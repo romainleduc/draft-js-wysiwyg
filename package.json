@@ -1,0 +1,37 @@
+{
+  "name": "draft-js-wysiwyg",
+  "version": "1.0.0",
+  "description": "A wysiwyg using DraftJS.",
+  "main": "src/index.js",
+  "scripts": {
+    "webpack": "webpack",
+    "dev": "npm run webpack -- --mode development --watch",
+    "build": "npm run webpack -- --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KiziKr/draft-js-wysiwyg.git"
+  },
+  "author": "Romain Leduc <KiziKr>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KiziKr/draft-js-wysiwyg/issues"
+  },
+  "homepage": "https://github.com/KiziKr/draft-js-wysiwyg#readme",
+  "dependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "path": "^0.12.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "draft-js": "^0.11.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}

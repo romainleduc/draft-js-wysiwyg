@@ -1,0 +1,1 @@
+export { default as WysiwygEditor } from './components/wysiwyg-editor/WysiwygEditor';
