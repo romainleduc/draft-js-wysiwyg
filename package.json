@@ -2,7 +2,7 @@
   "name": "draft-js-wysiwyg",
   "version": "1.0.0",
   "description": "A wysiwyg using DraftJS.",
-  "main": "src/index.js",
+  "main": "lib/draft-js-wysiwyg.js",
   "scripts": {
     "webpack": "webpack",
     "dev": "npm run webpack -- --mode development --watch",
@@ -19,19 +19,29 @@
     "url": "https://github.com/KiziKr/draft-js-wysiwyg/issues"
   },
   "homepage": "https://github.com/KiziKr/draft-js-wysiwyg#readme",
-  "dependencies": {
+  "devDependencies": {
+    "path": "^0.12.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "path": "^0.12.7",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
-  },
-  "devDependencies": {
+    "babel-preset-stage-0": "^6.24.1",
     "draft-js": "^0.11.7",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "publishConfig": {
+    "directory": "lib"
+  },
+  "dependencies": {
+    "draft-js-export-html": "^1.4.1",
+    "prop-types": "^15.7.2"
   }
 }

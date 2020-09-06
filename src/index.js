@@ -1,1 +1,1 @@
-export { default as WysiwygEditor } from './components/wysiwyg-editor/WysiwygEditor';
+export { WysiwygEditor } from './components/WysiwygEditor';

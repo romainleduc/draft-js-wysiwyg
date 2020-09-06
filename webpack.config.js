@@ -4,24 +4,30 @@ module.exports = {
     mode: 'production',
     entry: './src/index.js',
     optimization: {
-        minimize: true,
+        minimize: false,
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'draft-js-wysiwyg.min.js',
-        library: 'DraftJsWysiwyg',
-        libraryTarget: 'umd'
+        path: path.resolve('lib'),
+        filename: 'draft-js-wysiwyg.js',
+        library: 'draftJsWysiwyg',
+        libraryTarget: 'umd',
     },
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
-                exclude: /(node_modules)/,
-                use: 'babel-loader'
-            }
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: 'babel-loader',
+            },
         ]
     },
     resolve: {
         extensions: ['.js', '.jsx'],
+    },
+    externals: {
+        react: 'react',
+        immutable: 'immutable',
+        'react-dom': 'react-dom',
+        'draft-js': 'draft-js',
     },
 }
