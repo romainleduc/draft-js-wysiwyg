@@ -6,6 +6,7 @@ import {
     RichUtils,
 } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
+import EditorToolbar from './WysiwgEditorToolbar';
 
 const propTypes = {
     acceptCommands: PropTypes.arrayOf(PropTypes.string),
@@ -15,9 +16,14 @@ export const WysiwygEditor = ({
     className,
     editorProps,
     acceptCommands,
-    ...props,
+    toolbarProps,
+    ...props
 }) => {
     const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
+
+    const onChange = (editorState) => {
+        setEditorState(editorState);
+    }
 
     const handleKeyCommand = (command, editorState) => {
         if (!acceptCommands || acceptCommands.includes(command)) {
@@ -34,8 +40,14 @@ export const WysiwygEditor = ({
 
     return (
         <div {...props}>
+            <EditorToolbar
+                {...toolbarProps}
+                editorState={editorState}
+                onChange={onChange}
+            />
             <Editor
                 editorState={editorState}
+                onChange={onChange}
                 handleKeyCommand={handleKeyCommand}
                 onChange={editorState => setEditorState(editorState)}
                 {...editorProps}
