@@ -1,6 +1,6 @@
 {
   "name": "draft-js-wysiwyg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A wysiwyg using DraftJS.",
   "main": "lib/draft-js-wysiwyg.js",
   "scripts": {
