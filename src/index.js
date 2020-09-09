@@ -1,2 +1,3 @@
-export { WysiwygEditor } from './components/wysiwyg-editor/WysiwygEditor';
-export { EditorButton, InlineButton } from './components/editor-buttons';
+export { WysiwygEditor } from './WysiwygEditor';
+export { EditorButton } from './EditorButton';
+export { InlineButton } from './InlineButton';

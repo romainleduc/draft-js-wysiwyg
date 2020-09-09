@@ -75,13 +75,13 @@ const propTypes = {
 
 export const InlineButton = ({
     editorState,
-    onChange,
+    onEditorStateChange,
     inlineStyle,
     ...rest
 }) => {
 
     const toggleInlineStyle = () => {
-        onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
+        onEditorStateChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
     }
 
     return (

@@ -21,7 +21,7 @@ export const WysiwygEditor = ({
 }) => {
     const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
 
-    const onChange = (editorState) => {
+    const onEditorStateChange = (editorState) => {
         setEditorState(editorState);
     }
 
@@ -43,13 +43,12 @@ export const WysiwygEditor = ({
             <EditorToolbar
                 {...toolbarProps}
                 editorState={editorState}
-                onChange={onChange}
+                onEditorStateChange={onEditorStateChange}
             />
             <Editor
                 editorState={editorState}
-                onChange={onChange}
+                onChange={onEditorStateChange}
                 handleKeyCommand={handleKeyCommand}
-                onChange={editorState => setEditorState(editorState)}
                 {...editorProps}
             />
             <textarea
