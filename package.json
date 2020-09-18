@@ -45,6 +45,7 @@
     "directory": "lib"
   },
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "draft-js-export-html": "^1.4.1",
     "prop-types": "^15.7.2"
   }
