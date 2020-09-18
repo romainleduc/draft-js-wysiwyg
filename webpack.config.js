@@ -29,5 +29,7 @@ module.exports = {
         immutable: 'immutable',
         'react-dom': 'react-dom',
         'draft-js': 'draft-js',
+        '@material-ui/core': '@material-ui/core',
+        '@material-ui/icons': '@material-ui/icons',
     },
 }
