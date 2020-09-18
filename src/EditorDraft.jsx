@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Editor, RichUtils } from 'draft-js';
+import { Editor, RichUtils, getDefaultKeyBinding } from 'draft-js';
 import EditorContext from './EditorContext';
 
 export const EditorDraft = ({
@@ -7,6 +7,20 @@ export const EditorDraft = ({
     ...rest
 }) => {
     const { editorState, setEditorState } = useContext(EditorContext);
+    const editor = React.useRef(null);
+
+    const focusEditor = (e) => {
+        console.log('passe la ?')
+        setTimeout(() => {
+            console.log(editor.current)
+            editor.current.focus();
+        }, 0);
+    }
+
+    React.useEffect(() => {
+        console.log('passe ici ou pas ?')
+        focusEditor()
+    }, []);
 
     const handleKeyCommand = (command, editorState) => {
         if (!acceptCommands || acceptCommands.includes(command)) {
@@ -22,11 +36,14 @@ export const EditorDraft = ({
     }
 
     return (
-        <Editor
-            {...rest}
-            editorState={editorState}
-            onChange={setEditorState}
-            handleKeyCommand={handleKeyCommand}
-        />
+        <div onClick={focusEditor}>
+            <Editor
+                ref={editor}
+                editorState={editorState}
+                onChange={setEditorState}
+                handleKeyCommand={handleKeyCommand}
+                {...rest}
+            />
+        </div>
     );
 }

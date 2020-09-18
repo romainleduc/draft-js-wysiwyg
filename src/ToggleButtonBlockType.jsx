@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ToggleButton } from '@material-ui/lab';
 import EditorContext from './EditorContext';
-import { RichUtils } from 'draft-js';
+import { RichUtils, EditorState } from 'draft-js';
 
 export const ToggleButtonBlockType = ({
     value,
@@ -21,7 +21,12 @@ export const ToggleButtonBlockType = ({
 
     const handleClick = () => {
         if (editorState && setEditorState) {
-            setEditorState(toggleBlockType(editorState, value));
+            const editorStateFocused = EditorState.forceSelection(
+                editorState,
+                editorState.getSelection(),
+            );
+
+            setEditorState(toggleBlockType(editorStateFocused, value));
         }
     }
 

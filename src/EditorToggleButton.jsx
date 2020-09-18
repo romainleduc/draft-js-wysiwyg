@@ -3,7 +3,8 @@ import { ToggleButton } from '@material-ui/lab';
 import EditorContext from './EditorContext';
 import { RichUtils, EditorState } from 'draft-js';
 
-export const ToggleButtonInline = ({
+export const EditorToggleButton = ({
+    type,
     value,
     selected,
     children,
@@ -26,13 +27,33 @@ export const ToggleButtonInline = ({
         }
     }
 
-    const handleClick = (e) => {
+    const toggleSwitch = () => {
+        const eSF = EditorState.forceSelection(
+            editorState,
+            editorState.getSelection(),
+        )
+
+        const {
+            toggleInlineStyle,
+            toggleBlockType,
+        } = RichUtils;
+
+        switch (type) {
+            case 'inline':
+                return toggleInlineStyle(eSF, value);
+            case 'blockType':
+                return toggleBlockType(eSF, value);
+            default: return null;
+        }
+    }
+
+    const handleClick = () => {
         if (editorState && setEditorState) {
-            const editorStateFocused = EditorState.forceSelection(
-                editorState,
-                editorState.getSelection(),
-            );
-            setEditorState(RichUtils.toggleInlineStyle(editorStateFocused, value));
+            const newEditorState = toggleSwitch();
+
+            if (newEditorState) {
+                setEditorState(newEditorState);
+            }
         }
     }
 
