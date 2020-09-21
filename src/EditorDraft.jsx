@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Editor, RichUtils, getDefaultKeyBinding } from 'draft-js';
+import { Editor, RichUtils } from 'draft-js';
 import EditorContext from './EditorContext';
 
 export const EditorDraft = ({
@@ -10,15 +10,12 @@ export const EditorDraft = ({
     const editor = React.useRef(null);
 
     const focusEditor = (e) => {
-        console.log('passe la ?')
         setTimeout(() => {
-            console.log(editor.current)
             editor.current.focus();
         }, 0);
     }
 
     React.useEffect(() => {
-        console.log('passe ici ou pas ?')
         focusEditor()
     }, []);
 

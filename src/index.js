@@ -2,5 +2,5 @@ export { Editor } from './Editor';
 export { EditorToolbar } from './EditorToolbar';
 export { ToggleButtonInline } from './ToggleButtonInline';
 export { ToggleButtonBlockType } from './ToggleButtonBlockType';
-export { EditorToggleButton } from './EditorToggleButton';
+export { ToggleButtonPrefabs } from './ToggleButtonPrefabs';
 export { EditorDraft } from './EditorDraft';

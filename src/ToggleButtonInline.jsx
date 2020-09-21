@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ToggleButton } from '@material-ui/lab';
 import EditorContext from './EditorContext';
-import { RichUtils, EditorState } from 'draft-js';
+import { EditorState, RichUtils } from 'draft-js';
 
 export const ToggleButtonInline = ({
     value,
@@ -11,8 +11,14 @@ export const ToggleButtonInline = ({
 }) => {
     const { editorState, setEditorState } = useContext(EditorContext);
 
+    useEffect(() => {
+        if (selected) {
+            handleClick();
+        }
+    }, []);
+
     // Synchronize selection with keyboard shortcuts
-    const checkSelected = () => {
+    const synchronizeSelection = () => {
         if (editorState.getCurrentContent().hasText()) {
             const hasValue = editorState
                 .getCurrentInlineStyle()
@@ -21,25 +27,31 @@ export const ToggleButtonInline = ({
             return (hasValue && !selected) || (!hasValue && selected)
                 ? !selected
                 : selected;
-        } else {
-            return selected;
         }
+
+        return selected;
     }
 
-    const handleClick = (e) => {
+    const handleClick = () => {
         if (editorState && setEditorState) {
-            const editorStateFocused = EditorState.forceSelection(
-                editorState,
-                editorState.getSelection(),
+            const newEditorState = RichUtils.toggleInlineStyle(
+                EditorState.forceSelection(
+                    editorState,
+                    editorState.getSelection(),
+                ),
+                value
             );
-            setEditorState(RichUtils.toggleInlineStyle(editorStateFocused, value));
+
+            if (newEditorState) {
+                setEditorState(newEditorState);
+            }
         }
     }
 
     return (
         <ToggleButton
             onClick={handleClick}
-            selected={checkSelected()}
+            selected={synchronizeSelection()}
             value={value}
             {...rest}
         >

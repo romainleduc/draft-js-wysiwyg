@@ -1,39 +1,40 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ToggleButton } from '@material-ui/lab';
 import EditorContext from './EditorContext';
-import { RichUtils, EditorState } from 'draft-js';
+import { EditorState, RichUtils } from 'draft-js';
 
 export const ToggleButtonBlockType = ({
     value,
-    selected,
     children,
     ...rest
 }) => {
     const { editorState, setEditorState } = useContext(EditorContext);
-    const {
-        getCurrentBlockType,
-        toggleBlockType,
-    } = RichUtils;
 
-    const checkSelected = () => {
-        return getCurrentBlockType(editorState) === value;
-    }
+    useEffect(() => {
+        if (rest.selected) {
+            handleClick();
+        }
+    }, []);
 
     const handleClick = () => {
         if (editorState && setEditorState) {
-            const editorStateFocused = EditorState.forceSelection(
-                editorState,
-                editorState.getSelection(),
+            const newEditorState = RichUtils.toggleBlockType(
+                EditorState.forceSelection(
+                    editorState,
+                    editorState.getSelection(),
+                ),
+                value
             );
 
-            setEditorState(toggleBlockType(editorStateFocused, value));
+            if (newEditorState) {
+                setEditorState(newEditorState);
+            }
         }
     }
 
     return (
         <ToggleButton
             onClick={handleClick}
-            selected={checkSelected()}
             value={value}
             {...rest}
         >
