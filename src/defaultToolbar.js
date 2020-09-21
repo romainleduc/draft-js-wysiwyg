@@ -15,23 +15,23 @@ const defaultToolbar = {
     },
     inline: [
         {
-            name: 'bold',
+            name: 'BOLD',
             default: <FormatBold />,
         },
         {
-            name: 'italic',
+            name: 'ITALIC',
             default: <FormatItalic />,
         },
         {
-            name: 'underline',
+            name: 'UNDERLINE',
             default: <FormatUnderlined />,
         },
         {
-            name: 'strikethrough',
+            name: 'STRIKETHROUGH',
             default: <FormatStrikethrough />,
         },
         {
-            name: 'code',
+            name: 'CODE',
             default: <Code />,
         },
     ],
