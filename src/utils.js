@@ -3,7 +3,14 @@ import {
     Modifier,
 } from 'draft-js';
 
-export const mergeBlockData = (editorState, contentState, blockData) => {
+export const getBlockDataForKey = (contentState, blockKey) => {
+    return contentState
+        .getBlockForKey(blockKey)
+        ?.getData();
+}
+
+export const mergeBlockData = (editorState, contentState, blockKey) => {
+    const blockData = getBlockDataForKey(contentState, blockKey);
     const selection = editorState.getSelection();
 
     if (!blockData || !selection.isCollapsed()) {

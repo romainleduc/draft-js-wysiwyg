@@ -35,10 +35,10 @@ export const EditorDraft = ({
 
     const handleReturn = () => {
         const contentState = editorState.getCurrentContent();
-        const blockData = contentState.getFirstBlock().getData();
+        const startKey = editorState.getSelection().getStartKey();
 
-        if (contentState && blockData) {
-            setEditorState(mergeBlockData(editorState, contentState, blockData));
+        if (contentState) {
+            setEditorState(mergeBlockData(editorState, contentState, startKey));
             return "handled";
         }
 
