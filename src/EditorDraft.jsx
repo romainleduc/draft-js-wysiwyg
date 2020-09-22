@@ -39,6 +39,13 @@ export const EditorDraft = ({
                 editorState={editorState}
                 onChange={setEditorState}
                 handleKeyCommand={handleKeyCommand}
+                blockStyleFn={(block) => {
+                    const textAlign = block.getData()?.get('textAlign');
+
+                    if (textAlign) {
+                        return `align-${textAlign}`;
+                    }
+                }}
                 {...rest}
             />
         </div>

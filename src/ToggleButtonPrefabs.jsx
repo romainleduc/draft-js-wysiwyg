@@ -3,6 +3,7 @@ import { ToggleButtonGroup } from '@material-ui/lab';
 import { ToggleButtonInline } from './ToggleButtonInline';
 import { ToggleButtonBlockType } from './ToggleButtonBlockType';
 import defaultToolbar from './defaultToolbar';
+import { ToggleButtonTextAlign } from './ToggleButtonTextAlign';
 
 export const ToggleButtonPrefabs = ({
     type,
@@ -13,6 +14,7 @@ export const ToggleButtonPrefabs = ({
     const components = {
         inline: <ToggleButtonInline />,
         blockType: <ToggleButtonBlockType />,
+        textAlign: <ToggleButtonTextAlign />,
     };
 
     const customProps = (name) => {

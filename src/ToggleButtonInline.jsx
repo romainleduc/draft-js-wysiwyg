@@ -34,17 +34,13 @@ export const ToggleButtonInline = ({
 
     const handleClick = () => {
         if (editorState && setEditorState) {
-            const newEditorState = RichUtils.toggleInlineStyle(
+            setEditorState(RichUtils.toggleInlineStyle(
                 EditorState.forceSelection(
                     editorState,
                     editorState.getSelection(),
                 ),
                 value
-            );
-
-            if (newEditorState) {
-                setEditorState(newEditorState);
-            }
+            ));
         }
     }
 

@@ -5,6 +5,10 @@ import {
     FormatUnderlined,
     Code,
     FormatStrikethrough,
+    FormatAlignLeft,
+    FormatAlignRight,
+    FormatAlignCenter,
+    FormatAlignJustify,
 } from '@material-ui/icons';
 
 const defaultToolbar = {
@@ -75,6 +79,24 @@ const defaultToolbar = {
         {
             name: 'code-block',
             default: 'Code block',
+        },
+    ],
+    textAlign: [
+        {
+            name: 'left',
+            default: <FormatAlignLeft />,
+        },
+        {
+            name: 'center',
+            default: <FormatAlignCenter />,
+        },
+        {
+            name: 'right',
+            default: <FormatAlignRight />,
+        },
+        {
+            name: 'justify',
+            default: <FormatAlignJustify />,
         },
     ],
 }

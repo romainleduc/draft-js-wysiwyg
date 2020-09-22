@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import { ToggleButton } from '@material-ui/lab';
 import EditorContext from './EditorContext';
-import { EditorState, RichUtils } from 'draft-js';
+import { EditorState, Modifier } from 'draft-js';
 
-export const ToggleButtonBlockType = ({
+export const ToggleButtonTextAlign = ({
     value,
     children,
     ...rest
@@ -18,13 +18,13 @@ export const ToggleButtonBlockType = ({
 
     const handleClick = () => {
         if (editorState && setEditorState) {
-            setEditorState(RichUtils.toggleBlockType(
-                EditorState.forceSelection(
-                    editorState,
-                    editorState.getSelection(),
-                ),
-                value
-            ));
+            const newContentState = Modifier.setBlockData(
+                editorState.getCurrentContent(),
+                editorState.getSelection(),
+                { textAlign: value }
+            );
+
+            setEditorState(EditorState.push(editorState, newContentState, 'change-block-data'));
         }
     }
 
