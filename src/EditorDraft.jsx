@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import { Editor, RichUtils } from 'draft-js';
+import { Editor, RichUtils, Modifier, EditorState } from 'draft-js';
 import EditorContext from './EditorContext';
+import { mergeBlockData } from './utils';
 
 export const EditorDraft = ({
     acceptCommands,
@@ -32,6 +33,18 @@ export const EditorDraft = ({
         return 'not-handled';
     }
 
+    const handleReturn = () => {
+        const contentState = editorState.getCurrentContent();
+        const blockData = contentState.getFirstBlock().getData();
+
+        if (contentState && blockData) {
+            setEditorState(mergeBlockData(editorState, contentState, blockData));
+            return "handled";
+        }
+
+        return "not-handled"
+    }
+
     return (
         <div onClick={focusEditor}>
             <Editor
@@ -39,6 +52,7 @@ export const EditorDraft = ({
                 editorState={editorState}
                 onChange={setEditorState}
                 handleKeyCommand={handleKeyCommand}
+                handleReturn={handleReturn}
                 blockStyleFn={(block) => {
                     const textAlign = block.getData()?.get('textAlign');
 

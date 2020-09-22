@@ -24,7 +24,13 @@ export const ToggleButtonTextAlign = ({
                 { textAlign: value }
             );
 
-            setEditorState(EditorState.push(editorState, newContentState, 'change-block-data'));
+            setEditorState(
+                EditorState.push(
+                    editorState,
+                    newContentState,
+                    'change-block-data'
+                )
+            );
         }
     }
 
