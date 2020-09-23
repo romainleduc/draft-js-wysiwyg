@@ -9,6 +9,18 @@ export const getBlockDataForKey = (contentState, blockKey) => {
         ?.getData();
 }
 
+export const setBlockData = (editorState, data) => {
+    return EditorState.push(
+        editorState,
+        Modifier.setBlockData(
+            editorState.getCurrentContent(),
+            editorState.getSelection(),
+            data
+        ),
+        'change-block-data'
+    );
+}
+
 export const mergeBlockData = (editorState, contentState, blockKey) => {
     const blockData = getBlockDataForKey(contentState, blockKey);
     const selection = editorState.getSelection();
