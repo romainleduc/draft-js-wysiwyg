@@ -3,7 +3,7 @@ import { ToggleButton } from '@material-ui/lab';
 import EditorContext from './EditorContext';
 import { EditorState, RichUtils } from 'draft-js';
 
-export const ToggleButtonInline = ({
+export const InlineToggleButton = ({
     value,
     selected,
     children,

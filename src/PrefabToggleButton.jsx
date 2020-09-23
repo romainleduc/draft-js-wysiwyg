@@ -1,20 +1,20 @@
 import React from 'react';
 import { ToggleButtonGroup } from '@material-ui/lab';
-import { ToggleButtonInline } from './ToggleButtonInline';
-import { ToggleButtonBlockType } from './ToggleButtonBlockType';
+import { InlineToggleButton } from './InlineToggleButton';
+import { BlockTypeToggleButton } from './BlockTypeToggleButton';
+import { TextAlignToggleButton } from './TextAlignToggleButton';
 import defaultToolbar from './defaultToolbar';
-import { ToggleButtonTextAlign } from './ToggleButtonTextAlign';
 
-export const ToggleButtonPrefabs = ({
+export const PrefabToggleButton = ({
     type,
     options,
     toggleButtonGroupProps,
     customOptions,
 }) => {
     const components = {
-        inline: <ToggleButtonInline />,
-        blockType: <ToggleButtonBlockType />,
-        textAlign: <ToggleButtonTextAlign />,
+        inline: <InlineToggleButton />,
+        blockType: <BlockTypeToggleButton />,
+        textAlign: <TextAlignToggleButton />,
     };
 
     const customProps = (name) => {
