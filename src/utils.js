@@ -9,13 +9,13 @@ export const getBlockDataForKey = (contentState, blockKey) => {
         ?.getData();
 }
 
-export const setBlockData = (editorState, data) => {
+export const setBlockData = (editorState, blockData) => {
     return EditorState.push(
         editorState,
         Modifier.setBlockData(
             editorState.getCurrentContent(),
             editorState.getSelection(),
-            data
+            blockData
         ),
         'change-block-data'
     );
