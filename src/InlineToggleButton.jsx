@@ -19,14 +19,16 @@ export const InlineToggleButton = ({
 
     // Synchronize selection with keyboard shortcuts
     const synchronizeSelection = () => {
-        if (editorState.getCurrentContent().hasText()) {
-            const hasValue = editorState
-                .getCurrentInlineStyle()
-                .has(value);
-
-            return (hasValue && !selected) || (!hasValue && selected)
-                ? !selected
-                : selected;
+        if (editorState && setEditorState) {
+            if (editorState.getCurrentContent().hasText()) {
+                const hasValue = editorState
+                    .getCurrentInlineStyle()
+                    .has(value);
+    
+                return (hasValue && !selected) || (!hasValue && selected)
+                    ? !selected
+                    : selected;
+            }
         }
 
         return selected;

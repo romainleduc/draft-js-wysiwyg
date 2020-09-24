@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { Editor, RichUtils, Modifier, EditorState } from 'draft-js';
+import { Editor, RichUtils, Modifier, EditorState, getDefaultKeyBinding, BlockMapBuilder } from 'draft-js';
 import EditorContext from './EditorContext';
-import { mergeBlockData } from './utils';
+import { mergeBlockData, getBlocksBetween, indentSelection, cloneBlockWithIndentation, outdentSelection } from './utils';
 
 export const EditorDraft = ({
     acceptCommands,
@@ -59,6 +59,22 @@ export const EditorDraft = ({
                     if (textAlign) {
                         return `align-${textAlign}`;
                     }
+                }}
+                keyBindingFn={(event) => {
+                    if (event.key === 'Tab') {
+                        event.preventDefault();
+                        const contentState = editorState.getCurrentContent();
+                        const selection = editorState.getSelection();
+
+                        if (event.shiftKey) {
+                            setEditorState(outdentSelection(editorState, contentState, selection));
+                        } else {
+                            setEditorState(indentSelection(editorState, contentState, selection));
+                        }
+                        return null;
+                    }
+
+                    return getDefaultKeyBinding(event);
                 }}
                 {...rest}
             />

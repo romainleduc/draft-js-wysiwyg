@@ -65,12 +65,12 @@ const defaultToolbar = {
             default: 'H6',
         },
         {
-            name: 'ordered-list-item',
-            default: 'Ordered list',
+            name: 'unordered-list-item',
+            default: 'UL',
         },
         {
-            name: 'unordered-list-item',
-            default: 'Unordered list',
+            name: 'ordered-list-item',
+            default: 'OL',
         },
         {
             name: 'blockquote',
