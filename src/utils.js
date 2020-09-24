@@ -3,6 +3,7 @@ import {
     Modifier,
     ContentBlock,
     BlockMapBuilder,
+    genKey,
 } from 'draft-js';
 
 /**
@@ -80,21 +81,27 @@ export const replaceWithFragment = (editorState, contentState, selection, blocks
 /**
  * 
  */
-export const indentBlocks = (blocks) => {
-    return blocks.map(block => new ContentBlock({
-        key: block.getKey(),
-        type: block.getType(),
-        text: `\t${block.getText()}`,
-        data: block.getData(),
-    }));
+export const indentBlocks = (blocks, selection) => {
+    return blocks.map(block => {
+        // recover only the text of the selection to avoid
+        // ending up with additional text when inserting
+        const endText = block.getText()
+            .substr(selection.getStartOffset(), selection.getEndOffset());
+
+        return new ContentBlock({
+            key: block.getKey(),
+            type: block.getType(),
+            text: `\t${endText}`,
+            data: block.getData(),
+        });
+    });
 }
 
 /**
- *  
+ *  Note: does not work correctly at the moment
  */
-export const outdentBlocks = (blocks) => {
+export const outdentBlocks = (blocks, selection) => {
     return blocks.map(block => {
-        console.log(block.getText().substr(0, 1) === '\t',block.getText().substr(0, 1))
         if (block.getText().substr(0, 1) === '\t') {
             return new ContentBlock({
                 key: block.getKey(),
@@ -123,13 +130,16 @@ export const indentSelection = (editorState, contentState, selection) => {
             editorState,
             contentState,
             selection,
-            indentBlocks(blocks)
+            indentBlocks(blocks, selection)
         );
     } else {
         return insertText(editorState, contentState, selection, '\t');
     }
 }
 
+/**
+ * 
+ */
 export const outdentSelection = (editorState, contentState, selection) => {
     if (!selection.isCollapsed()) {
         const blocks = getBlocksBetween(
@@ -149,6 +159,9 @@ export const outdentSelection = (editorState, contentState, selection) => {
     }
 }
 
+/**
+ * 
+ */
 export const mergeBlockData = (editorState, contentState, blockKey) => {
     const blockData = getBlockDataForKey(contentState, blockKey);
     const selection = editorState.getSelection();
