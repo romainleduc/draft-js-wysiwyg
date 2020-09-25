@@ -3,7 +3,7 @@ import {
     Modifier,
     ContentBlock,
     BlockMapBuilder,
-    genKey,
+    ContentState,
 } from 'draft-js';
 
 /**
@@ -81,20 +81,52 @@ export const replaceWithFragment = (editorState, contentState, selection, blocks
 /**
  * 
  */
-export const indentBlocks = (blocks, selection) => {
-    return blocks.map(block => {
-        // recover only the text of the selection to avoid
-        // ending up with additional text when inserting
-        const endText = block.getText()
-            .substr(selection.getStartOffset(), selection.getEndOffset());
+export const indentBlock = (
+    editorState,
+    contentState,
+    selection,
+    blockKey,
+) => {
+    const contentBlock = contentState.getBlockForKey(blockKey);
+    // recover only the text of the selection to avoid
+    // ending up with additional text when inserting
+    const endText = contentBlock.getText()
+        .substr(selection.getStartOffset(), selection.getEndOffset());
 
+    return replaceWithFragment(
+        editorState,
+        contentState,
+        selection,
+        [
+            new ContentBlock({
+                key: contentBlock.getKey(),
+                type: contentBlock.getType(),
+                text: selection.getStartOffset() !== 0 ? '\t' : `\t${endText}`,
+                data: contentBlock.getData(),
+            }),
+        ]
+    );
+}
+
+/**
+ * 
+ */
+export const indentBlocks = (contentBlocks) => {
+    return contentBlocks.map(contentBlock => {
         return new ContentBlock({
-            key: block.getKey(),
-            type: block.getType(),
-            text: `\t${endText}`,
-            data: block.getData(),
+            key: contentBlock.getKey(),
+            type: contentBlock.getType(),
+            text: `\t${contentBlock.getText()}`,
+            data: contentBlock.getData(),
         });
     });
+}
+
+export const indentSelectionBlocks = (editorState, contentBlocks) => {
+    const contentState = editorState.getCurrentContent();
+    const selection = editorState.getSelection();
+
+    return EditorState.push(editorState, ContentState.createFromBlockArray(contentBlocks), 'apply-entity');
 }
 
 /**
@@ -120,21 +152,26 @@ export const outdentBlocks = (blocks, selection) => {
  */
 export const indentSelection = (editorState, contentState, selection) => {
     if (!selection.isCollapsed()) {
+        const startKey = selection.getStartKey();
+        const endKey = selection.getEndKey();
+
         const blocks = getBlocksBetween(
             contentState,
             selection.getStartKey(),
             selection.getEndKey()
         );
 
-        return replaceWithFragment(
-            editorState,
-            contentState,
-            selection,
-            indentBlocks(blocks, selection)
-        );
-    } else {
-        return insertText(editorState, contentState, selection, '\t');
+        if (startKey === endKey) {
+            return indentBlock(editorState, contentState, selection, startKey);
+        }
+        else {
+            console.log('passe la')
+            return indentSelectionBlocks(editorState, blocks);
+        }
+
     }
+
+    return insertText(editorState, contentState, selection, '\t');
 }
 
 /**
@@ -148,15 +185,20 @@ export const outdentSelection = (editorState, contentState, selection) => {
             selection.getEndKey()
         );
 
-        return replaceWithFragment(
+        console.log('blocks: ', blocks, 'outdentBlocks: ', outdentBlocks(blocks));
+
+        const test = replaceWithFragment(
             editorState,
             contentState,
             selection,
             outdentBlocks(blocks)
         );
-    } else {
-        return editorState;
+
+        console.log('replaceWithFragment: ', test)
+        return test;
     }
+
+    return editorState;
 }
 
 /**
