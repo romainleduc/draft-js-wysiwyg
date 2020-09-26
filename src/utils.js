@@ -152,7 +152,6 @@ export const indentSelection = (editorState, contentState) => {
     const endKey = selection.getEndKey();
 
     if (!selection.isCollapsed()) {
-
         if (startKey === endKey) {
             return indentBlock(
                 editorState,
