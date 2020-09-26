@@ -38,6 +38,19 @@ export function getBlocksBetween(contentState, startKey, endKey) {
 }
 
 /**
+ * Returns array keys of blocks.
+ */
+export function getBlocksKeysBetween(contentState, startKey, endKey) {
+    return getBlocksMapBetween(
+        contentState.getBlockMap(),
+        startKey,
+        endKey
+    ).toArray().map(contentBlock => {
+        return contentBlock.getKey();
+    });
+}
+
+/**
  * Add block level meta-data.
  */
 export const setBlockData = (editorState, blockData) => {
@@ -111,22 +124,54 @@ export const indentBlock = (
 /**
  * 
  */
-export const indentBlocks = (contentBlocks) => {
-    return contentBlocks.map(contentBlock => {
-        return new ContentBlock({
-            key: contentBlock.getKey(),
-            type: contentBlock.getType(),
-            text: `\t${contentBlock.getText()}`,
-            data: contentBlock.getData(),
-        });
+export const indentBlocksForKeys = (editorState, contentState, blockKeys) => {
+    const contentBlocks = contentState.getBlocksAsArray().map(contentBlock => {
+        if (blockKeys.includes(contentBlock.getKey())) {
+            return new ContentBlock({
+                key: contentBlock.getKey(),
+                type: contentBlock.getType(),
+                text: `\t${contentBlock.getText()}`,
+                data: contentBlock.getData(),
+            });
+        }
+
+        return contentBlock;
     });
+
+    return EditorState.push(
+        editorState,
+        ContentState.createFromBlockArray(contentBlocks),
+        'apply-entity'
+    );
 }
 
-export const indentSelectionBlocks = (editorState, contentBlocks) => {
-    const contentState = editorState.getCurrentContent();
+/**
+ * 
+ */
+export const indentSelection = (editorState, contentState) => {
     const selection = editorState.getSelection();
+    const startKey = selection.getStartKey();
+    const endKey = selection.getEndKey();
 
-    return EditorState.push(editorState, ContentState.createFromBlockArray(contentBlocks), 'apply-entity');
+    if (!selection.isCollapsed()) {
+
+        if (startKey === endKey) {
+            return indentBlock(
+                editorState,
+                contentState,
+                selection,
+                startKey
+            );
+        }
+
+        return indentBlocksForKeys(
+            editorState,
+            contentState,
+            getBlocksKeysBetween(contentState, startKey, endKey)
+        );   
+    }
+
+    return insertText(editorState, contentState, selection, '\t');
 }
 
 /**
@@ -147,32 +192,31 @@ export const outdentBlocks = (blocks, selection) => {
     });
 }
 
-/**
- * 
- */
-export const indentSelection = (editorState, contentState, selection) => {
-    if (!selection.isCollapsed()) {
-        const startKey = selection.getStartKey();
-        const endKey = selection.getEndKey();
+// /**
+//  * 
+//  */
+// export const indentSelection = (editorState, contentState, selection) => {
+//     if (!selection.isCollapsed()) {
+//         const startKey = selection.getStartKey();
+//         const endKey = selection.getEndKey();
 
-        const blocks = getBlocksBetween(
-            contentState,
-            selection.getStartKey(),
-            selection.getEndKey()
-        );
+//         const blocks = getBlocksBetween(
+//             contentState,
+//             selection.getStartKey(),
+//             selection.getEndKey()
+//         );
 
-        if (startKey === endKey) {
-            return indentBlock(editorState, contentState, selection, startKey);
-        }
-        else {
-            console.log('passe la')
-            return indentSelectionBlocks(editorState, blocks);
-        }
+//         if (startKey === endKey) {
+//             return indentBlock(editorState, contentState, selection, startKey);
+//         }
+//         else {
+//             return indentSelectionBlocks(editorState, blocks);
+//         }
 
-    }
+//     }
 
-    return insertText(editorState, contentState, selection, '\t');
-}
+//     return insertText(editorState, contentState, selection, '\t');
+// }
 
 /**
  * 

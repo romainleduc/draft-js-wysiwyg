@@ -69,7 +69,7 @@ export const EditorDraft = ({
                         if (event.shiftKey) {
                             setEditorState(outdentSelection(editorState, contentState, selection));
                         } else {
-                            setEditorState(indentSelection(editorState, contentState, selection));
+                            setEditorState(indentSelection(editorState, contentState));
                         }
                         return null;
                     }
