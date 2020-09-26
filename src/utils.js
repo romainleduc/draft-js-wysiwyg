@@ -45,9 +45,7 @@ export function getBlocksKeysBetween(contentState, startKey, endKey) {
         contentState.getBlockMap(),
         startKey,
         endKey
-    ).toArray().map(contentBlock => {
-        return contentBlock.getKey();
-    });
+    ).toArray().map(contentBlock => contentBlock.getKey());
 }
 
 /**
@@ -168,81 +166,49 @@ export const indentSelection = (editorState, contentState) => {
             editorState,
             contentState,
             getBlocksKeysBetween(contentState, startKey, endKey)
-        );   
+        );
     }
 
     return insertText(editorState, contentState, selection, '\t');
 }
 
 /**
- *  Note: does not work correctly at the moment
+ *
  */
-export const outdentBlocks = (blocks, selection) => {
-    return blocks.map(block => {
-        if (block.getText().substr(0, 1) === '\t') {
+export const outdentBlocksForKeys = (editorState, contentState, blockKeys) => {
+    const contentBlocks = contentState.getBlocksAsArray().map(contentBlock => {
+        if (blockKeys.includes(contentBlock.getKey()) && contentBlock.getText().substr(0, 1) === '\t') {
             return new ContentBlock({
-                key: block.getKey(),
-                type: block.getType(),
-                text: `${block.getText().substr(1)}`,
-                data: block.getData(),
+                key: contentBlock.getKey(),
+                type: contentBlock.getType(),
+                text: `${contentBlock.getText().substr(1)}`,
+                data: contentBlock.getData(),
             });
         }
 
-        return block;
+        return contentBlock;
     });
+
+    return EditorState.push(
+        editorState,
+        ContentState.createFromBlockArray(contentBlocks),
+        'apply-entity'
+    );
 }
-
-// /**
-//  * 
-//  */
-// export const indentSelection = (editorState, contentState, selection) => {
-//     if (!selection.isCollapsed()) {
-//         const startKey = selection.getStartKey();
-//         const endKey = selection.getEndKey();
-
-//         const blocks = getBlocksBetween(
-//             contentState,
-//             selection.getStartKey(),
-//             selection.getEndKey()
-//         );
-
-//         if (startKey === endKey) {
-//             return indentBlock(editorState, contentState, selection, startKey);
-//         }
-//         else {
-//             return indentSelectionBlocks(editorState, blocks);
-//         }
-
-//     }
-
-//     return insertText(editorState, contentState, selection, '\t');
-// }
 
 /**
  * 
  */
-export const outdentSelection = (editorState, contentState, selection) => {
-    if (!selection.isCollapsed()) {
-        const blocks = getBlocksBetween(
-            contentState,
-            selection.getStartKey(),
-            selection.getEndKey()
-        );
+export const outdentSelection = (editorState, contentState) => {
+    const selection = editorState.getSelection();
+    const startKey = selection.getStartKey();
+    const endKey = selection.getEndKey();
 
-        console.log('blocks: ', blocks, 'outdentBlocks: ', outdentBlocks(blocks));
-
-        const test = replaceWithFragment(
-            editorState,
-            contentState,
-            selection,
-            outdentBlocks(blocks)
-        );
-
-        console.log('replaceWithFragment: ', test)
-        return test;
-    }
-
-    return editorState;
+    return outdentBlocksForKeys(
+        editorState,
+        contentState,
+        getBlocksKeysBetween(contentState, startKey, endKey)
+    );
 }
 
 /**
