@@ -46,17 +46,22 @@ export const EditorDraft = ({
     }
 
     const keyBindingFn = (event) => {
-        if (event.key === 'Tab') {
-            event.preventDefault();
+        const contentState = editorState.getCurrentContent();
 
-            const contentState = editorState.getCurrentContent();
-
-            if (event.shiftKey) {
-                setEditorState(outdentSelection(editorState, contentState));
-            } else {
-                setEditorState(indentSelection(editorState, contentState));
+        if (event.shiftKey) {
+            switch (event.key) {
+                case 'Tab':
+                    event.preventDefault();
+                    setEditorState(outdentSelection(editorState, contentState));
+                    return null;
             }
-            return null;
+        } else {
+            switch (event.key) {
+                case 'Tab':
+                    event.preventDefault();
+                    setEditorState(indentSelection(editorState, contentState));
+                    return null;
+            }
         }
 
         return getDefaultKeyBinding(event);
