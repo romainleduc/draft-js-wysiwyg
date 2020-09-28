@@ -111,7 +111,7 @@ export const mergeOutdentSelection = (selection) => {
  * Return a new selection by merging the indentation offset.
  * 
  * The function will always keep the start of the selection
- * of the first row when it starts at 0
+ * of the first row when it starts at 0.
  */
 export const mergeIndentSelection = (selection) => {
     let anchorOffset = selection.getAnchorOffset();
