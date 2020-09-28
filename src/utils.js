@@ -98,7 +98,7 @@ export const pushContentStateFromArray = (editorState, contentBlocks) => {
 }
 
 /**
- * 
+ * Return a new selection by merging the outdentation offset.
  */
 export const mergeOutdentSelection = (selection) => {
     return selection.merge({
