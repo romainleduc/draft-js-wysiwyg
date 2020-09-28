@@ -97,24 +97,45 @@ export const pushContentStateFromArray = (editorState, contentBlocks) => {
     );
 }
 
-export const updateOutdentSelection = (editorState, selection) => {
-    return EditorState.acceptSelection(
-        editorState,
-        selection.merge({
-            anchorOffset: selection.getAnchorOffset() - 1,
-            focusOffset: selection.getFocusOffset() - 1,
-        })
-    );
+/**
+ * 
+ */
+export const mergeOutdentSelection = (selection) => {
+    return selection.merge({
+        anchorOffset: selection.getAnchorOffset() - 1,
+        focusOffset: selection.getFocusOffset() - 1,
+    });
 }
 
-export const updateIndentSelection = (editorState, selection) => {
-    return EditorState.acceptSelection(
-        editorState,
-        selection.merge({
-            anchorOffset: selection.getAnchorOffset() + 1,
-            focusOffset: selection.getFocusOffset() + 1,
-        })
-    );
+/**
+ * Return a new selection by merging the indentation offset.
+ * 
+ * The function will always keep the start of the selection
+ * of the first row when it starts at 0
+ */
+export const mergeIndentSelection = (selection) => {
+    let anchorOffset = selection.getAnchorOffset();
+    let focusOffset = selection.getFocusOffset();
+
+    if (selection.getIsBackward()) {
+        if (focusOffset !== 0) {
+            focusOffset += 1;
+        }
+
+        if (anchorOffset !== 0) {
+            anchorOffset += 1;
+        }
+    }
+
+    if (!selection.getIsBackward()) {
+        focusOffset += 1;
+
+        if (anchorOffset !== 0) {
+            anchorOffset += 1;
+        }
+    }
+
+    return selection.merge({ anchorOffset, focusOffset });
 }
 
 export const cloneContentBlock = (contentBlock, text) => {
@@ -143,14 +164,14 @@ export const indentBlock = (
 
     const text = selection.getStartOffset() !== 0 ? '\t' : `\t${endText}`;
 
-    return updateIndentSelection(
+    return EditorState.acceptSelection(
         replaceWithFragment(
             editorState,
             contentState,
             selection,
             [cloneContentBlock(contentBlock, text)]
         ),
-        selection
+        mergeIndentSelection(selection)
     );
 }
 
@@ -173,12 +194,12 @@ export const indentBlocksForKeys = (
             return contentBlock;
         });
 
-    return updateIndentSelection(
+    return EditorState.acceptSelection(
         pushContentStateFromArray(
             editorState,
             contentBlocks
         ),
-        selection
+        mergeIndentSelection(selection)
     );
 }
 
@@ -230,12 +251,12 @@ export const outdentBlocksForKeys = (
             return contentBlock;
         });
 
-    return updateOutdentSelection(
+    return EditorState.acceptSelection(
         pushContentStateFromArray(
             editorState,
             contentBlocks
         ),
-        selection
+        mergeOutdentSelection(selection)
     );
 }
 
