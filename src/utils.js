@@ -89,6 +89,43 @@ export const replaceWithFragment = (editorState, contentState, selection, blocks
     );
 }
 
+export const pushContentStateFromArray = (editorState, contentBlocks) => {
+    return EditorState.push(
+        editorState,
+        ContentState.createFromBlockArray(contentBlocks),
+        'apply-entity'
+    );
+}
+
+export const updateOutdentSelection = (editorState, selection) => {
+    return EditorState.acceptSelection(
+        editorState,
+        selection.merge({
+            anchorOffset: selection.getAnchorOffset() - 1,
+            focusOffset: selection.getFocusOffset() - 1,
+        })
+    );
+}
+
+export const updateIndentSelection = (editorState, selection) => {
+    return EditorState.acceptSelection(
+        editorState,
+        selection.merge({
+            anchorOffset: selection.getAnchorOffset() + 1,
+            focusOffset: selection.getFocusOffset() + 1,
+        })
+    );
+}
+
+export const cloneContentBlock = (contentBlock, text) => {
+    return new ContentBlock({
+        key: contentBlock.getKey(),
+        type: contentBlock.getType(),
+        data: contentBlock.getData(),
+        text,
+    });
+}
+
 /**
  * 
  */
@@ -104,42 +141,44 @@ export const indentBlock = (
     const endText = contentBlock.getText()
         .substr(selection.getStartOffset(), selection.getEndOffset());
 
-    return replaceWithFragment(
-        editorState,
-        contentState,
-        selection,
-        [
-            new ContentBlock({
-                key: contentBlock.getKey(),
-                type: contentBlock.getType(),
-                text: selection.getStartOffset() !== 0 ? '\t' : `\t${endText}`,
-                data: contentBlock.getData(),
-            }),
-        ]
+    const text = selection.getStartOffset() !== 0 ? '\t' : `\t${endText}`;
+
+    return updateIndentSelection(
+        replaceWithFragment(
+            editorState,
+            contentState,
+            selection,
+            [cloneContentBlock(contentBlock, text)]
+        ),
+        selection
     );
 }
 
 /**
  * 
  */
-export const indentBlocksForKeys = (editorState, contentState, blockKeys) => {
-    const contentBlocks = contentState.getBlocksAsArray().map(contentBlock => {
-        if (blockKeys.includes(contentBlock.getKey())) {
-            return new ContentBlock({
-                key: contentBlock.getKey(),
-                type: contentBlock.getType(),
-                text: `\t${contentBlock.getText()}`,
-                data: contentBlock.getData(),
-            });
-        }
+export const indentBlocksForKeys = (
+    editorState,
+    selection,
+    contentState,
+    blockKeys
+) => {
+    const contentBlocks = contentState
+        .getBlocksAsArray()
+        .map(contentBlock => {
+            if (blockKeys.includes(contentBlock.getKey())) {
+                return cloneContentBlock(contentBlock, `\t${contentBlock.getText()}`);
+            }
 
-        return contentBlock;
-    });
+            return contentBlock;
+        });
 
-    return EditorState.push(
-        editorState,
-        ContentState.createFromBlockArray(contentBlocks),
-        'apply-entity'
+    return updateIndentSelection(
+        pushContentStateFromArray(
+            editorState,
+            contentBlocks
+        ),
+        selection
     );
 }
 
@@ -163,6 +202,7 @@ export const indentSelection = (editorState, contentState) => {
 
         return indentBlocksForKeys(
             editorState,
+            selection,
             contentState,
             getBlocksKeysBetween(contentState, startKey, endKey)
         );
@@ -174,24 +214,28 @@ export const indentSelection = (editorState, contentState) => {
 /**
  *
  */
-export const outdentBlocksForKeys = (editorState, contentState, blockKeys) => {
-    const contentBlocks = contentState.getBlocksAsArray().map(contentBlock => {
-        if (blockKeys.includes(contentBlock.getKey()) && contentBlock.getText().substr(0, 1) === '\t') {
-            return new ContentBlock({
-                key: contentBlock.getKey(),
-                type: contentBlock.getType(),
-                text: `${contentBlock.getText().substr(1)}`,
-                data: contentBlock.getData(),
-            });
-        }
+export const outdentBlocksForKeys = (
+    editorState,
+    selection,
+    contentState,
+    blockKeys
+) => {
+    const contentBlocks = contentState
+        .getBlocksAsArray()
+        .map(contentBlock => {
+            if (blockKeys.includes(contentBlock.getKey()) && contentBlock.getText().substr(0, 1) === '\t') {
+                return cloneContentBlock(contentBlock, `${contentBlock.getText().substr(1)}`);
+            }
 
-        return contentBlock;
-    });
+            return contentBlock;
+        });
 
-    return EditorState.push(
-        editorState,
-        ContentState.createFromBlockArray(contentBlocks),
-        'apply-entity'
+    return updateOutdentSelection(
+        pushContentStateFromArray(
+            editorState,
+            contentBlocks
+        ),
+        selection
     );
 }
 
@@ -205,6 +249,7 @@ export const outdentSelection = (editorState, contentState) => {
 
     return outdentBlocksForKeys(
         editorState,
+        selection,
         contentState,
         getBlocksKeysBetween(contentState, startKey, endKey)
     );
