@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
 import { ToggleButton } from '@material-ui/lab';
 import EditorContext from './EditorContext';
-import { setBlockData } from './utils';
+import {
+    setBlockDataSelection,
+    setAllBlocksData,
+} from './utils';
 
 export const TextAlignToggleButton = forwardRef(
     (
         {
             value,
             children,
+            ignoreSelection,
             ...rest
         },
         ref
@@ -22,7 +26,26 @@ export const TextAlignToggleButton = forwardRef(
 
         const handleClick = () => {
             if (editorState && setEditorState) {
-                setEditorState(setBlockData(editorState, { textAlign: value }));
+                const contentState = editorState.getCurrentContent();
+                const blockData = { textAlign: value };
+
+                if (ignoreSelection) {
+                    setEditorState(
+                        setAllBlocksData(
+                            editorState,
+                            contentState,
+                            blockData
+                        )
+                    );
+                } else {
+                    setEditorState(
+                        setBlockDataSelection(
+                            editorState,
+                            contentState,
+                            blockData
+                        )
+                    );
+                }
             }
         }
 

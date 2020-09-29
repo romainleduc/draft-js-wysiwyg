@@ -4,6 +4,7 @@ import {
     ContentBlock,
     BlockMapBuilder,
     ContentState,
+    SelectionState,
 } from 'draft-js';
 
 /**
@@ -45,21 +46,52 @@ export function getBlocksKeysBetween(contentState, startKey, endKey) {
         contentState.getBlockMap(),
         startKey,
         endKey
-    ).toArray().map(contentBlock => contentBlock.getKey());
+    )
+    .toArray()
+    .map(contentBlock => contentBlock.getKey());
 }
 
 /**
  * Add block level meta-data.
  */
-export const setBlockData = (editorState, blockData) => {
+export const setBlockData = (editorState, contentState, selection, blockData) => {
     return EditorState.push(
         editorState,
         Modifier.setBlockData(
-            editorState.getCurrentContent(),
-            editorState.getSelection(),
+            contentState,
+            selection,
             blockData
         ),
         'change-block-data'
+    );
+}
+
+/**
+ */
+export const setBlockDataSelection = (editorState, contentState, blockData) => {
+    return setBlockData(
+        editorState,
+        contentState,
+        editorState.getSelection(),
+        blockData
+    );
+}
+
+/**
+ * 
+ */
+export const setAllBlocksData = (editorState, contentState, blockData) => {
+    const blocks = contentState.getBlocksAsArray();
+    const selectionState = SelectionState.createEmpty('blockkey');
+
+    return setBlockData(
+        editorState,
+        contentState,
+        selectionState.merge({
+            anchorKey: blocks[0].getKey(),
+            focusKey: blocks[blocks.length -1].getKey(),
+        }),
+        blockData
     );
 }
 
