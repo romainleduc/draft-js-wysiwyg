@@ -5,12 +5,13 @@ import {
     BlockMapBuilder,
     ContentState,
     SelectionState,
+    BlockMap,
 } from 'draft-js';
 
 /**
  * 
  */
-export const getBlockDataForKey = (contentState, blockKey) => {
+export const getBlockDataForKey = (contentState: ContentState, blockKey: string) => {
     return contentState
         .getBlockForKey(blockKey)
         ?.getData();
@@ -19,7 +20,11 @@ export const getBlockDataForKey = (contentState, blockKey) => {
 /**
  * Returns collection of blocks.
  */
-export function getBlocksMapBetween(blockMap, startKey, endKey) {
+export function getBlocksMapBetween(
+    blockMap: BlockMap,
+    startKey: string,
+    endKey: string
+) {
     return blockMap
         .toSeq()
         .skipUntil((_, k) => k === startKey)
@@ -30,7 +35,11 @@ export function getBlocksMapBetween(blockMap, startKey, endKey) {
 /**
  * Returns array of blocks.
  */
-export function getBlocksBetween(contentState, startKey, endKey) {
+export function getBlocksBetween(
+    contentState: ContentState,
+    startKey: string,
+    endKey: string
+) {
     return getBlocksMapBetween(
         contentState.getBlockMap(),
         startKey,
@@ -41,7 +50,11 @@ export function getBlocksBetween(contentState, startKey, endKey) {
 /**
  * Returns array keys of blocks.
  */
-export function getBlocksKeysBetween(contentState, startKey, endKey) {
+export function getBlocksKeysBetween(
+    contentState: ContentState,
+    startKey: string,
+    endKey: string
+) {
     return getBlocksMapBetween(
         contentState.getBlockMap(),
         startKey,
@@ -54,7 +67,12 @@ export function getBlocksKeysBetween(contentState, startKey, endKey) {
 /**
  * Add block level meta-data.
  */
-export const setBlockData = (editorState, contentState, selection, blockData) => {
+export const setBlockData = (
+    editorState: EditorState,
+    contentState: ContentState,
+    selection: SelectionState,
+    blockData: any
+) => {
     return EditorState.push(
         editorState,
         Modifier.setBlockData(
@@ -67,20 +85,13 @@ export const setBlockData = (editorState, contentState, selection, blockData) =>
 }
 
 /**
- */
-export const setBlockDataSelection = (editorState, contentState, blockData) => {
-    return setBlockData(
-        editorState,
-        contentState,
-        editorState.getSelection(),
-        blockData
-    );
-}
-
-/**
  * 
  */
-export const setAllBlocksData = (editorState, contentState, blockData) => {
+export const setAllBlocksData = (
+    editorState: EditorState,
+    contentState: ContentState,
+    blockData: any
+) => {
     const blocks = contentState.getBlocksAsArray();
     const selectionState = SelectionState.createEmpty('blockkey');
 
@@ -98,7 +109,12 @@ export const setAllBlocksData = (editorState, contentState, blockData) => {
 /**
  * 
  */
-export const insertText = (editorState, contentState, selection, text) => {
+export const insertText = (
+    editorState: EditorState,
+    contentState: ContentState,
+    selection: SelectionState,
+    text: string
+) => {
     return EditorState.push(
         editorState,
         Modifier.insertText(contentState, selection, text),
@@ -109,19 +125,27 @@ export const insertText = (editorState, contentState, selection, text) => {
 /**
  * 
  */
-export const replaceWithFragment = (editorState, contentState, selection, blocks) => {
+export const replaceWithFragment = (
+    editorState: EditorState,
+    contentState: ContentState,
+    selection: SelectionState,
+    contentBlocks: ContentBlock[]
+) => {
     return EditorState.push(
         editorState,
         Modifier.replaceWithFragment(
             contentState,
             selection,
-            BlockMapBuilder.createFromArray(blocks)
+            BlockMapBuilder.createFromArray(contentBlocks)
         ),
         'insert-fragment'
     );
 }
 
-export const pushContentStateFromArray = (editorState, contentBlocks) => {
+export const pushContentStateFromArray = (
+    editorState: EditorState,
+    contentBlocks: ContentBlock[]
+) => {
     return EditorState.push(
         editorState,
         ContentState.createFromBlockArray(contentBlocks),
@@ -132,7 +156,7 @@ export const pushContentStateFromArray = (editorState, contentBlocks) => {
 /**
  * Return a new selection by merging the outdentation offset.
  */
-export const mergeOutdentSelection = (selection) => {
+export const mergeOutdentSelection = (selection: SelectionState) => {
     return selection.merge({
         anchorOffset: selection.getAnchorOffset() - 1,
         focusOffset: selection.getFocusOffset() - 1,
@@ -145,7 +169,7 @@ export const mergeOutdentSelection = (selection) => {
  * The function will always keep the start of the selection
  * of the first row when it starts at 0.
  */
-export const mergeIndentSelection = (selection) => {
+export const mergeIndentSelection = (selection: SelectionState) => {
     let anchorOffset = selection.getAnchorOffset();
     let focusOffset = selection.getFocusOffset();
 
@@ -170,7 +194,7 @@ export const mergeIndentSelection = (selection) => {
     return selection.merge({ anchorOffset, focusOffset });
 }
 
-export const cloneContentBlock = (contentBlock, text) => {
+export const cloneContentBlock = (contentBlock: ContentBlock, text: string) => {
     return new ContentBlock({
         key: contentBlock.getKey(),
         type: contentBlock.getType(),
@@ -183,10 +207,10 @@ export const cloneContentBlock = (contentBlock, text) => {
  * 
  */
 export const indentBlock = (
-    editorState,
-    contentState,
-    selection,
-    blockKey,
+    editorState: EditorState,
+    contentState: ContentState,
+    selection: SelectionState,
+    blockKey: string,
 ) => {
     const contentBlock = contentState.getBlockForKey(blockKey);
     // recover only the text of the selection to avoid
@@ -211,10 +235,10 @@ export const indentBlock = (
  * 
  */
 export const indentBlocksForKeys = (
-    editorState,
-    selection,
-    contentState,
-    blockKeys
+    editorState: EditorState,
+    selection: SelectionState,
+    contentState: ContentState,
+    blockKeys: any
 ) => {
     const contentBlocks = contentState
         .getBlocksAsArray()
@@ -238,7 +262,10 @@ export const indentBlocksForKeys = (
 /**
  * 
  */
-export const indentSelection = (editorState, contentState) => {
+export const indentSelection = (
+    editorState: EditorState,
+    contentState: ContentState
+) => {
     const selection = editorState.getSelection();
     const startKey = selection.getStartKey();
     const endKey = selection.getEndKey();
@@ -268,10 +295,10 @@ export const indentSelection = (editorState, contentState) => {
  *
  */
 export const outdentBlocksForKeys = (
-    editorState,
-    selection,
-    contentState,
-    blockKeys
+    editorState: EditorState,
+    selection: SelectionState,
+    contentState: ContentState,
+    blockKeys: any
 ) => {
     const contentBlocks = contentState
         .getBlocksAsArray()
@@ -295,7 +322,10 @@ export const outdentBlocksForKeys = (
 /**
  * 
  */
-export const outdentSelection = (editorState, contentState) => {
+export const outdentSelection = (
+    editorState: EditorState,
+    contentState: ContentState
+) => {
     const selection = editorState.getSelection();
     const startKey = selection.getStartKey();
     const endKey = selection.getEndKey();
@@ -311,7 +341,11 @@ export const outdentSelection = (editorState, contentState) => {
 /**
  * 
  */
-export const mergeBlockData = (editorState, contentState, blockKey) => {
+export const mergeBlockData = (
+    editorState: EditorState,
+    contentState: ContentState,
+    blockKey: string
+) => {
     const blockData = getBlockDataForKey(contentState, blockKey);
     const selection = editorState.getSelection();
 

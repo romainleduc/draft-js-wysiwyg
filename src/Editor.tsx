@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 import { EditorState } from 'draft-js';
 import EditorContext from './EditorContext';
 
-export const Editor = ({
+export interface EditorProps
+    extends React.HTMLAttributes<HTMLDivElement> {
+    editorState: EditorState,
+    onEditorStateChange: React.Dispatch<React.SetStateAction<EditorState>>;
+}
+
+const Editor = ({
     className,
     children,
     editorState,
     onEditorStateChange,
     ...props
-}) => {
+}: EditorProps) => {
     const init = () => {
         if (!editorState || !onEditorStateChange) {
             const [state, setState] = useState(EditorState.createEmpty());
@@ -38,3 +44,5 @@ export const Editor = ({
         </EditorContext.Provider>
     );
 }
+
+export default Editor;

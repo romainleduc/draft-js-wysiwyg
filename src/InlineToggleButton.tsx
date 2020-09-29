@@ -1,19 +1,21 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
-import { ToggleButton } from '@material-ui/lab';
+import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import EditorContext from './EditorContext';
 import { EditorState, RichUtils } from 'draft-js';
 
-export const InlineToggleButton = forwardRef(
+export interface InlineToggleButtonProps extends ToggleButtonProps {}
+
+const InlineToggleButton = forwardRef(
     (
         {
             value,
             selected,
             children,
             ...rest
-        },
+        }: InlineToggleButtonProps,
         ref
     ) => {
-        const { editorState, setEditorState } = useContext(EditorContext);
+        const { editorState, setEditorState } = useContext(EditorContext) || {};
 
         useEffect(() => {
             if (selected) {
@@ -52,7 +54,7 @@ export const InlineToggleButton = forwardRef(
 
         return (
             <ToggleButton
-                ref={ref}
+                ref={ref as any}
                 onClick={handleClick}
                 selected={synchronizeSelection()}
                 value={value}
@@ -63,3 +65,5 @@ export const InlineToggleButton = forwardRef(
         );
     }
 );
+
+export default InlineToggleButton;

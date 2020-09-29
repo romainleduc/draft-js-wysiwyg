@@ -1,25 +1,37 @@
-import React, { useContext, useEffect, forwardRef } from 'react';
-import { ToggleButton } from '@material-ui/lab';
+import React, {
+    useContext,
+    useEffect,
+    forwardRef,
+} from 'react';
+import {
+    ToggleButton,
+    ToggleButtonProps,
+} from '@material-ui/lab';
 import EditorContext from './EditorContext';
 import {
-    setBlockDataSelection,
+    setBlockData,
     setAllBlocksData,
 } from './utils';
 
-export const TextAlignToggleButton = forwardRef(
+export interface TextAlignToggleButtonProps extends ToggleButtonProps {
+    ignoreSelection: boolean;
+}
+
+const TextAlignToggleButton = forwardRef(
     (
         {
+            selected,
             value,
             children,
             ignoreSelection,
             ...rest
-        },
+        }: TextAlignToggleButtonProps,
         ref
     ) => {
-        const { editorState, setEditorState } = useContext(EditorContext);
+        const { editorState, setEditorState } = useContext(EditorContext) || {};
 
         useEffect(() => {
-            if (rest.selected) {
+            if (selected) {
                 handleClick();
             }
         }, []);
@@ -27,6 +39,7 @@ export const TextAlignToggleButton = forwardRef(
         const handleClick = () => {
             if (editorState && setEditorState) {
                 const contentState = editorState.getCurrentContent();
+                const selectionState = editorState.getSelection();
                 const blockData = { textAlign: value };
 
                 if (ignoreSelection) {
@@ -39,9 +52,10 @@ export const TextAlignToggleButton = forwardRef(
                     );
                 } else {
                     setEditorState(
-                        setBlockDataSelection(
+                        setBlockData(
                             editorState,
                             contentState,
+                            selectionState,
                             blockData
                         )
                     );
@@ -51,7 +65,8 @@ export const TextAlignToggleButton = forwardRef(
 
         return (
             <ToggleButton
-                ref={ref}
+                ref={ref as any}
+                selected={selected}
                 onClick={handleClick}
                 value={value}
                 {...rest}
@@ -61,3 +76,5 @@ export const TextAlignToggleButton = forwardRef(
         );
     }
 );
+
+export default TextAlignToggleButton;
