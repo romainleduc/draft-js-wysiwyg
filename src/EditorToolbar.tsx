@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 export interface EditorToolbarProps
     extends React.HTMLAttributes<HTMLDivElement> {
-        children: React.ReactNode;
+    children: React.ReactNode;
 }
 
-const EditorToolbar = ({
-    children,
-    ...props
-}: EditorToolbarProps) => {
-    return (
-        <div className={props.className}>
-            {children}
-        </div>
-    );
-}
+const EditorToolbar = forwardRef(
+    (
+        {
+            children,
+            ...props
+        }: EditorToolbarProps,
+        ref
+    ) => {
+        return (
+            <div ref={ref as any} className={props.className}>
+                {children}
+            </div>
+        );
+    });
 
 export default EditorToolbar;

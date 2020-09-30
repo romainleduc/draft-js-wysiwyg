@@ -66,4 +66,6 @@ const InlineToggleButton = forwardRef(
     }
 );
 
+InlineToggleButton.displayName = 'InlineToggleButton';
+
 export default InlineToggleButton;

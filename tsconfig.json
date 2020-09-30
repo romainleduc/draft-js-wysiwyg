@@ -1,11 +1,8 @@
 {
     "compilerOptions": {
-        "module": "esnext",
+        "module": "commonjs",
         "target": "es5",
-        "lib": [
-            "es6",
-            "dom"
-        ],
+        "lib": [ "es2015", "dom" ],
         "jsx": "preserve",
         "allowJs": true,
         "skipLibCheck": true,
@@ -19,7 +16,8 @@
         "experimentalDecorators": true,
         "noErrorTruncation": false,
         "rootDir": "src",
-        "outDir": "lib"
+        "outDir": "lib",
+        "declaration": true
     },
     "include": ["src"]
 }

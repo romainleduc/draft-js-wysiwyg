@@ -3,12 +3,12 @@
   "version": "1.0.5",
   "description": "A wysiwyg using DraftJS.",
   "main": "lib/index.js",
-  "types": "lib/esm/index.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "webpack": "webpack",
     "dev": "npm run webpack -- --mode development --watch",
     "build": "npm run webpack -- --mode production",
-    "build-types": "tsc -m es6 --outDir lib-esm",
+    "build-types": "tsc -d --emitDeclarationOnly --outDir types",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -51,6 +51,7 @@
     "@babel/preset-typescript": "^7.10.4",
     "@types/draft-js": "^0.10.44",
     "draft-js-export-html": "^1.4.1",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "terser-webpack-plugin": "^4.2.2"
   }
 }
