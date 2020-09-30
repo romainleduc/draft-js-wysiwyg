@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
-import { ToggleButton } from '@material-ui/lab';
-import EditorContext from './EditorContext';
+import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import { EditorState, RichUtils } from 'draft-js';
+import EditorContext from '../EditorContext';
 
-export const BlockTypeToggleButton = forwardRef(
+export interface BlockTypeToggleButtonProps extends ToggleButtonProps {}
+
+const BlockTypeToggleButton = forwardRef(
     (
         {
             value,
             children,
             ...rest
-        },
+        }: BlockTypeToggleButtonProps,
         ref
     ) => {
-        const { editorState, setEditorState } = useContext(EditorContext);
+        const { editorState, setEditorState } = useContext(EditorContext) || {};
 
         useEffect(() => {
             if (rest.selected) {
@@ -34,7 +36,7 @@ export const BlockTypeToggleButton = forwardRef(
 
         return (
             <ToggleButton
-                ref={ref}
+                ref={ref as any}
                 onClick={handleClick}
                 value={value}
                 {...rest}
@@ -44,3 +46,5 @@ export const BlockTypeToggleButton = forwardRef(
         );
     }
 );
+
+export default BlockTypeToggleButton;

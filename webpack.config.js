@@ -2,27 +2,27 @@ const path = require('path');
 
 module.exports = {
     mode: 'production',
-    entry: './src/index.js',
+    entry: './src/index.tsx',
     optimization: {
         minimize: false,
     },
     output: {
         path: path.resolve('lib'),
-        filename: 'draft-js-wysiwyg.js',
+        filename: 'index.js',
         library: 'draftJsWysiwyg',
         libraryTarget: 'umd',
     },
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(ts|tsx)$/,
                 exclude: /node_modules/,
                 use: 'babel-loader',
             },
         ]
     },
     resolve: {
-        extensions: ['.js', '.jsx'],
+        extensions: ['.ts', '.tsx', '.js'],
     },
     externals: {
         react: 'react',

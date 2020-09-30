@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "lib": [ "es2015", "dom" ],
+        "jsx": "preserve",
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "experimentalDecorators": true,
+        "noErrorTruncation": false,
+        "rootDir": "src",
+        "outDir": "lib",
+        "declaration": true
+    },
+    "include": ["src"]
+}
