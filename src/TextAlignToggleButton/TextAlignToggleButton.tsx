@@ -7,14 +7,14 @@ import {
     ToggleButton,
     ToggleButtonProps,
 } from '@material-ui/lab';
-import EditorContext from './EditorContext';
+import EditorContext from '../EditorContext';
 import {
     setBlockData,
     setAllBlocksData,
-} from './utils';
+} from '../utils';
 
 export interface TextAlignToggleButtonProps extends ToggleButtonProps {
-    ignoreSelection: boolean;
+    ignoreSelection?: boolean;
 }
 
 const TextAlignToggleButton = forwardRef(
@@ -23,7 +23,7 @@ const TextAlignToggleButton = forwardRef(
             selected,
             value,
             children,
-            ignoreSelection,
+            ignoreSelection = false,
             ...rest
         }: TextAlignToggleButtonProps,
         ref

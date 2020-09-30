@@ -1,7 +1,7 @@
 import React, { useState, forwardRef } from 'react';
 import { EditorState, EditorProps, Editor, RichUtils, ContentBlock, getDefaultKeyBinding } from 'draft-js';
-import { mergeBlockData, outdentSelection, indentSelection } from './utils';
-import EditorContext from './EditorContext';
+import { mergeBlockData, outdentSelection, indentSelection } from '../utils';
+import EditorContext from '../EditorContext';
 
 export interface EditorContainerProps
     extends React.HTMLAttributes<HTMLDivElement> {

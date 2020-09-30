@@ -1,48 +1,30 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
-import EditorContext from './EditorContext';
 import { EditorState, RichUtils } from 'draft-js';
+import EditorContext from '../EditorContext';
 
-export interface InlineToggleButtonProps extends ToggleButtonProps {}
+export interface BlockTypeToggleButtonProps extends ToggleButtonProps {}
 
-const InlineToggleButton = forwardRef(
+const BlockTypeToggleButton = forwardRef(
     (
         {
             value,
-            selected,
             children,
             ...rest
-        }: InlineToggleButtonProps,
+        }: BlockTypeToggleButtonProps,
         ref
     ) => {
         const { editorState, setEditorState } = useContext(EditorContext) || {};
 
         useEffect(() => {
-            if (selected) {
+            if (rest.selected) {
                 handleClick();
             }
         }, []);
 
-        // Synchronize selection with keyboard shortcuts
-        const synchronizeSelection = () => {
-            if (editorState && setEditorState) {
-                if (editorState.getCurrentContent().hasText()) {
-                    const hasValue = editorState
-                        .getCurrentInlineStyle()
-                        .has(value);
-
-                    return (hasValue && !selected) || (!hasValue && selected)
-                        ? !selected
-                        : selected;
-                }
-            }
-
-            return selected;
-        }
-
         const handleClick = () => {
             if (editorState && setEditorState) {
-                setEditorState(RichUtils.toggleInlineStyle(
+                setEditorState(RichUtils.toggleBlockType(
                     EditorState.forceSelection(
                         editorState,
                         editorState.getSelection(),
@@ -56,7 +38,6 @@ const InlineToggleButton = forwardRef(
             <ToggleButton
                 ref={ref as any}
                 onClick={handleClick}
-                selected={synchronizeSelection()}
                 value={value}
                 {...rest}
             >
@@ -66,6 +47,4 @@ const InlineToggleButton = forwardRef(
     }
 );
 
-InlineToggleButton.displayName = 'InlineToggleButton';
-
-export default InlineToggleButton;
+export default BlockTypeToggleButton;
