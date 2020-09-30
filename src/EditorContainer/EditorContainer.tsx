@@ -102,7 +102,7 @@ const EditorContainer = forwardRef(
             }}>
                 <div ref={ref as any} {...rest}>
                     {editorToolbar}
-                    <div ref={ref as any} onClick={focusEditor}>
+                    <div onClick={focusEditor}>
                         <Editor
                             ref={editor}
                             editorState={editorState}
