@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 import { EditorState, EditorProps, Editor, RichUtils, ContentBlock, getDefaultKeyBinding } from 'draft-js';
-import { mergeBlockData, outdentSelection, indentSelection } from '../utils';
+import { mergeBlockData, indentSelection } from '../utils';
 import EditorContext from '../EditorContext';
 
 export interface EditorContainerProps
@@ -79,14 +79,26 @@ const EditorContainer = forwardRef(
                     switch (e.key) {
                         case 'Tab':
                             e.preventDefault();
-                            setEditorState(outdentSelection(editorState, contentState));
+                            setEditorState(
+                                indentSelection(
+                                    editorState,
+                                    contentState,
+                                    'decrease'
+                                )
+                            );
                             return null;
                     }
                 } else {
                     switch (e.key) {
                         case 'Tab':
                             e.preventDefault();
-                            setEditorState(indentSelection(editorState, contentState));
+                            setEditorState(
+                                indentSelection(
+                                    editorState,
+                                    contentState,
+                                    'increase'
+                                )
+                            );
                             return null;
                     }
                 }

@@ -156,7 +156,7 @@ export const pushContentStateFromArray = (
 /**
  * Return a new selection by merging the outdentation offset.
  */
-export const mergeOutdentSelection = (selection: SelectionState) => {
+export const mergeIndentDecreaseSelection = (selection: SelectionState) => {
     return selection.merge({
         anchorOffset: selection.getAnchorOffset() - 1,
         focusOffset: selection.getFocusOffset() - 1,
@@ -169,7 +169,7 @@ export const mergeOutdentSelection = (selection: SelectionState) => {
  * The function will always keep the start of the selection
  * of the first row when it starts at 0.
  */
-export const mergeIndentSelection = (selection: SelectionState) => {
+export const mergeIndentIncreaseSelection = (selection: SelectionState) => {
     let anchorOffset = selection.getAnchorOffset();
     let focusOffset = selection.getFocusOffset();
 
@@ -206,7 +206,7 @@ export const cloneContentBlock = (contentBlock: ContentBlock, text: string) => {
 /**
  * 
  */
-export const indentBlock = (
+export const indentIncreaseBlock = (
     editorState: EditorState,
     contentState: ContentState,
     selection: SelectionState,
@@ -227,14 +227,14 @@ export const indentBlock = (
             selection,
             [cloneContentBlock(contentBlock, text)]
         ),
-        mergeIndentSelection(selection)
+        mergeIndentIncreaseSelection(selection)
     );
 }
 
 /**
  * 
  */
-export const indentBlocksForKeys = (
+export const indentIncreaseBlocksForKeys = (
     editorState: EditorState,
     selection: SelectionState,
     contentState: ContentState,
@@ -255,7 +255,7 @@ export const indentBlocksForKeys = (
             editorState,
             contentBlocks
         ),
-        mergeIndentSelection(selection)
+        mergeIndentIncreaseSelection(selection)
     );
 }
 
@@ -264,15 +264,25 @@ export const indentBlocksForKeys = (
  */
 export const indentSelection = (
     editorState: EditorState,
-    contentState: ContentState
+    contentState: ContentState,
+    type: 'increase' | 'decrease'
 ) => {
     const selection = editorState.getSelection();
     const startKey = selection.getStartKey();
     const endKey = selection.getEndKey();
 
+    if (type === 'decrease') {
+        return indentDecreaseBlocksForKeys(
+            editorState,
+            selection,
+            contentState,
+            getBlocksKeysBetween(contentState, startKey, endKey)
+        );
+    }
+
     if (!selection.isCollapsed()) {
         if (startKey === endKey) {
-            return indentBlock(
+            return indentIncreaseBlock(
                 editorState,
                 contentState,
                 selection,
@@ -280,7 +290,7 @@ export const indentSelection = (
             );
         }
 
-        return indentBlocksForKeys(
+        return indentIncreaseBlocksForKeys(
             editorState,
             selection,
             contentState,
@@ -291,15 +301,28 @@ export const indentSelection = (
     return insertText(editorState, contentState, selection, '\t');
 }
 
+export const isOutdentable = (
+    selectionState: SelectionState,
+    contentState: ContentState
+): boolean => {
+    const startKey = selectionState.getStartKey();
+    const endKey = selectionState.getEndKey();
+
+    return getBlocksBetween(contentState, startKey, endKey).some(contentBlock => {
+        const startText = contentBlock.getText().substr(0, 1);
+        return startText === '\t' || startText === ' ';
+    });
+}
+
 /**
  *
  */
-export const outdentBlocksForKeys = (
+export const indentDecreaseBlocksForKeys = (
     editorState: EditorState,
     selection: SelectionState,
     contentState: ContentState,
     blockKeys: any
-) => {
+): EditorState => {
     const contentBlocks = contentState
         .getBlocksAsArray()
         .map(contentBlock => {
@@ -315,28 +338,10 @@ export const outdentBlocksForKeys = (
             editorState,
             contentBlocks
         ),
-        mergeOutdentSelection(selection)
+        mergeIndentDecreaseSelection(selection)
     );
 }
 
-/**
- * 
- */
-export const outdentSelection = (
-    editorState: EditorState,
-    contentState: ContentState
-) => {
-    const selection = editorState.getSelection();
-    const startKey = selection.getStartKey();
-    const endKey = selection.getEndKey();
-
-    return outdentBlocksForKeys(
-        editorState,
-        selection,
-        contentState,
-        getBlocksKeysBetween(contentState, startKey, endKey)
-    );
-}
 
 /**
  * 

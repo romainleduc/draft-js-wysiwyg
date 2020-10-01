@@ -12,3 +12,6 @@ export type { EditorContainerProps }from './EditorContainer';
 
 export { default as EditorToolbar } from './EditorToolbar';
 export type { EditorToolbarProps }from './EditorToolbar';
+
+export { default as IndentToggleButton } from './IndentToggleButton';
+export type { IndentToggleButtonProps } from './IndentToggleButton';
