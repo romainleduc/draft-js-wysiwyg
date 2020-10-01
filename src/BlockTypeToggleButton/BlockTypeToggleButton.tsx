@@ -3,7 +3,10 @@ import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import { EditorState, RichUtils } from 'draft-js';
 import EditorContext from '../EditorContext';
 
-export interface BlockTypeToggleButtonProps extends ToggleButtonProps {}
+export interface BlockTypeToggleButtonProps
+    extends Omit<ToggleButtonProps, 'value'> {
+    value: string;
+}
 
 const BlockTypeToggleButton = forwardRef(
     (

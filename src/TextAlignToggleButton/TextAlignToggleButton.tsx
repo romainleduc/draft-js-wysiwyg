@@ -13,7 +13,9 @@ import {
     setAllBlocksData,
 } from '../utils';
 
-export interface TextAlignToggleButtonProps extends ToggleButtonProps {
+export interface TextAlignToggleButtonProps
+    extends Omit<ToggleButtonProps, 'value'> {
+    value: 'left' | 'center' | 'right' | 'justify';
     ignoreSelection?: boolean;
 }
 
