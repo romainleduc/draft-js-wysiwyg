@@ -17,6 +17,10 @@ yarn add draft-js-wysiwyg
 Easy to use example
 
 ```jsx
+import { EditorContainer, EditorToolbar, TextAlignToggleButton } from 'draft-js-wysiwyg';
+import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-ui/icons';
+import { ToggleButtonGroup } from '@material-ui/lab';
+
 const ExempleEditorToolbar = (props) => {
     const [alignment, setAlignment] = React.useState('left');
 
