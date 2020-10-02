@@ -87,20 +87,19 @@ export const setBlockData = (
 /**
  * 
  */
-export const setAllBlocksData = (
+export const setBlocksData = (
     editorState: EditorState,
     contentState: ContentState,
+    anchorKey: string,
+    focusKey: string,
     blockData: any
 ) => {
-    const blocks = contentState.getBlocksAsArray();
-    const selectionState = SelectionState.createEmpty('blockkey');
-
     return setBlockData(
         editorState,
         contentState,
-        selectionState.merge({
-            anchorKey: blocks[0].getKey(),
-            focusKey: blocks[blocks.length -1].getKey(),
+        SelectionState.createEmpty('blockkey').merge({
+            anchorKey,
+            focusKey,
         }),
         blockData
     );

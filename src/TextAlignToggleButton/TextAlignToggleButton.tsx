@@ -9,7 +9,7 @@ import {
 } from '@material-ui/lab';
 import {
     setBlockData,
-    setAllBlocksData,
+    setBlocksData,
 } from '../utils';
 import EditorContext from '../EditorContext';
 
@@ -45,13 +45,19 @@ const TextAlignToggleButton = forwardRef(
                 const blockData = { textAlign: value };
 
                 if (ignoreSelection) {
-                    setEditorState(
-                        setAllBlocksData(
-                            editorState,
-                            contentState,
-                            blockData
-                        )
-                    );
+                    const contentBlocks = contentState.getBlocksAsArray();
+
+                    if (!!contentBlocks.length) {
+                        setEditorState(
+                            setBlocksData(
+                                editorState,
+                                contentState,
+                                contentBlocks[0].getKey(),
+                                contentBlocks[contentBlocks.length - 1].getKey(),
+                                blockData
+                            )
+                        );
+                    }
                 } else {
                     setEditorState(
                         setBlockData(
