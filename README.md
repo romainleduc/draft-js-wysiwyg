@@ -55,9 +55,9 @@ const ExempleEditor = (props) => (
 
 ## Documentation
 
-###### Components
+**Components**
 https://material-ui.com/components/toggle-button/
 
-###### Components API
+**Components API**
 https://material-ui.com/api/toggle-button/
 https://material-ui.com/api/toggle-button-group/
