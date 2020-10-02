@@ -7,11 +7,11 @@ import {
     ToggleButton,
     ToggleButtonProps,
 } from '@material-ui/lab';
-import EditorContext from '../EditorContext';
 import {
     setBlockData,
     setAllBlocksData,
 } from '../utils';
+import EditorContext from '../EditorContext';
 
 export interface TextAlignToggleButtonProps
     extends Omit<ToggleButtonProps, 'value'> {

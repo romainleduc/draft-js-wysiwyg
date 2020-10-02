@@ -1,7 +1,17 @@
-import React, { useContext, useEffect, forwardRef } from 'react';
-import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
+import React, {
+    useContext,
+    useEffect,
+    forwardRef,
+} from 'react';
+import {
+    ToggleButton,
+    ToggleButtonProps,
+} from '@material-ui/lab';
+import {
+    indentSelection,
+    isOutdentable,
+} from '../utils';
 import EditorContext from '../EditorContext';
-import { indentSelection, isOutdentable } from '../utils';
 
 export interface IndentToggleButtonProps
     extends Omit<ToggleButtonProps, 'value'> {

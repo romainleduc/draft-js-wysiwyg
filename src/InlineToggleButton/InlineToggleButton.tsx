@@ -1,7 +1,17 @@
-import React, { useContext, useEffect, forwardRef } from 'react';
-import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
+import React, {
+    useContext,
+    useEffect,
+    forwardRef,
+} from 'react';
+import {
+    ToggleButton,
+    ToggleButtonProps,
+} from '@material-ui/lab';
+import {
+    EditorState,
+    RichUtils,
+} from 'draft-js';
 import EditorContext from '../EditorContext';
-import { EditorState, RichUtils } from 'draft-js';
 
 export interface InlineToggleButtonProps
     extends Omit<ToggleButtonProps, 'value'> {

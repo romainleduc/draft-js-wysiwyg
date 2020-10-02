@@ -1,6 +1,19 @@
-import React, { useState, forwardRef } from 'react';
-import { EditorState, EditorProps, Editor, RichUtils, ContentBlock, getDefaultKeyBinding } from 'draft-js';
-import { mergeBlockData, indentSelection } from '../utils';
+import React, {
+    useState,
+    forwardRef,
+} from 'react';
+import {
+    EditorState,
+    EditorProps,
+    Editor,
+    RichUtils,
+    ContentBlock,
+    getDefaultKeyBinding,
+} from 'draft-js';
+import {
+    indentSelection,
+    mergeBlockData,
+} from '../utils';
 import EditorContext from '../EditorContext';
 
 export interface EditorContainerProps
