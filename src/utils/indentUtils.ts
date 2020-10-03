@@ -3,32 +3,36 @@ import {
     ContentBlock,
     EditorState,
     ContentState,
-} from "draft-js";
+} from 'draft-js';
 import {
     replaceWithFragment,
     pushContentStateFromArray,
     getBlocksKeysBetween,
     insertText,
     getBlocksBetween,
-} from "./blockUtils";
+} from './blockUtils';
 
 /**
  * Return a new selection by merging the outdentation offset.
  */
-export const mergeIndentDecreaseSelection = (selection: SelectionState) => {
+export const mergeIndentDecreaseSelection = (
+    selection: SelectionState
+): SelectionState => {
     return selection.merge({
         anchorOffset: selection.getAnchorOffset() - 1,
         focusOffset: selection.getFocusOffset() - 1,
     });
-}
+};
 
 /**
  * Return a new selection by merging the indentation offset.
- * 
+ *
  * The function will always keep the start of the selection
  * of the first row when it starts at 0.
  */
-export const mergeIndentIncreaseSelection = (selection: SelectionState) => {
+export const mergeIndentIncreaseSelection = (
+    selection: SelectionState
+): SelectionState => {
     let anchorOffset = selection.getAnchorOffset();
     let focusOffset = selection.getFocusOffset();
 
@@ -51,86 +55,87 @@ export const mergeIndentIncreaseSelection = (selection: SelectionState) => {
     }
 
     return selection.merge({ anchorOffset, focusOffset });
-}
+};
 
-export const cloneContentBlock = (contentBlock: ContentBlock, text: string) => {
+export const cloneContentBlock = (
+    contentBlock: ContentBlock,
+    text: string
+): ContentBlock => {
     return new ContentBlock({
         key: contentBlock.getKey(),
         type: contentBlock.getType(),
         data: contentBlock.getData(),
         text,
     });
-}
+};
 
 export const isListType = (contentBlock: ContentBlock): boolean => {
     const type = contentBlock.getType();
-    return (type === 'unordered-list-item') || (type === 'ordered-list-item');
-}
+    return type === 'unordered-list-item' || type === 'ordered-list-item';
+};
 
 /**
- * 
+ *
  */
 export const indentIncreaseBlock = (
     editorState: EditorState,
     contentState: ContentState,
     selection: SelectionState,
-    blockKey: string,
-) => {
+    blockKey: string
+): EditorState => {
     const contentBlock = contentState.getBlockForKey(blockKey);
     // recover only the text of the selection to avoid
     // ending up with additional text when inserting
-    const endText = contentBlock.getText()
+    const endText = contentBlock
+        .getText()
         .substr(selection.getStartOffset(), selection.getEndOffset());
 
     const text = selection.getStartOffset() !== 0 ? '\t' : `\t${endText}`;
 
     return EditorState.acceptSelection(
-        replaceWithFragment(
-            editorState,
-            contentState,
-            selection,
-            [cloneContentBlock(contentBlock, text)]
-        ),
+        replaceWithFragment(editorState, contentState, selection, [
+            cloneContentBlock(contentBlock, text),
+        ]),
         mergeIndentIncreaseSelection(selection)
     );
-}
+};
 
 /**
- * 
+ *
  */
 export const indentIncreaseBlocksForKeys = (
     editorState: EditorState,
     selection: SelectionState,
     contentState: ContentState,
-    blockKeys: any
-) => {
+    blockKeys: string[]
+): EditorState => {
     const contentBlocks = contentState
         .getBlocksAsArray()
-        .map(contentBlock => {
+        .map((contentBlock) => {
             if (blockKeys.includes(contentBlock.getKey())) {
-                return cloneContentBlock(contentBlock, `\t${contentBlock.getText()}`);
+                return cloneContentBlock(
+                    contentBlock,
+                    `\t${contentBlock.getText()}`
+                );
             }
 
             return contentBlock;
         });
 
     return EditorState.acceptSelection(
-        pushContentStateFromArray(
-            editorState,
-            contentBlocks
-        ),
+        pushContentStateFromArray(editorState, contentBlocks),
         mergeIndentIncreaseSelection(selection)
     );
-}
+};
 
 /**
- * 
+ *
  */
 export const indentSelection = (
     editorState: EditorState,
     contentState: ContentState,
     type: 'increase' | 'decrease'
-) => {
+): EditorState => {
     const selection = editorState.getSelection();
     const startKey = selection.getStartKey();
     const endKey = selection.getEndKey();
@@ -163,7 +168,7 @@ export const indentSelection = (
     }
 
     return insertText(editorState, contentState, selection, '\t');
-}
+};
 
 export const isOutdentable = (
     selectionState: SelectionState,
@@ -172,11 +177,13 @@ export const isOutdentable = (
     const startKey = selectionState.getStartKey();
     const endKey = selectionState.getEndKey();
 
-    return getBlocksBetween(contentState, startKey, endKey).some(contentBlock => {
-        const startText = contentBlock.getText().substr(0, 1);
-        return startText === '\t' || startText === ' ';
-    });
-}
+    return getBlocksBetween(contentState, startKey, endKey).some(
+        (contentBlock) => {
+            const startText = contentBlock.getText().substr(0, 1);
+            return startText === '\t' || startText === ' ';
+        }
+    );
+};
 
 /**
  *
@@ -185,23 +192,26 @@ export const indentDecreaseBlocksForKeys = (
     editorState: EditorState,
     selection: SelectionState,
     contentState: ContentState,
-    blockKeys: any
+    blockKeys: string[]
 ): EditorState => {
     const contentBlocks = contentState
         .getBlocksAsArray()
-        .map(contentBlock => {
-            if (blockKeys.includes(contentBlock.getKey()) && contentBlock.getText().substr(0, 1) === '\t') {
-                return cloneContentBlock(contentBlock, `${contentBlock.getText().substr(1)}`);
+        .map((contentBlock) => {
+            if (
+                blockKeys.includes(contentBlock.getKey()) &&
+                contentBlock.getText().substr(0, 1) === '\t'
+            ) {
+                return cloneContentBlock(
+                    contentBlock,
+                    `${contentBlock.getText().substr(1)}`
+                );
             }
 
             return contentBlock;
         });
 
     return EditorState.acceptSelection(
-        pushContentStateFromArray(
-            editorState,
-            contentBlocks
-        ),
+        pushContentStateFromArray(editorState, contentBlocks),
         mergeIndentDecreaseSelection(selection)
     );
-}
+};

@@ -5,19 +5,16 @@ export interface EditorToolbarProps
     children: React.ReactNode;
 }
 
-const EditorToolbar = forwardRef(
-    (
-        {
-            children,
-            ...props
-        }: EditorToolbarProps,
-        ref
-    ) => {
+const EditorToolbar = forwardRef<HTMLDivElement, EditorToolbarProps>(
+    ({ children, ...props }: EditorToolbarProps, ref) => {
         return (
-            <div ref={ref as any} className={props.className}>
+            <div ref={ref} className={props.className}>
                 {children}
             </div>
         );
-    });
+    }
+);
+
+EditorToolbar.displayName = 'EditorToolbar';
 
 export default EditorToolbar;

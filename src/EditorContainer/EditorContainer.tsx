@@ -1,7 +1,4 @@
-import React, {
-    useState,
-    forwardRef,
-} from 'react';
+import React, { useState, forwardRef, useRef } from 'react';
 import {
     EditorState,
     EditorProps,
@@ -9,24 +6,21 @@ import {
     RichUtils,
     ContentBlock,
     getDefaultKeyBinding,
+    DraftHandleValue,
 } from 'draft-js';
-import {
-    indentSelection,
-    mergeBlockData,
-} from '../utils';
+import { indentSelection, mergeBlockData } from '../utils';
 import EditorContext from '../EditorContext';
 
 export interface EditorContainerProps
     extends React.HTMLAttributes<HTMLDivElement> {
-    acceptCommands?: any;
+    acceptCommands?: string[];
     editorToolbar?: React.ReactNode;
     editorProps?: EditorProps;
 }
 
-const EditorContainer = forwardRef(
+const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
     (
         {
-            className,
             acceptCommands,
             editorToolbar,
             editorProps,
@@ -34,22 +28,32 @@ const EditorContainer = forwardRef(
         }: EditorContainerProps,
         ref
     ) => {
-        const [editorState, setEditorState] = useState(editorProps?.editorState || EditorState.createEmpty());
-        const editor = React.useRef(null) as any;
+        const [editorState, setEditorState] = useState(
+            editorProps?.editorState || EditorState.createEmpty()
+        );
+        const editor = useRef<Editor>(null);
 
-        const focusEditor = () => {
+        const focusEditor = (): void => {
             setTimeout(() => {
-                editor.current.focus();
+                if (editor && editor.current) {
+                    editor.current.focus();
+                }
             }, 0);
-        }
+        };
 
         React.useEffect(() => {
-            focusEditor()
+            focusEditor();
         }, []);
 
-        const handleKeyCommand = (command: string, editorState: EditorState) => {
+        const handleKeyCommand = (
+            command: string,
+            editorState: EditorState
+        ): DraftHandleValue => {
             if (!acceptCommands || acceptCommands.includes(command)) {
-                const newState = RichUtils.handleKeyCommand(editorState, command);
+                const newState = RichUtils.handleKeyCommand(
+                    editorState,
+                    command
+                );
 
                 if (newState && setEditorState) {
                     setEditorState(newState);
@@ -58,23 +62,25 @@ const EditorContainer = forwardRef(
             }
 
             return 'not-handled';
-        }
+        };
 
-        const handleReturn = () => {
+        const handleReturn = (): DraftHandleValue => {
             if (editorState && setEditorState) {
                 const contentState = editorState.getCurrentContent();
                 const startKey = editorState.getSelection().getStartKey();
 
                 if (contentState) {
-                    setEditorState(mergeBlockData(editorState, contentState, startKey));
-                    return "handled";
+                    setEditorState(
+                        mergeBlockData(editorState, contentState, startKey)
+                    );
+                    return 'handled';
                 }
             }
 
-            return "not-handled"
-        }
+            return 'not-handled';
+        };
 
-        const blockStyleFn = (contentBlock: ContentBlock) => {
+        const blockStyleFn = (contentBlock: ContentBlock): string => {
             const textAlign = contentBlock.getData()?.get('textAlign');
 
             if (textAlign) {
@@ -82,50 +88,16 @@ const EditorContainer = forwardRef(
             }
 
             return '';
-        }
-
-        const keyBindingFn = (e: React.KeyboardEvent<{}>) => {
-            if (editorState && setEditorState) {
-                const contentState = editorState.getCurrentContent();
-
-                if (e.shiftKey) {
-                    switch (e.key) {
-                        case 'Tab':
-                            e.preventDefault();
-                            setEditorState(
-                                indentSelection(
-                                    editorState,
-                                    contentState,
-                                    'decrease'
-                                )
-                            );
-                            return null;
-                    }
-                } else {
-                    switch (e.key) {
-                        case 'Tab':
-                            e.preventDefault();
-                            setEditorState(
-                                indentSelection(
-                                    editorState,
-                                    contentState,
-                                    'increase'
-                                )
-                            );
-                            return null;
-                    }
-                }
-            }
-
-            return getDefaultKeyBinding(e);
-        }
+        };
 
         return (
-            <EditorContext.Provider value={{
-                editorState,
-                setEditorState,
-            }}>
-                <div ref={ref as any} {...rest}>
+            <EditorContext.Provider
+                value={{
+                    editorState,
+                    setEditorState,
+                }}
+            >
+                <div ref={ref} {...rest}>
                     {editorToolbar}
                     <div onClick={focusEditor}>
                         <Editor
@@ -135,7 +107,41 @@ const EditorContainer = forwardRef(
                             handleKeyCommand={handleKeyCommand}
                             handleReturn={handleReturn}
                             blockStyleFn={blockStyleFn}
-                            keyBindingFn={keyBindingFn}
+                            keyBindingFn={(e) => {
+                                if (editorState && setEditorState) {
+                                    const contentState = editorState.getCurrentContent();
+
+                                    if (e.shiftKey) {
+                                        switch (e.key) {
+                                            case 'Tab':
+                                                e.preventDefault();
+                                                setEditorState(
+                                                    indentSelection(
+                                                        editorState,
+                                                        contentState,
+                                                        'decrease'
+                                                    )
+                                                );
+                                                return null;
+                                        }
+                                    } else {
+                                        switch (e.key) {
+                                            case 'Tab':
+                                                e.preventDefault();
+                                                setEditorState(
+                                                    indentSelection(
+                                                        editorState,
+                                                        contentState,
+                                                        'increase'
+                                                    )
+                                                );
+                                                return null;
+                                        }
+                                    }
+                                }
+
+                                return getDefaultKeyBinding(e);
+                            }}
                             {...editorProps}
                         />
                     </div>
@@ -144,5 +150,7 @@ const EditorContainer = forwardRef(
         );
     }
 );
+
+EditorContainer.displayName = 'EditorContainer';
 
 export default EditorContainer;

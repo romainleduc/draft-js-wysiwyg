@@ -1,16 +1,6 @@
-import React, {
-    useContext,
-    useEffect,
-    forwardRef,
-} from 'react';
-import {
-    ToggleButton,
-    ToggleButtonProps,
-} from '@material-ui/lab';
-import {
-    setBlockData,
-    setBlocksData,
-} from '../utils';
+import React, { useContext, useEffect, forwardRef } from 'react';
+import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
+import { setBlockData, setBlocksData } from '../utils';
 import EditorContext from '../EditorContext';
 
 export interface TextAlignToggleButtonProps
@@ -19,7 +9,10 @@ export interface TextAlignToggleButtonProps
     ignoreSelection?: boolean;
 }
 
-const TextAlignToggleButton = forwardRef(
+const TextAlignToggleButton = forwardRef<
+    HTMLButtonElement,
+    TextAlignToggleButtonProps
+>(
     (
         {
             selected,
@@ -53,7 +46,9 @@ const TextAlignToggleButton = forwardRef(
                                 editorState,
                                 contentState,
                                 contentBlocks[0].getKey(),
-                                contentBlocks[contentBlocks.length - 1].getKey(),
+                                contentBlocks[
+                                    contentBlocks.length - 1
+                                ].getKey(),
                                 blockData
                             )
                         );
@@ -69,11 +64,11 @@ const TextAlignToggleButton = forwardRef(
                     );
                 }
             }
-        }
+        };
 
         return (
             <ToggleButton
-                ref={ref as any}
+                ref={ref}
                 selected={selected}
                 onClick={handleClick}
                 value={value}
