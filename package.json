@@ -13,6 +13,14 @@
     "lint": "eslint --ext tsx --ext ts src && tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": "eslint --fix"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KiziKr/draft-js-wysiwyg.git"
@@ -39,6 +47,8 @@
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.3",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
     "path": "^0.12.7",
     "prettier": "^2.1.2",
     "react": "^16.13.1",
