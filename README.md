@@ -28,11 +28,11 @@ import { EditorContainer, EditorToolbar, InlineToggleButton } from 'draft-js-wys
 import { ToggleButtonGroup } from '@material-ui/lab';
 
 const ExempleEditorToolbar = (props) => {
-  const [formats, setFormats] = React.useState(() => ['BOLD']);
+    const [formats, setFormats] = React.useState(() => ['BOLD']);
 
-  const handleFormat = (event, newFormats) => {
-    setFormats(newFormats);
-  };
+    const handleFormat = (event, newFormats) => {
+        setFormats(newFormats);
+    };
 
     return (
         <EditorToolbar {...props}>
@@ -45,14 +45,14 @@ const ExempleEditorToolbar = (props) => {
                 <InlineToggleButton value='ITALIC'>Italic</InlineToggleButton>
             </ToggleButtonGroup>
         </EditorToolbar>
-    )
-}
+    );
+};
 
 const ExempleEditor = (props) => (
     <EditorContainer
         editorToolbar={<ExempleToolbar/>}
     />
-)
+);
 ```
 
 ## Documentation
