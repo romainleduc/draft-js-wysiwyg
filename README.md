@@ -23,15 +23,6 @@ npm install draft-js-wysiwyg
 yarn add draft-js-wysiwyg
 ```
 
-**You can install it and its required dependencies using:**
-
-```sh
-npm install draft-js-wysiwyg draft-js @material-ui/core @material-ui/lab
-
-#or
-yarn add draft-js-wysiwyg draft-js @material-ui/core @material-ui/lab
-```
-
 ## Getting started
 
 Easy to use example
