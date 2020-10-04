@@ -24,44 +24,35 @@ Please note that `draft-js-wysiwyg` depends on `@material-ui/core` and `@materia
 Easy to use example
 
 ```jsx
-import { EditorContainer, EditorToolbar, TextAlignToggleButton } from 'draft-js-wysiwyg';
-import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-ui/icons';
+import { EditorContainer, EditorToolbar, InlineToggleButton } from 'draft-js-wysiwyg';
 import { ToggleButtonGroup } from '@material-ui/lab';
 
 const ExempleEditorToolbar = (props) => {
-    const [alignment, setAlignment] = React.useState('left');
+    const [formats, setFormats] = React.useState(() => ['BOLD']);
 
-    const handleAlignment = (event, newAlignment) => {
-        setAlignment(newAlignment);
+    const handleFormat = (event, newFormats) => {
+        setFormats(newFormats);
     };
 
     return (
         <EditorToolbar {...props}>
             <ToggleButtonGroup
-                exclusive
-                value={alignment}
-                onChange={handleAlignment}
+                value={formats}
+                onChange={handleFormat}
                 size='small'
             >
-                <TextAlignToggleButton value='left'>
-                    <FormatAlignLeft />
-                </TextAlignToggleButton>
-                <TextAlignToggleButton value='center'>
-                    <FormatAlignCenter />
-                </TextAlignToggleButton>
-                <TextAlignToggleButton value='right'>
-                    <FormatAlignRight />
-                </TextAlignToggleButton>
+                <InlineToggleButton value='BOLD'>Bold</InlineToggleButton>
+                <InlineToggleButton value='ITALIC'>Italic</InlineToggleButton>
             </ToggleButtonGroup>
         </EditorToolbar>
-    )
-}
+    );
+};
 
 const ExempleEditor = (props) => (
     <EditorContainer
         editorToolbar={<ExempleToolbar/>}
     />
-)
+);
 ```
 
 ## Documentation

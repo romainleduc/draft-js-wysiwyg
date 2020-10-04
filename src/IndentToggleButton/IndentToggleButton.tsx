@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
-import { indentSelection, isOutdentable } from '../utils';
+import {
+    indentIncreaseSelection,
+    indentDecreaseSelection,
+    isOutdentable,
+} from '../utils';
 import EditorContext from '../EditorContext';
+import { EditorState } from 'draft-js';
 
 export interface IndentToggleButtonProps
     extends Omit<ToggleButtonProps, 'value'> {
@@ -16,20 +21,26 @@ const IndentToggleButton = forwardRef<
 
     useEffect(() => {
         if (rest.selected) {
-            handleClick();
+            setIndentSelection();
         }
     }, []);
 
-    const handleClick = () => {
+    const setIndentSelection = (): void => {
         if (editorState && setEditorState) {
-            setEditorState(
-                indentSelection(
-                    editorState,
-                    editorState.getCurrentContent(),
-                    value
-                )
-            );
+            setEditorState(indentSelection(editorState));
         }
+    };
+
+    const indentSelection = (editorState: EditorState): EditorState => {
+        const contentState = editorState.getCurrentContent();
+
+        if (value === 'increase') {
+            return indentIncreaseSelection(editorState, contentState);
+        } else if (value === 'decrease') {
+            return indentDecreaseSelection(editorState, contentState);
+        }
+
+        return editorState;
     };
 
     const isDisabled = () => {
@@ -48,10 +59,7 @@ const IndentToggleButton = forwardRef<
     return (
         <ToggleButton
             ref={ref}
-            onClick={(e) => {
-                e.preventDefault();
-                handleClick();
-            }}
+            onClick={setIndentSelection}
             disabled={isDisabled()}
             value={value}
             {...rest}
