@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-    EditorState,
-} from 'draft-js';
+import { EditorState } from 'draft-js';
 
 interface EditorContextType {
     editorState: EditorState;

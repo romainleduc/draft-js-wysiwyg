@@ -8,46 +8,37 @@ export interface BlockTypeToggleButtonProps
     value: string;
 }
 
-const BlockTypeToggleButton = forwardRef(
-    (
-        {
-            value,
-            children,
-            ...rest
-        }: BlockTypeToggleButtonProps,
-        ref
-    ) => {
-        const { editorState, setEditorState } = useContext(EditorContext) || {};
+const BlockTypeToggleButton = forwardRef<
+    HTMLButtonElement,
+    BlockTypeToggleButtonProps
+>(({ value, children, ...rest }: BlockTypeToggleButtonProps, ref) => {
+    const { editorState, setEditorState } = useContext(EditorContext) || {};
 
-        useEffect(() => {
-            if (rest.selected) {
-                handleClick();
-            }
-        }, []);
+    useEffect(() => {
+        if (rest.selected) {
+            handleClick();
+        }
+    }, []);
 
-        const handleClick = () => {
-            if (editorState && setEditorState) {
-                setEditorState(RichUtils.toggleBlockType(
+    const handleClick = () => {
+        if (editorState && setEditorState) {
+            setEditorState(
+                RichUtils.toggleBlockType(
                     EditorState.forceSelection(
                         editorState,
-                        editorState.getSelection(),
+                        editorState.getSelection()
                     ),
                     value
-                ));
-            }
+                )
+            );
         }
+    };
 
-        return (
-            <ToggleButton
-                ref={ref as any}
-                onClick={handleClick}
-                value={value}
-                {...rest}
-            >
-                {children}
-            </ToggleButton>
-        );
-    }
-);
+    return (
+        <ToggleButton ref={ref} onClick={handleClick} value={value} {...rest}>
+            {children}
+        </ToggleButton>
+    );
+});
 
 export default BlockTypeToggleButton;

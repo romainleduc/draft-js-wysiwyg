@@ -1,17 +1,7 @@
-import React, {
-    useContext,
-    useEffect,
-    forwardRef,
-} from 'react';
-import {
-    ToggleButton,
-    ToggleButtonProps,
-} from '@material-ui/lab';
+import React, { useContext, useEffect, forwardRef } from 'react';
+import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
+import { setBlockData, setBlocksData } from '../utils';
 import EditorContext from '../EditorContext';
-import {
-    setBlockData,
-    setAllBlocksData,
-} from '../utils';
 
 export interface TextAlignToggleButtonProps
     extends Omit<ToggleButtonProps, 'value'> {
@@ -19,7 +9,10 @@ export interface TextAlignToggleButtonProps
     ignoreSelection?: boolean;
 }
 
-const TextAlignToggleButton = forwardRef(
+const TextAlignToggleButton = forwardRef<
+    HTMLButtonElement,
+    TextAlignToggleButtonProps
+>(
     (
         {
             selected,
@@ -45,13 +38,21 @@ const TextAlignToggleButton = forwardRef(
                 const blockData = { textAlign: value };
 
                 if (ignoreSelection) {
-                    setEditorState(
-                        setAllBlocksData(
-                            editorState,
-                            contentState,
-                            blockData
-                        )
-                    );
+                    const contentBlocks = contentState.getBlocksAsArray();
+
+                    if (!!contentBlocks.length) {
+                        setEditorState(
+                            setBlocksData(
+                                editorState,
+                                contentState,
+                                contentBlocks[0].getKey(),
+                                contentBlocks[
+                                    contentBlocks.length - 1
+                                ].getKey(),
+                                blockData
+                            )
+                        );
+                    }
                 } else {
                     setEditorState(
                         setBlockData(
@@ -63,11 +64,11 @@ const TextAlignToggleButton = forwardRef(
                     );
                 }
             }
-        }
+        };
 
         return (
             <ToggleButton
-                ref={ref as any}
+                ref={ref}
                 selected={selected}
                 onClick={handleClick}
                 value={value}
