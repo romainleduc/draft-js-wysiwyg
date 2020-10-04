@@ -12,13 +12,27 @@ A Wysiwyg editor built using [React](https://reactjs.org/), [Draft](https://draf
 
 ## Installation
 
-draft-js-wysiwyg is available from npm. You can install it (and its required dependencies) using:
+Draft-js-wysiwyg is available as an [npm package](https://www.npmjs.com/package/draft-js-wysiwyg). 
 
 ```sh
 npm install draft-js-wysiwyg
 
 #or
 yarn add draft-js-wysiwyg
+```
+
+Please note that `draft-js-wysiwyg` requires peer dependencies including:
+* [Draft](https://draftjs.org/)
+* [Material-UI/core](https://material-ui.com/)
+* [Material-UI/lab](https://material-ui.com/)
+
+If they are not yet in your project, you can install them using:
+
+```sh
+npm install draft-js @material-ui/core @material-ui/lab
+
+#or
+yarn add draft-js @material-ui/core @material-ui/lab
 ```
 
 ## Getting started
