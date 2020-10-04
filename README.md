@@ -5,7 +5,7 @@
 A Wysiwyg editor built using [React](https://reactjs.org/), [Draft](https://draftjs.org/) and [Material-UI](https://material-ui.com/) libraries.
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/KiziKr/draft-js-wysiwyg/blob/master/LICENSE)
-[![npm latest package](https://img.shields.io/npm/v/@material-ui/core/latest.svg)](https://www.npmjs.com/package/draft-js-wysiwyg)
+[![npm latest package](https://img.shields.io/npm/v/draft-js-wysiwyg/latest.svg)](https://www.npmjs.com/package/draft-js-wysiwyg)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=KiziKr/draft-js-wysiwyg)](https://dependabot.com)
 
 </div>
@@ -15,7 +15,7 @@ A Wysiwyg editor built using [React](https://reactjs.org/), [Draft](https://draf
 draft-js-wysiwyg is available from npm. You can install it (and its required dependencies) using:
 
 ```sh
-npm instal draft-js-wysiwyg
+npm install draft-js-wysiwyg
 
 #or
 yarn add draft-js-wysiwyg
