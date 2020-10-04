@@ -13,7 +13,15 @@ import {
 } from './blockUtils';
 
 /**
- * Return a new selection by merging the outdentation offset.
+ * Check if a content block is of type list.
+ */
+export const isListType = (contentBlock: ContentBlock): boolean => {
+    const type = contentBlock.getType();
+    return type === 'unordered-list-item' || type === 'ordered-list-item';
+};
+
+/**
+ * Return a new selection by merging the indent decrease offset.
  */
 export const mergeIndentDecreaseSelection = (
     selection: SelectionState
@@ -67,11 +75,6 @@ export const cloneContentBlock = (
         data: contentBlock.getData(),
         text,
     });
-};
-
-export const isListType = (contentBlock: ContentBlock): boolean => {
-    const type = contentBlock.getType();
-    return type === 'unordered-list-item' || type === 'ordered-list-item';
 };
 
 /**
@@ -131,23 +134,13 @@ export const indentIncreaseBlocksForKeys = (
 /**
  *
  */
-export const indentSelection = (
+export const indentIncreaseSelection = (
     editorState: EditorState,
-    contentState: ContentState,
-    type: 'increase' | 'decrease'
+    contentState: ContentState
 ): EditorState => {
     const selection = editorState.getSelection();
     const startKey = selection.getStartKey();
     const endKey = selection.getEndKey();
-
-    if (type === 'decrease') {
-        return indentDecreaseBlocksForKeys(
-            editorState,
-            selection,
-            contentState,
-            getBlocksKeysBetween(contentState, startKey, endKey)
-        );
-    }
 
     if (!selection.isCollapsed()) {
         if (startKey === endKey) {
@@ -168,6 +161,27 @@ export const indentSelection = (
     }
 
     return insertText(editorState, contentState, selection, '\t');
+};
+
+/**
+ *
+ */
+export const indentDecreaseSelection = (
+    editorState: EditorState,
+    contentState: ContentState
+): EditorState => {
+    const selectionState = editorState.getSelection();
+
+    return indentDecreaseBlocksForKeys(
+        editorState,
+        selectionState,
+        contentState,
+        getBlocksKeysBetween(
+            contentState,
+            selectionState.getStartKey(),
+            selectionState.getEndKey()
+        )
+    );
 };
 
 export const isOutdentable = (
