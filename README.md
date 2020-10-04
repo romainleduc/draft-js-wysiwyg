@@ -17,6 +17,8 @@ npm install draft-js-wysiwyg
 yarn add draft-js-wysiwyg
 ```
 
+Please note that `draft-js-wysiwyg` depends on `@material-ui/core` and `@material-ui/lab` which must also be installed.
+
 ## Getting started
 
 Easy to use example
