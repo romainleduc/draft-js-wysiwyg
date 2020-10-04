@@ -21,12 +21,7 @@ npm install draft-js-wysiwyg
 yarn add draft-js-wysiwyg
 ```
 
-Please note that `draft-js-wysiwyg` requires peer dependencies including:
-* [Draft](https://draftjs.org/)
-* [Material-UI/core](https://material-ui.com/)
-* [Material-UI/lab](https://material-ui.com/)
-
-If they are not yet in your project, you can install them using:
+Please note that `draft-js-wysiwyg` requires peer dependencies which you can install using:
 
 ```sh
 npm install draft-js @material-ui/core @material-ui/lab
