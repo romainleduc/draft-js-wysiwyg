@@ -44,7 +44,6 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "@babel/preset-typescript": "^7.10.4",
-    "draft-js": "^0.11.7",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-prettier": "^3.1.4",
@@ -62,7 +61,6 @@
   "peerDependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.56",
-    "draft-js": "^0.11.7",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
@@ -70,6 +68,7 @@
     "directory": "lib"
   },
   "dependencies": {
+    "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
     "prop-types": "^15.7.2",
     "terser-webpack-plugin": "^4.2.2"

@@ -1,6 +1,4 @@
-<h1 align="center">draft-js-wysiwyg</h1>
-
-<div align="center">
+## draft-js-wysiwyg ##
 
 A Wysiwyg editor built using [React](https://reactjs.org/), [Draft](https://draftjs.org/) and [Material-UI](https://material-ui.com/) libraries.
 
@@ -8,13 +6,9 @@ A Wysiwyg editor built using [React](https://reactjs.org/), [Draft](https://draf
 [![npm latest package](https://img.shields.io/npm/v/draft-js-wysiwyg/latest.svg)](https://www.npmjs.com/package/draft-js-wysiwyg)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=KiziKr/draft-js-wysiwyg)](https://dependabot.com)
 
-</div>
-
 ## Installation
 
-Draft-js-wysiwyg is available as an [npm package](https://www.npmjs.com/package/draft-js-wysiwyg). 
-
-**You can install it using:**
+Draft-js-wysiwyg is available as an [npm package](https://www.npmjs.com/package/draft-js-wysiwyg). You can install it using:
 
 ```sh
 npm install draft-js-wysiwyg
