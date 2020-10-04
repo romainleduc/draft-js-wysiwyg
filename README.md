@@ -14,6 +14,8 @@ A Wysiwyg editor built using [React](https://reactjs.org/), [Draft](https://draf
 
 Draft-js-wysiwyg is available as an [npm package](https://www.npmjs.com/package/draft-js-wysiwyg). 
 
+**You can install it using:**
+
 ```sh
 npm install draft-js-wysiwyg
 
@@ -21,13 +23,13 @@ npm install draft-js-wysiwyg
 yarn add draft-js-wysiwyg
 ```
 
-Please note that `draft-js-wysiwyg` requires peer dependencies which you can install using:
+**You can install it and its required dependencies using:**
 
 ```sh
-npm install draft-js @material-ui/core @material-ui/lab
+npm install draft-js-wysiwyg draft-js @material-ui/core @material-ui/lab
 
 #or
-yarn add draft-js @material-ui/core @material-ui/lab
+yarn add draft-js-wysiwyg draft-js @material-ui/core @material-ui/lab
 ```
 
 ## Getting started
