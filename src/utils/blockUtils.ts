@@ -52,6 +52,33 @@ export function getBlocksKeysBetween(
 }
 
 /**
+ *
+ */
+export const getBlocksSelected = (
+    editorState: EditorState,
+    contentState: ContentState
+): ContentBlock[] => {
+    const selection = editorState.getSelection();
+    return getBlocksBetween(
+        contentState,
+        selection.getStartKey(),
+        selection.getEndKey()
+    );
+};
+
+/**
+ *
+ */
+export const getBlocksForKeys = (
+    contentState: ContentState,
+    blockKeys: string[]
+): ContentBlock[] => {
+    return contentState
+        .getBlocksAsArray()
+        .filter((contentBlock) => blockKeys.includes(contentBlock.getKey()));
+};
+
+/**
  * Add block level meta-data.
  */
 export const setBlockData = (
@@ -115,7 +142,7 @@ export const insertText = (
 /**
  *
  */
-export const replaceWithFragment = (
+export const pushReplaceWithFragment = (
     editorState: EditorState,
     contentState: ContentState,
     selection: SelectionState,
