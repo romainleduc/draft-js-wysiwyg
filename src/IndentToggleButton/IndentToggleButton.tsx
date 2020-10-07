@@ -45,7 +45,6 @@ const IndentToggleButton = forwardRef<
             const contentState = editorState.getCurrentContent();
 
             if (value === 'increase') {
-                console.log(nestedListOnly);
                 return indentIncreaseSelection(
                     editorState,
                     contentState,
@@ -74,7 +73,10 @@ const IndentToggleButton = forwardRef<
         return (
             <ToggleButton
                 ref={ref}
-                onClick={setIndentSelection}
+                onMouseDown={(e) => {
+                    e.preventDefault();
+                    setIndentSelection();
+                }}
                 disabled={isDisabled()}
                 value={value}
                 {...rest}

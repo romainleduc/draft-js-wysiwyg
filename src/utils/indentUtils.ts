@@ -176,7 +176,6 @@ export const indentIncreaseBlockForKey = (
         return indentIncreaseNestedList(editorState, contentState, selection);
     }
 
-    console.log(nestedListOnly);
     if (nestedListOnly) {
         return editorState;
     }
