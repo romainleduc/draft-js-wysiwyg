@@ -51,7 +51,11 @@ const IndentToggleButton = forwardRef<
                     nestedListOnly
                 );
             } else if (value === 'decrease') {
-                return indentDecreaseSelection(editorState, contentState);
+                return indentDecreaseSelection(
+                    editorState,
+                    contentState,
+                    nestedListOnly
+                );
             }
 
             return editorState;

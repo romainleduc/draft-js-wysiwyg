@@ -15,6 +15,8 @@ import {
     getBlocksForKeys,
 } from './blockUtils';
 
+type IndentType = 'decrease' | 'increase';
+
 /**
  * Check if a content block is of type list.
  */
@@ -109,40 +111,43 @@ export const cloneContentBlock = (
     });
 };
 
-export const setDepth = (
-    contentState: ContentState,
-    contentBlock: ContentBlock,
-    maxValue: number
-): ContentBlock => {
-    return contentBlock.set(
-        'depth',
-        Math.min(
-            contentBlock.getDepth() + 1,
-            Math.min(
-                contentState.getBlockBefore(contentBlock.getKey()).getDepth() +
-                    1,
-                maxValue
-            )
-        )
-    ) as ContentBlock;
+export const pushAdjustDepth = (
+    editorState: EditorState,
+    contentState: ContentState
+): EditorState => {
+    return EditorState.push(editorState, contentState, 'adjust-depth');
 };
 
-export const indentIncreaseNestedList = (
+export const indentNestedList = (
     editorState: EditorState,
     contentState: ContentState,
-    selectionState: SelectionState
+    selectionState: SelectionState,
+    indentType: IndentType
 ): EditorState => {
     const newContentBlocks = getBlocksSelected(editorState, contentState).map(
         (contentBlock) => {
-            if (isNestedList(contentState, contentBlock)) {
-                return setDepth(contentState, contentBlock, 4);
+            if (!isNestedList(contentState, contentBlock)) {
+                return contentBlock;
             }
 
-            return contentBlock;
+            const adjustment = indentType === 'increase' ? +1 : -1;
+
+            return contentBlock.set(
+                'depth',
+                Math.min(
+                    Math.max(contentBlock.getDepth() + adjustment, 0),
+                    Math.min(
+                        contentState
+                            .getBlockBefore(contentBlock.getKey())
+                            .getDepth() + 1,
+                        4
+                    )
+                )
+            ) as ContentBlock;
         }
     );
 
-    return EditorState.push(
+    return pushAdjustDepth(
         editorState,
         contentState.merge({
             blockMap: contentState
@@ -150,8 +155,7 @@ export const indentIncreaseNestedList = (
                 .merge(BlockMapBuilder.createFromArray(newContentBlocks)),
             selectionBefore: selectionState,
             selectionAfter: selectionState,
-        }) as ContentState,
-        'adjust-depth'
+        }) as ContentState
     );
 };
 
@@ -173,7 +177,12 @@ export const indentIncreaseBlockForKey = (
         .substr(selection.getStartOffset(), selection.getEndOffset());
 
     if (isNestedList(contentState, contentBlock)) {
-        return indentIncreaseNestedList(editorState, contentState, selection);
+        return indentNestedList(
+            editorState,
+            contentState,
+            selection,
+            'increase'
+        );
     }
 
     if (nestedListOnly) {
@@ -196,14 +205,20 @@ export const indentIncreaseBlockForKey = (
  */
 export const indentIncreaseBlocksForKeys = (
     contentState: ContentState,
-    blockKeys: string[]
+    blockKeys: string[],
+    indentType: IndentType
 ): ContentBlock[] => {
     return getBlocksForKeys(contentState, blockKeys).map((contentBlock) => {
         if (blockKeys.includes(contentBlock.getKey())) {
-            return cloneContentBlock(
-                contentBlock,
-                `\t${contentBlock.getText()}`
-            );
+            let newText = contentBlock.getText();
+
+            if (indentType === 'increase') {
+                newText = `\t${newText}`;
+            } else if (newText.substr(0, 1) === '\t') {
+                newText = newText.substr(1);
+            }
+
+            return cloneContentBlock(contentBlock, newText);
         }
 
         return contentBlock;
@@ -226,10 +241,11 @@ export const indentIncreaseBlocksForSelection = (
     );
 
     if (isArrayOfNestedList(contentState, contentBlocks)) {
-        return indentIncreaseNestedList(
+        return indentNestedList(
             editorState,
             contentState,
-            selectionState
+            selectionState,
+            'increase'
         );
     }
 
@@ -249,7 +265,11 @@ export const indentIncreaseBlocksForSelection = (
                     .getBlockMap()
                     .merge(
                         BlockMapBuilder.createFromArray(
-                            indentIncreaseBlocksForKeys(contentState, blockKeys)
+                            indentIncreaseBlocksForKeys(
+                                contentState,
+                                blockKeys,
+                                'increase'
+                            )
                         )
                     ),
                 selectionBefore: selectionState,
@@ -304,7 +324,8 @@ export const indentIncreaseSelection = (
  */
 export const indentDecreaseSelection = (
     editorState: EditorState,
-    contentState: ContentState
+    contentState: ContentState,
+    nestedListOnly = false
 ): EditorState => {
     const selectionState = editorState.getSelection();
 
@@ -312,11 +333,7 @@ export const indentDecreaseSelection = (
         editorState,
         selectionState,
         contentState,
-        getBlocksKeysBetween(
-            contentState,
-            selectionState.getStartKey(),
-            selectionState.getEndKey()
-        )
+        nestedListOnly
     );
 };
 
@@ -340,28 +357,53 @@ export const isOutdentable = (
  */
 export const indentDecreaseBlocksForKeys = (
     editorState: EditorState,
-    selection: SelectionState,
+    selectionState: SelectionState,
     contentState: ContentState,
-    blockKeys: string[]
+    nestedListOnly = false
 ): EditorState => {
-    const contentBlocks = contentState
-        .getBlocksAsArray()
-        .map((contentBlock) => {
-            if (
-                blockKeys.includes(contentBlock.getKey()) &&
-                contentBlock.getText().substr(0, 1) === '\t'
-            ) {
-                return cloneContentBlock(
-                    contentBlock,
-                    `${contentBlock.getText().substr(1)}`
-                );
-            }
+    const contentBlocks = getBlocksBetween(
+        contentState,
+        selectionState.getStartKey(),
+        selectionState.getEndKey()
+    );
 
-            return contentBlock;
-        });
+    if (isArrayOfNestedList(contentState, contentBlocks)) {
+        return indentNestedList(
+            editorState,
+            contentState,
+            selectionState,
+            'decrease'
+        );
+    }
+
+    if (nestedListOnly) {
+        return editorState;
+    }
+
+    const blockKeys = contentBlocks.map((contentBlock) =>
+        contentBlock.getKey()
+    );
 
     return EditorState.acceptSelection(
-        pushContentStateFromArray(editorState, contentBlocks),
-        mergeIndentDecreaseSelection(selection)
+        EditorState.push(
+            editorState,
+            contentState.merge({
+                blockMap: contentState
+                    .getBlockMap()
+                    .merge(
+                        BlockMapBuilder.createFromArray(
+                            indentIncreaseBlocksForKeys(
+                                contentState,
+                                blockKeys,
+                                'decrease'
+                            )
+                        )
+                    ),
+                selectionBefore: selectionState,
+                selectionAfter: selectionState,
+            }) as ContentState,
+            'apply-entity'
+        ),
+        mergeIndentDecreaseSelection(selectionState)
     );
 };
