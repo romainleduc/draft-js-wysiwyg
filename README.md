@@ -27,6 +27,23 @@ Easy to use example
 import { EditorContainer, EditorToolbar, InlineToggleButton } from 'draft-js-wysiwyg';
 import { ToggleButtonGroup } from '@material-ui/lab';
 
+const test = () => {
+    return (
+        <EditorContainer>
+        <EditorToolbar>
+            <ToggleButtonGroup
+                value={formats}
+                onChange={handleFormat}
+                size='small'
+            >
+                <InlineToggleButton value='BOLD'>Bold</InlineToggleButton>
+                <InlineToggleButton value='ITALIC'>Italic</InlineToggleButton>
+            </ToggleButtonGroup>
+        </EditorToolbar>
+        </EditorContainer>
+    );
+}
+
 const ExempleEditorToolbar = (props) => {
     const [formats, setFormats] = React.useState(() => ['BOLD']);
 

@@ -7,8 +7,6 @@ import {
 } from 'draft-js';
 import {
     pushReplaceWithFragment,
-    pushContentStateFromArray,
-    getBlocksKeysBetween,
     insertText,
     getBlocksBetween,
     getBlocksSelected,
