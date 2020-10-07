@@ -54,44 +54,40 @@ export const isArrayOfNestedList = (
 };
 
 /**
- * Return a new selection by merging the indent decrease offset.
- */
-export const mergeIndentDecreaseSelection = (
-    selection: SelectionState
-): SelectionState => {
-    return selection.merge({
-        anchorOffset: selection.getAnchorOffset() - 1,
-        focusOffset: selection.getFocusOffset() - 1,
-    });
-};
-
-/**
  * Return a new selection by merging the indentation offset.
  *
  * The function will always keep the start of the selection
  * of the first row when it starts at 0.
  */
-export const mergeIndentIncreaseSelection = (
-    selection: SelectionState
+export const mergeIndentSelection = (
+    selection: SelectionState,
+    indentType: IndentType
 ): SelectionState => {
     let anchorOffset = selection.getAnchorOffset();
     let focusOffset = selection.getFocusOffset();
 
-    if (selection.getIsBackward()) {
-        if (focusOffset !== 0) {
-            focusOffset += 1;
-        }
-
-        if (anchorOffset !== 0) {
-            anchorOffset += 1;
-        }
+    if (indentType === 'decrease') {
+        anchorOffset--;
+        focusOffset--;
     }
 
-    if (!selection.getIsBackward()) {
-        focusOffset += 1;
+    if (indentType === 'increase') {
+        if (selection.getIsBackward()) {
+            if (focusOffset !== 0) {
+                focusOffset++;
+            }
 
-        if (anchorOffset !== 0) {
-            anchorOffset += 1;
+            if (anchorOffset !== 0) {
+                anchorOffset++;
+            }
+        }
+
+        if (!selection.getIsBackward()) {
+            focusOffset++;
+
+            if (anchorOffset !== 0) {
+                anchorOffset++;
+            }
         }
     }
 
@@ -196,7 +192,7 @@ export const indentIncreaseBlockForKey = (
                 selection.getStartOffset() !== 0 ? '\t' : `\t${endText}`
             ),
         ]),
-        mergeIndentIncreaseSelection(selection)
+        mergeIndentSelection(selection, 'increase')
     );
 };
 
@@ -228,10 +224,11 @@ export const indentIncreaseBlocksForKeys = (
 /**
  *
  */
-export const indentIncreaseBlocksForSelection = (
+export const indentBlocksForSelection = (
     editorState: EditorState,
     contentState: ContentState,
     selectionState: SelectionState,
+    indentType: IndentType,
     nestedListOnly = false
 ): EditorState => {
     const contentBlocks = getBlocksBetween(
@@ -245,7 +242,7 @@ export const indentIncreaseBlocksForSelection = (
             editorState,
             contentState,
             selectionState,
-            'increase'
+            indentType
         );
     }
 
@@ -268,7 +265,7 @@ export const indentIncreaseBlocksForSelection = (
                             indentIncreaseBlocksForKeys(
                                 contentState,
                                 blockKeys,
-                                'increase'
+                                indentType
                             )
                         )
                     ),
@@ -277,64 +274,58 @@ export const indentIncreaseBlocksForSelection = (
             }) as ContentState,
             'apply-entity'
         ),
-        mergeIndentIncreaseSelection(selectionState)
+        mergeIndentSelection(selectionState, indentType)
     );
 };
 
 /**
  *
  */
-export const indentIncreaseSelection = (
+export const indentSelection = (
     editorState: EditorState,
     contentState: ContentState,
+    indentType: IndentType,
     nestedListOnly = false
 ): EditorState => {
-    const selection = editorState.getSelection();
-    const startKey = selection.getStartKey();
-    const endKey = selection.getEndKey();
+    const selectionState = editorState.getSelection();
+    const startKey = selectionState.getStartKey();
+    const endKey = selectionState.getEndKey();
+
+    if (indentType === 'decrease') {
+        return indentBlocksForSelection(
+            editorState,
+            contentState,
+            selectionState,
+            'decrease',
+            nestedListOnly
+        );
+    }
 
     if (
         startKey === endKey &&
-        (!selection.isCollapsed() ||
+        (!selectionState.isCollapsed() ||
             isListType(contentState.getBlockForKey(startKey)))
     ) {
         return indentIncreaseBlockForKey(
             editorState,
             contentState,
-            selection,
+            selectionState,
             startKey,
             nestedListOnly
         );
     }
 
-    if (!selection.isCollapsed()) {
-        return indentIncreaseBlocksForSelection(
+    if (!selectionState.isCollapsed()) {
+        return indentBlocksForSelection(
             editorState,
             contentState,
-            selection,
+            selectionState,
+            'increase',
             nestedListOnly
         );
     }
 
-    return insertText(editorState, contentState, selection, '\t');
-};
-
-/**
- *
- */
-export const indentDecreaseSelection = (
-    editorState: EditorState,
-    contentState: ContentState,
-    nestedListOnly = false
-): EditorState => {
-    const selectionState = editorState.getSelection();
-
-    return indentDecreaseBlocksForKeys(
-        editorState,
-        selectionState,
-        contentState,
-        nestedListOnly
-    );
+    return insertText(editorState, contentState, selectionState, '\t');
 };
 
 export const isOutdentable = (
@@ -349,61 +340,5 @@ export const isOutdentable = (
             const startText = contentBlock.getText().substr(0, 1);
             return startText === '\t' || startText === ' ';
         }
-    );
-};
-
-/**
- *
- */
-export const indentDecreaseBlocksForKeys = (
-    editorState: EditorState,
-    selectionState: SelectionState,
-    contentState: ContentState,
-    nestedListOnly = false
-): EditorState => {
-    const contentBlocks = getBlocksBetween(
-        contentState,
-        selectionState.getStartKey(),
-        selectionState.getEndKey()
-    );
-
-    if (isArrayOfNestedList(contentState, contentBlocks)) {
-        return indentNestedList(
-            editorState,
-            contentState,
-            selectionState,
-            'decrease'
-        );
-    }
-
-    if (nestedListOnly) {
-        return editorState;
-    }
-
-    const blockKeys = contentBlocks.map((contentBlock) =>
-        contentBlock.getKey()
-    );
-
-    return EditorState.acceptSelection(
-        EditorState.push(
-            editorState,
-            contentState.merge({
-                blockMap: contentState
-                    .getBlockMap()
-                    .merge(
-                        BlockMapBuilder.createFromArray(
-                            indentIncreaseBlocksForKeys(
-                                contentState,
-                                blockKeys,
-                                'decrease'
-                            )
-                        )
-                    ),
-                selectionBefore: selectionState,
-                selectionAfter: selectionState,
-            }) as ContentState,
-            'apply-entity'
-        ),
-        mergeIndentDecreaseSelection(selectionState)
     );
 };

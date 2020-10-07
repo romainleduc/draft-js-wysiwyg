@@ -8,11 +8,7 @@ import {
     getDefaultKeyBinding,
     DraftHandleValue,
 } from 'draft-js';
-import {
-    indentIncreaseSelection,
-    indentDecreaseSelection,
-    mergeBlockData,
-} from '../utils';
+import { indentSelection, mergeBlockData } from '../utils';
 import EditorContext from '../EditorContext';
 
 export interface EditorContainerProps
@@ -120,9 +116,10 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
                                             case 'Tab':
                                                 e.preventDefault();
                                                 setEditorState(
-                                                    indentDecreaseSelection(
+                                                    indentSelection(
                                                         editorState,
-                                                        contentState
+                                                        contentState,
+                                                        'decrease'
                                                     )
                                                 );
                                                 return null;
@@ -132,9 +129,10 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
                                             case 'Tab':
                                                 e.preventDefault();
                                                 setEditorState(
-                                                    indentIncreaseSelection(
+                                                    indentSelection(
                                                         editorState,
-                                                        contentState
+                                                        contentState,
+                                                        'increase'
                                                     )
                                                 );
                                                 return null;

@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import {
-    indentIncreaseSelection,
-    indentDecreaseSelection,
+    indentSelection as indentSelectionUtils,
     isOutdentable,
 } from '../utils';
 import EditorContext from '../EditorContext';
@@ -44,21 +43,12 @@ const IndentToggleButton = forwardRef<
         const indentSelection = (editorState: EditorState): EditorState => {
             const contentState = editorState.getCurrentContent();
 
-            if (value === 'increase') {
-                return indentIncreaseSelection(
-                    editorState,
-                    contentState,
-                    nestedListOnly
-                );
-            } else if (value === 'decrease') {
-                return indentDecreaseSelection(
-                    editorState,
-                    contentState,
-                    nestedListOnly
-                );
-            }
-
-            return editorState;
+            return indentSelectionUtils(
+                editorState,
+                contentState,
+                value,
+                nestedListOnly
+            );
         };
 
         const isDisabled = () => {
