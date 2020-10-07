@@ -11,62 +11,78 @@ import { EditorState } from 'draft-js';
 export interface IndentToggleButtonProps
     extends Omit<ToggleButtonProps, 'value'> {
     value: 'increase' | 'decrease';
+    nestedListOnly?: boolean;
 }
 
 const IndentToggleButton = forwardRef<
     HTMLButtonElement,
     IndentToggleButtonProps
->(({ value, children, ...rest }: IndentToggleButtonProps, ref) => {
-    const { editorState, setEditorState } = useContext(EditorContext) || {};
+>(
+    (
+        {
+            value,
+            children,
+            nestedListOnly = false,
+            ...rest
+        }: IndentToggleButtonProps,
+        ref
+    ) => {
+        const { editorState, setEditorState } = useContext(EditorContext) || {};
 
-    useEffect(() => {
-        if (rest.selected) {
-            setIndentSelection();
-        }
-    }, []);
-
-    const setIndentSelection = (): void => {
-        if (editorState && setEditorState) {
-            setEditorState(indentSelection(editorState));
-        }
-    };
-
-    const indentSelection = (editorState: EditorState): EditorState => {
-        const contentState = editorState.getCurrentContent();
-
-        if (value === 'increase') {
-            return indentIncreaseSelection(editorState, contentState);
-        } else if (value === 'decrease') {
-            return indentDecreaseSelection(editorState, contentState);
-        }
-
-        return editorState;
-    };
-
-    const isDisabled = () => {
-        if (editorState && setEditorState) {
-            if (value === 'decrease') {
-                return !isOutdentable(
-                    editorState.getSelection(),
-                    editorState.getCurrentContent()
-                );
+        useEffect(() => {
+            if (rest.selected) {
+                setIndentSelection();
             }
-        }
+        }, []);
 
-        return rest.disabled;
-    };
+        const setIndentSelection = (): void => {
+            if (editorState && setEditorState) {
+                setEditorState(indentSelection(editorState));
+            }
+        };
 
-    return (
-        <ToggleButton
-            ref={ref}
-            onClick={setIndentSelection}
-            disabled={isDisabled()}
-            value={value}
-            {...rest}
-        >
-            {children}
-        </ToggleButton>
-    );
-});
+        const indentSelection = (editorState: EditorState): EditorState => {
+            const contentState = editorState.getCurrentContent();
+
+            if (value === 'increase') {
+                console.log(nestedListOnly);
+                return indentIncreaseSelection(
+                    editorState,
+                    contentState,
+                    nestedListOnly
+                );
+            } else if (value === 'decrease') {
+                return indentDecreaseSelection(editorState, contentState);
+            }
+
+            return editorState;
+        };
+
+        const isDisabled = () => {
+            if (editorState && setEditorState) {
+                if (value === 'decrease') {
+                    return !isOutdentable(
+                        editorState.getSelection(),
+                        editorState.getCurrentContent()
+                    );
+                }
+            }
+
+            return rest.disabled;
+        };
+
+        return (
+            <ToggleButton
+                ref={ref}
+                onClick={setIndentSelection}
+                disabled={isDisabled()}
+                value={value}
+                {...rest}
+            >
+                {children}
+            </ToggleButton>
+        );
+    }
+);
 
 export default IndentToggleButton;
