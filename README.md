@@ -37,6 +37,8 @@ const DraftEditor = () => {
         setFormats(newFormats);
     };
 
+    console.log(html);
+
     return (
         <EditorContainer>
             <EditorToolbar>
@@ -58,6 +60,8 @@ const DraftEditor = () => {
     );
 }
 ```
+
+[![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/blissful-fast-rbujg)
 
 ## Documentation
 
