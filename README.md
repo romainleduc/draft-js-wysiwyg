@@ -24,11 +24,13 @@ Please note that `draft-js-wysiwyg` depends on `@material-ui/core` and `@materia
 Easy to use example
 
 ```jsx
-import { EditorContainer, EditorToolbar, InlineToggleButton } from 'draft-js-wysiwyg';
+import React, { useState } from 'react';
+import { Editor, EditorContainer, EditorToolbar, InlineToggleButton } from 'draft-js-wysiwyg';
 import { ToggleButtonGroup } from '@material-ui/lab';
 
-const test = () => {
-    const [formats, setFormats] = React.useState(() => ['BOLD']);
+const DraftEditor = () => {
+    const [formats, setFormats] = useState(() => ['BOLD']);
+    const [html, setHtml] = useState('');
 
     const handleFormat = (event, newFormats) => {
         setFormats(newFormats);
@@ -46,41 +48,10 @@ const test = () => {
                     <InlineToggleButton value='ITALIC'>Italic</InlineToggleButton>
                 </ToggleButtonGroup>
             </EditorToolbar>
-            <Editor
-                onChange={(value: string, html: string) => {
-                    
-                }}
-            />
+            <Editor onChange={value => setHtml(value)} />
         </EditorContainer>
     );
 }
-
-const ExempleEditorToolbar = (props) => {
-    const [formats, setFormats] = React.useState(() => ['BOLD']);
-
-    const handleFormat = (event, newFormats) => {
-        setFormats(newFormats);
-    };
-
-    return (
-        <EditorToolbar {...props}>
-            <ToggleButtonGroup
-                value={formats}
-                onChange={handleFormat}
-                size='small'
-            >
-                <InlineToggleButton value='BOLD'>Bold</InlineToggleButton>
-                <InlineToggleButton value='ITALIC'>Italic</InlineToggleButton>
-            </ToggleButtonGroup>
-        </EditorToolbar>
-    );
-};
-
-const ExempleEditor = (props) => (
-    <EditorContainer
-        editorToolbar={<ExempleToolbar/>}
-    />
-);
 ```
 
 ## Documentation
