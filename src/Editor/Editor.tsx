@@ -10,7 +10,6 @@ import {
 } from 'draft-js';
 import { indentSelection, mergeBlockData } from '../utils';
 import draftToHtml from 'draftjs-to-html';
-import { stateToHTML } from 'draft-js-export-html';
 import { convertToRaw } from 'draft-js';
 import EditorContext from '../EditorContext';
 
