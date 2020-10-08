@@ -1,7 +1,14 @@
 {
   "name": "draft-js-wysiwyg",
-  "version": "1.0.7",
   "description": "A wysiwyg using DraftJS.",
+  "version": "1.0.7",
+  "keywords": [
+    "draftjs",
+    "editor",
+    "react",
+    "richtext",
+    "material-ui"
+  ],
   "main": "lib/index.js",
   "types": "types/index.d.ts",
   "scripts": {
