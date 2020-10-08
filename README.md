@@ -19,9 +19,9 @@ yarn add draft-js-wysiwyg
 
 Please note that `draft-js-wysiwyg` depends on `@material-ui/core` and `@material-ui/lab` which must also be installed.
 
-## Getting started
+## Usage
 
-Easy to use example
+Here is a quick example to get you started.
 
 ```jsx
 import React, { useState } from 'react';
