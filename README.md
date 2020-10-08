@@ -28,18 +28,29 @@ import { EditorContainer, EditorToolbar, InlineToggleButton } from 'draft-js-wys
 import { ToggleButtonGroup } from '@material-ui/lab';
 
 const test = () => {
+    const [formats, setFormats] = React.useState(() => ['BOLD']);
+
+    const handleFormat = (event, newFormats) => {
+        setFormats(newFormats);
+    };
+
     return (
         <EditorContainer>
-        <EditorToolbar>
-            <ToggleButtonGroup
-                value={formats}
-                onChange={handleFormat}
-                size='small'
-            >
-                <InlineToggleButton value='BOLD'>Bold</InlineToggleButton>
-                <InlineToggleButton value='ITALIC'>Italic</InlineToggleButton>
-            </ToggleButtonGroup>
-        </EditorToolbar>
+            <EditorToolbar>
+                <ToggleButtonGroup
+                    value={formats}
+                    onChange={handleFormat}
+                    size='small'
+                >
+                    <InlineToggleButton value='BOLD'>Bold</InlineToggleButton>
+                    <InlineToggleButton value='ITALIC'>Italic</InlineToggleButton>
+                </ToggleButtonGroup>
+            </EditorToolbar>
+            <Editor
+                onChange={(value: string, html: string) => {
+                    
+                }}
+            />
         </EditorContainer>
     );
 }

@@ -9,15 +9,19 @@ import {
     DraftHandleValue,
 } from 'draft-js';
 import { indentSelection, mergeBlockData } from '../utils';
+import draftToHtml from 'draftjs-to-html';
+import { stateToHTML } from 'draft-js-export-html';
+import { convertToRaw } from 'draft-js';
 import EditorContext from '../EditorContext';
 
 export interface EditorProps
     extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
     acceptCommands?: string[];
+    onChange?(html: string): void;
 }
 
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
-    ({ acceptCommands, ...rest }: EditorProps, ref) => {
+    ({ acceptCommands, onChange, ...rest }: EditorProps, ref) => {
         const { editorState, setEditorState } = useContext(EditorContext) || {};
         const editor = useRef<DraftEditor>(null);
 
@@ -84,7 +88,19 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
                     <DraftEditor
                         ref={editor}
                         editorState={editorState}
-                        onChange={setEditorState}
+                        onChange={(editorState) => {
+                            if (onChange) {
+                                onChange(
+                                    draftToHtml(
+                                        convertToRaw(
+                                            editorState.getCurrentContent()
+                                        )
+                                    )
+                                );
+                            }
+
+                            setEditorState(editorState);
+                        }}
                         handleKeyCommand={handleKeyCommand}
                         handleReturn={handleReturn}
                         blockStyleFn={blockStyleFn}
