@@ -26,26 +26,31 @@ Here is a quick example to get you started.
 ```jsx
 import React, { useState } from 'react';
 import { Editor, EditorContainer, EditorToolbar, InlineToggleButton } from 'draft-js-wysiwyg';
+import { FormatItalic, FormatBold } from '@material-ui/icons';
 import { ToggleButtonGroup } from '@material-ui/lab';
 
 const DraftEditor = () => {
-    const [formats, setFormats] = useState(() => ['BOLD']);
+    const [inline, setInline] = useState(() => []);
     const [html, setHtml] = useState('');
 
-    const handleFormat = (event, newFormats) => {
-        setFormats(newFormats);
+    const handleInline = (event, newInline) => {
+        setInline(newInline);
     };
 
     return (
         <EditorContainer>
             <EditorToolbar>
                 <ToggleButtonGroup
-                    value={formats}
-                    onChange={handleFormat}
+                    value={inline}
+                    onChange={handleInline}
                     size='small'
                 >
-                    <InlineToggleButton value='BOLD'>Bold</InlineToggleButton>
-                    <InlineToggleButton value='ITALIC'>Italic</InlineToggleButton>
+                    <InlineToggleButton value='BOLD'>
+                        <FormatBold />
+                    </InlineToggleButton>
+                    <InlineToggleButton value='ITALIC'>
+                        <FormatItalic />
+                    </InlineToggleButton>
                 </ToggleButtonGroup>
             </EditorToolbar>
             <Editor onChange={value => setHtml(value)} />
