@@ -30,19 +30,19 @@ import { FormatItalic, FormatBold } from '@material-ui/icons';
 import { ToggleButtonGroup } from '@material-ui/lab';
 
 const DraftEditor = () => {
-    const [inline, setInline] = useState(() => []);
+    const [formats, setFormats] = useState(() => []);
     const [html, setHtml] = useState('');
 
-    const handleInline = (event, newInline) => {
-        setInline(newInline);
+    const handleFormat = (event, newFormats) => {
+        setFormats(newFormats);
     };
 
     return (
         <EditorContainer>
             <EditorToolbar>
                 <ToggleButtonGroup
-                    value={inline}
-                    onChange={handleInline}
+                    value={formats}
+                    onChange={handleFormat}
                     size='small'
                 >
                     <InlineToggleButton value='BOLD'>
