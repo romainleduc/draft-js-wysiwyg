@@ -12,6 +12,7 @@ import { indentSelection, mergeBlockData } from '../utils';
 import draftToHtml from 'draftjs-to-html';
 import { convertToRaw } from 'draft-js';
 import EditorContext from '../EditorContext';
+import { Media } from '../Media';
 
 export interface EditorProps
     extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -71,6 +72,20 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
             return 'not-handled';
         };
 
+        const mediaBlockRenderer = (contentBlock: ContentBlock) => {
+            if (contentBlock.getType() === 'atomic') {
+                return {
+                    component: Media,
+                    editable: false,
+                    props: {
+                        foo: 'bar'
+                    }
+                };
+            }
+
+            return null;
+        };
+
         const blockStyleFn = (contentBlock: ContentBlock): string => {
             const textAlign = contentBlock.getData()?.get('textAlign');
 
@@ -102,6 +117,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
                         }}
                         handleKeyCommand={handleKeyCommand}
                         handleReturn={handleReturn}
+                        blockRendererFn={mediaBlockRenderer}
                         blockStyleFn={blockStyleFn}
                         keyBindingFn={(e) => {
                             if (editorState && setEditorState) {

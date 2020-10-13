@@ -18,3 +18,6 @@ export type { EditorProps } from './Editor';
 
 export { default as IndentToggleButton } from './IndentToggleButton';
 export type { IndentToggleButtonProps } from './IndentToggleButton';
+
+export { MediaUploadIconButton } from './Media';
+export type { MediaUploadIconButtonProps } from './Media';

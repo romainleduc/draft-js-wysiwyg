@@ -6,7 +6,10 @@ import {
     ContentState,
     SelectionState,
     BlockMap,
+    AtomicBlockUtils,
+    Entity,
 } from 'draft-js';
+import { MediaType } from '../Media/Media';
 
 /**
  * Returns collection of blocks.
@@ -199,5 +202,17 @@ export const mergeBlockData = (
             blockData
         ),
         'split-block'
+    );
+};
+
+export const insertAtomicBlock = (
+    editorState: EditorState,
+    type: MediaType,
+    data?: Object
+): EditorState => {
+    return AtomicBlockUtils.insertAtomicBlock(
+        editorState,
+        Entity.create(type, 'IMMUTABLE', data),
+        ' '
     );
 };
