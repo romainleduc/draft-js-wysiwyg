@@ -6,31 +6,47 @@ import { insertAtomicBlock } from '../utils';
 
 export interface MediaUploadIconButtonProps extends IconButtonProps {
     mediaType: MediaType;
-    src: string;
-    alt?: string;
+    imgProps?: React.ImgHTMLAttributes<HTMLImageElement>;
+    audioProps?: React.AudioHTMLAttributes<HTMLAudioElement>;
+    videoProps?: React.VideoHTMLAttributes<HTMLVideoElement>;
+    iframeProps?: React.IframeHTMLAttributes<HTMLIFrameElement>;
 }
 
 export const MediaUploadIconButton = forwardRef<
     HTMLButtonElement,
     MediaUploadIconButtonProps
->(({ mediaType, src, alt, children, ...other }: MediaUploadIconButtonProps, ref) => {
-    const { editorState, setEditorState } = useContext(EditorContext) || {};
+>(
+    (
+        {
+            mediaType,
+            audioProps,
+            imgProps,
+            videoProps,
+            iframeProps,
+            children,
+            ...other
+        }: MediaUploadIconButtonProps,
+        ref
+    ) => {
+        const { editorState, setEditorState } = useContext(EditorContext) || {};
 
-    console.log(editorState)
+        const handleClick = () => {
+            if (editorState && setEditorState) {
+                setEditorState(
+                    insertAtomicBlock(editorState, mediaType, {
+                        audioProps,
+                        imgProps,
+                        videoProps,
+                        iframeProps,
+                    })
+                );
+            }
+        };
 
-    const handleClick = () => {
-        if (editorState && setEditorState) {
-            setEditorState(insertAtomicBlock(editorState, mediaType, { src, alt }));
-        }
+        return (
+            <IconButton ref={ref} onClick={handleClick} {...other}>
+                {children}
+            </IconButton>
+        );
     }
-
-    return (
-        <IconButton
-            ref={ref}
-            onClick={handleClick}
-            {...other}
-        >
-            {children}
-        </IconButton>
-    );
-});
+);

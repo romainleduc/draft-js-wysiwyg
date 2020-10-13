@@ -7,7 +7,6 @@ import {
     SelectionState,
     BlockMap,
     AtomicBlockUtils,
-    Entity,
 } from 'draft-js';
 import { MediaType } from '../Media/Media';
 
@@ -212,7 +211,10 @@ export const insertAtomicBlock = (
 ): EditorState => {
     return AtomicBlockUtils.insertAtomicBlock(
         editorState,
-        Entity.create(type, 'IMMUTABLE', data),
+        editorState
+            .getCurrentContent()
+            .createEntity(type, 'IMMUTABLE', data)
+            .getLastCreatedEntityKey(),
         ' '
     );
 };

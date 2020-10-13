@@ -37,8 +37,6 @@ const DraftEditor = () => {
         setFormats(newFormats);
     };
 
-    console.log(html);
-
     return (
         <EditorContainer>
             <EditorToolbar>

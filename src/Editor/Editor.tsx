@@ -77,9 +77,6 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
                 return {
                     component: Media,
                     editable: false,
-                    props: {
-                        foo: 'bar'
-                    }
                 };
             }
 
