@@ -26,7 +26,7 @@ Here is a quick example to get you started.
 ```jsx
 import React, { useState } from 'react';
 import { Editor, EditorContainer, EditorToolbar, InlineToggleButton } from 'draft-js-wysiwyg';
-import { FormatItalic, FormatBold } from '@material-ui/icons';
+import { FormatItalic, FormatBold, FormatStrikethrough, FormatUnderlined, Code } from '@material-ui/icons';
 import { ToggleButtonGroup } from '@material-ui/lab';
 
 const DraftEditor = () => {
