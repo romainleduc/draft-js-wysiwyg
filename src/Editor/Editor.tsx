@@ -9,7 +9,7 @@ import {
     DraftHandleValue,
 } from 'draft-js';
 import { indentSelection, mergeBlockData } from '../utils';
-import draftToHtml from 'draftjs-to-html';
+import { draftToHtml } from '../utils';
 import { convertToRaw } from 'draft-js';
 import EditorContext from '../EditorContext';
 import { Media } from '../Media';

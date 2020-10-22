@@ -44,7 +44,12 @@ export const Media = (props: MediaProps): JSX.Element => {
                 <video className={classes.media} controls {...videoProps} />
             )}
             {type === 'embedded_link' && (
-                <iframe frameBorder='0' allowFullScreen title='Wysiwyg Embedded Content' {...iframeProps} />
+                <iframe
+                    frameBorder="0"
+                    allowFullScreen
+                    title="Wysiwyg Embedded Content"
+                    {...iframeProps}
+                />
             )}
         </>
     );
