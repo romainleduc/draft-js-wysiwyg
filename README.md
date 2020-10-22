@@ -37,8 +37,6 @@ const DraftEditor = () => {
         setFormats(newFormats);
     };
 
-    console.log(html);
-
     return (
         <EditorContainer>
             <EditorToolbar>
@@ -47,12 +45,17 @@ const DraftEditor = () => {
                     onChange={handleFormat}
                     size='small'
                 >
-                    <InlineToggleButton value='BOLD'>
-                        <FormatBold />
-                    </InlineToggleButton>
-                    <InlineToggleButton value='ITALIC'>
-                        <FormatItalic />
-                    </InlineToggleButton>
+                    {[
+                        ['BOLD', <FormatBold />],
+                        ['ITALIC', <FormatItalic />],
+                        ['STRIKETHROUGH', <FormatStrikethrough />],
+                        ['UNDERLINE', <FormatUnderlined />],
+                        ['CODE', <Code />],
+                    ].map(inline =>
+                        <InlineToggleButton value={inline[0]}>
+                            {inline[1]}
+                        </InlineToggleButton>
+                    )}
                 </ToggleButtonGroup>
             </EditorToolbar>
             <Editor onChange={value => setHtml(value)} />
