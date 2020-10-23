@@ -1,5 +1,6 @@
 {
   "name": "draft-js-wysiwyg",
+  "private": true,
   "description": "A wysiwyg using DraftJS.",
   "version": "1.0.7",
   "keywords": [
@@ -18,6 +19,7 @@
     "build-types": "tsc -d --emitDeclarationOnly --outDir types",
     "format": "eslint --ext tsx --ext ts src --fix",
     "lint": "eslint --ext tsx --ext ts src && tsc --noEmit",
+    "docs:dev": "yarn workspace docs dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "husky": {
@@ -81,5 +83,8 @@
     "draftjs-to-html": "^0.9.1",
     "prop-types": "^15.7.2",
     "terser-webpack-plugin": "^4.2.2"
-  }
+  },
+  "workspaces": [
+    "docs"
+  ]
 }

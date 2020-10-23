@@ -12,7 +12,7 @@ import {
 
 const AppFrame = ({ children }) => {
     return (
-        <div class='root'>
+        <div className='root'>
             <AppBar
                 className='appBar'
                 position='static'
