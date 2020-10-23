@@ -1,5 +1,7 @@
 node_modules
 lib
+docs/.next
+docs/node_modules
 
 # Generated types
 types
