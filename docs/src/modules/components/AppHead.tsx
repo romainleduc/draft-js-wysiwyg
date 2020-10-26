@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 interface AppHeadProps {
     title: string;
     description: string;
-    largeCard: boolean;
-    card: string;
+    largeCard?: boolean;
+    card?: string;
 }
 
 const AppHead = ({

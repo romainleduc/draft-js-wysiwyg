@@ -1,5 +1,7 @@
 ---
 title: Inline Toggle Button React component
+component: le comzdzdponent
+link: materialui
 ---
 
 # InlineToggleButton
@@ -19,6 +21,8 @@ import { InlineToggleButton } from 'draft-js-wysiwyg';
 
 The `MuiToggleButton` name can be used for providing [default props](/customization/globals/#default-props) or [style overrides](/customization/globals/#css) at the theme level.
 
+{{"demo": "pages/components/accordion/CustomizedAccordions.js"}}
+
 ## Props
 
 | Name | Type | Default | Description |
@@ -27,6 +31,8 @@ The `MuiToggleButton` name can be used for providing [default props](/customizat
 | <span class="prop-name required">value<abbr title="required">*</abbr></span> | <span class="prop-type">string</span> |  | The value to associate with the button when selected in a ToggleButtonGroup. |
 
 Any other props supplied will be provided to the root element ([ToggleButton](https://material-ui.com/api/toggle-button/)).
+
+{{"demo": "pages/components/accordion/CustomizedAccordions.js"}}
 
 ## CSS
 
