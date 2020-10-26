@@ -1,8 +1,14 @@
 import React from 'react';
-import { IconButton, AppBar, Toolbar, Container, makeStyles } from '@material-ui/core';
+import {
+    IconButton,
+    AppBar,
+    Toolbar,
+    Container,
+    makeStyles,
+} from '@material-ui/core';
 import { Menu as MenuIcon, GitHub as GithubIcon } from '@material-ui/icons';
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles({
     root: {
         display: 'flex',
     },
@@ -19,8 +25,8 @@ const useStyles = makeStyles(({
         display: 'flex',
         flexDirection: 'column',
         paddingTop: 96,
-    }
-}));
+    },
+});
 
 interface AppFrameProps {
     children: any;
@@ -31,7 +37,7 @@ const AppFrame = ({ children }: AppFrameProps): JSX.Element => {
 
     return (
         <div className={classes.root}>
-            <AppBar className={classes.appBar} position='fixed'>
+            <AppBar className={classes.appBar} position="fixed">
                 <Toolbar>
                     <IconButton
                         edge="start"
@@ -55,7 +61,11 @@ const AppFrame = ({ children }: AppFrameProps): JSX.Element => {
                 </Toolbar>
             </AppBar>
             <div className={classes.content}>
-                <Container component='main' maxWidth='md' className={classes.main}>
+                <Container
+                    component="main"
+                    maxWidth="md"
+                    className={classes.main}
+                >
                     {children}
                 </Container>
             </div>

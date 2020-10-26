@@ -28,7 +28,7 @@ const getTitle = (markdown: string): string => {
     }
 
     throw new Error('Missing title in the page');
-}
+};
 
 const getDescription = (markdown: string): string => {
     const matches = markdown.match(descriptionRegExp);
@@ -38,16 +38,18 @@ const getDescription = (markdown: string): string => {
     }
 
     return matches[1].trim();
-}
+};
 
-export const prepareMarkdown = (markdown: string): {
-    title: string,
-    description: string,
-    md: string,
+export const prepareMarkdown = (
+    markdown: string
+): {
+    title: string;
+    description: string;
+    md: string;
 } => {
     return {
         title: getTitle(markdown),
         description: getDescription(markdown),
         md: marked(markdown),
-    }
+    };
 };

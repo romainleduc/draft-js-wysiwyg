@@ -9,16 +9,27 @@ interface AppHeadProps {
     card: string;
 }
 
-const AppHead = ({ title, description, card = 'https://material-ui.com/static/logo.png', largeCard = false }: AppHeadProps): JSX.Element => {
+const AppHead = ({
+    title,
+    description,
+    card = 'https://material-ui.com/static/logo.png',
+    largeCard = false,
+}: AppHeadProps): JSX.Element => {
     const router = useRouter();
 
     return (
         <Head>
-            <meta name='viewport' content='initial-scale=1, width=device-width' />
+            <meta
+                name="viewport"
+                content="initial-scale=1, width=device-width"
+            />
             <title>{`${title} - Draft-js-wysiwyg`}</title>
-            <meta name='description' content={description} />
+            <meta name="description" content={description} />
             {/* Twitter */}
-            <meta name="twitter:card" content={largeCard ? 'summary_large_image' : 'summary'} />
+            <meta
+                name="twitter:card"
+                content={largeCard ? 'summary_large_image' : 'summary'}
+            />
             <meta name="twitter:site" content="Draft-js-wysiwyg" />
             <meta name="twitter:title" content={title} />
             <meta name="twitter:description" content={description} />
@@ -26,7 +37,10 @@ const AppHead = ({ title, description, card = 'https://material-ui.com/static/lo
             {/* Facebook */}
             <meta property="og:type" content="website" />
             <meta property="og:title" content={title} />
-            <meta property="og:url" content={`https://draft-js-wysiwyg.com${router.asPath}`} />
+            <meta
+                property="og:url"
+                content={`https://draft-js-wysiwyg.com${router.asPath}`}
+            />
             <meta property="og:description" content={description} />
             <meta property="og:image" content={card} />
             <meta property="og:ttl" content="604800" />

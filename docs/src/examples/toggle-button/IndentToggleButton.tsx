@@ -8,6 +8,6 @@ const SimpleExample = (): JSX.Element => {
             <FormatIndentIncrease />
         </div>
     );
-}
+};
 
 export default SimpleExample;
