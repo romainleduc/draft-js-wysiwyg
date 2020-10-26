@@ -15,7 +15,6 @@
         "isolatedModules": true,
         "experimentalDecorators": true,
         "noErrorTruncation": false,
-        "rootDir": "src",
         "outDir": "lib",
         "declaration": true
     },

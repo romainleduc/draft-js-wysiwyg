@@ -23,6 +23,10 @@ module.exports = {
                 test: /\.css$/i,
                 use: ['css-loader'],
             },
+            {
+                test: /\.md$/,
+                loader: 'raw-loader',
+            },
         ]
     },
     resolve: {

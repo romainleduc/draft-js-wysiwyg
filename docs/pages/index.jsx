@@ -1,14 +1,22 @@
 import React from 'react';
-import AppFrame from '../components/AppFrame';
-import Head from 'next/head';
+import README from '../src/examples/toggle-button/toggle-button.md';
+import Markdown from 'markdown-to-jsx';
+import { getTitlePage, prepareMarkdown } from '../src/modules/utils/parseMarkdown';
+import AppHead from '../src/modules/components/AppHead';
+// import marked from 'marked';
 
 const IndexPage = () => {
+    const { title, description, md } = prepareMarkdown(README);
+
     return (
         <div>
-            <Head>
-                <title>Draft-js-wysiwyg</title>
-            </Head>
-            <div>Index page</div>
+            <AppHead
+                title={title}
+                description={description}
+            />
+            <Markdown>
+                {md}
+            </Markdown>
         </div>
     );
 }

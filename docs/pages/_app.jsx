@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppFrame from '../components/AppFrame';
+import AppFrame from '../src/modules/components/AppFrame';
 import { ThemeProvider } from '@material-ui/core/styles';
-import theme from '../components/theme';
+import theme from '../src/modules/components/theme';
 
 const App = (props) => {
   const { Component, pageProps } = props;
