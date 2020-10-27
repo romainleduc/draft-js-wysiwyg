@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
         '& pre': {
             margin: theme.spacing(3, 'auto'),
             padding: theme.spacing(2),
-            backgroundColor: '#272c34',
             direction: 'ltr',
             borderRadius: theme.shape.borderRadius,
             overflow: 'auto',
@@ -33,14 +32,11 @@ const useStyles = makeStyles((theme) => ({
                 'Consolas, "Liberation Mono", Menlo, Courier, monospace',
             WebkitFontSmoothing: 'subpixel-antialiased',
             padding: '0 3px',
-            color: theme.palette.text.primary,
-            backgroundColor: 'rgba(255, 229, 100, 0.2)',
             fontSize: '.85em',
             borderRadius: 2,
         },
         '& code[class*="language-"]': {
-            backgroundColor: '#272c34',
-            color: '#fff',
+            color: '#abebff',
             // Avoid layout jump after hydration (style injected by prism)
             lineHeight: 1.5,
         },

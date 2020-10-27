@@ -1,9 +1,15 @@
 import marked from 'marked';
+import prism from './prism';
 
 const headerRegExp = /---[\r\n]([\s\S]*)[\r\n]---/;
 const descriptionRegExp = /<p class="description">(.*)<\/p>/s;
 const headerKeyValueRegExp = /(.*?): (.*)/g;
 const emptyRegExp = /^\s*$/;
+
+interface MarkdownObject {
+    content: string;
+    isDemo: boolean;
+}
 
 /**
  * Extract information from the top of the markdown.
@@ -66,7 +72,7 @@ const getDescription = (markdown: string): string => {
     return matches[1].trim();
 };
 
-export const render = (markdown: string): any[] => {
+export const render = (markdown: string): MarkdownObject[] => {
     return markdown
         .replace(headerRegExp, '')
         .split(/^{{("(?:demo|component)":[^}]*)}}$/gm) // Split markdown into an array, separating demos
@@ -81,6 +87,7 @@ export const render = (markdown: string): any[] => {
 
             return {
                 content: marked(content, {
+                    highlight: prism,
                     headerIds: false,
                     breaks: false,
                     pedantic: false,
