@@ -5,6 +5,7 @@ const theme = createMuiTheme({
     palette: {
         primary: {
             main: '#1976d2',
+            dark: '#24292e',
         },
         secondary: {
             main: '#19857b',
@@ -15,6 +16,9 @@ const theme = createMuiTheme({
         background: {
             default: '#fff',
         },
+    },
+    shape: {
+        borderRadius: 2,
     },
     overrides: {
         MuiAppBar: {

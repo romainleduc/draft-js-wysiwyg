@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
+import HighlightedCode from './HighlightedCode';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
             position: 'absolute',
         },
         '& pre': {
-            margin: theme.spacing(3, 'auto'),
+            margin: 0,
             padding: theme.spacing(2),
             direction: 'ltr',
             borderRadius: theme.shape.borderRadius,
@@ -200,12 +201,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface MarkdownElementProps extends React.HTMLAttributes<HTMLDivElement> {
-    html: string;
+    htmlOrRaw: string;
+    isHighlightedCode?: boolean;
+    language?: string;
 }
 
 const MarkdownElement = ({
     className,
-    html,
+    htmlOrRaw,
+    isHighlightedCode,
+    language,
     ...other
 }: MarkdownElementProps): JSX.Element => {
     const classes = useStyles();
@@ -213,9 +218,15 @@ const MarkdownElement = ({
     return (
         <div
             className={clsx(classes.root, 'markdown-body', className)}
-            dangerouslySetInnerHTML={{ __html: html }}
+            dangerouslySetInnerHTML={
+                !isHighlightedCode ? { __html: htmlOrRaw } : undefined
+            }
             {...other}
-        />
+        >
+            {isHighlightedCode && (
+                <HighlightedCode code={htmlOrRaw} language={language || 'js'} />
+            )}
+        </div>
     );
 };
 

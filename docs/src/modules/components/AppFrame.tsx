@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-    IconButton,
-    AppBar,
-    Toolbar,
-    makeStyles,
-} from '@material-ui/core';
+import { IconButton, AppBar, Toolbar, makeStyles } from '@material-ui/core';
 import { Menu as MenuIcon, GitHub as GithubIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles({
@@ -54,9 +49,7 @@ const AppFrame = ({ children }: AppFrameProps): JSX.Element => {
                     </div>
                 </Toolbar>
             </AppBar>
-            <div className={classes.content}>
-                {children}
-            </div>
+            <div className={classes.content}>{children}</div>
         </div>
     );
 };

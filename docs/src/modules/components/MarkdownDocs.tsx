@@ -16,42 +16,32 @@ const useStyles = makeStyles({
     },
 });
 
-const MarkdownDocs = (props: MarkdownDocsProps): JSX.Element => {
+const MarkdownDocs = ({ markdown }: MarkdownDocsProps): JSX.Element => {
     const classes = useStyles();
 
     const getDemoData = (demoPath: string) => {
         return {
             raw: require(`!raw-loader!../../examples/${demoPath}`).default,
             component: require(`../../examples/${demoPath}`).default,
-        }
-    }
+            language: demoPath.match(/(tsx|jsx|js)/g)?.[0] || 'js',
+        };
+    };
 
     return (
-        <Container
-            component='main'
-            maxWidth='md'
-            className={classes.main}
-        >
-            {render(props.markdown).map((content, key) => {
-                if (content.isDemo) {
-                    console.log(content.content)
-                    return (
-                        <Demo
-                            {...getDemoData(content.content)}
-                            key={key}
-                        />
-                    );
+        <Container component="main" maxWidth="md" className={classes.main}>
+            {render(markdown).map(({ isDemo, content }, key) => {
+                if (isDemo) {
+                    return <Demo {...getDemoData(content)} key={key} />;
                 }
 
                 return (
                     <MarkdownElement
                         key={key}
                         className=""
-                        html={content.content}
+                        htmlOrRaw={content}
                     />
                 );
-            })
-            }
+            })}
         </Container>
     );
 };

@@ -101,21 +101,21 @@
  .token.atrule,
  .token.attr-value,
  .token.function {
-   /* color: #62dda4; */
-   color: #e3db89;
+   color: #fffebf;
  }
 
  .token.class-name {
     color: #6aeeb6;
  }
  
- .token.keyword {
-   /* color: #CE95D2; */
+ .token.keyword,
+ .token.tag {
    color: #48afd7;
  }
 
- .token.keyword.special-import {
-    color: #CE95D2;
+ .token.keyword.special {
+    /* color: #CE95D2; */
+    color: #E1A0E6;
   }
  
  .token.regex,
@@ -150,7 +150,6 @@
  }
  
  .token.property,
- .token.tag,
  .token.constant,
  .token.symbol,
  .token.deleted {

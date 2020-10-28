@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormatIndentIncrease, FormatIndentDecrease } from '@material-ui/icons';
 
-const SimpleExample = (): JSX.Element => {
+const SimpleExample = () => {
     return (
         <div>
             <FormatIndentDecrease />
