@@ -21,7 +21,7 @@ import { InlineToggleButton } from 'draft-js-wysiwyg';
 
 The `MuiToggleButton` name can be used for providing [default props](/customization/globals/#default-props) or [style overrides](/customization/globals/#css) at the theme level.
 
-{{"demo": "toggle-button/IndentToggleButton.jsx"}}
+{{"demo": "InlineToggleButton/InlineToggleButton.jsx"}}
 
 ## Props
 
@@ -32,7 +32,7 @@ The `MuiToggleButton` name can be used for providing [default props](/customizat
 
 Any other props supplied will be provided to the root element ([ToggleButton](https://material-ui.com/api/toggle-button/)).
 
-{{"demo": "toggle-button/IndentToggleButton.jsx"}}
+{{"demo": "InlineToggleButton/InlineToggleButton.jsx"}}
 
 ## CSS
 
@@ -79,7 +79,7 @@ import { InlineToggleButton } from 'draft-js-wysiwyg';
 
 The `MuiToggleButton` name can be used for providing [default props](/customization/globals/#default-props) or [style overrides](/customization/globals/#css) at the theme level.
 
-{{"demo": "toggle-button/IndentToggleButton.jsx"}}
+{{"demo": "InlineToggleButton/InlineToggleButton.jsx"}}
 
 ### Props
 

@@ -11,6 +11,7 @@ module.exports = {
         filename: 'index.js',
         library: 'draftJsWysiwyg',
         libraryTarget: 'umd',
+        globalObject: `(typeof self !== 'undefined' ? self : this)`
     },
     module: {
         rules: [
