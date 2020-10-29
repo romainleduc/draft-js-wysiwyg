@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import NoSsr from '@material-ui/core/NoSsr';
 import copy from 'clipboard-copy';
 import MarkdownElement from './MarkdownElement';
 import {
@@ -61,7 +62,9 @@ const Demo = ({
     return (
         <div className="demo">
             <div className={classes.preview}>
-                <Component />
+                <NoSsr>
+                    <Component />
+                </NoSsr>
             </div>
             <div className={classes.toolbar}>
                 <Tooltip title="Show the source" placement="top">
