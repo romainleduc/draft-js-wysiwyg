@@ -22,7 +22,7 @@ module.exports = {
             },
             {
                 test: /\.css$/i,
-                use: ['css-loader'],
+                use: ['style-loader', 'css-loader'],
             },
             {
                 test: /\.md$/,
@@ -38,6 +38,7 @@ module.exports = {
         immutable: 'immutable',
         'react-dom': 'react-dom',
         '@material-ui/core': '@material-ui/core',
+        '@material-ui/lab': '@material-ui/lab',
         '@material-ui/icons': '@material-ui/icons',
     },
 }

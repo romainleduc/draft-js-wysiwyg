@@ -13,16 +13,30 @@ import {
   FormatUnderlined,
   Code,
 } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme => ({
+  root: {
+    width: 196,
+  },
+  editor: {
+    border: `1px solid ${theme.palette.divider}`,
+    borderTop: 0,
+    minHeight: 60,
+    padding: 5,
+  }
+})));
 
 const SimpleExample = () => {
   const [formats, setFormats] = useState(() => []);
+  const classes = useStyles();
 
   const handleFormat = (event, newFormats) => {
     setFormats(newFormats);
   };
 
   return (
-    <EditorContainer>
+    <EditorContainer className={classes.root}>
       <EditorToolbar>
         <ToggleButtonGroup
           value={formats}
@@ -42,7 +56,10 @@ const SimpleExample = () => {
           )}
         </ToggleButtonGroup>
       </EditorToolbar>
-      <Editor />
+      <Editor
+        className={classes.editor}
+        placeholder='Begin typing...'
+      />
     </EditorContainer>
   );
 };

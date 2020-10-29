@@ -85,7 +85,8 @@
  .token.string,
  .token.char,
  .token.builtin,
- .token.inserted {
+ .token.inserted,
+ .token.attr-value {
    color: #d5a77e;
  }
  
@@ -99,7 +100,6 @@
  }
  
  .token.atrule,
- .token.attr-value,
  .token.function {
    color: #fffebf;
  }
