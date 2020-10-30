@@ -1,6 +1,7 @@
 import React from 'react';
 import AppHead from '../src/modules/components/AppHead';
 import MarkdownDocs from '../src/modules/components/MarkdownDocs';
+import 'draft-js/dist/Draft.css';
 
 interface MarkdownDocsPageProps {
     title: string;
