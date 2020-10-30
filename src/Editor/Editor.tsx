@@ -12,15 +12,17 @@ import { indentSelection, mergeBlockData } from '../utils';
 import draftToHtml from 'draftjs-to-html';
 import { convertToRaw } from 'draft-js';
 import EditorContext from '../EditorContext';
+import 'draft-js/dist/Draft.css';
 
 export interface EditorProps
     extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
+    className?: string;
     acceptCommands?: string[];
     onChange?(html: string): void;
 }
 
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
-    ({ acceptCommands, onChange, ...rest }: EditorProps, ref) => {
+    ({ className, acceptCommands, onChange, ...rest }: EditorProps, ref) => {
         const { editorState, setEditorState } = useContext(EditorContext) || {};
         const editor = useRef<DraftEditor>(null);
 
@@ -82,7 +84,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         };
 
         return (
-            <div ref={ref} onClick={focusEditor}>
+            <div ref={ref} className={className} onClick={focusEditor}>
                 {editorState && setEditorState && (
                     <DraftEditor
                         ref={editor}

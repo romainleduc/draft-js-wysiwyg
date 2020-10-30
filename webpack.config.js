@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'production',
@@ -11,7 +12,9 @@ module.exports = {
         filename: 'index.js',
         library: 'draftJsWysiwyg',
         libraryTarget: 'umd',
+        globalObject: `(typeof self !== 'undefined' ? self : this)`,
     },
+    plugins: [new MiniCssExtractPlugin()],
     module: {
         rules: [
             {
@@ -21,7 +24,11 @@ module.exports = {
             },
             {
                 test: /\.css$/i,
-                use: ['css-loader'],
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            },
+            {
+                test: /\.md$/,
+                loader: 'raw-loader',
             },
         ]
     },
@@ -33,6 +40,7 @@ module.exports = {
         immutable: 'immutable',
         'react-dom': 'react-dom',
         '@material-ui/core': '@material-ui/core',
+        '@material-ui/lab': '@material-ui/lab',
         '@material-ui/icons': '@material-ui/icons',
     },
 }
