@@ -64,8 +64,6 @@ const DraftEditor = () => {
 }
 ```
 
-[![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/blissful-fast-rbujg)
-
 ## Documentation
 
 **Components**
