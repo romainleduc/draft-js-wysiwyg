@@ -25,38 +25,23 @@ Here is a quick example to get you started.
 
 ```jsx
 import React, { useState } from 'react';
-import { Editor, EditorContainer, EditorToolbar, InlineToggleButton } from 'draft-js-wysiwyg';
-import { FormatItalic, FormatBold, FormatStrikethrough, FormatUnderlined, Code } from '@material-ui/icons';
-import { ToggleButtonGroup } from '@material-ui/lab';
+import FormatBoldIcon from '@material-ui/icons/FormatBold';
+import {
+    Editor,
+    EditorContainer,
+    EditorToolbar,
+    InlineToggleButton,
+} from 'draft-js-wysiwyg';
 
 const DraftEditor = () => {
-    const [formats, setFormats] = useState(() => []);
     const [html, setHtml] = useState('');
-
-    const handleFormat = (event, newFormats) => {
-        setFormats(newFormats);
-    };
 
     return (
         <EditorContainer>
             <EditorToolbar>
-                <ToggleButtonGroup
-                    value={formats}
-                    onChange={handleFormat}
-                    size='small'
-                >
-                    {[
-                        ['BOLD', <FormatBold />],
-                        ['ITALIC', <FormatItalic />],
-                        ['STRIKETHROUGH', <FormatStrikethrough />],
-                        ['UNDERLINE', <FormatUnderlined />],
-                        ['CODE', <Code />],
-                    ].map(inline =>
-                        <InlineToggleButton value={inline[0]}>
-                            {inline[1]}
-                        </InlineToggleButton>
-                    )}
-                </ToggleButtonGroup>
+                <InlineToggleButton value='BOLD'>
+                    <FormatBoldIcon />
+                </InlineToggleButton>
             </EditorToolbar>
             <Editor onChange={value => setHtml(value)} />
         </EditorContainer>
