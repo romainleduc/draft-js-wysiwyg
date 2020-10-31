@@ -50,7 +50,10 @@ const SimpleExample = () => {
             ['UNDERLINE', <FormatUnderlined />],
             ['CODE', <Code />],
           ].map(inline =>
-            <InlineToggleButton value={inline[0]}>
+            <InlineToggleButton
+              key={`inline-${inline[0]}`}
+              value={inline[0]}
+            >
               {inline[1]}
             </InlineToggleButton>
           )}

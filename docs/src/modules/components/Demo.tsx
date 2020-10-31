@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     preview: {
         display: 'flex',
         justifyContent: 'center',
-        padding: theme.spacing(3),
+        padding: theme.spacing(4),
         border: `1px solid ${fade(theme.palette.action.active, 0.12)}`,
         borderBottom: 0,
     },
