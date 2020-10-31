@@ -21,19 +21,19 @@ const InlineToggleButton = forwardRef<
     }, []);
 
     // Synchronize selection with keyboard shortcuts
-    const synchronizeSelection = () => {
-        if (editorState && setEditorState) {
-            if (editorState.getCurrentContent().hasText()) {
-                const hasValue = editorState.getCurrentInlineStyle().has(value);
+    // const synchronizeSelection = () => {
+    //     if (editorState && setEditorState) {
+    //         if (editorState.getCurrentContent().hasText()) {
+    //             const hasValue = editorState.getCurrentInlineStyle().has(value);
 
-                return (hasValue && !selected) || (!hasValue && selected)
-                    ? !selected
-                    : selected;
-            }
-        }
+    //             return (hasValue && !selected) || (!hasValue && selected)
+    //                 ? !selected
+    //                 : selected;
+    //         }
+    //     }
 
-        return selected;
-    };
+    //     return selected;
+    // };
 
     const handleClick = () => {
         if (editorState && setEditorState) {
@@ -53,7 +53,8 @@ const InlineToggleButton = forwardRef<
         <ToggleButton
             ref={ref}
             onClick={handleClick}
-            selected={synchronizeSelection()}
+            // selected={synchronizeSelection()}
+            selected={selected}
             value={value}
             {...rest}
         >

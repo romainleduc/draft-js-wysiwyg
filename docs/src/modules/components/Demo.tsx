@@ -17,18 +17,24 @@ const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: 'flex',
         justifyContent: 'flex-end',
-        backgroundColor: '#ccd5df',
-        border: `1px solid ${fade(theme.palette.action.active, 0.12)}`,
     },
     preview: {
         display: 'flex',
         justifyContent: 'center',
         padding: theme.spacing(4),
         border: `1px solid ${fade(theme.palette.action.active, 0.12)}`,
-        borderBottom: 0,
+        '& .draft-toolbar': {
+            backgroundColor: '#ccd5df',
+        },
+        '& .draft-editor': {
+            border: `1px solid ${theme.palette.divider}`,
+            borderTop: 0,
+            minHeight: 75,
+            padding: 5,
+        },
     },
     code: {
-        maxHeight: 'min(68vh, 1000px)',
+        maxHeight: 'min(68vh, 500px)',
         overflow: 'auto',
     },
 }));

@@ -6,43 +6,35 @@ import {
   EditorToolbar,
   InlineToggleButton,
 } from 'draft-js-wysiwyg';
-import {
-  FormatBold,
-  FormatItalic,
-  FormatStrikethrough,
-  FormatUnderlined,
-  Code,
-} from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme => ({
   root: {
-    width: 196,
+    width: 184.8,
   },
 })));
 
-const SimpleExample = () => {
-  const [formats, setFormats] = useState(() => []);
+const CustomExample = () => {
+  const [size, setSize] = useState('FONT_SIZE_MEDIUM');
   const classes = useStyles();
 
-  const handleFormat = (event, newFormats) => {
-    setFormats(newFormats);
+  const handleSize = (event, newSize) => {
+    setSize(newSize);
   };
 
   return (
     <EditorContainer className={classes.root}>
       <EditorToolbar>
         <ToggleButtonGroup
-          value={formats}
-          onChange={handleFormat}
+          exclusive
+          value={size}
+          onChange={handleSize}
           size='small'
         >
           {[
-            ['BOLD', <FormatBold />],
-            ['ITALIC', <FormatItalic />],
-            ['STRIKETHROUGH', <FormatStrikethrough />],
-            ['UNDERLINE', <FormatUnderlined />],
-            ['CODE', <Code />],
+            ['FONT_SIZE_SMALL', 'Small'],
+            ['FONT_SIZE_MEDIUM', 'Medium'],
+            ['FONT_SIZE_LARGE', 'Large'],
           ].map(inline =>
             <InlineToggleButton
               key={`inline-${inline[0]}`}
@@ -56,9 +48,20 @@ const SimpleExample = () => {
       <Editor
         className={classes.editor}
         placeholder='Enter some text..'
+        customStyleMap={{
+          FONT_SIZE_SMALL: {
+            fontSize: '10px',
+          },
+          FONT_SIZE_MEDIUM: {
+            fontSize: '15px',
+          },
+          FONT_SIZE_LARGE: {
+            fontSize: '30px',
+          }
+        }}
       />
     </EditorContainer>
   );
 };
 
-export default SimpleExample;
+export default CustomExample;

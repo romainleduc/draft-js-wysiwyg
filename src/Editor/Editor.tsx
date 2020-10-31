@@ -12,6 +12,7 @@ import { indentSelection, mergeBlockData } from '../utils';
 import draftToHtml from 'draftjs-to-html';
 import { convertToRaw } from 'draft-js';
 import EditorContext from '../EditorContext';
+import clsx from 'clsx';
 import 'draft-js/dist/Draft.css';
 
 export interface EditorProps
@@ -84,7 +85,11 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         };
 
         return (
-            <div ref={ref} className={className} onClick={focusEditor}>
+            <div
+                ref={ref}
+                className={clsx('draft-editor', className)}
+                onClick={focusEditor}
+            >
                 {editorState && setEditorState && (
                     <DraftEditor
                         ref={editor}

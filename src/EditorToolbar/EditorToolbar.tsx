@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import clsx from 'clsx';
 
 export interface EditorToolbarProps
     extends React.HTMLAttributes<HTMLDivElement> {
@@ -8,7 +9,7 @@ export interface EditorToolbarProps
 const EditorToolbar = forwardRef<HTMLDivElement, EditorToolbarProps>(
     ({ children, ...props }: EditorToolbarProps, ref) => {
         return (
-            <div ref={ref} className={props.className}>
+            <div ref={ref} className={clsx('draft-toolbar', props.className)}>
                 {children}
             </div>
         );
