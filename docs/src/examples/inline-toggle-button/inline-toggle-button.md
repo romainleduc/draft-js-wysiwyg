@@ -1,7 +1,5 @@
 ---
 title: Inline Toggle Button React component
-component: le comzdzdponent
-link: materialui
 ---
 
 # Inline Toggle Button
@@ -12,7 +10,7 @@ link: materialui
 
 {{"demo": "inline-toggle-button/SimpleExample.jsx"}}
 
-## Custom style
+## Extend styles
 
 It is possible to add your own styles using the `customStyleMap` property provided by [Draft.js](https://draftjs.org/docs/advanced-topics-inline-styles/). This will allow you to add an inline style name map corresponding to the CSS style objects.
 
@@ -36,7 +34,7 @@ import { InlineToggleButton } from 'draft-js-wysiwyg';
 | Name | Type | Default | Description |
 |:-----|:-----|:--------|:------------|
 | <span class="prop-name">children</span> | <span class="prop-type">node</span> |  | The content of the button. |
-| <span class="prop-name required">value<abbr title="required">*</abbr></span> | <span class="prop-type">string</span> |  | The value to associate with the button when selected in a ToggleButtonGroup. |
+| <span class="prop-name required">value<abbr title="required">*</abbr></span> | <span class="prop-type">string</span> |  | The inline style to associate with the button when selected in a ToggleButtonGroup. |
 
 Any other props supplied will be provided to the root element ([ToggleButton](https://material-ui.com/api/toggle-button/)).
 

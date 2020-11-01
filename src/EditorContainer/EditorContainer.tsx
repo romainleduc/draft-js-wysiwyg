@@ -1,6 +1,7 @@
 import React, { useState, forwardRef } from 'react';
 import { EditorState } from 'draft-js';
 import EditorContext from '../EditorContext';
+import clsx from 'clsx';
 
 export interface EditorContainerProps
     extends React.HTMLAttributes<HTMLDivElement> {
@@ -10,6 +11,7 @@ export interface EditorContainerProps
 const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
     (
         {
+            className,
             editorState: editorStateProps,
             children,
             ...rest
@@ -27,7 +29,7 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
                     setEditorState,
                 }}
             >
-                <div ref={ref} {...rest}>
+                <div ref={ref} {...rest} className={clsx('draft-container', className)}>
                     {children}
                 </div>
             </EditorContext.Provider>

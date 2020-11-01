@@ -13,24 +13,16 @@ import {
   FormatUnderlined,
   Code,
 } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles((theme => ({
-  root: {
-    width: 196,
-  },
-})));
 
 const SimpleExample = () => {
   const [formats, setFormats] = useState(() => []);
-  const classes = useStyles();
 
   const handleFormat = (event, newFormats) => {
     setFormats(newFormats);
   };
 
   return (
-    <EditorContainer className={classes.root}>
+    <EditorContainer>
       <EditorToolbar>
         <ToggleButtonGroup
           value={formats}
@@ -53,10 +45,7 @@ const SimpleExample = () => {
           )}
         </ToggleButtonGroup>
       </EditorToolbar>
-      <Editor
-        className={classes.editor}
-        placeholder='Enter some text..'
-      />
+      <Editor placeholder='Enter some text..' />
     </EditorContainer>
   );
 };

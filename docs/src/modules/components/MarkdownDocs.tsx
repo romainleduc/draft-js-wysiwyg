@@ -3,6 +3,7 @@ import { render } from '../utils/parseMarkdown';
 import MarkdownElement from './MarkdownElement';
 import Demo from './Demo';
 import { Container, makeStyles } from '@material-ui/core';
+import clsx from 'clsx';
 
 interface MarkdownDocsProps {
     markdown: string;
@@ -13,6 +14,10 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         paddingTop: 96,
+    },
+    mainWidth: {
+        paddingLeft: 48,
+        paddingRight: 48,
     },
 });
 
@@ -28,7 +33,7 @@ const MarkdownDocs = ({ markdown }: MarkdownDocsProps): JSX.Element => {
     };
 
     return (
-        <Container component="main" maxWidth="md" className={classes.main}>
+        <Container component='main' maxWidth='md' className={clsx(classes.main, classes.mainWidth)}>
             {render(markdown).map(({ isDemo, content }, key) => {
                 if (isDemo) {
                     return <Demo {...getDemoData(content)} key={key} />;

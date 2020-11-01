@@ -7,7 +7,6 @@ import {
     IconButton,
     Collapse,
     makeStyles,
-    fade,
     Snackbar,
 } from '@material-ui/core';
 import CodeIcon from '@material-ui/icons/Code';
@@ -19,17 +18,15 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-end',
     },
     preview: {
-        display: 'flex',
-        justifyContent: 'center',
-        padding: theme.spacing(4),
-        border: `1px solid ${fade(theme.palette.action.active, 0.12)}`,
         '& .draft-toolbar': {
-            backgroundColor: '#ccd5df',
+            backgroundColor: '#ccd5df94',
+            border: `1px solid ${theme.palette.divider}`,
+            padding: 4,
         },
         '& .draft-editor': {
             border: `1px solid ${theme.palette.divider}`,
             borderTop: 0,
-            minHeight: 75,
+            minHeight: 141,
             padding: 5,
         },
     },

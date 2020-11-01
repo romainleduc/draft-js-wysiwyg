@@ -3,7 +3,7 @@ import README from '../src/examples/inline-toggle-button/inline-toggle-button.md
 import { prepareMarkdown } from '../src/modules/utils/parseMarkdown';
 import MarkdownDocsPage from './MarkdownDocsPage';
 
-const IndexPage = (): JSX.Element => {
+const InlineToggleButtonPage = (): JSX.Element => {
     const { title, description, markdown } = prepareMarkdown(README);
 
     return (
@@ -15,4 +15,4 @@ const IndexPage = (): JSX.Element => {
     );
 };
 
-export default IndexPage;
+export default InlineToggleButtonPage;

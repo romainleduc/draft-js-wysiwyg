@@ -6,24 +6,16 @@ import {
   EditorToolbar,
   InlineToggleButton,
 } from 'draft-js-wysiwyg';
-import { makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles((theme => ({
-  root: {
-    width: 184.8,
-  },
-})));
 
 const CustomExample = () => {
   const [size, setSize] = useState('FONT_SIZE_MEDIUM');
-  const classes = useStyles();
 
   const handleSize = (event, newSize) => {
     setSize(newSize);
   };
 
   return (
-    <EditorContainer className={classes.root}>
+    <EditorContainer>
       <EditorToolbar>
         <ToggleButtonGroup
           exclusive
@@ -46,17 +38,16 @@ const CustomExample = () => {
         </ToggleButtonGroup>
       </EditorToolbar>
       <Editor
-        className={classes.editor}
         placeholder='Enter some text..'
         customStyleMap={{
           FONT_SIZE_SMALL: {
-            fontSize: '10px',
+            fontSize: 10,
           },
           FONT_SIZE_MEDIUM: {
-            fontSize: '15px',
+            fontSize: 15,
           },
           FONT_SIZE_LARGE: {
-            fontSize: '30px',
+            fontSize: 30,
           }
         }}
       />
