@@ -17,7 +17,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@types/marked": "^1.1.0",
-    "@types/prismjs": "^1.16.1",
+    "@types/prismjs": "^1.16.2",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-prismjs": "^2.0.1",
     "clipboard-copy": "^3.1.0",
