@@ -112,4 +112,5 @@ const DraftButton = forwardRef<HTMLButtonElement, DraftButtonProps>(
 );
 
 DraftButton.displayName = 'DraftButton';
-export default withStyles(styles, { name: 'DraftButton' })(DraftButton);
+
+export default withStyles(styles)(DraftButton);
