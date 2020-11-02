@@ -40,15 +40,9 @@ const ExtendStyle = () => {
       <Editor
         placeholder='Enter some text..'
         customStyleMap={{
-          FONT_SIZE_SMALL: {
-            fontSize: 10,
-          },
-          FONT_SIZE_MEDIUM: {
-            fontSize: 15,
-          },
-          FONT_SIZE_LARGE: {
-            fontSize: 30,
-          }
+          FONT_SIZE_SMALL: { fontSize: 10 },
+          FONT_SIZE_MEDIUM: { fontSize: 15 },
+          FONT_SIZE_LARGE: { fontSize: 30 }
         }}
       />
     </EditorContainer>

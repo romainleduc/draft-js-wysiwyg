@@ -27,7 +27,7 @@ const AppDrawer = ({ onClose, ...other }: DrawerProps): JSX.Element => {
     useEffect(() => {
         if ((!isMobileSize && width < 500) || (isMobileSize && width > 500)) {
             setIsMobileSize(!isMobileSize);
-            onClose({}, 'escapeKeyDown');
+            onClose?.({}, 'escapeKeyDown');
         }
     }, [width]);
 

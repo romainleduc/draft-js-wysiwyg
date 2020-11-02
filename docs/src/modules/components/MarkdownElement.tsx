@@ -36,12 +36,6 @@ const useStyles = makeStyles((theme) => ({
             padding: '0 3px',
             fontSize: '.85em',
             borderRadius: 2,
-            '& .token.keyword, .token.tag': {
-                color: '#48afd7',
-            },
-            '& .token.class-name': {
-                color: '#6aeeb6',
-            },
         },
         '& code[class*="language-"]': {
             color: '#abebff',

@@ -7,14 +7,24 @@ import {
     ContentBlock,
     getDefaultKeyBinding,
     DraftHandleValue,
+    DefaultDraftBlockRenderMap,
+    DraftBlockRenderMap,
 } from 'draft-js';
 import { indentSelection, mergeBlockData } from '../utils';
 import draftToHtml from 'draftjs-to-html';
-import { convertToRaw } from 'draft-js';
+import { convertToRaw, DraftBlockType, DraftBlockRenderConfig } from 'draft-js';
 import EditorContext from '../EditorContext';
 import clsx from 'clsx';
 import 'draft-js/dist/Draft.css';
 import { makeStyles } from '@material-ui/core';
+
+export interface EditorProps
+    extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
+    className?: string;
+    acceptCommands?: string[];
+    onChange?(html: string): void;
+    blockRenderMapIsExpandable?: boolean;
+}
 
 const userStyles = makeStyles({
     editor: {
@@ -33,15 +43,18 @@ const userStyles = makeStyles({
     },
 });
 
-export interface EditorProps
-    extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
-    className?: string;
-    acceptCommands?: string[];
-    onChange?(html: string): void;
-}
-
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
-    ({ className, acceptCommands, onChange, ...rest }: EditorProps, ref) => {
+    (
+        {
+            className,
+            acceptCommands,
+            onChange,
+            blockRenderMap,
+            blockRenderMapIsExpandable,
+            ...rest
+        }: EditorProps,
+        ref
+    ) => {
         const { editorState, setEditorState } = useContext(EditorContext) || {};
         const editor = useRef<DraftEditor>(null);
         const classes = userStyles();
@@ -103,6 +116,18 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
             return '';
         };
 
+        const blockRenderMapFn = (): DraftBlockRenderMap | undefined => {
+            if (blockRenderMap) {
+                if (blockRenderMapIsExpandable) {
+                    return DefaultDraftBlockRenderMap.merge(blockRenderMap);
+                }
+
+                return blockRenderMap;
+            }
+
+            return undefined;
+        };
+
         return (
             <div
                 ref={ref}
@@ -129,6 +154,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
                         handleKeyCommand={handleKeyCommand}
                         handleReturn={handleReturn}
                         blockStyleFn={blockStyleFn}
+                        blockRenderMap={blockRenderMapFn()}
                         keyBindingFn={(e) => {
                             if (editorState && setEditorState) {
                                 const contentState = editorState.getCurrentContent();
