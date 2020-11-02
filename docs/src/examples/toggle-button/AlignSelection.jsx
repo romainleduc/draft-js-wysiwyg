@@ -13,7 +13,7 @@ import {
 } from '@material-ui/icons';
 
 const AlignSelection = () => {
-  const [alignment, setAlignment] = useState('center');
+  const [alignment, setAlignment] = useState('left');
 
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -42,7 +42,7 @@ const AlignSelection = () => {
           )}
         </ToggleButtonGroup>
       </EditorToolbar>
-      <Editor placeholder='Enter some text..' />
+      <Editor textAlignment={alignment} placeholder='Enter some text..' />
     </EditorContainer>
   );
 };

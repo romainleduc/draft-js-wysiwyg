@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppFrame from '../src/modules/components/AppFrame';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../src/modules/components/theme';
+import 'draft-js/dist/Draft.css';
 
 const App = (props) => {
   const { Component, pageProps } = props;

@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
     preview: {
         '& .draft-toolbar': {
-            backgroundColor: '#ccd5df94',
+            backgroundColor: '#ccd5df57',
             border: `1px solid ${theme.palette.divider}`,
             padding: 4,
         },

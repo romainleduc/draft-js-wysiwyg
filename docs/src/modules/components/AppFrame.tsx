@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, ReactNode } from 'react';
 import { IconButton, AppBar, Toolbar, makeStyles } from '@material-ui/core';
 import { Menu as MenuIcon, GitHub as GithubIcon } from '@material-ui/icons';
+import AppDrawer from './AppDrawer';
 
 const useStyles = makeStyles({
     root: {
@@ -15,13 +16,21 @@ const useStyles = makeStyles({
     content: {
         flex: 1,
     },
+    drawer: {
+        width: 240,
+        flexShrink: 0,
+    },
+    drawerPaper: {
+        width: 240,
+    },
 });
 
 interface AppFrameProps {
-    children: any;
+    children: ReactNode;
 }
 
 const AppFrame = ({ children }: AppFrameProps): JSX.Element => {
+    const [openDrawer, setOpenDrawer] = useState(true);
     const classes = useStyles();
 
     return (
@@ -49,6 +58,15 @@ const AppFrame = ({ children }: AppFrameProps): JSX.Element => {
                     </div>
                 </Toolbar>
             </AppBar>
+            <AppDrawer
+                className={classes.drawer}
+                anchor="left"
+                open={openDrawer}
+                onClose={() => setOpenDrawer(false)}
+                classes={{
+                    paper: classes.drawerPaper,
+                }}
+            />
             <div className={classes.content}>{children}</div>
         </div>
     );

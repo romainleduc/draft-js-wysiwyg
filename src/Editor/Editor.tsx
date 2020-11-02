@@ -14,6 +14,24 @@ import { convertToRaw } from 'draft-js';
 import EditorContext from '../EditorContext';
 import clsx from 'clsx';
 import 'draft-js/dist/Draft.css';
+import { makeStyles } from '@material-ui/core';
+
+const userStyles = makeStyles({
+    editor: {
+        '& .public-DraftStyleDefault-ltr': {
+            textAlign: 'inherit',
+        },
+        '& .align-left': {
+            textAlign: 'left',
+        },
+        '& .align-center': {
+            textAlign: 'center',
+        },
+        '& .align-right': {
+            textAlign: 'right',
+        },
+    },
+});
 
 export interface EditorProps
     extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -26,6 +44,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     ({ className, acceptCommands, onChange, ...rest }: EditorProps, ref) => {
         const { editorState, setEditorState } = useContext(EditorContext) || {};
         const editor = useRef<DraftEditor>(null);
+        const classes = userStyles();
 
         const focusEditor = (): void => {
             setTimeout(() => {
@@ -87,7 +106,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         return (
             <div
                 ref={ref}
-                className={clsx('draft-editor', className)}
+                className={clsx('draft-editor', classes.editor, className)}
                 onClick={focusEditor}
             >
                 {editorState && setEditorState && (

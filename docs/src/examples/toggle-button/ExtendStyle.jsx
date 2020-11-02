@@ -7,7 +7,7 @@ import {
   InlineToggleButton,
 } from 'draft-js-wysiwyg';
 
-const CustomExample = () => {
+const ExtendStyle = () => {
   const [size, setSize] = useState('FONT_SIZE_MEDIUM');
 
   const handleSize = (event, newSize) => {
@@ -55,4 +55,4 @@ const CustomExample = () => {
   );
 };
 
-export default CustomExample;
+export default ExtendStyle;
