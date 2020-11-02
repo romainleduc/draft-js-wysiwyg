@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-end',
     },
     preview: {
+        '& .MuiToggleButton-root': {
+            border: 0,
+        },
         '& .draft-toolbar': {
             backgroundColor: '#ccd5df57',
             border: `1px solid ${theme.palette.divider}`,
