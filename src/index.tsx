@@ -16,5 +16,5 @@ export type { EditorToolbarProps } from './EditorToolbar';
 export { default as Editor } from './Editor';
 export type { EditorProps } from './Editor';
 
-export { default as IndentToggleButton } from './IndentToggleButton';
-export type { IndentToggleButtonProps } from './IndentToggleButton';
+export { default as IndentDraftButton } from './IndentDraftButton';
+export type { IndentDraftButtonProps } from './IndentDraftButton';
