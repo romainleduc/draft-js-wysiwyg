@@ -23,9 +23,25 @@ It is possible to add your own styles using the `customStyleMap` property provid
 
 ***
 
-## Block render
+## Block Type
+<p class="sub-description">Block type toggle buttons can be used to allow the user to add new blocks in the editor.</p>
 
-{{"demo": "toggle-button/BlockRender.jsx"}}
+### Basic Example
+
+{{"demo": "toggle-button/BasicExampleBlockType.jsx"}}
+
+### Configuring block render map
+
+Draft's default block render map can be overwritten by passing an [Immutable Map](https://web.archive.org/web/20150623131347/http://facebook.github.io:80/immutable-js/docs/#/Map) to the editor blockRender props.
+[More info here](https://draftjs.org/docs/advanced-topics-custom-block-render-map)
+
+{{"demo": "toggle-button/ConfiguringBlockRenderMap.jsx"}}
+
+### Extend block render map
+
+There are cases where instead of overriding the defaults, we only want to add new types of blocks. This can be done using the `blockRenderMapIsExpandable` property of the editor.
+
+{{"demo": "toggle-button/ExtendBlockRenderMap.jsx"}}
 
 ***
 
