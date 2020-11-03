@@ -21,6 +21,11 @@ const theme = createMuiTheme({
         borderRadius: 2,
     },
     overrides: {
+        MuiButton: {
+            root: {
+                borderRadius: null,
+            }
+        },
         MuiAppBar: {
             colorPrimary: {
                 backgroundColor: '#24292e',

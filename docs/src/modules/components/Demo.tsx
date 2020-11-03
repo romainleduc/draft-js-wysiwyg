@@ -13,6 +13,9 @@ import CodeIcon from '@material-ui/icons/Code';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+    },
     toolbar: {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -66,7 +69,7 @@ const Demo = ({
     };
 
     return (
-        <div className="demo">
+        <div className={classes.root}>
             <div className={classes.preview}>
                 <NoSsr>
                     <Component />

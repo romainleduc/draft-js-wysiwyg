@@ -1,5 +1,5 @@
 import React from 'react';
-import README from '../src/examples/toggle-button/toggle-button.md';
+import README from '../src/examples/components/toggle-button/toggle-button.md';
 import { prepareMarkdown } from '../src/modules/utils/parseMarkdown';
 import MarkdownDocsPage from './MarkdownDocsPage';
 

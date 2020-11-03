@@ -8,7 +8,19 @@ const emptyRegExp = /^\s*$/;
 
 interface MarkdownObject {
     content: string;
-    isDemo: boolean;
+    type: 'demo' | 'api' | 'content';
+}
+
+const renderer = (src: string): string => {
+    return marked(src, {
+        highlight: prism,
+        headerIds: false,
+        breaks: false,
+        pedantic: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false,
+    });
 }
 
 /**
@@ -72,33 +84,54 @@ const getDescription = (markdown: string): string => {
     return matches[1].trim();
 };
 
+const excludeTitle = (markdown: string): string => {
+    return markdown.replace(headerRegExp, '');
+}
+
+const getType = (markdown: string) => {
+    if (/api/s.test(markdown)) {
+        return 'api';
+    }
+
+    if (/demo/s.test(markdown)) {
+        return 'demo';
+    }
+
+    return 'content';
+}
+
 export const render = (markdown: string): MarkdownObject[] => {
-    return markdown
-        .replace(headerRegExp, '')
-        .split(/^{{("(?:demo|component)":[^}]*)}}$/gm) // Split markdown into an array, separating demos
+    return excludeTitle(markdown)
+        .split(/^{{("(?:demo|api)":[^}]*)}}$/gm) // Split markdown into an array, separating demos
         .filter((content) => !emptyRegExp.test(content)) // Remove empty lines
         .map((content) => {
-            if (/^"(demo|component)": "(.*)"/.test(content)) {
+            const type = getType(content);
+
+            if (type !== 'content') {
                 return {
-                    content: content.substring(9, content.length - 1),
-                    isDemo: true,
-                };
+                    content: content.substring(type === 'demo' ? 9: 8, content.length - 1),
+                    type,
+                }
             }
 
             return {
-                content: marked(content, {
-                    highlight: prism,
-                    headerIds: false,
-                    breaks: false,
-                    pedantic: false,
-                    sanitize: false,
-                    smartLists: true,
-                    smartypants: false,
-                }),
-                isDemo: false,
+                content: renderer(content),
+                type: 'content',
             };
         });
 };
+
+export const markedApiDoc = (filename: string): {
+    title: string,
+    html: string,
+} => {
+    const markdown = require(`../../examples/api-doc/${filename}`).default;
+
+    return {
+        title: getTitle(markdown),
+        html: renderer(excludeTitle(markdown)),
+    }
+}
 
 export const prepareMarkdown = (
     markdown: string
@@ -110,6 +143,6 @@ export const prepareMarkdown = (
     return {
         title: getTitle(markdown),
         description: getDescription(markdown),
-        markdown: markdown.replace(headerRegExp, ''),
+        markdown: excludeTitle(markdown),
     };
 };

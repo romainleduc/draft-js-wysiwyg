@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
         ...theme.typography.body1,
         color: theme.palette.text.primary,
         wordBreak: 'break-word',
+        width: '100%',
         '& .anchor-link': {
             marginTop: -96, // Offset for the anchor.
             position: 'absolute',
