@@ -11,7 +11,7 @@ import {
 const ConfiguringBlockRenderMap = () => {
   const [block, setBlock] = useState('');
 
-  const handleBlock = (event, newBlock) => {
+  const handleBlock = (_, newBlock) => {
     setBlock(newBlock);
   };
 

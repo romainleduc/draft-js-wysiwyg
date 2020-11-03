@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { ModalProps, Modal, Button, makeStyles, Paper, Typography, IconButton } from '@material-ui/core';
+import {
+    ModalProps,
+    Modal,
+    Button,
+    makeStyles,
+    Paper,
+    Typography,
+    IconButton,
+} from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 
 interface ApiDocModalProps extends Omit<ModalProps, 'open' | 'onClose'> {
@@ -32,10 +40,14 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
         height: 625,
         width: '100%',
-    }
+    },
 }));
 
-const ApiDocModal = ({ title, children, ...other }: ApiDocModalProps): JSX.Element => {
+const ApiDocModal = ({
+    title,
+    children,
+    ...other
+}: ApiDocModalProps): JSX.Element => {
     const [open, setOpen] = useState(false);
     const classes = useStyles();
 
@@ -48,22 +60,27 @@ const ApiDocModal = ({ title, children, ...other }: ApiDocModalProps): JSX.Eleme
     };
     return (
         <>
-            <Button color='primary' variant='outlined' onClick={handleOpen}>Show Api</Button>
-            <Modal className={classes.modal} open={open} {...other} onClose={handleClose}>
+            <Button color="primary" variant="outlined" onClick={handleOpen}>
+                Show Api
+            </Button>
+            <Modal
+                className={classes.modal}
+                open={open}
+                {...other}
+                onClose={handleClose}
+            >
                 <Paper className={classes.paper}>
                     <div className={classes.header}>
-                        <Typography variant='h4'>{title}</Typography>
+                        <Typography variant="h4">{title}</Typography>
                         <IconButton onClick={handleClose}>
                             <Close />
                         </IconButton>
                     </div>
-                    <div className={classes.content}>
-                        {children}
-                    </div>
+                    <div className={classes.content}>{children}</div>
                 </Paper>
             </Modal>
         </>
     );
-}
+};
 
 export default ApiDocModal;

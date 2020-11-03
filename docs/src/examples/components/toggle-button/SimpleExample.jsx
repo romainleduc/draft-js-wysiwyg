@@ -17,7 +17,7 @@ import {
 const SimpleExample = () => {
   const [formats, setFormats] = useState(() => []);
 
-  const handleFormat = (event, newFormats) => {
+  const handleFormat = (_, newFormats) => {
     setFormats(newFormats);
   };
 

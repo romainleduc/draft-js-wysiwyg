@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     code: {
-        maxHeight: 'min(68vh, 500px)',
+        maxHeight: 'min(68vh, 1000px)',
         overflow: 'auto',
     },
 }));

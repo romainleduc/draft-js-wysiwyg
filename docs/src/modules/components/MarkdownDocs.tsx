@@ -28,14 +28,19 @@ const MarkdownDocs = ({ markdown }: MarkdownDocsProps): JSX.Element => {
 
     const getDemoData = (demoPath: string) => {
         return {
-            raw: require(`!raw-loader!../../examples/components/${demoPath}`).default,
+            raw: require(`!raw-loader!../../examples/components/${demoPath}`)
+                .default,
             component: require(`../../examples/components/${demoPath}`).default,
             language: demoPath.match(/(tsx|jsx|js)/g)?.[0] || 'js',
         };
     };
 
     return (
-        <Container component='main' maxWidth='md' className={clsx(classes.main, classes.mainWidth)}>
+        <Container
+            component="main"
+            maxWidth="md"
+            className={clsx(classes.main, classes.mainWidth)}
+        >
             {render(markdown).map(({ type, content }, key) => {
                 if (type === 'demo') {
                     return <Demo {...getDemoData(content)} key={key} />;
@@ -46,10 +51,7 @@ const MarkdownDocs = ({ markdown }: MarkdownDocsProps): JSX.Element => {
 
                     return (
                         <ApiDocModal title={title} key={key}>
-                            <MarkdownElement
-                                className=""
-                                htmlOrRaw={html}
-                            />
+                            <MarkdownElement className="" htmlOrRaw={html} />
                         </ApiDocModal>
                     );
                 }

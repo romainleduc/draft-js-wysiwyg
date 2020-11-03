@@ -15,7 +15,7 @@ import {
 const AlignSelection = () => {
   const [alignment, setAlignment] = useState('left');
 
-  const handleAlignment = (event, newAlignment) => {
+  const handleAlignment = (_, newAlignment) => {
     setAlignment(newAlignment);
   };
 

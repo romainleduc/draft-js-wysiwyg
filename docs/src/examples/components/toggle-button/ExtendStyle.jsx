@@ -10,7 +10,7 @@ import {
 const ExtendStyle = () => {
   const [size, setSize] = useState('FONT_SIZE_MEDIUM');
 
-  const handleSize = (event, newSize) => {
+  const handleSize = (_, newSize) => {
     setSize(newSize);
   };
 

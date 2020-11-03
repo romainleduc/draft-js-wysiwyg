@@ -21,7 +21,7 @@ const renderer = (src: string): string => {
         smartLists: true,
         smartypants: false,
     });
-}
+};
 
 /**
  * Extract information from the top of the markdown.
@@ -29,13 +29,12 @@ const renderer = (src: string): string => {
  *
  * ---
  * title: Backdrop React Component
- * components: Backdrop
  * ---
  *
  * # Backdrop
  *
  * should output:
- * { title: 'Backdrop React Component', components: ['Backdrop'] }
+ * { title: 'Backdrop React Component' }
  */
 const getHeaders = (markdown: string) => {
     const header = markdown.match(headerRegExp);
@@ -45,20 +44,14 @@ const getHeaders = (markdown: string) => {
     }
 
     let regexMatches;
-    const headers = {} as any;
+    const headers: { [key: string]: string } = {};
 
     // eslint-disable-next-line no-cond-assign
     while ((regexMatches = headerKeyValueRegExp.exec(header[1])) !== null) {
         const key = regexMatches[1];
         const value = regexMatches[2].replace(/(.*)/, '$1');
-
-        if (value[0] === '[') {
-            // Need double quotes to JSON parse.
-            headers[key] = JSON.parse(value.replace(/'/g, '"'));
-        } else {
-            // Remove trailing single quote yml escaping.
-            headers[key] = value.replace(/^'|'$/g, '');
-        }
+        // Remove trailing single quote yml escaping.
+        headers[key] = value.replace(/^'|'$/g, '');
     }
 
     return headers;
@@ -86,7 +79,7 @@ const getDescription = (markdown: string): string => {
 
 const excludeTitle = (markdown: string): string => {
     return markdown.replace(headerRegExp, '');
-}
+};
 
 const getType = (markdown: string) => {
     if (/api/s.test(markdown)) {
@@ -98,7 +91,7 @@ const getType = (markdown: string) => {
     }
 
     return 'content';
-}
+};
 
 export const render = (markdown: string): MarkdownObject[] => {
     return excludeTitle(markdown)
@@ -109,9 +102,12 @@ export const render = (markdown: string): MarkdownObject[] => {
 
             if (type !== 'content') {
                 return {
-                    content: content.substring(type === 'demo' ? 9: 8, content.length - 1),
+                    content: content.substring(
+                        type === 'demo' ? 9 : 8,
+                        content.length - 1
+                    ),
                     type,
-                }
+                };
             }
 
             return {
@@ -121,17 +117,19 @@ export const render = (markdown: string): MarkdownObject[] => {
         });
 };
 
-export const markedApiDoc = (filename: string): {
-    title: string,
-    html: string,
+export const markedApiDoc = (
+    filename: string
+): {
+    title: string;
+    html: string;
 } => {
     const markdown = require(`../../examples/api-doc/${filename}`).default;
 
     return {
         title: getTitle(markdown),
         html: renderer(excludeTitle(markdown)),
-    }
-}
+    };
+};
 
 export const prepareMarkdown = (
     markdown: string

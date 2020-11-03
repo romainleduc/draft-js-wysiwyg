@@ -10,7 +10,7 @@ import {
 const BasicExample = () => {
   const [block, setBlock] = useState('');
 
-  const handleBlock = (event, newBlock) => {
+  const handleBlock = (_, newBlock) => {
     setBlock(newBlock);
   };
 
