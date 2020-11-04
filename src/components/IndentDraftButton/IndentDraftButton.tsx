@@ -19,7 +19,7 @@ export interface IndentDraftButtonProps extends DraftButtonProps {
      */
     nestedListOnly?: boolean;
     /**
-     * If `true`, inline style will not be available from keyboard shortcuts
+     * If `true`, indentation will not be available from keyboard shortcuts
      * @default false
      */
     disableKeyboardShortcuts?: boolean;
