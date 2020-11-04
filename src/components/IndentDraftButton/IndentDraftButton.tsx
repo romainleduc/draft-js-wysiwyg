@@ -1,10 +1,12 @@
-import React, { useContext, forwardRef } from 'react';
+import React, { useContext, forwardRef, useEffect } from 'react';
 import {
     indentSelection as indentSelectionUtils,
     isOutdentable,
 } from '../../utils';
 import EditorContext from '../EditorContext';
 import { DraftButton, DraftButtonProps } from '../DraftButton';
+import ReduxContext from '../ReduxContext';
+import { ACTION_TYPES } from '../../redux/constants';
 
 export interface IndentDraftButtonProps extends DraftButtonProps {
     /**
@@ -16,6 +18,11 @@ export interface IndentDraftButtonProps extends DraftButtonProps {
      * @default false
      */
     nestedListOnly?: boolean;
+    /**
+     * If `true`, inline style will not be available from keyboard shortcuts
+     * @default false
+     */
+    disableKeyboardShortcuts?: boolean;
 }
 
 const IndentDraftButton = forwardRef<HTMLButtonElement, IndentDraftButtonProps>(
@@ -25,11 +32,22 @@ const IndentDraftButton = forwardRef<HTMLButtonElement, IndentDraftButtonProps>(
             children,
             value,
             nestedListOnly,
+            disableKeyboardShortcuts,
             ...rest
         }: IndentDraftButtonProps,
         ref
     ) => {
         const { editorState, setEditorState } = useContext(EditorContext) || {};
+        const { dispatch } = useContext(ReduxContext);
+
+        useEffect(() => {
+            if (!disableKeyboardShortcuts) {
+                dispatch({
+                    type: ACTION_TYPES.ADD_KEY_BINDING,
+                    payload: 'Tab',
+                });
+            }
+        }, []);
 
         const handleIndentSelection = (
             e: React.MouseEvent<HTMLButtonElement, MouseEvent>

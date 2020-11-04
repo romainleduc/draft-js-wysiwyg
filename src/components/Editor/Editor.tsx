@@ -23,6 +23,7 @@ export interface EditorProps
     extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
     className?: string;
     keyCommands?: string[];
+    keyBinding?: string[];
     onChange?(html: string): void;
     blockRenderMapIsExpandable?: boolean;
 }
@@ -49,6 +50,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         {
             className,
             keyCommands,
+            keyBinding,
             onChange,
             blockRenderMap,
             blockRenderMapIsExpandable,
@@ -77,7 +79,10 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
             command: string,
             editorState: EditorState
         ): DraftHandleValue => {
-            if (keyCommands?.includes(command) || state.keyCommands.includes(command)) {
+            if (
+                keyCommands?.includes(command) ||
+                state.keyCommands.includes(command)
+            ) {
                 const newState = RichUtils.handleKeyCommand(
                     editorState,
                     command
@@ -158,7 +163,12 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
                         blockStyleFn={blockStyleFn}
                         blockRenderMap={blockRenderMapFn()}
                         keyBindingFn={(e) => {
-                            if (editorState && setEditorState) {
+                            if (
+                                editorState &&
+                                setEditorState &&
+                                (keyBinding?.includes(e.key) ||
+                                    state.keyBinding.includes(e.key))
+                            ) {
                                 const contentState = editorState.getCurrentContent();
 
                                 if (e.shiftKey) {

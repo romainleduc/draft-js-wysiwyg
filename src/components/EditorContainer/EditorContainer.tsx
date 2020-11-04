@@ -3,7 +3,8 @@ import { EditorState } from 'draft-js';
 import EditorContext from '../EditorContext';
 import clsx from 'clsx';
 import keyCommandsReducer from '../../redux/reducers/keyCommandsReducer';
-import ReduxContext, { initialStoreValue } from '../ReduxContext';
+import ReduxContext from '../ReduxContext';
+import { initialState } from '../../redux/reducers/keyCommandsReducer';
 
 export interface EditorContainerProps
     extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,7 +21,7 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
         }: EditorContainerProps,
         ref
     ) => {
-        const [state, dispatch] = useReducer(keyCommandsReducer, initialStoreValue);
+        const [state, dispatch] = useReducer(keyCommandsReducer, initialState);
         const [editorState, setEditorState] = useState(
             editorStateProps || EditorState.createEmpty()
         );
@@ -33,7 +34,11 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
                 }}
             >
                 <ReduxContext.Provider value={{ state, dispatch }}>
-                    <div ref={ref} {...rest} className={clsx('draft-container', className)}>
+                    <div
+                        ref={ref}
+                        {...rest}
+                        className={clsx('draft-container', className)}
+                    >
                         {children}
                     </div>
                 </ReduxContext.Provider>

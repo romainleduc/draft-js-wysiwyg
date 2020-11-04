@@ -1,13 +1,14 @@
 import React from 'react';
-import { ReducerState } from '../redux/reducers/keyCommandsReducer';
-
-export const initialStoreValue = { keyCommands: [] };
+import {
+    ReducerState,
+    initialState,
+} from '../redux/reducers/keyCommandsReducer';
 
 const ReduxContext = React.createContext<{
-    state: ReducerState,
-    dispatch: React.Dispatch<any>
+    state: ReducerState;
+    dispatch: React.Dispatch<any>;
 }>({
-    state: initialStoreValue,
+    state: initialState,
     dispatch: () => null,
 });
 
