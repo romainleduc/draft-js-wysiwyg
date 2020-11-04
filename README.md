@@ -2,9 +2,9 @@
 
 A Wysiwyg editor built using [React](https://reactjs.org/), [Draft](https://draftjs.org/) and [Material-UI](https://material-ui.com/) libraries.
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/KiziKr/draft-js-wysiwyg/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/romainleduc/draft-js-wysiwyg/blob/master/LICENSE)
 [![npm latest package](https://img.shields.io/npm/v/draft-js-wysiwyg/latest.svg)](https://www.npmjs.com/package/draft-js-wysiwyg)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=KiziKr/draft-js-wysiwyg)](https://dependabot.com)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=romainleduc/draft-js-wysiwyg)](https://dependabot.com)
 
 ## Installation
 
@@ -25,41 +25,29 @@ Here is a quick example to get you started.
 
 ```jsx
 import React, { useState } from 'react';
-import { Editor, EditorContainer, EditorToolbar, InlineToggleButton } from 'draft-js-wysiwyg';
-import { FormatItalic, FormatBold } from '@material-ui/icons';
-import { ToggleButtonGroup } from '@material-ui/lab';
+import FormatBoldIcon from '@material-ui/icons/FormatBold';
+import {
+    Editor,
+    EditorContainer,
+    EditorToolbar,
+    InlineToggleButton,
+} from 'draft-js-wysiwyg';
 
 const DraftEditor = () => {
-    const [formats, setFormats] = useState(() => []);
     const [html, setHtml] = useState('');
-
-    const handleFormat = (event, newFormats) => {
-        setFormats(newFormats);
-    };
 
     return (
         <EditorContainer>
             <EditorToolbar>
-                <ToggleButtonGroup
-                    value={formats}
-                    onChange={handleFormat}
-                    size='small'
-                >
-                    <InlineToggleButton value='BOLD'>
-                        <FormatBold />
-                    </InlineToggleButton>
-                    <InlineToggleButton value='ITALIC'>
-                        <FormatItalic />
-                    </InlineToggleButton>
-                </ToggleButtonGroup>
+                <InlineToggleButton value='BOLD'>
+                    <FormatBoldIcon />
+                </InlineToggleButton>
             </EditorToolbar>
             <Editor onChange={value => setHtml(value)} />
         </EditorContainer>
     );
 }
 ```
-
-[![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/blissful-fast-rbujg)
 
 ## Documentation
 

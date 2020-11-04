@@ -4,3 +4,4 @@ src
 webpack.config.js
 .gitignore
 yarn.lock
+docs

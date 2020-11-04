@@ -15,9 +15,8 @@
         "isolatedModules": true,
         "experimentalDecorators": true,
         "noErrorTruncation": false,
-        "rootDir": "src",
         "outDir": "lib",
         "declaration": true
     },
-    "include": ["src"]
+    "exclude": ["**/lib", "**/node_modules", "docs/.next", "docs/export"]
 }

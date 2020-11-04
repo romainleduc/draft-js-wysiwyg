@@ -1,0 +1,36 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Romain LEDUC",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@types/marked": "^1.1.0",
+    "@types/prismjs": "^1.16.2",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-prismjs": "^2.0.1",
+    "clipboard-copy": "^3.1.0",
+    "clsx": "^1.1.1",
+    "draft-js-wysiwyg": "^1.0.7",
+    "markdown-to-jsx": "^7.0.1",
+    "marked": "^1.2.2",
+    "next": "^10.0.0",
+    "path": "^0.12.7",
+    "prismjs": "^1.22.0",
+    "raw-loader": "^4.0.2",
+    "react": "^17.0.1",
+    "react-docgen": "^5.3.1",
+    "react-dom": "^17.0.0"
+  }
+}
