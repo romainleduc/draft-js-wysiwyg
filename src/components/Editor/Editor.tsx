@@ -10,18 +10,19 @@ import {
     DefaultDraftBlockRenderMap,
     DraftBlockRenderMap,
 } from 'draft-js';
-import { indentSelection, mergeBlockData } from '../utils';
+import { indentSelection, mergeBlockData } from '../../utils';
 import draftToHtml from 'draftjs-to-html';
-import { convertToRaw, DraftBlockType, DraftBlockRenderConfig } from 'draft-js';
+import { convertToRaw } from 'draft-js';
 import EditorContext from '../EditorContext';
 import clsx from 'clsx';
-import 'draft-js/dist/Draft.css';
 import { makeStyles } from '@material-ui/core';
+import 'draft-js/dist/Draft.css';
+import ReduxContext from '../ReduxContext';
 
 export interface EditorProps
     extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
     className?: string;
-    acceptCommands?: string[];
+    keyCommands?: string[];
     onChange?(html: string): void;
     blockRenderMapIsExpandable?: boolean;
 }
@@ -47,7 +48,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     (
         {
             className,
-            acceptCommands,
+            keyCommands,
             onChange,
             blockRenderMap,
             blockRenderMapIsExpandable,
@@ -58,6 +59,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         const { editorState, setEditorState } = useContext(EditorContext) || {};
         const editor = useRef<DraftEditor>(null);
         const classes = userStyles();
+        const { state } = useContext(ReduxContext);
 
         const focusEditor = (): void => {
             setTimeout(() => {
@@ -75,7 +77,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
             command: string,
             editorState: EditorState
         ): DraftHandleValue => {
-            if (!acceptCommands || acceptCommands.includes(command)) {
+            if (keyCommands?.includes(command) || state.keyCommands.includes(command)) {
                 const newState = RichUtils.handleKeyCommand(
                     editorState,
                     command

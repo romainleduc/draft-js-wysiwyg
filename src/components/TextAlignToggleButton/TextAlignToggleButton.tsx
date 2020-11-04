@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
-import { setBlockData, setBlocksData } from '../utils';
+import { setBlockData, setBlocksData } from '../../utils';
 import EditorContext from '../EditorContext';
 
 export interface TextAlignToggleButtonProps

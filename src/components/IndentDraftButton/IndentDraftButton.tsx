@@ -2,7 +2,7 @@ import React, { useContext, forwardRef } from 'react';
 import {
     indentSelection as indentSelectionUtils,
     isOutdentable,
-} from '../utils';
+} from '../../utils';
 import EditorContext from '../EditorContext';
 import { DraftButton, DraftButtonProps } from '../DraftButton';
 

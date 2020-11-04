@@ -2,6 +2,8 @@ import React, { useContext, useEffect, forwardRef } from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import { EditorState, RichUtils } from 'draft-js';
 import EditorContext from '../EditorContext';
+import { ACTION_TYPES } from '../../redux/constants';
+import ReduxContext from '../ReduxContext';
 
 export interface InlineToggleButtonProps
     extends Omit<ToggleButtonProps, 'value'> {
@@ -13,11 +15,17 @@ const InlineToggleButton = forwardRef<
     InlineToggleButtonProps
 >(({ value, selected, children, ...rest }: InlineToggleButtonProps, ref) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
+    const { dispatch } = useContext(ReduxContext);
 
     useEffect(() => {
         if (selected) {
             handleClick();
         }
+
+        dispatch({
+            type: ACTION_TYPES.ADD_KEY_COMMAND,
+            payload: value,
+        });
     }, []);
 
     // Synchronize selection with keyboard shortcuts
@@ -37,7 +45,8 @@ const InlineToggleButton = forwardRef<
 
     const handleClick = () => {
         if (editorState && setEditorState) {
-            setEditorState(
+            console.log(value)
+             setEditorState(
                 RichUtils.toggleInlineStyle(
                     EditorState.forceSelection(
                         editorState,
@@ -51,12 +60,12 @@ const InlineToggleButton = forwardRef<
 
     return (
         <ToggleButton
+            {...rest}
             ref={ref}
+            selected={selected}
             onClick={handleClick}
             // selected={synchronizeSelection()}
-            selected={selected}
             value={value}
-            {...rest}
         >
             {children}
         </ToggleButton>
