@@ -20,14 +20,12 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
         margin: 15,
-        // marginLeft: 100,
     },
     paper: {
         maxWidth: 950,
         backgroundColor: theme.palette.background.paper,
         border: `1px solid ${theme.palette.divider}`,
         boxShadow: theme.shadows[5],
-        // padding: theme.spacing(2, 4, 3),
     },
     header: {
         display: 'flex',
@@ -40,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
         height: 625,
         width: '100%',
+    },
+    button: {
+        alignSelf: 'flex-start',
     },
 }));
 
@@ -60,7 +61,7 @@ const ApiDocModal = ({
     };
     return (
         <>
-            <Button color="primary" variant="outlined" onClick={handleOpen}>
+            <Button className={classes.button} color="primary" variant="outlined" onClick={handleOpen}>
                 Show Api
             </Button>
             <Modal

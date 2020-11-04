@@ -3,9 +3,11 @@ import { IconButton, AppBar, Toolbar, makeStyles } from '@material-ui/core';
 import { Menu as MenuIcon, GitHub as GithubIcon } from '@material-ui/icons';
 import AppDrawer from './AppDrawer';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme => ({
     root: {
-        display: 'flex',
+        [theme.breakpoints.up('lg')]: {
+            paddingLeft: 180,
+        },
     },
     grow: {
         flexGrow: 1,
@@ -23,7 +25,7 @@ const useStyles = makeStyles({
     drawerPaper: {
         width: 240,
     },
-});
+})));
 
 interface AppFrameProps {
     children: ReactNode;
@@ -67,7 +69,7 @@ const AppFrame = ({ children }: AppFrameProps): JSX.Element => {
                     paper: classes.drawerPaper,
                 }}
             />
-            <div className={classes.content}>{children}</div>
+            {children}
         </div>
     );
 };

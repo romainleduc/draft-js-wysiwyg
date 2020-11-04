@@ -61,5 +61,3 @@ There are cases where instead of overriding the defaults, we only want to add ne
 It is possible to ignore the selection so that the horizontal alignment is done on all the content.
 
 {{"demo": "toggle-button/AlignAllContent.jsx"}}
-
-***

@@ -208,7 +208,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * 
+ *
  */
 interface MarkdownElementProps extends React.HTMLAttributes<HTMLDivElement> {
     htmlOrRaw: string;

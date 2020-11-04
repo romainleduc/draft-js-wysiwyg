@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: '#ccd5df57',
             border: `1px solid ${theme.palette.divider}`,
             padding: 4,
+            '& .MuiToggleButtonGroup-root': {
+                display: 'block',
+            },
         },
         '& .draft-editor': {
             border: `1px solid ${theme.palette.divider}`,
