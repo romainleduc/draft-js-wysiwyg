@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { StylesProvider } from '@material-ui/core/styles';
 import Head from 'next/head';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppFrame from '../src/modules/components/AppFrame';
@@ -19,6 +20,7 @@ const App = (props) => {
   }, []);
 
   return (
+    <StylesProvider>
     <>
       <Head>
         <title>Draft-js-wysiwyg</title>
@@ -34,6 +36,7 @@ const App = (props) => {
         </AppFrame>
       </ThemeProvider>
     </>
+    </StylesProvider>
   );
 }
 

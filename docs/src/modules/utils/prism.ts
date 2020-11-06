@@ -3,7 +3,7 @@ import * as Prism from 'prismjs';
 Prism.plugins.customClass.add(
     ({ content, language }: { content: string; language: string }) => {
         if (
-            /^(import|export|from|return|default)$/g.test(content) &&
+            /^(import|export|from|return|default|if|else)$/g.test(content) &&
             /^(js|jsx)$/g.test(language)
         ) {
             return 'special';

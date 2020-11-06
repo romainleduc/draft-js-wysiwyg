@@ -1,10 +1,10 @@
 import React, { useContext, forwardRef } from 'react';
-import { IconButton, IconButtonProps } from '@material-ui/core';
+import { Button, ButtonProps } from '@material-ui/core';
 import { MediaType } from './Media';
 import EditorContext from '../EditorContext';
 import { insertAtomicBlock } from '../../utils';
 
-export interface MediaUploadIconButtonProps extends IconButtonProps {
+export interface MediaButtonProps extends ButtonProps {
     mediaType: MediaType;
     imgProps?: React.ImgHTMLAttributes<HTMLImageElement>;
     audioProps?: React.AudioHTMLAttributes<HTMLAudioElement>;
@@ -12,9 +12,9 @@ export interface MediaUploadIconButtonProps extends IconButtonProps {
     iframeProps?: React.IframeHTMLAttributes<HTMLIFrameElement>;
 }
 
-export const MediaUploadIconButton = forwardRef<
+const MediaButton = forwardRef<
     HTMLButtonElement,
-    MediaUploadIconButtonProps
+    MediaButtonProps
 >(
     (
         {
@@ -25,7 +25,7 @@ export const MediaUploadIconButton = forwardRef<
             iframeProps,
             children,
             ...other
-        }: MediaUploadIconButtonProps,
+        }: MediaButtonProps,
         ref
     ) => {
         const { editorState, setEditorState } = useContext(EditorContext) || {};
@@ -44,9 +44,11 @@ export const MediaUploadIconButton = forwardRef<
         };
 
         return (
-            <IconButton ref={ref} onClick={handleClick} {...other}>
+            <Button ref={ref} onClick={handleClick} {...other}>
                 {children}
-            </IconButton>
+            </Button>
         );
     }
 );
+
+export default MediaButton;

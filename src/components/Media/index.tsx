@@ -1,4 +1,4 @@
 export { Media } from './Media';
 
-export { MediaUploadIconButton } from './MediaUploadIconButton';
-export type { MediaUploadIconButtonProps } from './MediaUploadIconButton';
+export { default } from './MediaButton';
+export type { MediaButtonProps } from './MediaButton';

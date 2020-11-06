@@ -19,5 +19,5 @@ export type { EditorProps } from './Editor';
 export { default as IndentDraftButton } from './IndentDraftButton';
 export type { IndentDraftButtonProps } from './IndentDraftButton';
 
-export { MediaUploadIconButton } from './Media';
-export type { MediaUploadIconButtonProps } from './Media';
+export { default as MediaButton } from './Media';
+export type { MediaButtonProps } from './Media';

@@ -42,12 +42,12 @@ module.exports = {
         },
         extensions: ['.ts', '.tsx', '.js'],
     },
-    externals: {
+    externals: [
+      {
         react: 'react',
         immutable: 'immutable',
         'react-dom': 'react-dom',
-        '@material-ui/core': '@material-ui/core',
-        '@material-ui/lab': '@material-ui/lab',
-        '@material-ui/icons': '@material-ui/icons',
-    },
+      },
+      /@material-ui\/.*/
+    ]
 }

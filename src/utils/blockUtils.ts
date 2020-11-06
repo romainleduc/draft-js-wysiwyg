@@ -8,7 +8,7 @@ import {
     BlockMap,
     AtomicBlockUtils,
 } from 'draft-js';
-import { MediaType } from '../Media/Media';
+import { MediaType } from '../components/Media/Media';
 
 /**
  * Returns collection of blocks.

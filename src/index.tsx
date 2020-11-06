@@ -16,8 +16,8 @@ export type { EditorToolbarProps } from './components';
 export { Editor } from './components';
 export type { EditorProps } from './components';
 
-export { MediaUploadIconButton } from './components/Media';
-export type { MediaUploadIconButtonProps } from './components/Media';
+export { MediaButton } from './components';
+export type { MediaButtonProps } from './components/Media';
 
 export { IndentDraftButton } from './components';
 export type { IndentDraftButtonProps } from './components';
