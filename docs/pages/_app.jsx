@@ -9,7 +9,7 @@ import 'draft-js/dist/Draft.css';
 
 const App = (props) => {
   const { Component, pageProps } = props;
-
+  
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');

@@ -10,6 +10,7 @@ export interface MediaButtonProps extends ButtonProps {
   audioProps?: React.AudioHTMLAttributes<HTMLAudioElement>;
   videoProps?: React.VideoHTMLAttributes<HTMLVideoElement>;
   iframeProps?: React.IframeHTMLAttributes<HTMLIFrameElement>;
+  onInserted?: () => void;
 }
 
 const MediaButton = forwardRef<HTMLButtonElement, MediaButtonProps>(
@@ -21,6 +22,7 @@ const MediaButton = forwardRef<HTMLButtonElement, MediaButtonProps>(
       videoProps,
       iframeProps,
       children,
+      onInserted,
       ...other
     }: MediaButtonProps,
     ref
@@ -29,14 +31,20 @@ const MediaButton = forwardRef<HTMLButtonElement, MediaButtonProps>(
 
     const handleClick = () => {
       if (editorState && setEditorState) {
-        setEditorState(
-          insertAtomicBlock(editorState, mediaType, {
-            audioProps,
-            imgProps,
-            videoProps,
-            iframeProps,
-          })
+        setTimeout(
+          () =>
+            setEditorState(
+              insertAtomicBlock(editorState, mediaType, {
+                audioProps,
+                imgProps,
+                videoProps,
+                iframeProps,
+              })
+            ),
+          0
         );
+
+        onInserted?.();
       }
     };
 

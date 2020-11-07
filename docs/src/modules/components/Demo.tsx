@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
       minHeight: 141,
       padding: 5,
     },
+    '& .DraftEditor-editorContainer': {
+      maxHeight: 'min(68vh, 1000px)',
+      overflowY: 'auto',
+    },
   },
   code: {
     maxHeight: 'min(68vh, 1000px)',
