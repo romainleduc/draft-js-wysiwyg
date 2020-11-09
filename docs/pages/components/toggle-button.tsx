@@ -1,7 +1,7 @@
 import React from 'react';
-import README from '../src/examples/components/toggle-button/toggle-button.md';
-import { prepareMarkdown } from '../src/modules/utils/parseMarkdown';
-import MarkdownDocsPage from './MarkdownDocsPage';
+import README from '../../src/examples/components/toggle-button/toggle-button.md';
+import { prepareMarkdown } from '../../src/modules/utils/parseMarkdown';
+import MarkdownDocsPage from '../MarkdownDocsPage';
 
 const ToggleButtonPage = (): JSX.Element => {
   const { title, description, markdown } = prepareMarkdown(README);

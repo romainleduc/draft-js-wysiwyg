@@ -1,5 +1,5 @@
 import React from 'react';
-import { MediaButton as MediaButtonDraft, EditorContainer, EditorToolbar, Editor } from 'draft-js-wysiwyg';
+import { MediaButton, EditorContainer, EditorToolbar, Editor } from 'draft-js-wysiwyg';
 import { makeStyles, List, ListItem, Modal, IconButton, Tooltip } from '@material-ui/core';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import imgData from './imgData';
@@ -39,9 +39,8 @@ const useStyles = makeStyles((theme => ({
  *
  * const imgData = [
  *   {
- *     img: image,
+ *     src: image,
  *     title: 'Image',
- *     author: 'author',
  *   },
  *   {
  *     [etc...]
@@ -55,20 +54,18 @@ const EditorModal = (props) => {
     <Modal className={classes.modal} {...props}>
       <div className={classes.paper}>
         <List className={classes.list}>
-          {imgData.map((data) => (
+          {imgData.map(({ title, src }) => (
             <ListItem className={classes.itemList}>
-              <Tooltip title={data.title} placement='top'>
-                <MediaButtonDraft
+              <Tooltip title={title} placement='top'>
+                <MediaButton
                   className={classes.test}
                   mediaType='image'
                   component='span'
-                  imgProps={{
-                    src: data.img,
-                  }}
+                  src={src}
                   onInserted={() => props.onClose()}
                 >
-                  <img src={data.img} />
-                </MediaButtonDraft>
+                  <img src={src} />
+                </MediaButton>
               </Tooltip>
             </ListItem>
           ))}
@@ -78,9 +75,8 @@ const EditorModal = (props) => {
   );
 }
 
-const MediaButton = () => {
+const Image = () => {
   const [open, setOpen] = React.useState(false);
-  const classes = useStyles();
 
   const handleClick = () => {
     setOpen(!open);
@@ -102,4 +98,4 @@ const MediaButton = () => {
   );
 }
 
-export default MediaButton;
+export default Image;

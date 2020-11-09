@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
+import { ToggleButtonGroup } from '@material-ui/lab';
 import {
   EditorContainer,
   Editor,
@@ -17,9 +17,6 @@ const ExtendStyle = () => {
   return (
     <EditorContainer>
       <EditorToolbar>
-        <ToggleButton value='zdidzjzijdzij'>
-          zdqqdzdzq
-        </ToggleButton>
         <ToggleButtonGroup
           exclusive
           value={size}

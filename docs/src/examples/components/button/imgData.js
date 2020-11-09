@@ -2,19 +2,21 @@ const path = '/static/images/media';
 
 const imgData = [
   {
-    img: `${path}/dairypanda.png`,
+    src: `${path}/dairypanda.png`,
     title: 'Dairypanda’s hytale fan art',
+    type: 'image',
+    props: {},
   },
   {
-    img: `${path}/nuffy.jpg`,
+    src: `${path}/nuffy.jpg`,
     title: 'Nuffy’s hytale fan art',
   },
   {
-    img: `${path}/aura.gif`,
+    src: `${path}/aura.gif`,
     title: 'Aura’s hytale fan art',
   },
   {
-    img: `${path}/omnia.jpg`,
+    src: `${path}/omnia.jpg`,
     title: 'Omnia’s hytale fan art',
   },
 ];

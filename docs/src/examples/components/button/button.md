@@ -13,9 +13,13 @@ title: Button React component
 
 {{"api": "toggle-button/inline-toggle-button.md"}}
 
-### Basic example
+### Image
 
-{{"demo": "button/MediaButton.jsx"}}
+{{"demo": "button/Image.jsx"}}
+
+### Validation
+
+{{"demo": "button/Validation.jsx"}}
 
 ### Extend styles
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
+import { ToggleButtonGroup } from '@material-ui/lab';
 import {
   EditorContainer,
   Editor,
@@ -24,9 +24,6 @@ const SimpleExample = () => {
   return (
     <EditorContainer>
       <EditorToolbar>
-        <ToggleButton value='test'>
-          ssss
-        </ToggleButton>
         <ToggleButtonGroup
           value={formats}
           onChange={handleFormat}
