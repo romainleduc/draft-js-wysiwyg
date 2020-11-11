@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { EditorContainer, EditorToolbar, Editor, MediaButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Button, TextField, FormHelperText } from '@material-ui/core';
-import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
+import { makeStyles, Modal, IconButton, Button, FormHelperText, fade } from '@material-ui/core';
+import { ImageOutlined, Panorama } from '@material-ui/icons';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme => ({
   modal: {
@@ -30,17 +31,24 @@ const useStyles = makeStyles((theme => ({
     }
   },
   preview: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 250,
     height: 230,
-    backgroundColor: 'black',
+    backgroundColor: theme.palette.background['level1'],
     marginBottom: 10,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    color: theme.palette.text.secondary
   },
   test: {
     padding: 0,
     border: 'solid 1px #000000c9'
   },
+  iconHidden: {
+    display: 'none',
+  }
 })));
 
 const MediaUpload = ({ id, children, validate, onChange, ...other }) => {
@@ -86,6 +94,10 @@ const EditorModal = (props) => {
     return errors;
   }
 
+  const hasErrors = () => {
+    return errors?.image || (!errors && !objectURL)
+  }
+
   return (
     <Modal className={classes.modal} {...props}>
       <div className={classes.paper}>
@@ -94,7 +106,12 @@ const EditorModal = (props) => {
           style={{
             backgroundImage: `url('${objectURL}')`
           }}
-        />
+        >
+          <Panorama
+            className={clsx(!hasErrors() && classes.iconHidden)}
+            size='large'
+          />
+        </div>
         <MediaUpload
           id='image-validation'
           onChange={handleChangeMedia}
@@ -116,7 +133,7 @@ const EditorModal = (props) => {
         }
         <MediaButton
           mediaType='image'
-          disabled={errors?.image || (!errors && !objectURL)}
+          disabled={hasErrors()}
           onInserted={() => props.onClose()}
           src={objectURL}
         >
@@ -138,7 +155,7 @@ const Image = () => {
     <EditorContainer>
       <EditorToolbar>
         <IconButton onClick={handleClick}>
-          <ImageOutlinedIcon />
+          <ImageOutlined />
         </IconButton>
         <EditorModal
           open={open}
