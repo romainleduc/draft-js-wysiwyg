@@ -15,7 +15,7 @@ title: Button React component
 
 ### Image
 
-{{"demo": "button/Image.jsx"}}
+{{"demo": "button/Media.jsx"}}
 
 ### Validation
 
