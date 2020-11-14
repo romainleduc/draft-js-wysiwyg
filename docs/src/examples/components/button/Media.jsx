@@ -93,6 +93,7 @@ const EditorModal = (props) => {
         >
           <Tab label='Image' />
           <Tab label='Audio' />
+          <Tab label='Video' />
         </Tabs>
         {mediaData.map((media, key) => (
           <TabPanel
@@ -105,7 +106,7 @@ const EditorModal = (props) => {
               cellHeight={140}
               cols={3}
             >
-              {media.map(({ background, tooltip, type, src }) => (
+              {media.map(({ background, tooltip, type, mediaProps }) => (
                 <GridListTile>
                   <Tooltip
                     title={tooltip}
@@ -117,7 +118,7 @@ const EditorModal = (props) => {
                       className={classes.media}
                       mediaType={type}
                       component='span'
-                      src={src}
+                      {...mediaProps}
                     >
                       {type !== 'image' &&
                         <PlayArrowRounded style={{

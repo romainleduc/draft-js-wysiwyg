@@ -6,11 +6,11 @@ import { insertAtomicBlock } from '../../utils';
 
 export interface MediaButtonProps extends ButtonProps {
   mediaType: MediaType;
-  src?: string;
   imgProps?: React.ImgHTMLAttributes<HTMLImageElement>;
   audioProps?: React.AudioHTMLAttributes<HTMLAudioElement>;
   videoProps?: React.VideoHTMLAttributes<HTMLVideoElement>;
   iframeProps?: React.IframeHTMLAttributes<HTMLIFrameElement>;
+  sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
   onInserted?: () => void;
 }
 
@@ -22,7 +22,7 @@ const MediaButton = forwardRef<HTMLButtonElement, MediaButtonProps>(
       imgProps,
       videoProps,
       iframeProps,
-      src,
+      sourcesProps,
       children,
       onInserted,
       ...other
@@ -41,7 +41,7 @@ const MediaButton = forwardRef<HTMLButtonElement, MediaButtonProps>(
                 imgProps,
                 videoProps,
                 iframeProps,
-                src,
+                sourcesProps,
               })
             ),
           0

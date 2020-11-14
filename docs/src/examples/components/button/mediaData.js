@@ -1,53 +1,123 @@
 const path = '/static/images/media';
 const audioPath = '/static/audios/media';
+const videoPath = '/static/videos/media';
 
 const mediaData = [
   [
     {
       background: `${path}/dairypanda.png`,
-      src: `${path}/dairypanda.png`,
       tooltip: 'Dairypanda’s hytale fan art',
       type: 'image',
-      props: {},
+      mediaProps: {
+        imgProps: {
+          src: `${path}/dairypanda.png`,
+        },
+      },
     },
     {
       background: `${path}/nuffy.jpg`,
-      src: `${path}/nuffy.jpg`,
       tooltip: 'Nuffy’s hytale fan art',
       type: 'image',
+      mediaProps: {
+        imgProps: {
+          src: `${path}/nuffy.jpg`,
+        },
+      },
     },
     {
       background: `${path}/aura.gif`,
-      src: `${path}/aura.gif`,
       tooltip: 'Aura’s hytale fan art',
       type: 'image',
+      mediaProps: {
+        imgProps: {
+          src: `${path}/aura.gif`,
+        },
+      },
     },
-    // {
-    //   background: `${path}/omnia.jpg`,
-    //   src: `${path}/omnia.jpg`,
-    //   tooltip: 'Omnia’s hytale fan art',
-    //   type: 'image',
-    // },
   ],
   [
     {
       background: `${path}/shine.jpg`,
-      src: `${audioPath}/Shine.mp3`,
       tooltip: 'Acoustic music',
       type: 'audio',
-      props: {},
+      mediaProps: {
+        audioProps: {
+          src: `${audioPath}/Shine.mp3`,
+        },
+      },
     },
     {
       background: `${path}/open.jpg`,
-      src: `${audioPath}/Open.mp3`,
       tooltip: 'Orchestral music',
       type: 'audio',
+      mediaProps: {
+        audioProps: {
+          src: `${audioPath}/Open.mp3`,
+        },
+      },
     },
     {
       background: `${path}/percussion.jpg`,
-      src: `${audioPath}/Bongoland.mp3`,
       tooltip: 'Percussion music',
       type: 'audio',
+      mediaProps: {
+        audioProps: {
+          src: `${audioPath}/Bongoland.mp3`,
+        },
+      },
+    },
+  ],
+  [
+    {
+      background: `${path}/casino.jpg`,
+      tooltip: 'Orchestral music',
+      type: 'video',
+      mediaProps: {
+        videoProps: {
+          poster: `${path}/casino.jpg`,
+        },
+        sourcesProps: [
+          {
+            src: `${videoPath}/casino.mp4`,
+            type: 'video/mp4',
+          },
+        ],
+        errorMessage: "Sorry, your browser doesn't support mp4 videos.",
+      },
+    },
+    {
+      background: `${path}/react.jpg`,
+      tooltip: 'Percussion music',
+      type: 'video',
+      mediaProps: {
+        videoProps: {
+          poster: `${path}/react.jpg`,
+        },
+        sourcesProps: [
+          {
+            src: `${videoPath}/react.mp4`,
+            type: 'video/mp4',
+          },
+        ],
+        errorMessage: "Sorry, your browser doesn't support mp4 videos.",
+      },
+    },
+    {
+      background: `${path}/game.jpg`,
+      tooltip: 'Percussion music',
+      type: 'video',
+      mediaProps: {
+        videoProps: {
+          poster: `${path}/game.jpg`,
+        },
+        sourcesProps: [
+          {
+            src: `${videoPath}/gaming.mp4`,
+            type: 'video/mp4',
+          },
+        ],
+        errorMessage: "Sorry, your browser doesn't support mp4 videos.",
+      },
     },
   ],
 ];
