@@ -65,7 +65,6 @@ const InlineToggleButton = forwardRef<
 
     const handleClick = () => {
       if (editorState && setEditorState) {
-        console.log(value);
         setEditorState(
           RichUtils.toggleInlineStyle(
             EditorState.forceSelection(editorState, editorState.getSelection()),

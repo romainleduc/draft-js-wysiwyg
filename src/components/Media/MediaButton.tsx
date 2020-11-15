@@ -3,6 +3,15 @@ import { Button, ButtonProps } from '@material-ui/core';
 import { MediaType } from './Media';
 import EditorContext from '../EditorContext';
 import { insertAtomicBlock } from '../../utils';
+import { MediaVolumeProps } from './MediaVolume';
+
+interface MediaAudioProps
+  extends Omit<
+    React.AudioHTMLAttributes<HTMLAudioElement>,
+    'controls' | 'controlsList'
+  > {
+  volumeProps: MediaVolumeProps;
+}
 
 export interface MediaButtonProps extends ButtonProps {
   mediaType: MediaType;
@@ -42,6 +51,7 @@ const MediaButton = forwardRef<HTMLButtonElement, MediaButtonProps>(
                 videoProps,
                 iframeProps,
                 sourcesProps,
+                mediaType,
               })
             ),
           0

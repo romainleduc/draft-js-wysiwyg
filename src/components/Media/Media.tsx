@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ContentState, ContentBlock } from 'draft-js';
+import { AudioContainer } from './AudioContainer';
+import { MediaVolume } from './MediaVolume';
+import { MediaPlay } from './MediaPlay';
+import {
+  PlayArrow,
+  Pause,
+  VolumeUp,
+  VolumeDown,
+  VolumeMute,
+  VolumeOff,
+} from '@material-ui/icons';
 
 export interface MediaData {
   title?: string;
@@ -35,22 +46,86 @@ export const Media = (props: MediaProps): JSX.Element => {
     videoProps,
     iframeProps,
     sourcesProps,
+    mediaType,
   } = entity.getData();
+  const [mediaPlaying, setMediaPlaying] = useState(false);
+  const [mediaVolume, setMediaVolume] = useState(
+    audioProps?.muted || videoProps?.muted ? 0 : 1
+  );
   const type = entity.getType();
+  let mediaIcons: { [key: string]: string[] };
+  let mediaProps;
+  let otherMediaProps;
+
+  if (mediaType === 'audio') {
+    mediaProps = audioProps;
+  } else if (mediaType === 'video') {
+    mediaProps = videoProps;
+  }
+
+  if (mediaProps) {
+    const {
+      playIcon,
+      pauseIcon,
+      volumeOffIcon,
+      volumeMuteIcon,
+      volumeDownIcon,
+      volumeUpIcon,
+      ...restMediaProps
+    } = mediaProps;
+    otherMediaProps = restMediaProps;
+
+    mediaIcons = {
+      playIcon: [playIcon, <PlayArrow />],
+      pauseIcon: [pauseIcon, <Pause />],
+      volumeOffIcon: [volumeOffIcon, <VolumeOff />],
+      volumeMuteIcon: [volumeMuteIcon, <VolumeMute />],
+      volumeDownIcon: [volumeDownIcon, <VolumeDown />],
+      volumeUpIcon: [volumeUpIcon, <VolumeUp />],
+    };
+  }
+
+  const handleChangeMediaPlaying = (playing: boolean) => {
+    setMediaPlaying(playing);
+  };
+
+  const handleChangeMediaVolume = (volume: number) => {
+    setMediaVolume(volume);
+  };
+
+  const getIcon = (name: string) => {
+    const icon = mediaIcons[name];
+
+    if (icon) {
+      return icon[0] || icon[1];
+    }
+
+    return undefined;
+  };
 
   return (
     <>
       {type === 'audio' && (
-        <audio className={classes.media} controls {...audioProps}>
-          {sourcesProps?.map(
-            (
-              sourceProps: React.SourceHTMLAttributes<HTMLSourceElement>,
-              key: number
-            ) => (
-              <source key={`mediaAudioSource-${key}`} {...sourceProps} />
-            )
-          )}
-        </audio>
+        <AudioContainer
+          className={classes.media}
+          audioProps={...otherMediaProps}
+        >
+          <MediaPlay onChangePlaying={handleChangeMediaPlaying}>
+            {mediaPlaying ? getIcon('pauseIcon') : getIcon('playIcon')}
+          </MediaPlay>
+          <MediaVolume
+            {...otherMediaProps.volumeProps}
+            onChangeVolume={handleChangeMediaVolume}
+          >
+            {mediaVolume >= 0.5
+              ? getIcon('volumeUpIcon')
+              : mediaVolume >= 0.3
+              ? getIcon('volumeDownIcon')
+              : mediaVolume > 0
+              ? getIcon('volumeMuteIcon')
+              : getIcon('volumeOffIcon')}
+          </MediaVolume>
+        </AudioContainer>
       )}
       {type === 'image' && <img className={classes.media} {...imgProps} />}
       {type === 'video' && (

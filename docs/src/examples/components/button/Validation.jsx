@@ -135,7 +135,9 @@ const EditorModal = (props) => {
           mediaType='image'
           disabled={hasErrors()}
           onInserted={() => props.onClose()}
-          src={objectURL}
+          imgProps={{
+            src: objectURL,
+          }}
         >
           Insert
         </MediaButton>
