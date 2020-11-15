@@ -3,18 +3,20 @@ import { Button, ButtonProps } from '@material-ui/core';
 import { MediaType } from './Media';
 import EditorContext from '../EditorContext';
 import { insertAtomicBlock } from '../../utils';
-import { MediaVolumeProps } from './MediaVolume';
+import { VolumeMediaProps } from './VolumeMedia';
+import clsx from 'clsx';
 
 interface MediaAudioProps
   extends Omit<
     React.AudioHTMLAttributes<HTMLAudioElement>,
     'controls' | 'controlsList'
   > {
-  volumeProps: MediaVolumeProps;
+  volumeProps: VolumeMediaProps;
 }
 
 export interface MediaButtonProps extends ButtonProps {
   mediaType: MediaType;
+  customControls?: (audio: HTMLMediaElement) => JSX.Element;
   imgProps?: React.ImgHTMLAttributes<HTMLImageElement>;
   audioProps?: React.AudioHTMLAttributes<HTMLAudioElement>;
   videoProps?: React.VideoHTMLAttributes<HTMLVideoElement>;
@@ -26,12 +28,14 @@ export interface MediaButtonProps extends ButtonProps {
 const MediaButton = forwardRef<HTMLButtonElement, MediaButtonProps>(
   (
     {
+      className,
       mediaType,
       audioProps,
       imgProps,
       videoProps,
       iframeProps,
       sourcesProps,
+      customControls,
       children,
       onInserted,
       ...other
@@ -51,6 +55,7 @@ const MediaButton = forwardRef<HTMLButtonElement, MediaButtonProps>(
                 videoProps,
                 iframeProps,
                 sourcesProps,
+                customControls,
                 mediaType,
               })
             ),
@@ -62,7 +67,12 @@ const MediaButton = forwardRef<HTMLButtonElement, MediaButtonProps>(
     };
 
     return (
-      <Button ref={ref} onClick={handleClick} {...other}>
+      <Button
+        className={clsx(className, 'media-button')}
+        ref={ref}
+        onClick={handleClick}
+        {...other}
+      >
         {children}
       </Button>
     );

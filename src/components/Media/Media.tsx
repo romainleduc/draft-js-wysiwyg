@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ContentState, ContentBlock } from 'draft-js';
 import { AudioContainer } from './AudioContainer';
-import { MediaVolume } from './MediaVolume';
-import { MediaPlay } from './MediaPlay';
+import { VolumeMedia } from './VolumeMedia';
+import { PlayIconButton } from './PlayIconButton';
 import {
   PlayArrow,
   Pause,
@@ -46,44 +46,13 @@ export const Media = (props: MediaProps): JSX.Element => {
     videoProps,
     iframeProps,
     sourcesProps,
-    mediaType,
+    customControls,
   } = entity.getData();
   const [mediaPlaying, setMediaPlaying] = useState(false);
   const [mediaVolume, setMediaVolume] = useState(
     audioProps?.muted || videoProps?.muted ? 0 : 1
   );
   const type = entity.getType();
-  let mediaIcons: { [key: string]: string[] };
-  let mediaProps;
-  let otherMediaProps;
-
-  if (mediaType === 'audio') {
-    mediaProps = audioProps;
-  } else if (mediaType === 'video') {
-    mediaProps = videoProps;
-  }
-
-  if (mediaProps) {
-    const {
-      playIcon,
-      pauseIcon,
-      volumeOffIcon,
-      volumeMuteIcon,
-      volumeDownIcon,
-      volumeUpIcon,
-      ...restMediaProps
-    } = mediaProps;
-    otherMediaProps = restMediaProps;
-
-    mediaIcons = {
-      playIcon: [playIcon, <PlayArrow />],
-      pauseIcon: [pauseIcon, <Pause />],
-      volumeOffIcon: [volumeOffIcon, <VolumeOff />],
-      volumeMuteIcon: [volumeMuteIcon, <VolumeMute />],
-      volumeDownIcon: [volumeDownIcon, <VolumeDown />],
-      volumeUpIcon: [volumeUpIcon, <VolumeUp />],
-    };
-  }
 
   const handleChangeMediaPlaying = (playing: boolean) => {
     setMediaPlaying(playing);
@@ -93,38 +62,28 @@ export const Media = (props: MediaProps): JSX.Element => {
     setMediaVolume(volume);
   };
 
-  const getIcon = (name: string) => {
-    const icon = mediaIcons[name];
-
-    if (icon) {
-      return icon[0] || icon[1];
-    }
-
-    return undefined;
-  };
-
   return (
     <>
       {type === 'audio' && (
         <AudioContainer
           className={classes.media}
-          audioProps={...otherMediaProps}
+          audioProps={audioProps}
+          customControls={customControls}
         >
-          <MediaPlay onChangePlaying={handleChangeMediaPlaying}>
-            {mediaPlaying ? getIcon('pauseIcon') : getIcon('playIcon')}
-          </MediaPlay>
-          <MediaVolume
-            {...otherMediaProps.volumeProps}
-            onChangeVolume={handleChangeMediaVolume}
-          >
-            {mediaVolume >= 0.5
-              ? getIcon('volumeUpIcon')
-              : mediaVolume >= 0.3
-              ? getIcon('volumeDownIcon')
-              : mediaVolume > 0
-              ? getIcon('volumeMuteIcon')
-              : getIcon('volumeOffIcon')}
-          </MediaVolume>
+          <PlayIconButton onChangePlaying={handleChangeMediaPlaying}>
+            {mediaPlaying ? <Pause /> : <PlayArrow />}
+          </PlayIconButton>
+          <VolumeMedia onChangeVolume={handleChangeMediaVolume}>
+            {mediaVolume >= 0.5 ? (
+              <VolumeUp />
+            ) : mediaVolume >= 0.3 ? (
+              <VolumeDown />
+            ) : mediaVolume > 0 ? (
+              <VolumeMute />
+            ) : (
+              <VolumeOff />
+            )}
+          </VolumeMedia>
         </AudioContainer>
       )}
       {type === 'image' && <img className={classes.media} {...imgProps} />}

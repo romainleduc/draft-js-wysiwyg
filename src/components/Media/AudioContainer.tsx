@@ -5,7 +5,6 @@ import clsx from 'clsx';
 
 const useStyles = makeStyles({
   root: {
-    backgroundColor: 'yellow',
     color: 'white',
   },
   body: {
@@ -15,11 +14,13 @@ const useStyles = makeStyles({
 
 interface AudioContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   audioProps: React.AudioHTMLAttributes<HTMLAudioElement>;
+  customControls?: (audio: HTMLMediaElement) => JSX.Element;
 }
 
 export const AudioContainer = ({
   className,
   audioProps,
+  customControls,
   children,
   ...other
 }: AudioContainerProps): JSX.Element => {
@@ -45,7 +46,8 @@ export const AudioContainer = ({
         <div>
           <audio ref={audioRef} {...audioProps} />
         </div>
-        <div className={classes.body}>{children}</div>
+        {customControls && media && customControls(media)}
+        {!customControls && <div className={classes.body}>{children}</div>}
       </div>
     </MediaContext.Provider>
   );

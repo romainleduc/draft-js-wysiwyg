@@ -19,5 +19,11 @@ export type { EditorProps } from './components';
 export { MediaButton } from './components';
 export type { MediaButtonProps } from './components/Media';
 
+export { VolumeMedia } from './components/Media';
+export type { VolumeMediaProps } from './components/Media';
+
+export { PlayIconButton } from './components/Media';
+export type { PlayIconButtonProps } from './components/Media';
+
 export { IndentDraftButton } from './components';
 export type { IndentDraftButtonProps } from './components';

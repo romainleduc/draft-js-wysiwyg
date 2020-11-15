@@ -3,7 +3,6 @@ import { MediaButton, EditorContainer, EditorToolbar, Editor } from 'draft-js-wy
 import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, Tabs, Tab, GridList, GridListTile, fade, GridListTileBar } from '@material-ui/core';
 import { ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import mediaData from './mediaData';
-import clsx from 'clsx';
 
 const useStyles = makeStyles((theme => ({
   modal: {
@@ -134,7 +133,7 @@ const EditorModal = (props) => {
           </TabPanel>
         ))}
       </div>
-    </Modal>
+    </Modal >
   );
 }
 
