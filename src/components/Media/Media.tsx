@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ContentState, ContentBlock } from 'draft-js';
 import { AudioContainer } from './AudioContainer';
-import { VolumeMedia } from './VolumeMedia';
 import { PlayIconButton } from './PlayIconButton';
-import {
-  PlayArrow,
-  Pause,
-  VolumeUp,
-  VolumeDown,
-  VolumeMute,
-  VolumeOff,
-} from '@material-ui/icons';
+import { VolumeSlider } from './VolumeSlider';
+import { VolumeIconButton } from './VolumeIconButton';
 
 export interface MediaData {
   title?: string;
@@ -48,19 +41,7 @@ export const Media = (props: MediaProps): JSX.Element => {
     sourcesProps,
     customControls,
   } = entity.getData();
-  const [mediaPlaying, setMediaPlaying] = useState(false);
-  const [mediaVolume, setMediaVolume] = useState(
-    audioProps?.muted || videoProps?.muted ? 0 : 1
-  );
   const type = entity.getType();
-
-  const handleChangeMediaPlaying = (playing: boolean) => {
-    setMediaPlaying(playing);
-  };
-
-  const handleChangeMediaVolume = (volume: number) => {
-    setMediaVolume(volume);
-  };
 
   return (
     <>
@@ -70,20 +51,11 @@ export const Media = (props: MediaProps): JSX.Element => {
           audioProps={audioProps}
           customControls={customControls}
         >
-          <PlayIconButton onChangePlaying={handleChangeMediaPlaying}>
-            {mediaPlaying ? <Pause /> : <PlayArrow />}
-          </PlayIconButton>
-          <VolumeMedia onChangeVolume={handleChangeMediaVolume}>
-            {mediaVolume >= 0.5 ? (
-              <VolumeUp />
-            ) : mediaVolume >= 0.3 ? (
-              <VolumeDown />
-            ) : mediaVolume > 0 ? (
-              <VolumeMute />
-            ) : (
-              <VolumeOff />
-            )}
-          </VolumeMedia>
+          <PlayIconButton />
+          <div>
+            <VolumeIconButton />
+            <VolumeSlider />
+          </div>
         </AudioContainer>
       )}
       {type === 'image' && <img className={classes.media} {...imgProps} />}

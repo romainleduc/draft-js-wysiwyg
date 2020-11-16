@@ -22,8 +22,5 @@ export type { IndentDraftButtonProps } from './IndentDraftButton';
 export { default as MediaButton } from './Media';
 export type { MediaButtonProps } from './Media';
 
-export { VolumeMedia } from './Media';
-export type { VolumeMediaProps } from './Media';
-
 export { PlayIconButton } from './Media';
 export type { PlayIconButtonProps } from './Media';

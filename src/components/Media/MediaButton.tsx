@@ -3,16 +3,7 @@ import { Button, ButtonProps } from '@material-ui/core';
 import { MediaType } from './Media';
 import EditorContext from '../EditorContext';
 import { insertAtomicBlock } from '../../utils';
-import { VolumeMediaProps } from './VolumeMedia';
 import clsx from 'clsx';
-
-interface MediaAudioProps
-  extends Omit<
-    React.AudioHTMLAttributes<HTMLAudioElement>,
-    'controls' | 'controlsList'
-  > {
-  volumeProps: VolumeMediaProps;
-}
 
 export interface MediaButtonProps extends ButtonProps {
   mediaType: MediaType;

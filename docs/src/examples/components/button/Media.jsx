@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MediaButton, EditorContainer, EditorToolbar, Editor } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, Tabs, Tab, GridList, GridListTile, fade, GridListTileBar } from '@material-ui/core';
+import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, Tabs, Tab, GridList, GridListTile, fade } from '@material-ui/core';
 import { ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import mediaData from './mediaData';
 

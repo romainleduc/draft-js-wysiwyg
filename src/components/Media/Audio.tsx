@@ -1,7 +1,4 @@
 import React, { useEffect, useState, createRef } from 'react';
-import { Slider, SliderProps } from '@material-ui/core';
-import { MediaVolumn } from './MediaVolumn';
-import MediaContext from './MediaContext';
 
 interface AudioProps extends React.AudioHTMLAttributes<HTMLAudioElement> {
   playIcon: any;
