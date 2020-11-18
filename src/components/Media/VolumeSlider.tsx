@@ -1,27 +1,31 @@
-import React, { useState, useEffect, useContext, forwardRef } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import {
   Slider,
   SliderProps,
 } from '@material-ui/core';
-import MediaContext from './MediaContext';
 import clsx from 'clsx';
 
-export interface VolumeSliderProps extends SliderProps {}
+export interface VolumeSliderProps extends SliderProps {
+  media: HTMLMediaElement;
+  onChangeVolume?: (volume: number) => void;
+}
 
 export const VolumeSlider = forwardRef<HTMLDivElement, VolumeSliderProps>(
   (
     {
       className,
+      media,
+      onChangeVolume,
       ...other
     }: VolumeSliderProps,
     ref
   ): JSX.Element => {
-    const { media } = useContext(MediaContext) || {};
-    const [volume, setVolume] = useState(media?.volume || 100);
-
+    const [volume, setVolume] = useState(media?.volume * 100 || 100);
+  
     useEffect(() => {
       if (media) {
         media.volume = volume / 100;
+        onChangeVolume?.(media.volume);
       }
     }, [volume]);
 
@@ -34,7 +38,7 @@ export const VolumeSlider = forwardRef<HTMLDivElement, VolumeSliderProps>(
     return (
       <Slider
         ref={ref}
-        className={clsx('volume-slider', className)}
+        className={clsx('media-volume', className)}
         value={volume}
         onChange={handleChange}
         {...other}

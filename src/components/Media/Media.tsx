@@ -1,10 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ContentState, ContentBlock } from 'draft-js';
-import { AudioContainer } from './AudioContainer';
-import { PlayIconButton } from './PlayIconButton';
-import { VolumeSlider } from './VolumeSlider';
-import { VolumeIconButton } from './VolumeIconButton';
+import { AudioPrefab } from './AudioPrefab';
 
 export interface MediaData {
   title?: string;
@@ -46,17 +43,11 @@ export const Media = (props: MediaProps): JSX.Element => {
   return (
     <>
       {type === 'audio' && (
-        <AudioContainer
+        <AudioPrefab
           className={classes.media}
           audioProps={audioProps}
           customControls={customControls}
-        >
-          <PlayIconButton />
-          <div>
-            <VolumeIconButton />
-            <VolumeSlider />
-          </div>
-        </AudioContainer>
+         />
       )}
       {type === 'image' && <img className={classes.media} {...imgProps} />}
       {type === 'video' && (

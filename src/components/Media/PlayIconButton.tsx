@@ -1,12 +1,13 @@
-import React, { useContext, forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { IconButton, IconButtonProps } from '@material-ui/core';
-import MediaContext from './MediaContext';
 import { Pause, PlayArrow } from '@material-ui/icons';
 
 export interface PlayIconButtonProps
   extends Omit<IconButtonProps, 'children'> {
+  media: HTMLMediaElement;
   playIcon?: React.ReactNode;
   pauseIcon?: React.ReactNode;
+  onChangePlaying?: (playing: boolean) => void;
 }
 
 const defaultPlayIcon = <PlayArrow />;
@@ -18,31 +19,34 @@ export const PlayIconButton = forwardRef<
 >(
   (
     {
+      media,
       playIcon = defaultPlayIcon,
       pauseIcon = defaultPauseIcon,
+      onChangePlaying,
       ...other
     }: PlayIconButtonProps,
     ref
   ): JSX.Element => {
-    const { media } = useContext(MediaContext) || {};
-    const [playing, setPlaying] = useState(false);
+    const [playing, setPlaying] = useState(!media.paused);
+
+    useEffect(() => {
+      onChangePlaying?.(!media.paused);
+    }, [playing]);
 
     const handleClick = () => {
-      if (media) {
-        if (media.paused) {
-          media.play();
-        } else {
-          media.pause();
-        }
-
-        setPlaying(!media.paused);
+      if (media.paused) {
+        media.play();
+      } else {
+        media.pause();
       }
-    };
+
+      setPlaying(!media.paused);
+    }
 
     return (
       <IconButton
         ref={ref}
-        className="media-play"
+        className='media-play'
         onClick={handleClick}
         {...other}
       >
