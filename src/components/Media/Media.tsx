@@ -31,28 +31,26 @@ export const Media = (props: MediaProps): JSX.Element => {
   const classes = useStyles();
   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
   const {
-    audioProps,
-    imgProps,
-    videoProps,
-    iframeProps,
-    sourcesProps,
-    customControls,
+    atomicVideoProps,
+    atomicAudioProps,
+    atomicImageProps,
   } = entity.getData();
   const type = entity.getType();
 
+  console.log(atomicAudioProps)
+
   return (
     <>
-      {type === 'audio' && (
+      {type === 'audio' && atomicAudioProps && (
         <AudioPrefab
           className={classes.media}
-          audioProps={audioProps}
-          customControls={customControls}
+          atomicAudioProps={atomicAudioProps}
          />
       )}
-      {type === 'image' && <img className={classes.media} {...imgProps} />}
+      {type === 'image' && <img className={classes.media} {...atomicImageProps} />}
       {type === 'video' && (
-        <video className={classes.media} controls {...videoProps}>
-          {sourcesProps?.map(
+        <video className={classes.media} controls {...atomicVideoProps.videoProps}>
+          {atomicVideoProps.sourcesProps?.map(
             (
               sourceProps: React.SourceHTMLAttributes<HTMLSourceElement>,
               key: number
@@ -62,14 +60,14 @@ export const Media = (props: MediaProps): JSX.Element => {
           )}
         </video>
       )}
-      {type === 'embedded_link' && (
+      {/* {type === 'embedded_link' && (
         <iframe
           frameBorder="0"
           allowFullScreen
           title="Wysiwyg Embedded Content"
           {...iframeProps}
         />
-      )}
+      )} */}
     </>
   );
 };
