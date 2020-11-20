@@ -24,7 +24,7 @@
     "clsx": "^1.1.1",
     "draft-js-wysiwyg": "^1.0.7",
     "markdown-to-jsx": "^7.0.1",
-    "marked": "^1.2.2",
+    "marked": "^1.2.5",
     "next": "^10.0.0",
     "path": "^0.12.7",
     "prismjs": "^1.22.0",
