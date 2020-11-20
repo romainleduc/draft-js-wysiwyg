@@ -1,12 +1,14 @@
 import React, { forwardRef } from 'react';
-import { SlideProps } from '@material-ui/core';
+import { IconButtonProps, SlideProps } from '@material-ui/core';
 import AtomicButton, { AtomicButtonProps } from './AtomicButton';
 
 export interface AtomicMediaProps {
   customControls?: (audio: HTMLMediaElement) => JSX.Element;
   sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
+  playButtonProps?: IconButtonProps;
   playIcon?: React.ReactNode;
   pauseIcon?: React.ReactNode;
+  volumeButtonProps?: IconButtonProps;
   volumeOffIcon?: React.ReactNode;
   volumeMuteIcon?: React.ReactNode;
   volumeDownIcon?: React.ReactNode;

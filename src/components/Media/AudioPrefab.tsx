@@ -11,8 +11,10 @@ interface AudioPrefabProps extends React.HTMLAttributes<HTMLDivElement> {
 export const AudioPrefab = ({
   atomicAudioProps: {
     customControls,
+    playButtonProps,
     playIcon,
     pauseIcon,
+    volumeButtonProps,
     volumeOffIcon,
     volumeMuteIcon,
     volumeDownIcon,
@@ -49,8 +51,16 @@ export const AudioPrefab = ({
             media={audio as HTMLMediaElement}
             playIcon={playIcon}
             pauseIcon={pauseIcon}
+            {...playButtonProps}
           />
-          <MuteIconButton media={audio as HTMLMediaElement} />
+          <MuteIconButton
+            media={audio as HTMLMediaElement}
+            volumeOffIcon={volumeOffIcon}
+            volumeMuteIcon={volumeMuteIcon}
+            volumeDownIcon={volumeDownIcon}
+            volumeUpIcon={volumeUpIcon}
+            {...volumeButtonProps}
+          />
           <VolumeSlider
             media={audio as HTMLMediaElement}
             onChangeVolume={handleChangeVolume}
