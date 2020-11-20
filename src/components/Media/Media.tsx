@@ -37,7 +37,7 @@ export const Media = (props: MediaProps): JSX.Element => {
   } = entity.getData();
   const type = entity.getType();
 
-  console.log(atomicAudioProps)
+  console.log(atomicAudioProps);
 
   return (
     <>
@@ -45,11 +45,17 @@ export const Media = (props: MediaProps): JSX.Element => {
         <AudioPrefab
           className={classes.media}
           atomicAudioProps={atomicAudioProps}
-         />
+        />
       )}
-      {type === 'image' && <img className={classes.media} {...atomicImageProps} />}
+      {type === 'image' && (
+        <img className={classes.media} {...atomicImageProps} />
+      )}
       {type === 'video' && (
-        <video className={classes.media} controls {...atomicVideoProps.videoProps}>
+        <video
+          className={classes.media}
+          controls
+          {...atomicVideoProps.videoProps}
+        >
           {atomicVideoProps.sourcesProps?.map(
             (
               sourceProps: React.SourceHTMLAttributes<HTMLSourceElement>,

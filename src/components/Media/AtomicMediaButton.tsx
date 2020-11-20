@@ -14,21 +14,12 @@ export interface AtomicMediaProps {
   sliderProps?: SlideProps;
 }
 
-export interface AtomicMediaButtonProps extends AtomicButtonProps {}
+export type AtomicMediaButtonProps = AtomicButtonProps;
 
 const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
-  (
-    {
-      children,
-      ...other
-    }: AtomicMediaButtonProps,
-    ref
-  ) => {
+  ({ children, ...other }: AtomicMediaButtonProps, ref) => {
     return (
-      <AtomicButton
-        ref={ref}
-        {...other}
-      >
+      <AtomicButton ref={ref} {...other}>
         {children}
       </AtomicButton>
     );

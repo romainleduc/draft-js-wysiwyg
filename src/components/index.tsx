@@ -28,6 +28,5 @@ export type { AtomicAudioButtonProps } from './Media';
 export { AtomicVideoButton } from './Media';
 export type { AtomicVideoButtonProps } from './Media';
 
-
 export { PlayIconButton } from './Media';
 export type { PlayIconButtonProps } from './Media';

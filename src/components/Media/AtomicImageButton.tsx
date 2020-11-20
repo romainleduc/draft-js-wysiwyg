@@ -1,26 +1,20 @@
 import React, { forwardRef } from 'react';
 import AtomicButton, { AtomicButtonProps } from './AtomicButton';
 
-export interface AtomicImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {}
+export type AtomicImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
 
-export interface AtomicImageButtonProps extends Omit<AtomicButtonProps, 'mediaType' | 'atomicAudioProps' | 'atomicVideoProps'> {
+export interface AtomicImageButtonProps
+  extends Omit<
+    AtomicButtonProps,
+    'mediaType' | 'atomicAudioProps' | 'atomicVideoProps'
+  > {
   atomicImageProps?: AtomicImageProps;
 }
 
 const AtomicImageButton = forwardRef<HTMLButtonElement, AtomicImageButtonProps>(
-  (
-    {
-      children,
-      ...other
-    }: AtomicImageButtonProps,
-    ref
-  ) => {
+  ({ children, ...other }: AtomicImageButtonProps, ref) => {
     return (
-      <AtomicButton
-        ref={ref}
-        mediaType='video'
-        {...other}
-      >
+      <AtomicButton ref={ref} mediaType="video" {...other}>
         {children}
       </AtomicButton>
     );

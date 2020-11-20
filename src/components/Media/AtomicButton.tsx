@@ -27,39 +27,39 @@ const AtomicButton = forwardRef<HTMLButtonElement, AtomicButtonProps>(
       onInserted,
       ...other
     }: AtomicButtonProps,
-  ref
-) => {
-  const { editorState, setEditorState } = useContext(EditorContext) || {};
+    ref
+  ) => {
+    const { editorState, setEditorState } = useContext(EditorContext) || {};
 
-  const handleClick = () => {
-    if (editorState && setEditorState) {
-      setTimeout(
-        () =>
-          setEditorState(
-            insertAtomicBlock(editorState, mediaType, {
-              mediaType,
-              atomicVideoProps,
-              atomicAudioProps,
-            })
-          ),
-        0
-      );
+    const handleClick = () => {
+      if (editorState && setEditorState) {
+        setTimeout(
+          () =>
+            setEditorState(
+              insertAtomicBlock(editorState, mediaType, {
+                mediaType,
+                atomicVideoProps,
+                atomicAudioProps,
+              })
+            ),
+          0
+        );
 
-      onInserted?.();
-    }
-  };
+        onInserted?.();
+      }
+    };
 
-  return (
-    <Button
-      className={clsx(className, 'atomic-button')}
-      ref={ref}
-      onClick={handleClick}
-      {...other}
-    >
-      {children}
-    </Button>
-  );
-}
+    return (
+      <Button
+        className={clsx(className, 'atomic-button')}
+        ref={ref}
+        onClick={handleClick}
+        {...other}
+      >
+        {children}
+      </Button>
+    );
+  }
 );
 
 export default AtomicButton;

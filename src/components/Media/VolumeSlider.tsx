@@ -1,8 +1,5 @@
 import React, { useState, useEffect, forwardRef } from 'react';
-import {
-  Slider,
-  SliderProps,
-} from '@material-ui/core';
+import { Slider, SliderProps } from '@material-ui/core';
 import clsx from 'clsx';
 
 export interface VolumeSliderProps extends SliderProps {
@@ -12,16 +9,11 @@ export interface VolumeSliderProps extends SliderProps {
 
 export const VolumeSlider = forwardRef<HTMLDivElement, VolumeSliderProps>(
   (
-    {
-      className,
-      media,
-      onChangeVolume,
-      ...other
-    }: VolumeSliderProps,
+    { className, media, onChangeVolume, ...other }: VolumeSliderProps,
     ref
   ): JSX.Element => {
     const [volume, setVolume] = useState(media?.volume * 100 || 100);
-  
+
     useEffect(() => {
       if (media) {
         media.volume = volume / 100;

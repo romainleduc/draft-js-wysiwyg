@@ -2,8 +2,7 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { IconButton, IconButtonProps } from '@material-ui/core';
 import { Pause, PlayArrow } from '@material-ui/icons';
 
-export interface PlayIconButtonProps
-  extends Omit<IconButtonProps, 'children'> {
+export interface PlayIconButtonProps extends Omit<IconButtonProps, 'children'> {
   media: HTMLMediaElement;
   playIcon?: React.ReactNode;
   pauseIcon?: React.ReactNode;
@@ -41,12 +40,12 @@ export const PlayIconButton = forwardRef<
       }
 
       setPlaying(!media.paused);
-    }
+    };
 
     return (
       <IconButton
         ref={ref}
-        className='media-play'
+        className="media-play"
         onClick={handleClick}
         {...other}
       >

@@ -1,13 +1,14 @@
 import React, { forwardRef } from 'react';
-import {
-  IconButton,
-  IconButtonProps,
-} from '@material-ui/core';
+import { IconButton, IconButtonProps } from '@material-ui/core';
 import clsx from 'clsx';
-import { VolumeDown, VolumeMute, VolumeOff, VolumeUp } from '@material-ui/icons';
+import {
+  VolumeDown,
+  VolumeMute,
+  VolumeOff,
+  VolumeUp,
+} from '@material-ui/icons';
 
-export interface MuteIconButtonProps
-  extends Omit<IconButtonProps, 'children'> {
+export interface MuteIconButtonProps extends Omit<IconButtonProps, 'children'> {
   volumeOffIcon?: React.ReactNode;
   volumeMuteIcon?: React.ReactNode;
   volumeDownIcon?: React.ReactNode;
@@ -21,7 +22,10 @@ const defaultVolumeMuteIcon = <VolumeMute />;
 const defaultVolumeDownIcon = <VolumeDown />;
 const defaultVolumeUpIcon = <VolumeUp />;
 
-export const MuteIconButton = forwardRef<HTMLButtonElement, MuteIconButtonProps>(
+export const MuteIconButton = forwardRef<
+  HTMLButtonElement,
+  MuteIconButtonProps
+>(
   (
     {
       className,
@@ -52,7 +56,7 @@ export const MuteIconButton = forwardRef<HTMLButtonElement, MuteIconButtonProps>
       }
 
       return volumeMuteIcon;
-    }
+    };
 
     return (
       <IconButton

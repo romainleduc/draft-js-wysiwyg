@@ -35,20 +35,15 @@ export const AudioPrefab = ({
 
   const handleChangeVolume = (newValue: number) => {
     setVolume(newValue);
-  }
+  };
 
   return (
     <div {...other}>
       <div>
-        <audio
-          ref={audioRef}
-          {...audioProps}
-        />
+        <audio ref={audioRef} {...audioProps} />
       </div>
-      {audio && customControls &&
-        customControls(audio)
-      }
-      {audio && !customControls &&
+      {audio && customControls && customControls(audio)}
+      {audio && !customControls && (
         <div>
           <PlayIconButton
             media={audio as HTMLMediaElement}
@@ -61,7 +56,7 @@ export const AudioPrefab = ({
             onChangeVolume={handleChangeVolume}
           />
         </div>
-      }
+      )}
     </div>
   );
-}
+};
