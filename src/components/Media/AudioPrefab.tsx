@@ -30,7 +30,7 @@ export const AudioPrefab = ({
           ref={audioRef}
           controls={!customControls}
           {...audioProps}
-          src={!Array.isArray(src) ? src: undefined}
+          src={!Array.isArray(src) ? src : undefined}
         />
       </div>
       {audio && customControls && customControls(audio)}

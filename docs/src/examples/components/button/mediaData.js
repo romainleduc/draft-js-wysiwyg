@@ -48,52 +48,19 @@ const mediaData = [
       background: `${path}/casino.jpg`,
       tooltip: 'Orchestral music',
       type: 'video',
-      mediaProps: {
-        videoProps: {
-          poster: `${path}/casino.jpg`,
-        },
-        sourcesProps: [
-          {
-            src: `${videoPath}/casino.mp4`,
-            type: 'video/mp4',
-          },
-        ],
-        errorMessage: "Sorry, your browser doesn't support mp4 videos.",
-      },
+      src: `${videoPath}/casino.mp4`,
     },
     {
       background: `${path}/react.jpg`,
       tooltip: 'Percussion music',
       type: 'video',
-      mediaProps: {
-        videoProps: {
-          poster: `${path}/react.jpg`,
-        },
-        sourcesProps: [
-          {
-            src: `${videoPath}/react.mp4`,
-            type: 'video/mp4',
-          },
-        ],
-        errorMessage: "Sorry, your browser doesn't support mp4 videos.",
-      },
+      src: `${videoPath}/react.mp4`,
     },
     {
       background: `${path}/game.jpg`,
       tooltip: 'Percussion music',
       type: 'video',
-      mediaProps: {
-        videoProps: {
-          poster: `${path}/game.jpg`,
-        },
-        sourcesProps: [
-          {
-            src: `${videoPath}/gaming.mp4`,
-            type: 'video/mp4',
-          },
-        ],
-        errorMessage: "Sorry, your browser doesn't support mp4 videos.",
-      },
+      src: `${videoPath}/gaming.mp4`,
     },
   ],
 ];

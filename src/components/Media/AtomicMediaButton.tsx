@@ -9,7 +9,10 @@ export interface AtomicMediaButtonProps extends ButtonProps {
   mediaType: MediaType;
   onInserted?: () => void;
   src: string | string[];
-  mediaProps?: React.ImgHTMLAttributes<HTMLImageElement> | React.AudioHTMLAttributes<HTMLAudioElement> | React.VideoHTMLAttributes<HTMLVideoElement>;
+  mediaProps?:
+    | React.ImgHTMLAttributes<HTMLImageElement>
+    | React.AudioHTMLAttributes<HTMLAudioElement>
+    | React.VideoHTMLAttributes<HTMLVideoElement>;
   customControls?: (video: HTMLVideoElement) => JSX.Element;
 }
 
@@ -34,16 +37,12 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
         setTimeout(
           () =>
             setEditorState(
-              insertAtomicBlock(
-                editorState,
+              insertAtomicBlock(editorState, mediaType, {
                 mediaType,
-                {
-                  mediaType,
-                  src,
-                  mediaProps,
-                  customControls,
-                },
-              )
+                src,
+                mediaProps,
+                customControls,
+              })
             ),
           0
         );
