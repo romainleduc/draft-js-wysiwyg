@@ -30,17 +30,17 @@ export const ImagePrefab = ({
       {!Array.isArray(src) ? (
         <img className={classes.media} src={src} {...other} />
       ) : (
-          <picture className={classes.media}>
-            {src.map((srcImage, key) => {
-              if (key !== 0) {
-                const props = sourceProps?.[key];
+        <picture className={classes.media}>
+          {src.map((srcImage, key) => {
+            if (key !== 0) {
+              const props = sourceProps?.[key];
 
-                return <source src={srcImage} {...props} />;
-              }
-            })}
-            <img src={src[0]} {...other} />
-          </picture>
-        )}
+              return <source src={srcImage} {...props} />;
+            }
+          })}
+          <img src={src[0]} {...other} />
+        </picture>
+      )}
     </>
-  )
+  );
 };

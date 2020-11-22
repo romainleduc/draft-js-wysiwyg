@@ -30,11 +30,7 @@ export const Media = (props: MediaProps): JSX.Element => {
   return (
     <>
       {mediaType === 'image' && (
-        <ImagePrefab
-          src={src}
-          sourceProps={sourceProps}
-          {...mediaProps}
-        />
+        <ImagePrefab src={src} sourceProps={sourceProps} {...mediaProps} />
       )}
       {mediaType === 'audio' && (
         <AudioPrefab
