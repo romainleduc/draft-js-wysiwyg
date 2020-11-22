@@ -1,5 +1,17 @@
+import { makeStyles } from '@material-ui/core';
 import React, { createRef, useEffect, useState } from 'react';
 const path = require('path');
+
+const useStyles = makeStyles({
+  media: {
+    display: 'block',
+    margin: '0 auto',
+    width: '100%',
+    // Fix an issue with Firefox rendering video controls
+    // with 'pre-wrap' white-space
+    whiteSpace: 'initial',
+  },
+});
 
 interface AudioPrefabProps extends React.HTMLAttributes<HTMLDivElement> {
   src: string | string[];
@@ -17,6 +29,7 @@ export const AudioPrefab = ({
 }: AudioPrefabProps): JSX.Element => {
   const audioRef = createRef<HTMLAudioElement>();
   const [audio, setAudio] = useState<HTMLAudioElement>();
+  const classes = useStyles();
 
   useEffect(() => {
     const currentAudio = audioRef.current;
@@ -40,6 +53,7 @@ export const AudioPrefab = ({
     <div {...other}>
       <div>
         <audio
+          className={classes.media}
           ref={audioRef}
           controls={!customControls}
           {...audioProps}

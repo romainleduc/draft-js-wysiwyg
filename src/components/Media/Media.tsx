@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
 import { ContentState, ContentBlock } from 'draft-js';
 import { AudioPrefab } from './AudioPrefab';
 import { VideoPrefab } from './VideoPrefab';
@@ -13,24 +12,12 @@ export interface MediaData {
 
 export type MediaType = 'image' | 'video' | 'audio' | 'embedded_link';
 
-const useStyles = makeStyles({
-  media: {
-    display: 'block',
-    margin: '0 auto',
-    width: '100%',
-    // Fix an issue with Firefox rendering video controls
-    // with 'pre-wrap' white-space
-    whiteSpace: 'initial',
-  },
-});
-
 export interface MediaProps {
   contentState: ContentState;
   block: ContentBlock;
 }
 
 export const Media = (props: MediaProps): JSX.Element => {
-  const classes = useStyles();
   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
   const {
     mediaType,
@@ -45,7 +32,6 @@ export const Media = (props: MediaProps): JSX.Element => {
       {mediaType === 'image' && (
         <ImagePrefab
           src={src}
-          className={classes.media}
           sourceProps={sourceProps}
           {...mediaProps}
         />
@@ -53,7 +39,6 @@ export const Media = (props: MediaProps): JSX.Element => {
       {mediaType === 'audio' && (
         <AudioPrefab
           src={src}
-          className={classes.media}
           audioProps={mediaProps}
           customControls={customControls}
           sourceProps={sourceProps}
@@ -62,7 +47,6 @@ export const Media = (props: MediaProps): JSX.Element => {
       {mediaType === 'video' && (
         <VideoPrefab
           src={src}
-          className={classes.media}
           videoProps={mediaProps}
           customControls={customControls}
           sourceProps={sourceProps}

@@ -1,5 +1,17 @@
+import { makeStyles } from '@material-ui/core';
 import React, { createRef, useEffect, useState } from 'react';
 const path = require('path');
+
+const useStyles = makeStyles({
+  media: {
+    display: 'block',
+    margin: '0 auto',
+    width: '100%',
+    // Fix an issue with Firefox rendering video controls
+    // with 'pre-wrap' white-space
+    whiteSpace: 'initial',
+  },
+});
 
 interface VideoPrefabProps extends React.HTMLAttributes<HTMLDivElement> {
   src: string | string[];
@@ -17,6 +29,7 @@ export const VideoPrefab = ({
 }: VideoPrefabProps): JSX.Element => {
   const videoRef = createRef<HTMLVideoElement>();
   const [video, setVideo] = useState<HTMLVideoElement>();
+  const classes = useStyles();
 
   useEffect(() => {
     const currentVideo = videoRef.current;
@@ -30,6 +43,7 @@ export const VideoPrefab = ({
     <div {...other}>
       <div>
         <video
+          className={classes.media}
           ref={videoRef}
           controls={!customControls}
           {...videoProps}
