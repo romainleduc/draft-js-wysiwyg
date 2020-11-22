@@ -31,23 +31,23 @@ export const Media = (props: MediaProps): JSX.Element => {
   const classes = useStyles();
   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
   const {
-    atomicVideoProps,
-    atomicAudioProps,
-    atomicImageProps,
+    mediaType,
+    src,
+    mediaProps,
+    customControls,
   } = entity.getData();
-  const type = entity.getType();
-
-  console.log(atomicAudioProps);
 
   return (
     <>
-      {type === 'audio' && atomicAudioProps && (
+      {mediaType === 'audio' && (
         <AudioPrefab
+          src={src}
           className={classes.media}
-          atomicAudioProps={atomicAudioProps}
+          audioProps={mediaProps}
+          customControls={customControls}
         />
       )}
-      {type === 'image' && (
+      {/* {type === 'image' && (
         <img className={classes.media} {...atomicImageProps} />
       )}
       {type === 'video' && (
@@ -65,7 +65,7 @@ export const Media = (props: MediaProps): JSX.Element => {
             )
           )}
         </video>
-      )}
+      )} */}
       {/* {type === 'embedded_link' && (
         <iframe
           frameBorder="0"

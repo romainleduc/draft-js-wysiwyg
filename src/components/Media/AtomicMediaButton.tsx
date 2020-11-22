@@ -1,29 +1,66 @@
-import React, { forwardRef } from 'react';
-import { IconButtonProps, SlideProps } from '@material-ui/core';
-import AtomicButton, { AtomicButtonProps } from './AtomicButton';
+import React, { useContext, forwardRef } from 'react';
+import { Button, ButtonProps } from '@material-ui/core';
+import { MediaType } from './Media';
+import EditorContext from '../EditorContext';
+import { insertAtomicBlock } from '../../utils';
+import clsx from 'clsx';
 
-export interface AtomicMediaProps {
-  customControls?: (audio: HTMLMediaElement) => JSX.Element;
-  sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
-  playButtonProps?: IconButtonProps;
-  playIcon?: React.ReactNode;
-  pauseIcon?: React.ReactNode;
-  volumeButtonProps?: IconButtonProps;
-  volumeOffIcon?: React.ReactNode;
-  volumeMuteIcon?: React.ReactNode;
-  volumeDownIcon?: React.ReactNode;
-  volumeUpIcon?: React.ReactNode;
-  sliderProps?: SlideProps;
+export interface AtomicMediaButtonProps extends ButtonProps {
+  mediaType: MediaType;
+  onInserted?: () => void;
+  src: string | string[];
+  mediaProps?: React.ImgHTMLAttributes<HTMLImageElement> | React.AudioHTMLAttributes<HTMLAudioElement> | React.VideoHTMLAttributes<HTMLVideoElement>;
+  customControls?: (video: HTMLVideoElement) => JSX.Element;
 }
 
-export type AtomicMediaButtonProps = AtomicButtonProps;
-
 const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
-  ({ children, ...other }: AtomicMediaButtonProps, ref) => {
+  (
+    {
+      className,
+      mediaType,
+      src,
+      mediaProps,
+      customControls,
+      children,
+      onInserted,
+      ...other
+    }: AtomicMediaButtonProps,
+    ref
+  ) => {
+    const { editorState, setEditorState } = useContext(EditorContext) || {};
+
+    const handleClick = () => {
+      if (editorState && setEditorState) {
+        setTimeout(
+          () =>
+            setEditorState(
+              insertAtomicBlock(
+                editorState,
+                mediaType,
+                {
+                  mediaType,
+                  src,
+                  mediaProps,
+                  customControls,
+                },
+              )
+            ),
+          0
+        );
+
+        onInserted?.();
+      }
+    };
+
     return (
-      <AtomicButton ref={ref} {...other}>
+      <Button
+        className={clsx(className, 'atomic-media-button')}
+        ref={ref}
+        onClick={handleClick}
+        {...other}
+      >
         {children}
-      </AtomicButton>
+      </Button>
     );
   }
 );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MediaButton, EditorContainer, EditorToolbar, Editor } from 'draft-js-wysiwyg';
+import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton } from 'draft-js-wysiwyg';
 import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, Tabs, Tab, GridList, GridListTile, fade } from '@material-ui/core';
 import { ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import mediaData from './mediaData';
@@ -105,19 +105,19 @@ const EditorModal = (props) => {
               cellHeight={140}
               cols={3}
             >
-              {media.map(({ background, tooltip, type, mediaProps }) => (
+              {media.map(({ background, tooltip, type, src }) => (
                 <GridListTile>
                   <Tooltip
                     title={tooltip}
                     placement='top'
                   >
-                    <MediaButton
+                    <AtomicMediaButton
+                      className={classes.media}
                       style={{ backgroundImage: `url('${background}')` }}
                       onInserted={() => props.onClose()}
-                      className={classes.media}
-                      mediaType={type}
                       component='span'
-                      {...mediaProps}
+                      mediaType={type}
+                      src={src}
                     >
                       {type !== 'image' &&
                         <PlayArrowRounded style={{
@@ -125,7 +125,7 @@ const EditorModal = (props) => {
                           color: '#fff',
                         }} />
                       }
-                    </MediaButton>
+                    </AtomicMediaButton>
                   </Tooltip>
                 </GridListTile>
               ))}
@@ -161,3 +161,21 @@ const Media = () => {
 }
 
 export default Media;
+
+{/* <>
+  <AtomicImageButton
+    onInserted={() => props.onClose()}
+    className={classes.media}
+    customControl={ }
+    imgProps={{ src }}
+  >
+  </AtomicImageButton>
+
+  <AtomicVideoButton
+    onInserted={() => props.onClose()}
+    className={classes.media}
+    customControl={ }
+    videoProps={{ src }}
+  >
+  </AtomicVideoButton>
+</> */}

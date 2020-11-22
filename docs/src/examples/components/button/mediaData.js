@@ -8,31 +8,19 @@ const mediaData = [
       background: `${path}/dairypanda.png`,
       tooltip: 'Dairypanda’s hytale fan art',
       type: 'image',
-      mediaProps: {
-        imgProps: {
-          src: `${path}/dairypanda.png`,
-        },
-      },
+      src: `${path}/dairypanda.png`,
     },
     {
       background: `${path}/nuffy.jpg`,
       tooltip: 'Nuffy’s hytale fan art',
       type: 'image',
-      mediaProps: {
-        imgProps: {
-          src: `${path}/nuffy.jpg`,
-        },
-      },
+      src: `${path}/nuffy.jpg`,
     },
     {
       background: `${path}/aura.gif`,
       tooltip: 'Aura’s hytale fan art',
       type: 'image',
-      mediaProps: {
-        imgProps: {
-          src: `${path}/aura.gif`,
-        },
-      },
+      src: `${path}/aura.gif`,
     },
   ],
   [
@@ -40,31 +28,19 @@ const mediaData = [
       background: `${path}/shine.jpg`,
       tooltip: 'Acoustic music',
       type: 'audio',
-      mediaProps: {
-        audioProps: {
-          src: `${audioPath}/Shine.mp3`,
-        },
-      },
+      src: `${audioPath}/Shine.mp3`,
     },
     {
       background: `${path}/open.jpg`,
       tooltip: 'Orchestral music',
       type: 'audio',
-      mediaProps: {
-        audioProps: {
-          src: `${audioPath}/Open.mp3`,
-        },
-      },
+      src: `${audioPath}/Open.mp3`,
     },
     {
       background: `${path}/percussion.jpg`,
       tooltip: 'Percussion music',
       type: 'audio',
-      mediaProps: {
-        audioProps: {
-          src: `${audioPath}/Bongoland.mp3`,
-        },
-      },
+      src: `${audioPath}/Bongoland.mp3`,
     },
   ],
   [

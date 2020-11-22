@@ -16,17 +16,11 @@ export type { EditorToolbarProps } from './components';
 export { Editor } from './components';
 export type { EditorProps } from './components';
 
-export { MediaButton } from './components';
-export type { MediaButtonProps } from './components/Media';
-
 export { PlayIconButton } from './components/Media';
 export type { PlayIconButtonProps } from './components/Media';
 
-export { AtomicAudioButton } from './components/Media';
-export type { AtomicAudioButtonProps } from './components/Media';
-
-export { AtomicVideoButton } from './components/Media';
-export type { AtomicVideoButtonProps } from './components/Media';
+export { AtomicMediaButton } from './components/Media';
+export type { AtomicMediaButtonProps } from './components/Media';
 
 export { IndentDraftButton } from './components';
 export type { IndentDraftButtonProps } from './components';

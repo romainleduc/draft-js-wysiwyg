@@ -1,31 +1,19 @@
 import React, { createRef, useEffect, useState } from 'react';
-import { AtomicAudioProps } from './AtomicAudioButton';
-import { MuteIconButton } from './MuteIconButton';
-import { PlayIconButton } from './PlayIconButton';
-import { VolumeSlider } from './VolumeSlider';
 
 interface AudioPrefabProps extends React.HTMLAttributes<HTMLDivElement> {
-  atomicAudioProps: AtomicAudioProps;
+  src: string | string[];
+  audioProps: React.AudioHTMLAttributes<HTMLAudioElement>;
+  customControls?: (audio: HTMLAudioElement) => JSX.Element;
 }
 
 export const AudioPrefab = ({
-  atomicAudioProps: {
-    customControls,
-    playButtonProps,
-    playIcon,
-    pauseIcon,
-    volumeButtonProps,
-    volumeOffIcon,
-    volumeMuteIcon,
-    volumeDownIcon,
-    volumeUpIcon,
-    ...audioProps
-  },
+  src,
+  audioProps,
+  customControls,
   ...other
 }: AudioPrefabProps): JSX.Element => {
   const audioRef = createRef<HTMLAudioElement>();
   const [audio, setAudio] = useState<HTMLAudioElement>();
-  const [volume, setVolume] = useState(100);
 
   useEffect(() => {
     const currentAudio = audioRef.current;
@@ -35,38 +23,17 @@ export const AudioPrefab = ({
     }
   }, [audio]);
 
-  const handleChangeVolume = (newValue: number) => {
-    setVolume(newValue);
-  };
-
   return (
     <div {...other}>
       <div>
-        <audio ref={audioRef} {...audioProps} />
+        <audio
+          ref={audioRef}
+          controls={!customControls}
+          {...audioProps}
+          src={!Array.isArray(src) ? src: undefined}
+        />
       </div>
       {audio && customControls && customControls(audio)}
-      {audio && !customControls && (
-        <div>
-          <PlayIconButton
-            media={audio as HTMLMediaElement}
-            playIcon={playIcon}
-            pauseIcon={pauseIcon}
-            {...playButtonProps}
-          />
-          <MuteIconButton
-            media={audio as HTMLMediaElement}
-            volumeOffIcon={volumeOffIcon}
-            volumeMuteIcon={volumeMuteIcon}
-            volumeDownIcon={volumeDownIcon}
-            volumeUpIcon={volumeUpIcon}
-            {...volumeButtonProps}
-          />
-          <VolumeSlider
-            media={audio as HTMLMediaElement}
-            onChangeVolume={handleChangeVolume}
-          />
-        </div>
-      )}
     </div>
   );
 };
