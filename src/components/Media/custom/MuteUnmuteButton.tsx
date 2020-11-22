@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import { IconButton, IconButtonProps } from '@material-ui/core';
 import clsx from 'clsx';
 import {
@@ -7,13 +7,14 @@ import {
   VolumeOff,
   VolumeUp,
 } from '@material-ui/icons';
+import MediaContext from './MediaContext';
 
-export interface MuteIconButtonProps extends Omit<IconButtonProps, 'children'> {
+export interface MuteUnmuteButtonProps
+  extends Omit<IconButtonProps, 'children'> {
   volumeOffIcon?: React.ReactNode;
   volumeMuteIcon?: React.ReactNode;
   volumeDownIcon?: React.ReactNode;
   volumeUpIcon?: React.ReactNode;
-  media: HTMLMediaElement;
   onChangeMute?: (muted: boolean) => void;
 }
 
@@ -22,37 +23,42 @@ const defaultVolumeMuteIcon = <VolumeMute />;
 const defaultVolumeDownIcon = <VolumeDown />;
 const defaultVolumeUpIcon = <VolumeUp />;
 
-export const MuteIconButton = forwardRef<
+export const MuteUnmuteButton = forwardRef<
   HTMLButtonElement,
-  MuteIconButtonProps
+  MuteUnmuteButtonProps
 >(
   (
     {
       className,
-      media,
       volumeOffIcon = defaultVolumeOffIcon,
       volumeMuteIcon = defaultVolumeMuteIcon,
       volumeDownIcon = defaultVolumeDownIcon,
       volumeUpIcon = defaultVolumeUpIcon,
       onChangeMute,
       ...other
-    }: MuteIconButtonProps,
+    }: MuteUnmuteButtonProps,
     ref
   ): JSX.Element => {
+    const { media } = useContext(MediaContext) || {};
+
     const handleClick = () => {
-      media.muted = !media.muted;
-      onChangeMute?.(media.muted);
+      if (media) {
+        media.muted = !media.muted;
+        onChangeMute?.(media.muted);
+      }
     };
 
     const getIcon = () => {
-      const { volume, muted } = media;
+      if (media) {
+        const { volume, muted } = media;
 
-      if (volume <= 0 || muted) {
-        return volumeOffIcon;
-      } else if (volume >= 0.5) {
-        return volumeUpIcon;
-      } else if (volume >= 0.3) {
-        return volumeDownIcon;
+        if (volume <= 0 || muted) {
+          return volumeOffIcon;
+        } else if (volume >= 0.5) {
+          return volumeUpIcon;
+        } else if (volume >= 0.3) {
+          return volumeDownIcon;
+        }
       }
 
       return volumeMuteIcon;

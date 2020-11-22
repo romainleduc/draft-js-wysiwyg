@@ -1,8 +1,8 @@
 import React from 'react';
 import { ContentState, ContentBlock } from 'draft-js';
-import { AudioPrefab } from './AudioPrefab';
-import { VideoPrefab } from './VideoPrefab';
-import { ImagePrefab } from './ImagePrefab';
+import { AudioPrefab } from './prefabs/AudioPrefab';
+import { VideoPrefab } from './prefabs/VideoPrefab';
+import { ImagePrefab } from './prefabs/ImagePrefab';
 
 export interface MediaData {
   title?: string;

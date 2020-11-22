@@ -22,5 +22,11 @@ export type { IndentDraftButtonProps } from './IndentDraftButton';
 export { AtomicMediaButton } from './Media';
 export type { AtomicMediaButtonProps } from './Media';
 
-export { PlayIconButton } from './Media';
-export type { PlayIconButtonProps } from './Media';
+export { PlayPauseButton } from './Media';
+export type { PlayPauseButtonProps } from './Media';
+
+export { MuteUnmuteButton } from './Media';
+export type { MuteUnmuteButtonProps } from './Media';
+
+export { MediaControl} from './Media';
+export type { MediaControlProps } from './Media';
