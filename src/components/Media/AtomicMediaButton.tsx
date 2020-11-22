@@ -13,7 +13,7 @@ export interface AtomicMediaButtonProps extends ButtonProps {
     | React.ImgHTMLAttributes<HTMLImageElement>
     | React.AudioHTMLAttributes<HTMLAudioElement>
     | React.VideoHTMLAttributes<HTMLVideoElement>;
-  customControls?: (video: HTMLVideoElement) => JSX.Element;
+  customControls?: (media: HTMLVideoElement | HTMLAudioElement) => JSX.Element;
   sourceProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
 }
 
