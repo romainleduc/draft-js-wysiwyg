@@ -1,14 +1,17 @@
 import React, { createRef, useEffect, useState } from 'react';
+const path = require('path');
 
 interface VideoPrefabProps extends React.HTMLAttributes<HTMLDivElement> {
   src: string | string[];
   videoProps: React.VideoHTMLAttributes<HTMLVideoElement>;
+  sourceProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
   customControls?: (audio: HTMLAudioElement) => JSX.Element;
 }
 
 export const VideoPrefab = ({
   src,
   videoProps,
+  sourceProps,
   customControls,
   ...other
 }: VideoPrefabProps): JSX.Element => {
@@ -31,7 +34,20 @@ export const VideoPrefab = ({
           controls={!customControls}
           {...videoProps}
           src={!Array.isArray(src) ? src : undefined}
-        />
+        >
+          {Array.isArray(src) &&
+            src.map((srcVideo, key) => {
+              const props = sourceProps?.[key];
+
+              return (
+                <source
+                  src={srcVideo}
+                  type={`video/${path.extname(src).substring(1)}`}
+                  {...props}
+                />
+              );
+            })}
+        </video>
       </div>
       {video && customControls && customControls(video)}
     </div>

@@ -34,7 +34,7 @@ const mediaData = [
       background: `${path}/open.jpg`,
       tooltip: 'Orchestral music',
       type: 'audio',
-      src: `${audioPath}/Open.mp3`,
+      src: [`${audioPath}/Open.mp3`],
     },
     {
       background: `${path}/percussion.jpg`,

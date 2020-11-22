@@ -1,14 +1,17 @@
 import React, { createRef, useEffect, useState } from 'react';
+const path = require('path');
 
 interface AudioPrefabProps extends React.HTMLAttributes<HTMLDivElement> {
   src: string | string[];
   audioProps: React.AudioHTMLAttributes<HTMLAudioElement>;
+  sourceProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
   customControls?: (audio: HTMLAudioElement) => JSX.Element;
 }
 
 export const AudioPrefab = ({
   src,
   audioProps,
+  sourceProps,
   customControls,
   ...other
 }: AudioPrefabProps): JSX.Element => {
@@ -23,6 +26,16 @@ export const AudioPrefab = ({
     }
   }, [audio]);
 
+  const getSourceType = (src: string) => {
+    let name = path.extname(src).substring(1);
+
+    if (name === 'mp3') {
+      name = 'mpeg';
+    }
+
+    return name;
+  };
+
   return (
     <div {...other}>
       <div>
@@ -31,7 +44,20 @@ export const AudioPrefab = ({
           controls={!customControls}
           {...audioProps}
           src={!Array.isArray(src) ? src : undefined}
-        />
+        >
+          {Array.isArray(src) &&
+            src.map((srcAudio, key) => {
+              const props = sourceProps?.[key];
+
+              return (
+                <source
+                  src={srcAudio}
+                  type={`audio/${getSourceType(srcAudio)}`}
+                  {...props}
+                />
+              );
+            })}
+        </audio>
       </div>
       {audio && customControls && customControls(audio)}
     </div>

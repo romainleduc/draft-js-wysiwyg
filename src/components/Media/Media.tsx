@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { ContentState, ContentBlock } from 'draft-js';
 import { AudioPrefab } from './AudioPrefab';
 import { VideoPrefab } from './VideoPrefab';
+import { ImagePrefab } from './ImagePrefab';
 
 export interface MediaData {
   title?: string;
@@ -31,44 +32,44 @@ export interface MediaProps {
 export const Media = (props: MediaProps): JSX.Element => {
   const classes = useStyles();
   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
-  const { mediaType, src, mediaProps, customControls } = entity.getData();
+  const {
+    mediaType,
+    src,
+    mediaProps,
+    customControls,
+    sourceProps,
+  } = entity.getData();
 
   return (
     <>
+      {mediaType === 'image' && (
+        <ImagePrefab
+          src={src}
+          className={classes.media}
+          sourceProps={sourceProps}
+          {...mediaProps}
+        />
+      )}
       {mediaType === 'audio' && (
         <AudioPrefab
           src={src}
           className={classes.media}
           audioProps={mediaProps}
           customControls={customControls}
+          sourceProps={sourceProps}
         />
       )}
-      {/* {type === 'image' && (
-        <img className={classes.media} {...atomicImageProps} />
-      )} */}
       {mediaType === 'video' && (
         <VideoPrefab
           src={src}
           className={classes.media}
           videoProps={mediaProps}
           customControls={customControls}
+          sourceProps={sourceProps}
         />
-        // <video
-        //   className={classes.media}
-        //   controls
-        //   {...atomicVideoProps.videoProps}
-        // >
-        //   {atomicVideoProps.sourcesProps?.map(
-        //     (
-        //       sourceProps: React.SourceHTMLAttributes<HTMLSourceElement>,
-        //       key: number
-        //     ) => (
-        //       <source key={`mediaVideoSource-${key}`} {...sourceProps} />
-        //     )
-        //   )}
-        // </video>
       )}
-      {/* {type === 'embedded_link' && (
+      {/*         
+      {type === 'embedded_link' && (
         <iframe
           frameBorder="0"
           allowFullScreen

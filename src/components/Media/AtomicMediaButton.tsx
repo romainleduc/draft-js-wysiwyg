@@ -14,6 +14,7 @@ export interface AtomicMediaButtonProps extends ButtonProps {
     | React.AudioHTMLAttributes<HTMLAudioElement>
     | React.VideoHTMLAttributes<HTMLVideoElement>;
   customControls?: (video: HTMLVideoElement) => JSX.Element;
+  sourceProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
 }
 
 const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
@@ -23,6 +24,7 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
       mediaType,
       src,
       mediaProps,
+      sourceProps,
       customControls,
       children,
       onInserted,
@@ -41,6 +43,7 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
                 mediaType,
                 src,
                 mediaProps,
+                sourceProps,
                 customControls,
               })
             ),
