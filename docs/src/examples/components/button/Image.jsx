@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton } from 'draft-js-wysiwyg';
+import React from 'react';
+import { EditorContainer, EditorToolbar, Editor, AtomicImageButton } from 'draft-js-wysiwyg';
 import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, Tabs, Tab, GridList, GridListTile, fade } from '@material-ui/core';
-import { ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
-import mediaData from './mediaData';
+import { ImageOutlined } from '@material-ui/icons';
+import imageData from './imageData';
 
 const useStyles = makeStyles((theme => ({
   modal: {
@@ -27,30 +27,7 @@ const useStyles = makeStyles((theme => ({
     width: '100%',
     height: '100%',
   },
-  hidden: {
-    display: 'none',
-  }
 })));
-
-const TabPanel = (props) => {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`wrapped-tabpanel-${index}`}
-      aria-labelledby={`wrapped-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
 
 /**
  * The example data is structured as follows:
@@ -70,11 +47,6 @@ const TabPanel = (props) => {
  */
 const EditorModal = (props) => {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <Modal
@@ -82,62 +54,38 @@ const EditorModal = (props) => {
       {...props}
     >
       <div className={classes.paper}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor='primary'
-          textColor='primary'
-          variant='fullWidth'
-          aria-label='Media tabs example'
-        >
-          <Tab label='Audio' />
-          <Tab label='Video' />
-          <Tab label='Embed' />
-        </Tabs>
-        {mediaData.map((media, key) => (
-          <TabPanel
-            value={value}
-            index={key}
-          >
+          <Typography variant='h3'>Image</Typography>
+        <Box p={3}>
             <GridList
               className={classes.gridList}
               spacing={10}
               cellHeight={140}
               cols={3}
             >
-              {media.map(({ background, tooltip, type, url }) => (
+              {imageData.map(({ background, tooltip, src }, key) => (
                 <GridListTile>
                   <Tooltip
                     title={tooltip}
                     placement='top'
                   >
-                    <AtomicMediaButton
+                    <AtomicImageButton
                       className={classes.media}
                       style={{ backgroundImage: `url('${background}')` }}
                       onInserted={() => props.onClose()}
+                      atomicImageProps={{ src }}
                       component='span'
-                      atomicMediaProps={{
-                        controls: true,
-                        url,
-                      }}
-                    >
-                      <PlayArrowRounded style={{
-                        fontSize: 45,
-                        color: '#fff',
-                      }} />
-                    </AtomicMediaButton>
+                    />
                   </Tooltip>
                 </GridListTile>
               ))}
             </GridList>
-          </TabPanel>
-        ))}
+        </Box>
       </div>
     </Modal >
   );
 }
 
-const Media = () => {
+const Image = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -160,4 +108,4 @@ const Media = () => {
   );
 }
 
-export default Media;
+export default Image;

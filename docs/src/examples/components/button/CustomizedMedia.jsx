@@ -105,6 +105,26 @@ const Media = () => {
         />
       </EditorToolbar>
       <Editor
+      mediaPlayerProps={{
+        customControls: {
+          youtube: '',
+          audio: '',
+          video: ''
+        },
+        customWrapper: {
+          audio: '',
+          video: ''
+        },
+        config: {
+          youtube: {
+            playerVars: {
+              origin: '',
+            }
+          }
+        },
+        playIcon: <div></div>,
+        light: false,
+      }}
         //audioControl={AudioControlCustom}
         placeholder='Enter some text..'
       />

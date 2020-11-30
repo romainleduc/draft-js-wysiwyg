@@ -8,18 +8,28 @@ title: Button React component
 
 ***
 
-## Media
-<p class="sub-description">Media button can be used to allow the user to modify styles within the editor.</p>
+## Atomic image
+
+<p class="sub-description">Atomic image button can be used to allow the user to modify styles within the editor.</p>
 
 {{"api": "toggle-button/inline-toggle-button.md"}}
 
-### Image
+### Basic example
 
-{{"demo": "button/Media.jsx"}}
+{{"demo": "button/Image.jsx"}}
 
 ### Validation
 
 {{"demo": "button/Validation.jsx"}}
+
+## Atomic Media
+<p class="sub-description">Media button can be used to allow the user to modify styles within the editor.</p>
+
+{{"api": "toggle-button/inline-toggle-button.md"}}
+
+### Video
+
+{{"demo": "button/Media.jsx"}}
 
 ### Customized media
 

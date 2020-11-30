@@ -8,7 +8,6 @@ import {
   BlockMap,
   AtomicBlockUtils,
 } from 'draft-js';
-import { MediaType } from '../components/Media/Media';
 
 /**
  * Returns collection of blocks.
@@ -206,7 +205,7 @@ export const mergeBlockData = (
 
 export const insertAtomicBlock = (
   editorState: EditorState,
-  type: MediaType,
+  type: string,
   data?: Object
 ): EditorState => {
   return AtomicBlockUtils.insertAtomicBlock(

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Button, FormHelperText, fade } from '@material-ui/core';
+import { EditorContainer, EditorToolbar, Editor, AtomicImageButton } from 'draft-js-wysiwyg';
+import { makeStyles, Modal, IconButton, Button, FormHelperText, Typography } from '@material-ui/core';
 import { ImageOutlined, Panorama } from '@material-ui/icons';
 import clsx from 'clsx';
 
@@ -101,6 +101,7 @@ const EditorModal = (props) => {
   return (
     <Modal className={classes.modal} {...props}>
       <div className={classes.paper}>
+        <Typography variant='h3' align='center'>Add image</Typography>
         <div
           className={classes.preview}
           style={{
@@ -131,14 +132,15 @@ const EditorModal = (props) => {
             {errors.image}
           </FormHelperText>
         }
-        <AtomicMediaButton
-          mediaType='image'
+        <AtomicImageButton
           disabled={hasErrors()}
           onInserted={() => props.onClose()}
-          src={objectURL}
+          atomicImageProps={{
+            src: objectURL
+          }}
         >
           Insert
-        </AtomicMediaButton>
+        </AtomicImageButton>
       </div>
     </Modal>
   );

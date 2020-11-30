@@ -22,11 +22,14 @@ export type { PlayPauseButtonProps } from './components/Media';
 export { MuteUnmuteButton } from './components/Media';
 export type { MuteUnmuteButtonProps } from './components/Media';
 
-export { MediaControl} from './components/Media';
+export { MediaControl } from './components/Media';
 export type { MediaControlProps } from './components/Media';
 
 export { AtomicMediaButton } from './components/Media';
 export type { AtomicMediaButtonProps } from './components/Media';
+
+export { AtomicImageButton } from './components/Media';
+export type { AtomicImageButtonProps } from './components/Media';
 
 export { IndentDraftButton } from './components';
 export type { IndentDraftButtonProps } from './components';

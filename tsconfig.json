@@ -21,7 +21,7 @@
     "outDir": "lib",
     "declaration": true
   },
-  "exclude": [
+  "include": [
     "**/lib",
     "**/node_modules",
     "docs/.next"

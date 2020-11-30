@@ -50,9 +50,10 @@ const useStyles = makeStyles((theme) => ({
       background: 'transparent',
     },
     '& h1': {
-      ...theme.typography.h3,
-      fontSize: 40,
+      fontSize: '2.5rem',
       margin: '16px 0',
+      letterSpacing: '0em',
+      fontWeight: 400,
     },
     '& .description': {
       ...theme.typography.h5,
@@ -64,13 +65,18 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '1.2rem',
     },
     '& h2': {
-      ...theme.typography.h4,
-      fontSize: 30,
       margin: '40px 0 16px',
+      fontSize: '1.875rem',
+      fontWeight: 400,
+      lineHeight: 1.235,
+      letterSpacing: '0.00735em',
     },
     '& h3': {
-      ...theme.typography.h5,
       margin: '40px 0 16px',
+      fontSize: '1.5rem',
+      fontWeight: 400,
+      lineHeight: 1.334,
+      letterSpacing: '0em',
     },
     '& h4': {
       ...theme.typography.h6,

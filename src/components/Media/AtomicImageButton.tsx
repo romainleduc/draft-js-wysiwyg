@@ -4,32 +4,25 @@ import EditorContext from '../EditorContext';
 import { insertAtomicBlock } from '../../utils';
 import clsx from 'clsx';
 
-export interface AtomicMediaProps {
-  url: string | string[] | any[];
-  playing?: boolean;
-  volume?: number;
-  controls?: boolean;
-  loop?: boolean;
-  muted?: boolean;
-  style?: any;
-  width?: number;
-  height?: number;
+export interface AtomicImageProps
+  extends React.ImgHTMLAttributes<HTMLImageElement> {
+  sourcesProps: React.SourceHTMLAttributes<HTMLSourceElement>[];
 }
 
-export interface AtomicMediaButtonProps extends ButtonProps {
+export interface AtomicImageButtonProps extends ButtonProps {
   onInserted?: () => void;
-  atomicMediaProps: AtomicMediaProps;
+  atomicImageProps: AtomicImageProps;
 }
 
-const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
+const AtomicImageButton = forwardRef<HTMLButtonElement, AtomicImageButtonProps>(
   (
     {
       className,
-      atomicMediaProps,
+      atomicImageProps,
       children,
       onInserted,
       ...other
-    }: AtomicMediaButtonProps,
+    }: AtomicImageButtonProps,
     ref
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
@@ -39,8 +32,8 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
         setTimeout(
           () =>
             setEditorState(
-              insertAtomicBlock(editorState, 'media', {
-                atomicMediaProps,
+              insertAtomicBlock(editorState, 'image', {
+                atomicImageProps,
               })
             ),
           0
@@ -52,7 +45,7 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
 
     return (
       <Button
-        className={clsx(className, 'atomic-media-button')}
+        className={clsx(className, 'atomic-image-button')}
         ref={ref}
         onClick={handleClick}
         {...other}
@@ -63,4 +56,4 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
   }
 );
 
-export default AtomicMediaButton;
+export default AtomicImageButton;
