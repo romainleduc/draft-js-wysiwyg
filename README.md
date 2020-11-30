@@ -27,25 +27,25 @@ Here is a quick example to get you started.
 import React, { useState } from 'react';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import {
-    Editor,
-    EditorContainer,
-    EditorToolbar,
-    InlineToggleButton,
+  Editor,
+  EditorContainer,
+  EditorToolbar,
+  InlineToggleButton,
 } from 'draft-js-wysiwyg';
 
 const DraftEditor = () => {
-    const [html, setHtml] = useState('');
+  const [html, setHtml] = useState('');
 
-    return (
-        <EditorContainer>
-            <EditorToolbar>
-                <InlineToggleButton value='BOLD'>
-                    <FormatBoldIcon />
-                </InlineToggleButton>
-            </EditorToolbar>
-            <Editor onChange={value => setHtml(value)} />
-        </EditorContainer>
-    );
+  return (
+    <EditorContainer>
+      <EditorToolbar>
+        <InlineToggleButton value='BOLD'>
+          <FormatBoldIcon />
+        </InlineToggleButton>
+      </EditorToolbar>
+      <Editor onChange={value => setHtml(value)} />
+    </EditorContainer>
+  );
 }
 ```
 

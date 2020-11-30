@@ -7,20 +7,20 @@ const headerKeyValueRegExp = /(.*?): (.*)/g;
 const emptyRegExp = /^\s*$/;
 
 interface MarkdownObject {
-    content: string;
-    type: 'demo' | 'api' | 'content';
+  content: string;
+  type: 'demo' | 'api' | 'content';
 }
 
 const renderer = (src: string): string => {
-    return marked(src, {
-        highlight: prism,
-        headerIds: false,
-        breaks: false,
-        pedantic: false,
-        sanitize: false,
-        smartLists: true,
-        smartypants: false,
-    });
+  return marked(src, {
+    highlight: prism,
+    headerIds: false,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+  });
 };
 
 /**
@@ -37,110 +37,110 @@ const renderer = (src: string): string => {
  * { title: 'Backdrop React Component' }
  */
 const getHeaders = (markdown: string) => {
-    const header = markdown.match(headerRegExp);
+  const header = markdown.match(headerRegExp);
 
-    if (!header || !header[1]) {
-        return undefined;
-    }
+  if (!header || !header[1]) {
+    return undefined;
+  }
 
-    let regexMatches;
-    const headers: { [key: string]: string } = {};
+  let regexMatches;
+  const headers: { [key: string]: string } = {};
 
-    // eslint-disable-next-line no-cond-assign
-    while ((regexMatches = headerKeyValueRegExp.exec(header[1])) !== null) {
-        const key = regexMatches[1];
-        const value = regexMatches[2].replace(/(.*)/, '$1');
-        // Remove trailing single quote yml escaping.
-        headers[key] = value.replace(/^'|'$/g, '');
-    }
+  // eslint-disable-next-line no-cond-assign
+  while ((regexMatches = headerKeyValueRegExp.exec(header[1])) !== null) {
+    const key = regexMatches[1];
+    const value = regexMatches[2].replace(/(.*)/, '$1');
+    // Remove trailing single quote yml escaping.
+    headers[key] = value.replace(/^'|'$/g, '');
+  }
 
-    return headers;
+  return headers;
 };
 
 const getTitle = (markdown: string): string => {
-    const title = getHeaders(markdown)?.title;
+  const title = getHeaders(markdown)?.title;
 
-    if (!title) {
-        throw new Error('Missing title in the page');
-    }
+  if (!title) {
+    throw new Error('Missing title in the page');
+  }
 
-    return title;
+  return title;
 };
 
 const getDescription = (markdown: string): string => {
-    const matches = markdown.match(descriptionRegExp);
+  const matches = markdown.match(descriptionRegExp);
 
-    if (!matches || !matches[1]) {
-        throw new Error('Missing description in the page');
-    }
+  if (!matches || !matches[1]) {
+    throw new Error('Missing description in the page');
+  }
 
-    return matches[1].trim();
+  return matches[1].trim();
 };
 
 const excludeTitle = (markdown: string): string => {
-    return markdown.replace(headerRegExp, '');
+  return markdown.replace(headerRegExp, '');
 };
 
 const getType = (markdown: string) => {
-    if (/api/s.test(markdown)) {
-        return 'api';
-    }
+  if (/api/s.test(markdown)) {
+    return 'api';
+  }
 
-    if (/demo/s.test(markdown)) {
-        return 'demo';
-    }
+  if (/demo/s.test(markdown)) {
+    return 'demo';
+  }
 
-    return 'content';
+  return 'content';
 };
 
 export const render = (markdown: string): MarkdownObject[] => {
-    return excludeTitle(markdown)
-        .split(/^{{("(?:demo|api)":[^}]*)}}$/gm) // Split markdown into an array, separating demos
-        .filter((content) => !emptyRegExp.test(content)) // Remove empty lines
-        .map((content) => {
-            const type = getType(content);
+  return excludeTitle(markdown)
+    .split(/^{{("(?:demo|api)":[^}]*)}}$/gm) // Split markdown into an array, separating demos
+    .filter((content) => !emptyRegExp.test(content)) // Remove empty lines
+    .map((content) => {
+      const type = getType(content);
 
-            if (type !== 'content') {
-                return {
-                    content: content.substring(
-                        type === 'demo' ? 9 : 8,
-                        content.length - 1
-                    ),
-                    type,
-                };
-            }
+      if (type !== 'content') {
+        return {
+          content: content.substring(
+            type === 'demo' ? 9 : 8,
+            content.length - 1
+          ),
+          type,
+        };
+      }
 
-            return {
-                content: renderer(content),
-                type: 'content',
-            };
-        });
+      return {
+        content: renderer(content),
+        type: 'content',
+      };
+    });
 };
 
 export const markedApiDoc = (
-    filename: string
+  filename: string
 ): {
-    title: string;
-    html: string;
+  title: string;
+  html: string;
 } => {
-    const markdown = require(`../../examples/api-doc/${filename}`).default;
+  const markdown = require(`../../examples/api-doc/${filename}`).default;
 
-    return {
-        title: getTitle(markdown),
-        html: renderer(excludeTitle(markdown)),
-    };
+  return {
+    title: getTitle(markdown),
+    html: renderer(excludeTitle(markdown)),
+  };
 };
 
 export const prepareMarkdown = (
-    markdown: string
+  markdown: string
 ): {
-    title: string;
-    description: string;
-    markdown: string;
+  title: string;
+  description: string;
+  markdown: string;
 } => {
-    return {
-        title: getTitle(markdown),
-        description: getDescription(markdown),
-        markdown: excludeTitle(markdown),
-    };
+  return {
+    title: getTitle(markdown),
+    description: getDescription(markdown),
+    markdown: excludeTitle(markdown),
+  };
 };

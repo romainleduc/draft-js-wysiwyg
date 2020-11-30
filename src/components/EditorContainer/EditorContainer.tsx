@@ -7,44 +7,44 @@ import ReduxContext from '../ReduxContext';
 import { initialState } from '../../redux/reducers/keyCommandsReducer';
 
 export interface EditorContainerProps
-    extends React.HTMLAttributes<HTMLDivElement> {
-    editorState?: EditorState;
+  extends React.HTMLAttributes<HTMLDivElement> {
+  editorState?: EditorState;
 }
 
 const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
-    (
-        {
-            className,
-            editorState: editorStateProps,
-            children,
-            ...rest
-        }: EditorContainerProps,
-        ref
-    ) => {
-        const [state, dispatch] = useReducer(keyCommandsReducer, initialState);
-        const [editorState, setEditorState] = useState(
-            editorStateProps || EditorState.createEmpty()
-        );
+  (
+    {
+      className,
+      editorState: editorStateProps,
+      children,
+      ...rest
+    }: EditorContainerProps,
+    ref
+  ) => {
+    const [state, dispatch] = useReducer(keyCommandsReducer, initialState);
+    const [editorState, setEditorState] = useState(
+      editorStateProps || EditorState.createEmpty()
+    );
 
-        return (
-            <EditorContext.Provider
-                value={{
-                    editorState,
-                    setEditorState,
-                }}
-            >
-                <ReduxContext.Provider value={{ state, dispatch }}>
-                    <div
-                        ref={ref}
-                        {...rest}
-                        className={clsx('draft-container', className)}
-                    >
-                        {children}
-                    </div>
-                </ReduxContext.Provider>
-            </EditorContext.Provider>
-        );
-    }
+    return (
+      <ReduxContext.Provider value={{ state, dispatch }}>
+        <EditorContext.Provider
+          value={{
+            editorState,
+            setEditorState,
+          }}
+        >
+          <div
+            ref={ref}
+            {...rest}
+            className={clsx('draft-container', className)}
+          >
+            {children}
+          </div>
+        </EditorContext.Provider>
+      </ReduxContext.Provider>
+    );
+  }
 );
 
 EditorContainer.displayName = 'EditorContainer';
