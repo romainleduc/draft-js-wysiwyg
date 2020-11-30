@@ -1,20 +1,35 @@
-export { default as TextAlignToggleButton } from './TextAlignToggleButton';
-export type { TextAlignToggleButtonProps } from './TextAlignToggleButton';
+export { TextAlignToggleButton } from './components';
+export type { TextAlignToggleButtonProps } from './components';
 
-export { default as InlineToggleButton } from './InlineToggleButton';
-export type { InlineToggleButtonProps } from './InlineToggleButton';
+export { InlineToggleButton } from './components';
+export type { InlineToggleButtonProps } from './components';
 
-export { default as BlockTypeToggleButton } from './BlockTypeToggleButton';
-export type { BlockTypeToggleButtonProps } from './BlockTypeToggleButton';
+export { BlockTypeToggleButton } from './components';
+export type { BlockTypeToggleButtonProps } from './components';
 
-export { default as EditorContainer } from './EditorContainer';
-export type { EditorContainerProps } from './EditorContainer';
+export { EditorContainer } from './components';
+export type { EditorContainerProps } from './components';
 
-export { default as EditorToolbar } from './EditorToolbar';
-export type { EditorToolbarProps } from './EditorToolbar';
+export { EditorToolbar } from './components';
+export type { EditorToolbarProps } from './components';
 
-export { default as Editor } from './Editor';
-export type { EditorProps } from './Editor';
+export { Editor } from './components';
+export type { EditorProps } from './components';
 
-export { default as IndentToggleButton } from './IndentToggleButton';
-export type { IndentToggleButtonProps } from './IndentToggleButton';
+export { PlayPauseButton } from './components/Media';
+export type { PlayPauseButtonProps } from './components/Media';
+
+export { MuteUnmuteButton } from './components/Media';
+export type { MuteUnmuteButtonProps } from './components/Media';
+
+export { MediaControl } from './components/Media';
+export type { MediaControlProps } from './components/Media';
+
+export { AtomicMediaButton } from './components/Media';
+export type { AtomicMediaButtonProps } from './components/Media';
+
+export { AtomicImageButton } from './components/Media';
+export type { AtomicImageButtonProps } from './components/Media';
+
+export { IndentDraftButton } from './components';
+export type { IndentDraftButtonProps } from './components';

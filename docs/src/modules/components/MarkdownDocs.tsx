@@ -1,49 +1,74 @@
 import React from 'react';
-import { render } from '../utils/parseMarkdown';
+import { render, markedApiDoc } from '../utils/parseMarkdown';
 import MarkdownElement from './MarkdownElement';
 import Demo from './Demo';
 import { Container, makeStyles } from '@material-ui/core';
+import ApiDocModal from './ApiDocModal';
+import clsx from 'clsx';
 
 interface MarkdownDocsProps {
-    markdown: string;
+  markdown: string;
 }
 
-const useStyles = makeStyles({
-    main: {
-        display: 'flex',
-        flexDirection: 'column',
-        paddingTop: 96,
+const useStyles = makeStyles((theme) => ({
+  main: {
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: 76,
     },
-});
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: 96,
+    },
+  },
+  mainWidth: {
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: 24,
+      paddingRight: 24,
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: 48,
+      paddingRight: 48,
+    },
+  },
+}));
 
 const MarkdownDocs = ({ markdown }: MarkdownDocsProps): JSX.Element => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const getDemoData = (demoPath: string) => {
-        return {
-            raw: require(`!raw-loader!../../examples/${demoPath}`).default,
-            component: require(`../../examples/${demoPath}`).default,
-            language: demoPath.match(/(tsx|jsx|js)/g)?.[0] || 'js',
-        };
+  const getDemoData = (demoPath: string) => {
+    return {
+      raw: require(`!raw-loader!../../examples/components/${demoPath}`).default,
+      component: require(`../../examples/components/${demoPath}`).default,
+      language: demoPath.match(/(tsx|jsx|js)/g)?.[0] || 'js',
     };
+  };
 
-    return (
-        <Container component="main" maxWidth="md" className={classes.main}>
-            {render(markdown).map(({ isDemo, content }, key) => {
-                if (isDemo) {
-                    return <Demo {...getDemoData(content)} key={key} />;
-                }
+  return (
+    <Container
+      component="main"
+      maxWidth="md"
+      className={clsx(classes.main, classes.mainWidth)}
+    >
+      {render(markdown).map(({ type, content }, key) => {
+        if (type === 'demo') {
+          return <Demo {...getDemoData(content)} key={key} />;
+        }
 
-                return (
-                    <MarkdownElement
-                        key={key}
-                        className=""
-                        htmlOrRaw={content}
-                    />
-                );
-            })}
-        </Container>
-    );
+        if (type === 'api') {
+          const { title, html } = markedApiDoc(content);
+
+          return (
+            <ApiDocModal title={title} key={key}>
+              <MarkdownElement className="" htmlOrRaw={html} />
+            </ApiDocModal>
+          );
+        }
+
+        return <MarkdownElement key={key} className="" htmlOrRaw={content} />;
+      })}
+    </Container>
+  );
 };
 
 export default MarkdownDocs;
