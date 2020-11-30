@@ -27,7 +27,7 @@ title: Button React component
 
 {{"api": "toggle-button/inline-toggle-button.md"}}
 
-### Video
+### Basic example
 
 {{"demo": "button/Media.jsx"}}
 
