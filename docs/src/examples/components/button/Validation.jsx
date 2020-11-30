@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
 import { EditorContainer, EditorToolbar, Editor, AtomicImageButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Button, FormHelperText, Typography } from '@material-ui/core';
+import { makeStyles, Modal, IconButton, FormHelperText, Typography } from '@material-ui/core';
 import { ImageOutlined, Panorama } from '@material-ui/icons';
+import { Switch } from '@material-ui/core';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme => ({
+  iconHidden: {
+    display: 'none',
+  },
   modal: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  list: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    width: 600,
-  },
-  itemList: {
-    padding: 5,
-    width: 150,
   },
   paper: {
     display: 'flex',
@@ -42,101 +37,49 @@ const useStyles = makeStyles((theme => ({
     backgroundPosition: 'center',
     color: theme.palette.text.secondary
   },
-  test: {
-    padding: 0,
-    border: 'solid 1px #000000c9'
-  },
-  iconHidden: {
-    display: 'none',
-  }
 })));
 
-const MediaUpload = ({ id, children, validate, onChange, ...other }) => {
-  const handleChange = (e) => {
-    const { files } = e.target;
-
-    if (files) {
-      onChange(files[0], validate?.(files[0]));
-    }
-  }
-
-  return (
-    <label htmlFor={id}>
-      <input
-        id={id}
-        style={{ display: 'none' }}
-        type="file"
-        onChange={handleChange}
-        {...other}
-      />
-      {children}
-    </label>
-  );
-}
-
 const EditorModal = (props) => {
-  const [objectURL, setObjectURL] = useState();
-  const [errors, setErrors] = useState();
+  const [hasErrors, setHasErrors] = useState(false);
+  const imgUrl = '/static/images/media/dairypanda.png'; 
   const classes = useStyles();
 
-  const handleChangeMedia = (file, errors) => {
-    setObjectURL(URL.createObjectURL(file));
-    setErrors(errors);
-  }
-
-  const validate = (file) => {
-    const errors = {};
-
-    if (!/^(image\/png|image\/jpeg)$/g.test(file.type)) {
-      errors.image = 'Type incorrect';
-    }
-
-    return errors;
-  }
-
-  const hasErrors = () => {
-    return errors?.image || (!errors && !objectURL)
+  const handleChangeChecked = () => {
+    setHasErrors(!hasErrors);
   }
 
   return (
     <Modal className={classes.modal} {...props}>
       <div className={classes.paper}>
         <Typography variant='h3' align='center'>Add image</Typography>
+        <Switch
+          checked={!hasErrors}
+          onChange={handleChangeChecked}
+          color='primary'
+          name='checked-media'
+          inputProps={{'aria-label': 'primary checkbox' }}
+        />
         <div
           className={classes.preview}
           style={{
-            backgroundImage: `url('${objectURL}')`
+            backgroundImage: !hasErrors && `url('${imgUrl}')`,
           }}
         >
           <Panorama
-            className={clsx(!hasErrors() && classes.iconHidden)}
+            className={clsx(!hasErrors && classes.iconHidden)}
             size='large'
           />
         </div>
-        <MediaUpload
-          id='image-validation'
-          onChange={handleChangeMedia}
-          validate={validate}
-        >
-          <Button
-            fullWidth
-            component='span'
-            color='primary'
-            variant='contained'
-          >
-            Choose file
-          </Button>
-        </MediaUpload>
-        {errors &&
+        {hasErrors &&
           <FormHelperText error>
-            {errors.image}
+            Errors were found
           </FormHelperText>
         }
         <AtomicImageButton
-          disabled={hasErrors()}
+          disabled={hasErrors}
           onInserted={() => props.onClose()}
           atomicImageProps={{
-            src: objectURL
+            src: imgUrl,
           }}
         >
           Insert
