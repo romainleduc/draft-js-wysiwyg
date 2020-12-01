@@ -15,11 +15,16 @@ export type MediaType = 'image' | 'video' | 'audio' | 'embedded_link';
 export interface MediaProps {
   contentState: ContentState;
   block: ContentBlock;
+  blockProps: any;
 }
 
 export const Media = (props: MediaProps): JSX.Element => {
   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
-  const { atomicMediaProps, atomicImageProps, atomicIframeProps, mediaType } = entity.getData();
+  const {
+    atomicMediaProps,
+    atomicImageProps,
+    atomicIframeProps,
+  } = entity.getData();
 
   return (
     <>

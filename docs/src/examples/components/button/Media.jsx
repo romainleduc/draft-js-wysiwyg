@@ -53,22 +53,23 @@ const TabPanel = (props) => {
   );
 }
 
-export const CustomMedia = (props) => {
-  const entity = props.contentState.getEntity(props.block.getEntityAt(0));
-  const {
-    atomicMediaProps,
-    atomicImageProps,
-    atomicIframeProps
-  } = entity.getData();
-console.log(atomicMediaProps, ReactPlayer)
-  return (
-    <>
-      {atomicMediaProps && (
-        <ReactPlayer url={atomicMediaProps?.src} controls={atomicMediaProps?.controls}/>
-      )}
-    </>
-  );
-};
+// export const CustomMedia = (props) => {
+//   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
+//   const {
+//     atomicMediaProps,
+//     atomicImageProps,
+//     atomicIframeProps
+//   } = entity.getData();
+//   const {foo} = props.blockProps;
+
+//   return (
+//     <>
+//       {atomicMediaProps && (
+//         <ReactPlayer url={atomicMediaProps?.src} controls={atomicMediaProps?.controls} />
+//       )}
+//     </>
+//   );
+// };
 
 /**
  * The example data is structured as follows:
@@ -174,16 +175,13 @@ const Media = () => {
         />
       </EditorToolbar>
       <Editor
-      blockRendererFn={(contentBlock) => {
-        if (contentBlock.getType() === 'atomic') {
-          return {
-            component: CustomMedia,
-            editable: false,
-          };
-        }
-  
-        return null;
-      }}
+        // blockRendererMedia={{
+        //   component: CustomMedia,
+        //   editable: false,
+        //   props: {
+        //     foo: 'bar',
+        //   }
+        // }}
         placeholder='Enter some text..'
       />
     </EditorContainer>

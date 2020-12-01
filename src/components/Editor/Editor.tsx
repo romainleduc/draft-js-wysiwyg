@@ -9,6 +9,7 @@ import {
   DraftHandleValue,
   DefaultDraftBlockRenderMap,
   DraftBlockRenderMap,
+  ContentState,
 } from 'draft-js';
 import { indentSelection, mergeBlockData } from '../../utils';
 import draftToHtml from 'draftjs-to-html';
@@ -27,6 +28,9 @@ export interface EditorProps
   keyBinding?: string[];
   onChange?(html: string): void;
   blockRenderMapIsExpandable?: boolean;
+  blockRendererMedia?: any;
+  blockRendererImage?: any;
+  blockRendererIframe?: any;
 }
 
 const userStyles = makeStyles({
@@ -53,6 +57,9 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       keyCommands,
       keyBinding,
       onChange,
+      blockRendererMedia,
+      blockRendererImage,
+      blockRendererIframe,
       blockRenderMap,
       blockRenderMapIsExpandable,
       ...rest
@@ -111,6 +118,27 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
 
     const mediaBlockRenderer = (contentBlock: ContentBlock) => {
       if (contentBlock.getType() === 'atomic') {
+        const {
+          atomicMediaProps,
+          atomicImageProps,
+          atomicIframeProps
+        } = editorState
+          .getCurrentContent()
+          .getEntity(contentBlock.getEntityAt(0))
+          .getData();
+
+        if (atomicMediaProps && blockRendererMedia) {
+          return blockRendererMedia;
+        }
+
+        if (atomicImageProps && blockRendererImage) {
+          return blockRendererImage;
+        }
+
+        if (atomicIframeProps && blockRendererIframe) {
+          return blockRendererIframe;
+        }
+
         return {
           component: Media,
           editable: false,
