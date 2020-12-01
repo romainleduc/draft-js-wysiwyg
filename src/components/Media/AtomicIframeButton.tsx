@@ -3,28 +3,23 @@ import { Button, ButtonProps } from '@material-ui/core';
 import EditorContext from '../EditorContext';
 import { insertAtomicBlock } from '../../utils';
 import clsx from 'clsx';
-import { getMediaType } from './patterns';
 
-export interface AtomicMediaProps extends React.MediaHTMLAttributes<HTMLMediaElement> {
-  sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
-  height?: number;
-  poster?: string;
-}
+export interface AtomicIframeProps extends React.IframeHTMLAttributes<HTMLIFrameElement> {}
 
-export interface AtomicMediaButtonProps extends ButtonProps {
+export interface AtomicIframeButtonProps extends ButtonProps {
   onInserted?: () => void;
-  atomicMediaProps: AtomicMediaProps;
+  atomicIframeProps: AtomicIframeProps;
 }
 
-const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
+const AtomicIframeButton = forwardRef<HTMLButtonElement, AtomicIframeButtonProps>(
   (
     {
       className,
-      atomicMediaProps,
+      atomicIframeProps,
       children,
       onInserted,
       ...other
-    }: AtomicMediaButtonProps,
+    }: AtomicIframeButtonProps,
     ref
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
@@ -35,8 +30,7 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
           () =>
             setEditorState(
               insertAtomicBlock(editorState, 'media', {
-                atomicMediaProps,
-                mediaType: getMediaType(atomicMediaProps?.src),
+                atomicIframeProps,
               })
             ),
           0
@@ -59,4 +53,4 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
   }
 );
 
-export default AtomicMediaButton;
+export default AtomicIframeButton;

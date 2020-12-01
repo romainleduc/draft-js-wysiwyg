@@ -92,7 +92,6 @@ const EditorModal = (props) => {
         >
           <Tab label='Audio' />
           <Tab label='Video' />
-          <Tab label='Embed' />
         </Tabs>
         {mediaData.map((media, key) => (
           <TabPanel
@@ -105,7 +104,7 @@ const EditorModal = (props) => {
               cellHeight={140}
               cols={3}
             >
-              {media.map(({ background, tooltip, type, url }) => (
+              {media.map(({ background, tooltip, src }) => (
                 <GridListTile>
                   <Tooltip
                     title={tooltip}
@@ -118,7 +117,7 @@ const EditorModal = (props) => {
                       component='span'
                       atomicMediaProps={{
                         controls: true,
-                        url,
+                        src,
                       }}
                     >
                       <PlayArrowRounded style={{
