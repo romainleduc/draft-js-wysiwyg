@@ -16,15 +16,6 @@ export type { EditorToolbarProps } from './components';
 export { Editor } from './components';
 export type { EditorProps } from './components';
 
-export { PlayPauseButton } from './components/Media';
-export type { PlayPauseButtonProps } from './components/Media';
-
-export { MuteUnmuteButton } from './components/Media';
-export type { MuteUnmuteButtonProps } from './components/Media';
-
-export { MediaControl } from './components/Media';
-export type { MediaControlProps } from './components/Media';
-
 export { AtomicMediaButton } from './components/Media';
 export type { AtomicMediaButtonProps } from './components/Media';
 

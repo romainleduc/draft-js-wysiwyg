@@ -47,6 +47,7 @@ module.exports = {
       react: 'react',
       immutable: 'immutable',
       'react-dom': 'react-dom',
+      'draft-js': 'draft-js',
     },
     /@material-ui\/.*/
   ]

@@ -3,6 +3,7 @@ import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton } from 'draft
 import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, Tabs, Tab, GridList, GridListTile, fade } from '@material-ui/core';
 import { ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import mediaData from './mediaData';
+import ReactPlayer from 'react-player';
 
 const useStyles = makeStyles((theme => ({
   modal: {
@@ -52,6 +53,23 @@ const TabPanel = (props) => {
   );
 }
 
+export const CustomMedia = (props) => {
+  const entity = props.contentState.getEntity(props.block.getEntityAt(0));
+  const {
+    atomicMediaProps,
+    atomicImageProps,
+    atomicIframeProps
+  } = entity.getData();
+console.log(atomicMediaProps, ReactPlayer)
+  return (
+    <>
+      {atomicMediaProps && (
+        <ReactPlayer url={atomicMediaProps?.src} controls={atomicMediaProps?.controls}/>
+      )}
+    </>
+  );
+};
+
 /**
  * The example data is structured as follows:
  *
@@ -92,6 +110,7 @@ const EditorModal = (props) => {
         >
           <Tab label='Audio' />
           <Tab label='Video' />
+          <Tab label='Embed' />
         </Tabs>
         {mediaData.map((media, key) => (
           <TabPanel
@@ -154,7 +173,19 @@ const Media = () => {
           onClose={handleClick}
         />
       </EditorToolbar>
-      <Editor placeholder='Enter some text..' />
+      <Editor
+      blockRendererFn={(contentBlock) => {
+        if (contentBlock.getType() === 'atomic') {
+          return {
+            component: CustomMedia,
+            editable: false,
+          };
+        }
+  
+        return null;
+      }}
+        placeholder='Enter some text..'
+      />
     </EditorContainer>
   );
 }
