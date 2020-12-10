@@ -1,12 +1,14 @@
 /**
+ * https://unpkg.com/prismjs/themes/prism-okaidia.css
  *
- * theme for JavaScript, CSS and HTML
- * Loosely based on Okaidia textmate theme by https://unpkg.com/prismjs/themes/prism-okaidia.css
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
  */
 
  code[class*="language-"],
  pre[class*="language-"] {
-   color: #fff;
+   color: #f8f8f2;
    background: none;
    text-shadow: 0 1px rgba(0, 0, 0, 0.3);
    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
@@ -38,7 +40,7 @@
  
  :not(pre) > code[class*="language-"],
  pre[class*="language-"] {
-   background: #24292e;
+   background: #272822;
  }
  
  /* Inline code */
@@ -54,12 +56,6 @@
  .token.cdata {
    color: slategray;
  }
-
- .token.attr-name,
- .token.constant,
- .language-javascript {
-    color: #abebff;
- }
  
  .token.punctuation {
    color: #f8f8f2;
@@ -71,6 +67,7 @@
  
  .token.property,
  .token.tag,
+ .token.constant,
  .token.symbol,
  .token.deleted {
    color: #f92672;
@@ -82,12 +79,12 @@
  }
  
  .token.selector,
+ .token.attr-name,
  .token.string,
  .token.char,
  .token.builtin,
- .token.inserted,
- .token.attr-value {
-   color: #d5a77e;
+ .token.inserted {
+   color: #a6e22e;
  }
  
  .token.operator,
@@ -100,24 +97,15 @@
  }
  
  .token.atrule,
- .token.function {
-   color: #fffebf;
- }
-
+ .token.attr-value,
+ .token.function,
  .token.class-name {
-    color: #6aeeb6;
+   color: #e6db74;
  }
  
- /* // fait */
- .token.keyword,
- .token.tag {
-   color: #48afd7;
+ .token.keyword {
+   color: #66d9ef;
  }
-
- .token.keyword.special {
-    /* color: #CE95D2; */
-    color: #E1A0E6;
-  }
  
  .token.regex,
  .token.important {
@@ -151,6 +139,8 @@
  }
  
  .token.property,
+ .token.tag,
+ .token.constant,
  .token.symbol,
  .token.deleted {
    color: rgb(252, 146, 158);
@@ -160,4 +150,3 @@
  .token.number {
    color: #b78eff;
  }
- 

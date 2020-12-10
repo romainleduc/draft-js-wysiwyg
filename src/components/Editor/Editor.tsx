@@ -9,10 +9,8 @@ import {
   DraftHandleValue,
   DefaultDraftBlockRenderMap,
   DraftBlockRenderMap,
-  ContentState,
 } from 'draft-js';
-import { indentSelection, mergeBlockData } from '../../utils';
-import draftToHtml from 'draftjs-to-html';
+import { indentSelection, mergeBlockData, draftToHtml } from '../../utils';
 import { convertToRaw } from 'draft-js';
 import EditorContext from '../EditorContext';
 import clsx from 'clsx';
@@ -183,7 +181,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
             onChange={(editorState) => {
               if (onChange) {
                 onChange(
-                  draftToHtml(convertToRaw(editorState.getCurrentContent()))
+                  draftToHtml(editorState.getCurrentContent())
                 );
               }
 

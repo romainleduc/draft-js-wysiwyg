@@ -1,68 +1,62 @@
 import {
-  RawDraftContentState,
-  RawDraftContentBlock,
   RawDraftInlineStyleRange,
   DraftInlineStyleType,
+  ContentState,
+  convertToRaw,
 } from 'draft-js';
 
 export interface InlineStyleRanges {
-  index: number;
+  start: number;
+  end: number;
+  length: number;
+  tag: string;
   inlineStyle: DraftInlineStyleType;
 }
 
 type TagType = 'opening' | 'closing';
 
-export const draftToHtml = (
-  rawDraftContentState: RawDraftContentState
+export const draftToHtml = (contentState: ContentState): string => {
+  let html = '';
+
+  convertToRaw(contentState)
+    .blocks
+    .forEach(({ text, inlineStyleRanges }) => {
+      if (text.length) {
+        html += `<p>${insertInlineStyleTags(text, inlineStyleRanges)}</p>`;
+      }
+    }
+  );
+
+  return html;
+};
+
+export const insertInlineStyleTags = (
+  text: string,
+  inlineStyleRanges: RawDraftInlineStyleRange[]
 ): string => {
-  // const html = rawDraftContentState.blocks.map(block => {
-  //     if (!!block.inlineStyleRanges.length) {
-  //         return addInline(block);
-  //     }
-  // });
+  const textToArray = Array.from(text);
+  const styleSorted = inlineStyleRanges.sort((a, b) => a.offset - b.offset);
 
-  //return html.join('');
-  console.log(rawDraftContentState);
-  console.log(addInlineStyles(rawDraftContentState.blocks[0]));
-  return '';
-};
+  let depth = 1;
 
-export const getInlineStyleRanges = (
-  inlineStyleRanges: Array<RawDraftInlineStyleRange>,
-  tagType: TagType
-): InlineStyleRanges[] => {
-  return inlineStyleRanges
-    .map(({ offset, style, length }) => {
-      const index = tagType === 'opening' ? offset : offset + (length - 1);
-
-      return {
-        index,
-        inlineStyle: style,
-      };
-    })
-    .sort((a, b) => a.index - b.index);
-};
-
-export const addInlineStyles = (block: RawDraftContentBlock): void => {
-  const openingTags = getInlineStyleRanges(block.inlineStyleRanges, 'opening');
-  const closingTags = getInlineStyleRanges(block.inlineStyleRanges, 'closing');
-  const textArray = Array.from(block.text);
-  let decale = 1;
-
-  openingTags.forEach(({ index, inlineStyle }, key) => {
-    textArray.splice(index + key, 0, getInlineStyleTag(inlineStyle, 'opening'));
-  });
-
-  closingTags.forEach(({ index, inlineStyle }, key) => {
-    textArray.splice(
-      index + key + decale + 1,
+  styleSorted.forEach(({ offset, style }, key) => {
+    depth += 1;
+    textToArray.splice(
+      offset + key,
       0,
-      getInlineStyleTag(inlineStyle, 'closing')
+      getInlineStyleTag(style, 'opening')
     );
-    decale += 2;
+  });
+  
+  styleSorted.forEach(({ offset, length, style }, key) => {
+    textToArray.splice(
+      offset + (length - 1) + key + depth,
+      0,
+      getInlineStyleTag(style, 'closing')
+    );
   });
 
-  console.log(textArray);
+  return textToArray.join('');
 };
 
 export const getInlineStyleTag = (

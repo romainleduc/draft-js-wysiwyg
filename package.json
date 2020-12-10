@@ -85,9 +85,7 @@
     "directory": "lib"
   },
   "dependencies": {
-    "@types/draftjs-to-html": "^0.8.0",
     "clsx": "^1.1.1",
-    "draftjs-to-html": "^0.9.1",
     "prop-types": "^15.7.2",
     "terser-webpack-plugin": "^4.2.2"
   },
