@@ -5,10 +5,24 @@ import clsx from 'clsx';
 import keyCommandsReducer from '../../redux/reducers/keyCommandsReducer';
 import ReduxContext from '../ReduxContext';
 import { initialState } from '../../redux/reducers/keyCommandsReducer';
+import { NoSsr } from '@material-ui/core';
 
 export interface EditorContainerProps
   extends React.HTMLAttributes<HTMLDivElement> {
   editorState?: EditorState;
+  noSsr?: boolean;
+}
+
+const RenderWithPossibleSsr = ({ noSsr, children, ...other }) => {
+  if (noSsr) {
+    return (
+      <NoSsr {...other}>
+        {children}
+      </NoSsr>
+    )
+  }
+
+  return children;
 }
 
 const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
@@ -17,6 +31,7 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
       className,
       editorState: editorStateProps,
       children,
+      noSsr,
       ...rest
     }: EditorContainerProps,
     ref
@@ -27,22 +42,24 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
     );
 
     return (
-      <ReduxContext.Provider value={{ state, dispatch }}>
-        <EditorContext.Provider
-          value={{
-            editorState,
-            setEditorState,
-          }}
-        >
-          <div
-            ref={ref}
-            {...rest}
-            className={clsx('draft-container', className)}
+      <RenderWithPossibleSsr noSsr={noSsr}>
+        <ReduxContext.Provider value={{ state, dispatch }}>
+          <EditorContext.Provider
+            value={{
+              editorState,
+              setEditorState,
+            }}
           >
-            {children}
-          </div>
-        </EditorContext.Provider>
-      </ReduxContext.Provider>
+            <div
+              ref={ref}
+              {...rest}
+              className={clsx('draft-container', className)}
+            >
+              {children}
+            </div>
+          </EditorContext.Provider>
+        </ReduxContext.Provider>
+      </RenderWithPossibleSsr>
     );
   }
 );
