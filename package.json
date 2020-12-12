@@ -1,6 +1,5 @@
 {
   "name": "draft-js-wysiwyg",
-  "private": true,
   "description": "A wysiwyg using DraftJS.",
   "version": "1.0.8",
   "keywords": [
