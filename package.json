@@ -33,14 +33,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KiziKr/draft-js-wysiwyg.git"
+    "url": "git+https://github.com/romainleduc/draft-js-wysiwyg.git"
   },
   "author": "Romain Leduc <KiziKr>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KiziKr/draft-js-wysiwyg/issues"
+    "url": "https://github.com/romainleduc/draft-js-wysiwyg/issues"
   },
-  "homepage": "https://github.com/KiziKr/draft-js-wysiwyg#readme",
+  "homepage": "https://github.com/romainleduc/draft-js-wysiwyg#readme",
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
