@@ -24,3 +24,9 @@ export type { AtomicImageButtonProps } from './components/Media';
 
 export { IndentDraftButton } from './components';
 export type { IndentDraftButtonProps } from './components';
+
+export {
+  getDefaultBlockRenderer,
+  getDefaultBlockStyle,
+  getDefaultKeyBinding
+} from './utils/editorUtils';

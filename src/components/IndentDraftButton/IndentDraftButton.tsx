@@ -2,6 +2,7 @@ import React, { useContext, forwardRef, useEffect } from 'react';
 import {
   indentSelection as indentSelectionUtils,
   isOutdentable,
+  IndentType
 } from '../../utils';
 import EditorContext from '../EditorContext';
 import { DraftButton, DraftButtonProps } from '../DraftButton';
@@ -12,7 +13,7 @@ export interface IndentDraftButtonProps extends DraftButtonProps {
   /**
    * The value to associate with the button
    */
-  value: 'increase' | 'decrease';
+  value: IndentType;
   /**
    * If `true`, indentation will only be performed on nested list.
    * @default false
@@ -24,6 +25,11 @@ export interface IndentDraftButtonProps extends DraftButtonProps {
    */
   disableKeyboardShortcuts?: boolean;
 }
+
+export enum IndentCommand {
+  Increase = 'increase-indent',
+  Decrease = 'decrease-indent',
+};
 
 const IndentDraftButton = forwardRef<HTMLButtonElement, IndentDraftButtonProps>(
   (
@@ -43,7 +49,7 @@ const IndentDraftButton = forwardRef<HTMLButtonElement, IndentDraftButtonProps>(
       if (!disableKeyboardShortcuts) {
         dispatch({
           type: ACTION_TYPES.ADD_KEY_BINDING,
-          payload: 'Tab',
+          payload: `${value}-indent`,
         });
       }
     }, []);
