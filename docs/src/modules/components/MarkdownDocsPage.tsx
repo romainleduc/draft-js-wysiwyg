@@ -1,6 +1,6 @@
 import React from 'react';
-import AppHead from '../src/modules/components/AppHead';
-import MarkdownDocs from '../src/modules/components/MarkdownDocs';
+import AppHead from './AppHead';
+import MarkdownDocs from './MarkdownDocs';
 
 interface MarkdownDocsPageProps {
   title: string;
