@@ -24,12 +24,3 @@ export type { AtomicMediaButtonProps } from './Media';
 
 export { AtomicImageButton } from './Media';
 export type { AtomicImageButtonProps } from './Media';
-
-export { PlayPauseButton } from './Media';
-export type { PlayPauseButtonProps } from './Media';
-
-export { MuteUnmuteButton } from './Media';
-export type { MuteUnmuteButtonProps } from './Media';
-
-export { MediaControl } from './Media';
-export type { MediaControlProps } from './Media';

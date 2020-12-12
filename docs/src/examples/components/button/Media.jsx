@@ -3,6 +3,7 @@ import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton } from 'draft
 import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, Tabs, Tab, GridList, GridListTile, fade } from '@material-ui/core';
 import { ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import mediaData from './mediaData';
+import ReactPlayer from 'react-player';
 
 const useStyles = makeStyles((theme => ({
   modal: {
@@ -51,6 +52,24 @@ const TabPanel = (props) => {
     </div>
   );
 }
+
+// export const CustomMedia = (props) => {
+//   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
+//   const {
+//     atomicMediaProps,
+//     atomicImageProps,
+//     atomicIframeProps
+//   } = entity.getData();
+//   const {foo} = props.blockProps;
+
+//   return (
+//     <>
+//       {atomicMediaProps && (
+//         <ReactPlayer url={atomicMediaProps?.src} controls={atomicMediaProps?.controls} />
+//       )}
+//     </>
+//   );
+// };
 
 /**
  * The example data is structured as follows:
@@ -105,7 +124,7 @@ const EditorModal = (props) => {
               cellHeight={140}
               cols={3}
             >
-              {media.map(({ background, tooltip, type, url }) => (
+              {media.map(({ background, tooltip, src }) => (
                 <GridListTile>
                   <Tooltip
                     title={tooltip}
@@ -118,7 +137,7 @@ const EditorModal = (props) => {
                       component='span'
                       atomicMediaProps={{
                         controls: true,
-                        url,
+                        src,
                       }}
                     >
                       <PlayArrowRounded style={{
@@ -155,7 +174,16 @@ const Media = () => {
           onClose={handleClick}
         />
       </EditorToolbar>
-      <Editor placeholder='Enter some text..' />
+      <Editor
+        // blockRendererMedia={{
+        //   component: CustomMedia,
+        //   editable: false,
+        //   props: {
+        //     foo: 'bar',
+        //   }
+        // }}
+        placeholder='Enter some text..'
+      />
     </EditorContainer>
   );
 }

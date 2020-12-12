@@ -13,7 +13,7 @@ import {
   getBlocksForKeys,
 } from './blockUtils';
 
-type IndentType = 'decrease' | 'increase';
+export type IndentType = 'decrease' | 'increase';
 
 /**
  * Check if a content block is of type list.
