@@ -21,7 +21,7 @@
     "clipboard-copy": "^3.1.0",
     "clsx": "^1.1.1",
     "draft-js": "^0.11.7",
-    "draft-js-wysiwyg": "^1.0.7",
+    "draft-js-wysiwyg": "^1.0.9",
     "markdown-to-jsx": "^7.0.1",
     "marked": "^1.2.2",
     "next": "^10.0.0",
