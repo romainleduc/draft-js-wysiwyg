@@ -1,6 +1,5 @@
+import marked from 'marked';
 import prism from './prism';
-
-const marked = require('marked');
 
 const headerRegExp = /---[\r\n]([\s\S]*)[\r\n]---/;
 const descriptionRegExp = /<p class="description">(.*)<\/p>/s;
