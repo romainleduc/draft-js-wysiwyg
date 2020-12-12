@@ -82,7 +82,11 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       ) {
         if (Object.values(IndentCommand).includes(command as IndentCommand)) {
           const contentState = editorState.getCurrentContent();
-          const indentType = command === IndentCommand.Increase ? 'increase': 'decrease';
+          const indentType = command === IndentCommand.Increase ? 'increase' : 'decrease';
+
+          if (!setEditorState) {
+            return 'not-handled';
+          }
 
           setEditorState(
             indentSelection(
@@ -96,7 +100,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         } else {
           const newState = RichUtils.handleKeyCommand(editorState, command);
 
-          if (newState) {
+          if (newState && setEditorState) {
             setEditorState(newState);
             return 'handled';
           }
