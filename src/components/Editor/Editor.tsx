@@ -96,7 +96,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         } else {
           const newState = RichUtils.handleKeyCommand(editorState, command);
 
-          if (newState && setEditorState) {
+          if (newState) {
             setEditorState(newState);
             return 'handled';
           }
