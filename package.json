@@ -2,6 +2,7 @@
   "name": "draft-js-wysiwyg",
   "description": "A wysiwyg using DraftJS.",
   "version": "1.0.9",
+  "private": true,
   "keywords": [
     "draftjs",
     "editor",
