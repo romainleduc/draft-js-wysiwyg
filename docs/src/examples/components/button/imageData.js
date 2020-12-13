@@ -1,4 +1,4 @@
-const imgPath = '/static/images/media';
+const imgPath = '/assets/static/images/media';
 
 export const imageData = [
   {

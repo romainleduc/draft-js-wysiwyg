@@ -74,7 +74,7 @@ const EditorModal = (props) => {
 
         <AtomicMediaButton
           className={classes.media}
-          style={{ backgroundImage: `url('/static/images/media/nuffy.jpg')` }}
+          style={{ backgroundImage: `url('/assets/static/images/media/nuffy.jpg')` }}
           onInserted={() => props.onClose()}
           component='span'
           mediaType={'audio'}

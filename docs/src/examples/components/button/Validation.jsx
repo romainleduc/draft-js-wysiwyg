@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme => ({
 
 const EditorModal = (props) => {
   const [hasErrors, setHasErrors] = useState(false);
-  const imgUrl = '/static/images/media/dairypanda.png'; 
+  const imgUrl = '/assets/static/images/media/dairypanda.png'; 
   const classes = useStyles();
 
   const handleChangeChecked = () => {
