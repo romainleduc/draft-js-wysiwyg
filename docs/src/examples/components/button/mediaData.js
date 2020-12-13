@@ -1,6 +1,6 @@
-const path = '/assets/static/images/media';
-const audioPath = '/assets/static/audios/media';
-const videoPath = '/assets/static/videos/media';
+const path = '/static/images/media';
+const audioPath = '/static/audios/media';
+const videoPath = '/static/videos/media';
 
 const mediaData = [
   [
