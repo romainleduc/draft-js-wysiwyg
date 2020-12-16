@@ -24,8 +24,11 @@ Please note that `draft-js-wysiwyg` depends on `draft-js`, `@material-ui/core` a
 Here is a quick example to get you started.
 
 ```jsx
-import React, { useState } from 'react';
-import FormatBoldIcon from '@material-ui/icons/FormatBold';
+import React from 'react';
+import {
+  FormatBold as FormatBoldIcon,
+  FormatItalic as FormatItalicIcon
+} from '@material-ui/icons';
 import {
   Editor,
   EditorContainer,
@@ -33,20 +36,19 @@ import {
   InlineToggleButton,
 } from 'draft-js-wysiwyg';
 
-const DraftEditor = () => {
-  const [html, setHtml] = useState('');
-
-  return (
-    <EditorContainer>
-      <EditorToolbar>
-        <InlineToggleButton value='BOLD'>
-          <FormatBoldIcon />
-        </InlineToggleButton>
-      </EditorToolbar>
-      <Editor onChange={value => setHtml(value)} />
-    </EditorContainer>
-  );
-}
+const SimpleExample = () => (
+  <EditorContainer>
+    <EditorToolbar>
+      <InlineToggleButton value='BOLD'>
+        <FormatBoldIcon />
+      </InlineToggleButton>
+        <InlineToggleButton value='ITALIC'>
+        <FormatItalicIcon />
+      </InlineToggleButton>
+    </EditorToolbar>
+    <Editor />
+  </EditorContainer>
+);
 ```
 
 ## Documentation
