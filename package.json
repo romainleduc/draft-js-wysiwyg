@@ -1,8 +1,8 @@
 {
   "name": "draft-js-wysiwyg",
-  "private": true,
   "description": "A wysiwyg using DraftJS.",
-  "version": "1.0.7",
+  "version": "1.0.9",
+  "private": true,
   "keywords": [
     "draftjs",
     "editor",
@@ -19,6 +19,7 @@
     "build-types": "tsc -d --emitDeclarationOnly --outDir types",
     "format": "eslint --ext tsx --ext ts src --fix",
     "lint": "eslint --ext tsx --ext ts src && tsc --noEmit",
+    "docs:build": "yarn workspace docs build",
     "docs:dev": "yarn workspace docs dev",
     "docs:format": "eslint --ext tsx --ext ts docs --fix",
     "docs:lint": "eslint --ext tsx --ext ts docs && tsc --noEmit",
@@ -34,14 +35,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KiziKr/draft-js-wysiwyg.git"
+    "url": "git+https://github.com/romainleduc/draft-js-wysiwyg.git"
   },
   "author": "Romain Leduc <KiziKr>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KiziKr/draft-js-wysiwyg/issues"
+    "url": "https://github.com/romainleduc/draft-js-wysiwyg/issues"
   },
-  "homepage": "https://github.com/KiziKr/draft-js-wysiwyg#readme",
+  "homepage": "https://github.com/romainleduc/draft-js-wysiwyg#readme",
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
@@ -53,10 +54,11 @@
     "@types/draft-js": "^0.10.44",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^5.0.1",
+    "draft-js": "^0.11.7",
     "eslint": "^7.12.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.2.0",
@@ -68,7 +70,6 @@
     "prettier": "^2.1.2",
     "react": "^17.0.1",
     "react-dom": "^16.14.0",
-    "draft-js": "^0.11.7",
     "typescript": "^4.0.5",
     "webpack": "^4.44.1",
     "webpack-cli": "^4.0.0"

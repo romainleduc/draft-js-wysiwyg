@@ -12,7 +12,7 @@ interface AppHeadProps {
 const AppHead = ({
   title,
   description,
-  card = 'https://material-ui.com/static/logo.png',
+  card = 'https://material-ui.com/assets/logo.png',
   largeCard = false,
 }: AppHeadProps): JSX.Element => {
   const router = useRouter();
