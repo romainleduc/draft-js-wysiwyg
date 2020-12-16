@@ -42,7 +42,7 @@ const SimpleExample = () => (
       <InlineToggleButton value='BOLD'>
         <FormatBoldIcon />
       </InlineToggleButton>
-        <InlineToggleButton value='ITALIC'>
+      <InlineToggleButton value='ITALIC'>
         <FormatItalicIcon />
       </InlineToggleButton>
     </EditorToolbar>
