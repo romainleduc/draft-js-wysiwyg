@@ -77,7 +77,7 @@ const ApiDocModal = ({
       >
         <Paper className={classes.paper}>
           <div className={classes.header}>
-            <Typography variant="h4">{title}</Typography>
+            <Typography variant="h3">{title}</Typography>
             <IconButton onClick={handleClose}>
               <Close />
             </IconButton>
