@@ -54,7 +54,7 @@ const EditorModal = (props) => {
       {...props}
     >
       <div className={classes.paper}>
-          <Typography variant='h3'>Image</Typography>
+          <Typography variant='h2'>Image</Typography>
         <Box p={3}>
             <GridList
               className={classes.gridList}

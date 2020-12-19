@@ -51,7 +51,7 @@ const EditorModal = (props) => {
   return (
     <Modal className={classes.modal} {...props}>
       <div className={classes.paper}>
-        <Typography variant='h3' align='center'>Add image</Typography>
+        <Typography variant='h2' align='center'>Add image</Typography>
         <Switch
           checked={!hasErrors}
           onChange={handleChangeChecked}

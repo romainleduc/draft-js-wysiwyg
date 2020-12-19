@@ -1,14 +1,10 @@
 import React, { useState, ReactNode } from 'react';
-import { IconButton, AppBar, Toolbar, makeStyles } from '@material-ui/core';
+import { IconButton, AppBar, Toolbar, makeStyles, Container } from '@material-ui/core';
 import { Menu as MenuIcon, GitHub as GithubIcon } from '@material-ui/icons';
 import AppDrawer from './AppDrawer';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    [theme.breakpoints.up('lg')]: {
-      paddingLeft: 180,
-    },
-  },
   grow: {
     flexGrow: 1,
   },
@@ -25,18 +21,39 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: 240,
   },
+  main: {
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: 76,
+    },
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: 96,
+    },
+  },
+  mainWidth: {
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: 24,
+      paddingRight: 24,
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: 48,
+      paddingRight: 48,
+    },
+  },
 }));
 
 interface AppFrameProps {
   children: ReactNode;
+  className?: string;
 }
 
-const AppFrame = ({ children }: AppFrameProps): JSX.Element => {
+const AppFrame = ({ children, className }: AppFrameProps): JSX.Element => {
   const [openDrawer, setOpenDrawer] = useState(true);
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(className)}>
       <AppBar className={classes.appBar} position="fixed">
         <Toolbar>
           <IconButton
@@ -52,7 +69,7 @@ const AppFrame = ({ children }: AppFrameProps): JSX.Element => {
             <IconButton
               component="a"
               color="inherit"
-              href="https://github.com/KiziKr/draft-js-wysiwyg"
+              href="https://github.com/romainleduc/draft-js-wysiwyg"
               edge="end"
             >
               <GithubIcon />
@@ -69,7 +86,13 @@ const AppFrame = ({ children }: AppFrameProps): JSX.Element => {
           paper: classes.drawerPaper,
         }}
       />
-      {children}
+      <Container
+        component="main"
+        maxWidth="md"
+        className={clsx(classes.main, classes.mainWidth)}
+      >
+        {children as any}
+      </Container>
     </div>
   );
 };

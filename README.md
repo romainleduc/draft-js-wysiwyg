@@ -1,4 +1,9 @@
-## draft-js-wysiwyg ##
+<div>
+  <a href='https://draft-js-wysiwyg.com'>
+    <img src='https://draft-js-wysiwyg.com/static/logo.png' alt='Draft-js-wysiwyg logo' />
+  </a>
+  <h1>Draft-js-wysiwyg</h1>
+</div>
 
 A Wysiwyg editor built using [React](https://reactjs.org/), [Draft](https://draftjs.org/) and [Material-UI](https://material-ui.com/) libraries.
 
