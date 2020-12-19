@@ -7,10 +7,10 @@
   Draft-js-wysiwyg
 </h1>
 <p align="center">
+A Wysiwyg editor built using
   <a href="https://reactjs.org/">
     React
-  </a>
-  ,
+  </a>,
   <a href="https://draftjs.org">
     Draft
   </a>
