@@ -4,24 +4,25 @@ import AppFrame from '../src/modules/components/AppFrame';
 import AppHead from '../src/modules/components/AppHead';
 
 const useStyles = makeStyles(theme => ({
-  content: {
+  heading: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
     '& p': {
       marginBottom: 30
-    }
+    },
+    paddingTop: 50,
+    paddingBottom: 50,
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
   logo: {
     flexShrink: 0,
-    width: 40,
-    height: 40,
+    width: 100,
+    height: 100,
     marginBottom: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
       margin: theme.spacing(2),
-      width: 35,
-      height: 35,
     },
   },
 }));
@@ -35,7 +36,8 @@ const LandingPage = () => {
         title=''
         description=''
       />
-      <div className={classes.content}>
+      <div className={classes.heading}>
+        <img src="/static/logo.png" alt="" className={classes.logo} />
         <Typography variant='h1'>
           Draft-js-wysiwyg
         </Typography>
@@ -49,7 +51,7 @@ const LandingPage = () => {
         <Button
           component='a'
           href='https://www.npmjs.com/package/draft-js-wysiwyg'
-          variant='contained'
+          variant='outlined'
           color='primary'
         >
           Get started
