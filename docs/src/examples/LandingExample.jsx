@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { EditorContainer, EditorToolbar, Editor, AtomicImageButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, GridList, GridListTile, fade, Divider, withStyles, FormControl, Select, MenuItem, Button } from '@material-ui/core';
-import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatStrikethrough, FormatUnderlined, ImageOutlined } from '@material-ui/icons';
+import { EditorContainer, EditorToolbar, Editor, AtomicImageButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton } from 'draft-js-wysiwyg';
+import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, GridList, GridListTile, fade, Divider, withStyles, FormControl, Select as MuiSelect, MenuItem, InputBase } from '@material-ui/core';
+import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatItalic, FormatStrikethrough, FormatUnderlined, ImageOutlined } from '@material-ui/icons';
 import imageData from './components/button/imageData';
 import { ToggleButtonGroup as MuiToggleButtonGroup } from '@material-ui/lab';
 
@@ -17,6 +17,32 @@ const ToggleButtonGroup = withStyles((theme) => ({
     },
   },
 }))(MuiToggleButtonGroup);
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    border: 'none',
+  },
+}))(MenuItem);
+
+const Select = withStyles((theme) => ({
+  icon: {
+    right: 4,  
+  },
+}))(MuiSelect);
+
+const BootstrapInput = withStyles((theme) => ({
+  input: {
+    margin: theme.spacing(0.5),
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    padding: '10px 26px 10px 12px',
+    // Use the system font instead of the default Roboto font.
+    '&:focus': {
+      backgroundColor: "#fff",
+    },
+  },
+}))(InputBase);
 
 const useStyles = makeStyles((theme => ({
   modal: {
@@ -86,19 +112,20 @@ const InlineToggleButtonGroup = () => {
   )
 }
 
-const BlockTypeToggleButtonGroup = () => {
-  const [block, setBlock] = useState('');
+const BlockTypeToggleButtonSelect = () => {
+  const [blockType, setBlockType] = React.useState('header-two');
 
-  const handleBlock = (_, newBlock) => {
-    setBlock(newBlock);
+  const handleChange = (event) => {
+    setBlockType(event.target.value);
   };
 
+
   return (
-    <ToggleButtonGroup
-      exclusive
-      value={block}
-      onChange={handleBlock}
-      size='small'
+    <FormControl>
+    <Select
+      value={blockType}
+      onChange={handleChange}
+      input={<BootstrapInput />}
     >
       {[
         ['header-one', 'H1'],
@@ -113,13 +140,15 @@ const BlockTypeToggleButtonGroup = () => {
         ['code-block', 'Code Block'],
       ].map(block =>
         <BlockTypeToggleButton
+          component={StyledMenuItem}
           key={`basic-block-${block[0]}`}
           value={block[0]}
         >
           {block[1]}
         </BlockTypeToggleButton>
       )}
-    </ToggleButtonGroup>
+    </Select>
+  </FormControl>
   )
 }
 
@@ -157,7 +186,7 @@ const EditorModal = (props) => {
             cols={3}
           >
             {imageData.map(({ background, tooltip, src }, key) => (
-              <GridListTile>
+              <GridListTile key={`grid-list-tile-${key}`}>
                 <Tooltip
                   title={tooltip}
                   placement='top'
@@ -195,7 +224,7 @@ const LandingExample = () => {
   return (
     <EditorContainer>
       <EditorToolbar className={classes.toolbar}>
-        <BlockTypeToggleButtonGroup />
+        <BlockTypeToggleButtonSelect />
         <Divider flexItem orientation="vertical" className={classes.divider} />
         {/* <IndentDraftButton value='increase'>
           <FormatIndentIncrease />
