@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://draft-js-wysiwyg.com">
-    <img src="https://draft-js-wysiwyg.com/static/logo.png" alt="Draft-js-wysiwyg logo" />
+    <img src="https://draft-js-wysiwyg.com/static/logo.svg" alt="Draft-js-wysiwyg logo" />
   </a>
 </p>
 <h1 align="center">

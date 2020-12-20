@@ -2,6 +2,7 @@ import { Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import AppFrame from '../src/modules/components/AppFrame';
 import AppHead from '../src/modules/components/AppHead';
+import LandingExample from '../src/examples/LandingExample';
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -37,7 +38,7 @@ const LandingPage = () => {
         description=''
       />
       <div className={classes.heading}>
-        <img src="/static/logo.png" alt="" className={classes.logo} />
+        <img src="/static/logo.svg" alt="" className={classes.logo} />
         <Typography variant='h1'>
           Draft-js-wysiwyg
         </Typography>
@@ -56,6 +57,9 @@ const LandingPage = () => {
         >
           Get started
         </Button>
+      </div>
+      <div>
+        <LandingExample />
       </div>
     </AppFrame>
   );

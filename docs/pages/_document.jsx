@@ -9,6 +9,7 @@ export default class Document extends NextDocument {
       <Html lang="en">
         <Head>
           {/* PWA primary color */}
+          <link rel="shortcut icon" href="/static/favicon.ico" /> 
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link rel="stylesheet" href="/static/styles/prism.css" data-noprefix />
           <link
