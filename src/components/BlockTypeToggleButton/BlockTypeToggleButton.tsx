@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
-import { ToggleButton, ToggleButtonProps, ToggleButtonGroup } from '@material-ui/lab';
+import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import { EditorState, RichUtils } from 'draft-js';
 import EditorContext from '../EditorContext';
 
@@ -21,6 +21,16 @@ const BlockTypeToggleButton = forwardRef<
     }
   }, []);
 
+  const handleChange = (event: React.FormEvent<HTMLButtonElement>) => {
+    const buttonValue = value || (event.target as HTMLButtonElement).value;
+
+    if (buttonValue) {
+      toggleBlockType(buttonValue);
+    }
+
+    onChange?.(event as any, buttonValue);
+  }
+
   const toggleBlockType = (buttonValue: string) => {
     if (editorState && setEditorState) {
       setEditorState(
@@ -35,15 +45,7 @@ const BlockTypeToggleButton = forwardRef<
   return (
     <ToggleButton
       ref={ref}
-      onChange={(e: any) => {
-        const buttonValue = value || e.target.value;
-
-        if (buttonValue) {
-          toggleBlockType(buttonValue);
-        }
-
-        onChange?.(e, buttonValue);
-      }}
+      onChange={handleChange}
       value={value}
       selected={selected}
       {...rest}
