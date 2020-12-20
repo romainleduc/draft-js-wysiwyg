@@ -13,10 +13,6 @@ export const initialState = {
   keyCommands: [],
 };
 
-const addCommand = (commands: string[], command: string): string[] => {
-  return Array.from(new Set([...commands, command]));
-};
-
 const keyCommandsReducer = (
   state: ReducerState = initialState,
   action: ActionType
@@ -24,7 +20,14 @@ const keyCommandsReducer = (
   if (action.type === ACTION_TYPES.ADD_KEY_COMMAND) {
     return {
       ...state,
-      keyCommands: addCommand(state.keyCommands, action.payload.toLowerCase()),
+      keyCommands: Array.from(
+        new Set(
+          [
+            ...state.keyCommands,
+            action.payload.toLowerCase()
+          ]
+        )
+      ),
     };
   } else {
     return state;
