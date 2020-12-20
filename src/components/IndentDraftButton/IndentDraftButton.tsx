@@ -48,7 +48,7 @@ const IndentDraftButton = forwardRef<HTMLButtonElement, IndentDraftButtonProps>(
     useEffect(() => {
       if (!disableKeyboardShortcuts) {
         dispatch({
-          type: ACTION_TYPES.ADD_KEY_BINDING,
+          type: ACTION_TYPES.ADD_KEY_COMMAND,
           payload: `${value}-indent`,
         });
       }

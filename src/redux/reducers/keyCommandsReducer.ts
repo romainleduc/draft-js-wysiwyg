@@ -1,18 +1,16 @@
 import { ACTION_TYPES } from '../constants';
 
 export interface ActionType {
-  type: 'ADD_KEY_COMMAND' | 'ADD_KEY_BINDING';
+  type: 'ADD_KEY_COMMAND';
   payload: string;
 }
 
 export interface ReducerState {
   keyCommands: string[];
-  keyBinding: string[];
 }
 
 export const initialState = {
   keyCommands: [],
-  keyBinding: [],
 };
 
 const addCommand = (commands: string[], command: string): string[] => {
@@ -29,10 +27,7 @@ const keyCommandsReducer = (
       keyCommands: addCommand(state.keyCommands, action.payload.toLowerCase()),
     };
   } else {
-    return {
-      ...state,
-      keyBinding: addCommand(state.keyBinding, action.payload),
-    };
+    return state;
   }
 };
 
