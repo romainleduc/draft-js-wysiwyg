@@ -3,7 +3,7 @@ import React from 'react';
 import AppFrame from '../src/modules/components/AppFrame';
 import AppHead from '../src/modules/components/AppHead';
 import LandingExample from '../src/examples/LandingExample';
-import BuildIcon from '@material-ui/icons/Build';
+import CreateIcon from '@material-ui/icons/Create';
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -31,10 +31,14 @@ const useStyles = makeStyles(theme => ({
     margin: '16px 0px',
   },
   test: {
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center',
   },
   test2: {
-    padding: '0px 100px'
+    padding: '50px 100px'
+  },
+  createIcon: {
+    marginRight: 16,
   }
 }));
 
@@ -70,7 +74,7 @@ const LandingPage = () => {
       </div>
       <div className={classes.test2}>
         <div className={classes.test}>
-          <BuildIcon color='primary' />
+          <CreateIcon className={classes.createIcon} color='primary' />
           <Typography variant='h6' component='h2'>
             Try it out!
           </Typography>

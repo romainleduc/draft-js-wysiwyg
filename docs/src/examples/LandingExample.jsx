@@ -89,6 +89,16 @@ const useStyles = makeStyles((theme => ({
     flexWrap: 'wrap',
     padding: 4,
     backgroundColor: '#ccd5df57',
+  },
+  editor: {
+    border: `1px solid ${theme.palette.divider}`,
+    padding: 5,
+    borderTop: 0,
+    minHeight: 141,
+    '& .DraftEditor-editorContainer': {
+      maxHeight: 'min(68vh, 600px)',
+      overflowY: 'auto',
+    },
   }
 })));
 
@@ -306,7 +316,11 @@ const LandingExample = () => {
           onClose={handleClick}
         />
       </EditorToolbar>
-      <Editor textAlignment={alignment} placeholder='Enter some text..' />
+      <Editor
+        className={classes.editor}
+        textAlignment={alignment}
+        placeholder='Enter some text..'
+      />
     </EditorContainer>
   );
 }
