@@ -3,6 +3,7 @@ import React from 'react';
 import AppFrame from '../src/modules/components/AppFrame';
 import AppHead from '../src/modules/components/AppHead';
 import LandingExample from '../src/examples/LandingExample';
+import BuildIcon from '@material-ui/icons/Build';
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -26,6 +27,15 @@ const useStyles = makeStyles(theme => ({
       margin: theme.spacing(2),
     },
   },
+  subtitle1: {
+    margin: '16px 0px',
+  },
+  test: {
+    display: 'flex'
+  },
+  test2: {
+    padding: '0px 100px'
+  }
 }));
 
 const LandingPage = () => {
@@ -58,7 +68,20 @@ const LandingPage = () => {
           Get started
         </Button>
       </div>
-      <div>
+      <div className={classes.test2}>
+        <div className={classes.test}>
+          <BuildIcon color='primary' />
+          <Typography variant='h6' component='h2'>
+            Try it out!
+          </Typography>
+        </div>
+        <Typography
+          className={classes.subtitle1}
+          variant='subtitle1'
+          component='p'
+        >
+          Here's a simple example of a rich text editor built in Draft.js.
+        </Typography>
         <LandingExample />
       </div>
     </AppFrame>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { EditorContainer, EditorToolbar, Editor, AtomicImageButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, GridList, GridListTile, fade, Divider, withStyles, FormControl, Select as MuiSelect, MenuItem, InputBase } from '@material-ui/core';
-import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatItalic, FormatStrikethrough, FormatUnderlined, ImageOutlined } from '@material-ui/icons';
+import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, GridList, GridListTile, fade, Divider, withStyles, FormControl, Select as MuiSelect, MenuItem, InputBase, ButtonGroup as MuiButtonGroup } from '@material-ui/core';
+import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, List } from '@material-ui/icons';
 import imageData from './components/button/imageData';
 import { ToggleButtonGroup as MuiToggleButtonGroup } from '@material-ui/lab';
 
@@ -18,6 +18,19 @@ const ToggleButtonGroup = withStyles((theme) => ({
   },
 }))(MuiToggleButtonGroup);
 
+const ButtonGroup = withStyles((theme) => ({
+  grouped: {
+    margin: theme.spacing(0.5),
+    border: 'none',
+    '&:not(:first-child)': {
+      borderRadius: theme.shape.borderRadius,
+    },
+    '&:first-child': {
+      borderRadius: theme.shape.borderRadius,
+    },
+  },
+}))(MuiButtonGroup);
+
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     border: 'none',
@@ -26,7 +39,7 @@ const StyledMenuItem = withStyles((theme) => ({
 
 const Select = withStyles((theme) => ({
   icon: {
-    right: 4,  
+    right: 4,
   },
 }))(MuiSelect);
 
@@ -119,39 +132,65 @@ const BlockTypeToggleButtonSelect = () => {
     setBlockType(event.target.value);
   };
 
-
   return (
     <FormControl>
-    <Select
-      value={blockType}
-      onChange={handleChange}
-      input={<BootstrapInput />}
-    >
-      {[
-        ['header-one', 'H1'],
-        ['header-two', 'H2'],
-        ['header-three', 'H3'],
-        ['header-four', 'H4'],
-        ['header-five', 'H5'],
-        ['header-six', 'H6'],
-        ['blockquote', 'Blockquote'],
-        ['unordered-list-item', 'UL'],
-        ['ordered-list-item', 'OL'],
-        ['code-block', 'Code Block'],
-      ].map(block =>
-        <BlockTypeToggleButton
-          component={StyledMenuItem}
-          key={`basic-block-${block[0]}`}
-          value={block[0]}
-        >
-          {block[1]}
-        </BlockTypeToggleButton>
-      )}
-    </Select>
-  </FormControl>
+      <Select
+        value={blockType}
+        onChange={handleChange}
+        input={<BootstrapInput />}
+      >
+        {[
+          ['unstyled', 'Paragraph'],
+          ['header-one', 'H1'],
+          ['header-two', 'H2'],
+          ['header-three', 'H3'],
+          ['header-four', 'H4'],
+          ['header-five', 'H5'],
+          ['header-six', 'H6'],
+          ['blockquote', 'Blockquote'],
+          ['code-block', 'Code Block'],
+        ].map(block =>
+          <BlockTypeToggleButton
+            component={StyledMenuItem}
+            key={`basic-block-${block[0]}`}
+            value={block[0]}
+          >
+            {block[1]}
+          </BlockTypeToggleButton>
+        )}
+      </Select>
+    </FormControl>
   )
 }
 
+
+const ListToggleButtonGroup = () => {
+  const [blockType, setBlockType] = useState('');
+
+  const handleBlockType = (_, newBlockType) => {
+    setBlockType(newBlockType);
+  };
+
+  return (
+    <ToggleButtonGroup
+      exclusive
+      value={blockType}
+      onChange={handleBlockType}
+      size='small'
+    >
+      <BlockTypeToggleButton value='unordered-list-item'>
+        <Tooltip title='Unordered list' placement='top'>
+          <FormatListBulleted />
+        </Tooltip>
+      </BlockTypeToggleButton>
+      <BlockTypeToggleButton value='ordered-list-item'>
+        <Tooltip title='Ordered list' placement='top'>
+          <FormatListNumbered />
+        </Tooltip>
+      </BlockTypeToggleButton>
+    </ToggleButtonGroup>
+  )
+}
 /**
  * The example data is structured as follows:
  *
@@ -226,12 +265,6 @@ const LandingExample = () => {
       <EditorToolbar className={classes.toolbar}>
         <BlockTypeToggleButtonSelect />
         <Divider flexItem orientation="vertical" className={classes.divider} />
-        {/* <IndentDraftButton value='increase'>
-          <FormatIndentIncrease />
-        </IndentDraftButton>
-        <IndentDraftButton size='small' value='decrease'>
-          <FormatIndentDecrease />
-        </IndentDraftButton> */}
         <Divider flexItem orientation="vertical" className={classes.divider} />
         <InlineToggleButtonGroup />
         <Divider flexItem orientation="vertical" className={classes.divider} />
@@ -254,6 +287,17 @@ const LandingExample = () => {
             </TextAlignToggleButton>
           )}
         </ToggleButtonGroup>
+        <Divider flexItem orientation="vertical" className={classes.divider} />
+        <ListToggleButtonGroup />
+        <Divider flexItem orientation="vertical" className={classes.divider} />
+        <ButtonGroup size='small'>
+          <IndentDraftButton value='increase'>
+            <FormatIndentIncrease />
+          </IndentDraftButton>
+          <IndentDraftButton value='decrease'>
+            <FormatIndentDecrease />
+          </IndentDraftButton>
+        </ButtonGroup>
         <IconButton onClick={handleClick}>
           <ImageOutlined />
         </IconButton>
