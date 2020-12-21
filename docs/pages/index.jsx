@@ -2,6 +2,8 @@ import { Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import AppFrame from '../src/modules/components/AppFrame';
 import AppHead from '../src/modules/components/AppHead';
+import LandingExample from '../src/examples/LandingExample';
+import CreateIcon from '@material-ui/icons/Create';
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -25,6 +27,19 @@ const useStyles = makeStyles(theme => ({
       margin: theme.spacing(2),
     },
   },
+  subtitle1: {
+    margin: '16px 0px',
+  },
+  test: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  test2: {
+    padding: '50px 100px'
+  },
+  createIcon: {
+    marginRight: 16,
+  }
 }));
 
 const LandingPage = () => {
@@ -37,7 +52,7 @@ const LandingPage = () => {
         description=''
       />
       <div className={classes.heading}>
-        <img src="/static/logo.png" alt="" className={classes.logo} />
+        <img src="/static/logo.svg" alt="" className={classes.logo} />
         <Typography variant='h1'>
           Draft-js-wysiwyg
         </Typography>
@@ -56,6 +71,22 @@ const LandingPage = () => {
         >
           Get started
         </Button>
+      </div>
+      <div className={classes.test2}>
+        <div className={classes.test}>
+          <CreateIcon className={classes.createIcon} color='primary' />
+          <Typography variant='h6' component='h2'>
+            Try it out!
+          </Typography>
+        </div>
+        <Typography
+          className={classes.subtitle1}
+          variant='subtitle1'
+          component='p'
+        >
+          Here's a simple example of a rich text editor built in Draft.js.
+        </Typography>
+        <LandingExample />
       </div>
     </AppFrame>
   );

@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 export interface AtomicImageProps
   extends React.ImgHTMLAttributes<HTMLImageElement> {
-  sourcesProps: React.SourceHTMLAttributes<HTMLSourceElement>[];
+  sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
 }
 
 export interface AtomicImageButtonProps extends ButtonProps {

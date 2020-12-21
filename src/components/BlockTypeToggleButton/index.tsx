@@ -1,2 +1,2 @@
-export { default } from './BlockTypeToggleButton';
+export { default as BlockTypeToggleButton } from './BlockTypeToggleButton';
 export type { BlockTypeToggleButtonProps } from './BlockTypeToggleButton';

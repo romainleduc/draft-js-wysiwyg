@@ -1,15 +1,36 @@
-<div>
-  <a href='https://draft-js-wysiwyg.com'>
-    <img src='https://draft-js-wysiwyg.com/static/logo.png' alt='Draft-js-wysiwyg logo' />
+<p align="center">
+  <a href="https://draft-js-wysiwyg.com">
+    <img src="https://draft-js-wysiwyg.com/static/logo.svg" alt="Draft-js-wysiwyg logo" />
   </a>
-  <h1>Draft-js-wysiwyg</h1>
-</div>
-
-A Wysiwyg editor built using [React](https://reactjs.org/), [Draft](https://draftjs.org/) and [Material-UI](https://material-ui.com/) libraries.
-
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/romainleduc/draft-js-wysiwyg/blob/master/LICENSE)
-[![npm latest package](https://img.shields.io/npm/v/draft-js-wysiwyg/latest.svg)](https://www.npmjs.com/package/draft-js-wysiwyg)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=romainleduc/draft-js-wysiwyg)](https://dependabot.com)
+</p>
+<h1 align="center">
+  Draft-js-wysiwyg
+</h1>
+<p align="center">
+A Wysiwyg editor built using
+  <a href="https://reactjs.org/">
+    React
+  </a>,
+  <a href="https://draftjs.org">
+    Draft
+  </a>
+  and
+  <a href="https://material-ui.com/">
+    Material-UI
+  </a>
+  libraries.
+</p>
+<p align="center">
+  <a href="https://github.com/romainleduc/draft-js-wysiwyg/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license" />
+  </a>
+  <a href="https://www.npmjs.com/package/draft-js-wysiwyg">
+    <img src="https://img.shields.io/npm/v/draft-js-wysiwyg/latest.svg" alt="npm latest package" />
+  </a>
+    <a href="https://dependabot.com">
+    <img src="https://api.dependabot.com/badges/status?host=github&repo=romainleduc/draft-js-wysiwyg" alt="Dependabot Status" />
+  </a>
+</p>
 
 ## Installation
 

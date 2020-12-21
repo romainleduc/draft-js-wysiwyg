@@ -2,6 +2,7 @@ import React, { useState, ReactNode } from 'react';
 import { IconButton, AppBar, Toolbar, makeStyles, Container } from '@material-ui/core';
 import { Menu as MenuIcon, GitHub as GithubIcon } from '@material-ui/icons';
 import AppDrawer from './AppDrawer';
+import AppFooter from './AppFooter';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
@@ -93,6 +94,7 @@ const AppFrame = ({ children, className }: AppFrameProps): JSX.Element => {
       >
         {children as any}
       </Container>
+      <AppFooter />
     </div>
   );
 };

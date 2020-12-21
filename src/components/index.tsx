@@ -4,7 +4,7 @@ export type { TextAlignToggleButtonProps } from './TextAlignToggleButton';
 export { default as InlineToggleButton } from './InlineToggleButton';
 export type { InlineToggleButtonProps } from './InlineToggleButton';
 
-export { default as BlockTypeToggleButton } from './BlockTypeToggleButton';
+export { BlockTypeToggleButton } from './BlockTypeToggleButton';
 export type { BlockTypeToggleButtonProps } from './BlockTypeToggleButton';
 
 export { default as EditorContainer } from './EditorContainer';
