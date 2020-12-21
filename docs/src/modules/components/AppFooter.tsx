@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
   logo: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: theme.palette.background['level1'],
+    backgroundColor: '#24292e',
     borderRadius: 15,
     padding: theme.spacing(0.8, 0.4),
     '& img': {
