@@ -14,9 +14,16 @@ const useStyles = makeStyles(theme => ({
     '& p': {
       marginBottom: 30
     },
-    paddingTop: 50,
-    paddingBottom: 50,
+    padding: '50px 0px',
     borderBottom: `1px solid ${theme.palette.divider}`,
+    [theme.breakpoints.only('xs')]: {
+      padding: '25px 0px',
+    },
+  },
+  title: {
+    [theme.breakpoints.only('xs')]: {
+      fontSize: '2.2rem',
+    },
   },
   logo: {
     flexShrink: 0,
@@ -35,7 +42,10 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   test2: {
-    padding: '50px 100px'
+    padding: '50px 0px',
+    [theme.breakpoints.up('md')]: {
+      padding: '50px 100px',
+    },
   },
   createIcon: {
     marginRight: 16,
@@ -53,7 +63,7 @@ const LandingPage = () => {
       />
       <div className={classes.heading}>
         <img src="/static/logo.svg" alt="" className={classes.logo} />
-        <Typography variant='h1'>
+        <Typography className={classes.title} variant='h1'>
           Draft-js-wysiwyg
         </Typography>
         <Typography
