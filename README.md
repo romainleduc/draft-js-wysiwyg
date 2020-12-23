@@ -79,11 +79,4 @@ const SimpleExample = () => (
 
 ## Documentation
 
-**Components**
-
-https://material-ui.com/components/toggle-button/
-
-**Components API**
-
-https://material-ui.com/api/toggle-button/
-https://material-ui.com/api/toggle-button-group/
+Check out our [documentation website](https://draft-js-wysiwyg.com).

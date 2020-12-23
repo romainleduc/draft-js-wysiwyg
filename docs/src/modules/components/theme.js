@@ -39,7 +39,7 @@ const theme = createMuiTheme({
     },
     MuiTypography: {
       h1: {
-        fontSize: '3.5rem',
+        fontSize: '3rem',
         margin: '20px 0',
         letterSpacing: '0em',
         fontWeight: 400,
