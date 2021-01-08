@@ -21,12 +21,7 @@ const keyCommandsReducer = (
     return {
       ...state,
       keyCommands: Array.from(
-        new Set(
-          [
-            ...state.keyCommands,
-            action.payload.toLowerCase()
-          ]
-        )
+        new Set([...state.keyCommands, action.payload.toLowerCase()])
       ),
     };
   } else {

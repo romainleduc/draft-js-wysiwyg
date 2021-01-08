@@ -8,7 +8,6 @@ import {
 } from 'draft-js';
 import { indentSelection, mergeBlockData, draftToHtml } from '../../utils';
 import EditorContext from '../EditorContext';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import ReduxContext from '../ReduxContext';
 import {
@@ -16,8 +15,9 @@ import {
   getDefaultBlockStyle,
   getDefaultKeyBinding,
 } from '../../utils/editorUtils';
-import 'draft-js/dist/Draft.css';
 import { IndentCommand } from '../IndentDraftButton/IndentDraftButton';
+import clsx from 'clsx';
+import 'draft-js/dist/Draft.css';
 
 export interface EditorProps
   extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -42,19 +42,15 @@ const userStyles = makeStyles({
       textAlign: 'right',
     },
   },
+  hidePlaceholder: {
+    '& .public-DraftEditorPlaceholder-root': {
+      display: 'none',
+    },
+  },
 });
 
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
-  (
-    {
-      className,
-      keyCommands,
-      keyBinding,
-      onChange,
-      ...rest
-    }: EditorProps,
-    ref
-  ) => {
+  ({ className, keyCommands, onChange, ...rest }: EditorProps, ref) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
     const editor = useRef<DraftEditor>(null);
     const classes = userStyles();
@@ -72,6 +68,19 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       focusEditor();
     }, []);
 
+    const isNotEmpty = () => {
+      const contentState = editorState?.getCurrentContent();
+
+      if (contentState) {
+        return (
+          contentState.hasText() ||
+          contentState.getFirstBlock().getType() !== 'unstyled'
+        );
+      }
+
+      return false;
+    };
+
     const handleKeyCommand = (
       command: string,
       editorState: EditorState
@@ -82,18 +91,15 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       ) {
         if (Object.values(IndentCommand).includes(command as IndentCommand)) {
           const contentState = editorState.getCurrentContent();
-          const indentType = command === IndentCommand.Increase ? 'increase' : 'decrease';
+          const indentType =
+            command === IndentCommand.Increase ? 'increase' : 'decrease';
 
           if (!setEditorState) {
             return 'not-handled';
           }
 
           setEditorState(
-            indentSelection(
-              editorState,
-              contentState,
-              indentType
-            )
+            indentSelection(editorState, contentState, indentType)
           );
 
           return 'handled';
@@ -126,18 +132,20 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
 
     const handleChange = (editorState: EditorState) => {
       if (onChange) {
-        onChange(
-          draftToHtml(editorState.getCurrentContent())
-        );
+        onChange(draftToHtml(editorState.getCurrentContent()));
       }
 
-      setEditorState(editorState);
-    }
+      setEditorState?.(editorState);
+    };
 
     return (
       <div
         ref={ref}
-        className={clsx('draft-editor', classes.editor, className)}
+        className={clsx(
+          className,
+          isNotEmpty() && classes.hidePlaceholder,
+          classes.editor
+        )}
         onClick={focusEditor}
       >
         {editorState && setEditorState && (

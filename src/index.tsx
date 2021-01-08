@@ -28,5 +28,5 @@ export type { IndentDraftButtonProps } from './components';
 export {
   getDefaultBlockRenderer,
   getDefaultBlockStyle,
-  getDefaultKeyBinding
+  getDefaultKeyBinding,
 } from './utils/editorUtils';

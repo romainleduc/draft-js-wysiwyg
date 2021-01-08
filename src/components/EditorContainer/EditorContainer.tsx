@@ -15,15 +15,11 @@ export interface EditorContainerProps
 
 const RenderWithPossibleSsr = ({ noSsr, children, ...other }) => {
   if (noSsr) {
-    return (
-      <NoSsr {...other}>
-        {children}
-      </NoSsr>
-    )
+    return <NoSsr {...other}>{children}</NoSsr>;
   }
 
   return children;
-}
+};
 
 const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
   (
