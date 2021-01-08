@@ -27,7 +27,7 @@ const AtomicMediaPrefab = ({
 
   return (
     <>
-      {getMediaType(src) === 'audio' &&
+      {getMediaType(src) === 'audio' && (
         <audio
           className={clsx(classes.media, className)}
           src={!sourcesProps && src}
@@ -37,8 +37,8 @@ const AtomicMediaPrefab = ({
             <source key={`${src}-${key}`} {...sourceProps} />
           ))}
         </audio>
-      }
-      {getMediaType(src) === 'video' &&
+      )}
+      {getMediaType(src) === 'video' && (
         <video
           className={clsx(classes.media, className)}
           src={!sourcesProps && src}
@@ -50,7 +50,7 @@ const AtomicMediaPrefab = ({
             <source key={`${src}-${key}`} {...sourceProps} />
           ))}
         </video>
-      }
+      )}
     </>
   );
 };

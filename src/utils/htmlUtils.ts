@@ -18,14 +18,11 @@ type TagType = 'opening' | 'closing';
 export const draftToHtml = (contentState: ContentState): string => {
   let html = '';
 
-  convertToRaw(contentState)
-    .blocks
-    .forEach(({ text, inlineStyleRanges }) => {
-      if (text.length) {
-        html += `<p>${insertInlineStyleTags(text, inlineStyleRanges)}</p>`;
-      }
+  convertToRaw(contentState).blocks.forEach(({ text, inlineStyleRanges }) => {
+    if (text.length) {
+      html += `<p>${insertInlineStyleTags(text, inlineStyleRanges)}</p>`;
     }
-  );
+  });
 
   return html;
 };
@@ -41,13 +38,9 @@ export const insertInlineStyleTags = (
 
   styleSorted.forEach(({ offset, style }, key) => {
     depth += 1;
-    textToArray.splice(
-      offset + key,
-      0,
-      getInlineStyleTag(style, 'opening')
-    );
+    textToArray.splice(offset + key, 0, getInlineStyleTag(style, 'opening'));
   });
-  
+
   styleSorted.forEach(({ offset, length, style }, key) => {
     textToArray.splice(
       offset + (length - 1) + key + depth,

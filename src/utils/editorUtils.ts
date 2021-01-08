@@ -5,7 +5,7 @@ import {
 import { IndentCommand } from '../components/IndentDraftButton/IndentDraftButton';
 import { Media } from '../components/Media';
 
-export const getDefaultBlockRenderer = (contentBlock: ContentBlock) => {
+export const getDefaultBlockRenderer = (contentBlock: ContentBlock): any => {
   if (contentBlock.getType() === 'atomic') {
     return {
       component: Media,
@@ -24,7 +24,9 @@ export const getDefaultBlockStyle = (contentBlock: ContentBlock): string => {
   return '';
 };
 
-export const getDefaultKeyBinding = (e: any): string => {
+export const getDefaultKeyBinding = (
+  e: React.KeyboardEvent<{}>
+): string | null => {
   if (e.shiftKey) {
     switch (e.key) {
       case 'Tab':
@@ -38,4 +40,4 @@ export const getDefaultKeyBinding = (e: any): string => {
   }
 
   return getDraftDefaultKeyBinding(e);
-}
+};

@@ -5,7 +5,8 @@ import { insertAtomicBlock } from '../../utils';
 import clsx from 'clsx';
 import { getMediaType } from './patterns';
 
-export interface AtomicMediaProps extends React.MediaHTMLAttributes<HTMLMediaElement> {
+export interface AtomicMediaProps
+  extends React.MediaHTMLAttributes<HTMLMediaElement> {
   sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
   height?: number;
   poster?: string;

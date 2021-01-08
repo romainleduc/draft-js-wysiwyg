@@ -50,10 +50,7 @@ const userStyles = makeStyles({
 });
 
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
-  (
-    { className, keyCommands, keyBinding, onChange, ...rest }: EditorProps,
-    ref
-  ) => {
+  ({ className, keyCommands, onChange, ...rest }: EditorProps, ref) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
     const editor = useRef<DraftEditor>(null);
     const classes = userStyles();
