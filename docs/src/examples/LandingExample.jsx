@@ -271,7 +271,7 @@ const LandingExample = () => {
   }
 
   return (
-    <EditorContainer>
+    <EditorContainer noSsr>
       <EditorToolbar className={classes.toolbar}>
         <BlockTypeToggleButtonSelect />
         <Divider flexItem orientation="vertical" className={classes.divider} />
