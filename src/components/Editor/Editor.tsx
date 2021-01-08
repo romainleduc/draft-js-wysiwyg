@@ -71,7 +71,11 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     const isNotEmpty = () => {
       const contentState = editorState?.getCurrentContent();
 
+      console.log(contentState);
       if (contentState) {
+        console.log(contentState.hasText());
+        console.log(contentState.getFirstBlock());
+        console.log(contentState.getFirstBlock()?.getType());
         return (
           contentState.hasText() ||
           contentState.getFirstBlock().getType() !== 'unstyled'
