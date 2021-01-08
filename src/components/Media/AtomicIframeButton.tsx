@@ -4,14 +4,17 @@ import EditorContext from '../EditorContext';
 import { insertAtomicBlock } from '../../utils';
 import clsx from 'clsx';
 
-export interface AtomicIframeProps extends React.IframeHTMLAttributes<HTMLIFrameElement> {}
+export type AtomicIframeProps = React.IframeHTMLAttributes<HTMLIFrameElement>;
 
 export interface AtomicIframeButtonProps extends ButtonProps {
   onInserted?: () => void;
   atomicIframeProps: AtomicIframeProps;
 }
 
-const AtomicIframeButton = forwardRef<HTMLButtonElement, AtomicIframeButtonProps>(
+const AtomicIframeButton = forwardRef<
+  HTMLButtonElement,
+  AtomicIframeButtonProps
+>(
   (
     {
       className,

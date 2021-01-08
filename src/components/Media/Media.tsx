@@ -32,9 +32,9 @@ export const Media = (props: MediaProps): JSX.Element => {
         <AtomicImagePrefab {...atomicImageProps} />
       ) : atomicMediaProps ? (
         <AtomicMediaPrefab {...atomicMediaProps} />
-      ): atomicIframeProps ? (
+      ) : atomicIframeProps ? (
         <AtomicIframePrefab {...atomicIframeProps} />
-      ): null}
+      ) : null}
     </>
   );
 };

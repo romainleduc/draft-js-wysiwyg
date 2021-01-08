@@ -2,7 +2,7 @@ import React, { useContext, forwardRef, useEffect } from 'react';
 import {
   indentSelection as indentSelectionUtils,
   isOutdentable,
-  IndentType
+  IndentType,
 } from '../../utils';
 import EditorContext from '../EditorContext';
 import { DraftButton, DraftButtonProps } from '../DraftButton';
@@ -29,7 +29,7 @@ export interface IndentDraftButtonProps extends DraftButtonProps {
 export enum IndentCommand {
   Increase = 'increase-indent',
   Decrease = 'decrease-indent',
-};
+}
 
 const IndentDraftButton = forwardRef<HTMLButtonElement, IndentDraftButtonProps>(
   (

@@ -6,46 +6,46 @@ export const FLV_EXTENSIONS = /\.(flv)($|\?)/i;
 
 const isAudio = (url: string | string[]) => {
   if (url instanceof Array) {
-    return url.every(item => AUDIO_EXTENSIONS.test(item));
+    return url.every((item) => AUDIO_EXTENSIONS.test(item));
   }
 
   return AUDIO_EXTENSIONS.test(url);
-}
+};
 
 const isVideo = (url: string | string[]) => {
   if (url instanceof Array) {
-    return url.every(item => VIDEO_EXTENSIONS.test(item));
+    return url.every((item) => VIDEO_EXTENSIONS.test(item));
   }
 
   return VIDEO_EXTENSIONS.test(url);
-}
+};
 
 const isHls = (url: string | string[]) => {
   if (url instanceof Array) {
-    return url.every(item => HLS_EXTENSIONS.test(item));
+    return url.every((item) => HLS_EXTENSIONS.test(item));
   }
 
   return HLS_EXTENSIONS.test(url);
-}
+};
 
 const isDash = (url: string | string[]) => {
   if (url instanceof Array) {
-    return url.every(item => DASH_EXTENSIONS.test(item));
+    return url.every((item) => DASH_EXTENSIONS.test(item));
   }
 
   return DASH_EXTENSIONS.test(url);
-}
+};
 
 const isFlv = (url: string | string[]) => {
   if (url instanceof Array) {
-    return url.every(item => FLV_EXTENSIONS.test(item));
+    return url.every((item) => FLV_EXTENSIONS.test(item));
   }
 
   return FLV_EXTENSIONS.test(url);
-}
+};
 
 export const getMediaType = (url?: string | string[]): string => {
-  console.log(url)
+  console.log(url);
   if (!url) {
     return 'media';
   }
@@ -71,4 +71,4 @@ export const getMediaType = (url?: string | string[]): string => {
   }
 
   return 'media';
-}
+};
