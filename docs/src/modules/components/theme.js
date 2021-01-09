@@ -20,7 +20,7 @@ const theme = createMuiTheme({
       level1: '#24292e',
     },
     text: {
-      secondary: fade('#fff', 0.8),
+      secondary: 'rgba(0, 0, 0, 0.54)',
     },
   },
   shape: {
@@ -64,7 +64,7 @@ const theme = createMuiTheme({
         lineHeight: 1.334,
         letterSpacing: '0em',
       },
-    }
+    },
   },
 });
 

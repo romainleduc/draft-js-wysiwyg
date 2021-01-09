@@ -275,7 +275,6 @@ const LandingExample = () => {
       <EditorToolbar className={classes.toolbar}>
         <BlockTypeToggleButtonSelect />
         <Divider flexItem orientation="vertical" className={classes.divider} />
-        <Divider flexItem orientation="vertical" className={classes.divider} />
         <InlineToggleButtonGroup />
         <Divider flexItem orientation="vertical" className={classes.divider} />
         <ToggleButtonGroup

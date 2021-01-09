@@ -56,7 +56,7 @@ const LandingPage = () => {
   const classes = useStyles();
 
   return (
-    <AppFrame>
+    <AppFrame disablePermanent>
       <AppHead
         title=''
         description=''

@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme => ({
     marginBottom: 10,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    color: theme.palette.text.secondary
+    color: '#fff',
   },
 })));
 

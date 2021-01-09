@@ -2,6 +2,7 @@ import React from 'react';
 import AppHead from './AppHead';
 import MarkdownDocs from './MarkdownDocs';
 import AppFrame from './AppFrame';
+import { useWindowSize } from '../hooks/useWindowSize';
 import { makeStyles } from '@material-ui/core';
 
 interface MarkdownDocsPageProps {
@@ -10,7 +11,7 @@ interface MarkdownDocsPageProps {
   markdown: string;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.up('lg')]: {
       paddingLeft: 180,
@@ -23,10 +24,11 @@ const MarkdownDocsPage = ({
   description,
   markdown,
 }: MarkdownDocsPageProps): JSX.Element => {
+  const { width } = useWindowSize();
   const classes = useStyles();
 
   return (
-    <AppFrame className={classes.root}>
+    <AppFrame disablePermanent={width < 1280} className={classes.root}>
       <AppHead title={title} description={description} />
       <MarkdownDocs markdown={markdown} />
     </AppFrame>

@@ -7,11 +7,11 @@ import {
   ListItemProps,
 } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: 500,
   },
-});
+}));
 
 interface AppDrawerNavItemProps extends ListItemProps {
   title: string;
@@ -30,7 +30,7 @@ const AppDrawerNavItem = ({
 
   return (
     <>
-      <ListItem button onClick={handleClick}>
+      <ListItem onClick={handleClick} button>
         <ListItemText classes={{ primary: classes.title }} primary={title} />
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
