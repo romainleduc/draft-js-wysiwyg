@@ -91,7 +91,10 @@ const SimpleExample = () => {
           </TextAlignToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
-      <Editor />
+      <Editor
+        placeholder='Enter some text..'
+        textAlignment={alignment}
+      />
     </EditorContainer>
   );
 }
