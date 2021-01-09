@@ -35,11 +35,5 @@ title: Button React component
 
 {{"demo": "button/CustomizedMedia.jsx"}}
 
-### Extend styles
-
-It is possible to add your own styles using the `customStyleMap` property provided by [Draft.js](https://draftjs.org/docs/advanced-topics-inline-styles/). This will allow you to add an inline style name map corresponding to the CSS style objects.
-
-{{"demo": "toggle-button/ExtendStyle.jsx"}}
-
 ***
 

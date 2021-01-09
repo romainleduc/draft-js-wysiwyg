@@ -159,8 +159,9 @@ const BlockTypeToggleButtonSelect = () => {
           ['header-six', 'H6'],
           ['blockquote', 'Blockquote'],
           ['code-block', 'Code Block'],
-        ].map(block =>
+        ].map((block, key) =>
           <BlockTypeToggleButton
+            key={`block-type-${key}`}
             component={StyledMenuItem}
             key={`basic-block-${block[0]}`}
             value={block[0]}

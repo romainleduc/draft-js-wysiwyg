@@ -1,7 +1,7 @@
-import { Container, Link, makeStyles } from '@material-ui/core';
 import React from 'react';
+import { Container, Link, makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   footer: {
     borderTop: `1px solid ${theme.palette.divider}`,
     padding: theme.spacing(3, 0),
@@ -26,11 +26,10 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
     listStyle: 'none',
     alignItems: 'center',
-  }
-}
-));
+  },
+}));
 
-const AppFooter = () => {
+const AppFooter = (): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -44,18 +43,15 @@ const AppFooter = () => {
                 href="https://github.com/romainleduc/draft-js-wysiwyg"
               >
                 GitHub
-                </Link>
+              </Link>
             </li>
             <li>
               <Link
-              className={classes.logo}
+                className={classes.logo}
                 variant="body2"
                 href="https://draft-js-wysiwyg.com/"
               >
-                <img
-                  src="/static/logo.svg"
-                  alt="Draft-js-wysiwyg logo"
-                />
+                <img src="/static/logo.svg" alt="Draft-js-wysiwyg logo" />
               </Link>
             </li>
             <li>
@@ -64,13 +60,13 @@ const AppFooter = () => {
                 href="https://github.com/romainleduc/draft-js-wysiwyg"
               >
                 About
-                </Link>
+              </Link>
             </li>
           </ul>
         </footer>
       </Container>
     </div>
   );
-}
+};
 
 export default AppFooter;
