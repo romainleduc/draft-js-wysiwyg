@@ -142,6 +142,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       <div
         ref={ref}
         className={clsx(
+          'draft-editor',
           className,
           isNotEmpty() && classes.hidePlaceholder,
           classes.editor
