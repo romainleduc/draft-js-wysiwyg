@@ -29,7 +29,7 @@ const AppDrawer = ({ onClose, ...other }: DrawerProps): JSX.Element => {
 
   return (
     <nav>
-      <Drawer anchor="left" onClose={onClose} {...other}>
+      <Drawer onClose={onClose} {...other}>
         <div className={classes.toolbar}>
           <Link
             variant="h6"
