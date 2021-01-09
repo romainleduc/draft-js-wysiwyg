@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useContext } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import {
   EditorState,
   EditorProps as DraftEditorProps,
@@ -17,7 +17,6 @@ import {
 } from '../../utils/editorUtils';
 import { IndentCommand } from '../IndentDraftButton/IndentDraftButton';
 import clsx from 'clsx';
-import 'draft-js/dist/Draft.css';
 
 export interface EditorProps
   extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -52,21 +51,8 @@ const userStyles = makeStyles({
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
   ({ className, keyCommands, onChange, ...rest }: EditorProps, ref) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
-    const editor = useRef<DraftEditor>(null);
-    const classes = userStyles();
     const { state } = useContext(ReduxContext);
-
-    const focusEditor = (): void => {
-      setTimeout(() => {
-        if (editor && editor.current) {
-          editor.current.focus();
-        }
-      }, 0);
-    };
-
-    React.useEffect(() => {
-      focusEditor();
-    }, []);
+    const classes = userStyles();
 
     const isNotEmpty = () => {
       const contentState = editorState?.getCurrentContent();
@@ -140,18 +126,16 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
 
     return (
       <div
-        ref={ref}
         className={clsx(
           'draft-editor',
           className,
           isNotEmpty() && classes.hidePlaceholder,
           classes.editor
         )}
-        onClick={focusEditor}
       >
         {editorState && setEditorState && (
           <DraftEditor
-            ref={editor}
+            ref={ref as any}
             editorState={editorState}
             blockRendererFn={getDefaultBlockRenderer}
             blockStyleFn={getDefaultBlockStyle}
@@ -168,5 +152,4 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
 );
 
 Editor.displayName = 'Editor';
-
 export default Editor;

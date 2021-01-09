@@ -50,6 +50,7 @@ const AppDrawer = ({ onClose, ...other }: DrawerProps): JSX.Element => {
                     <Link
                       component={NextLink}
                       href={`${pathname}${child.pathname}`}
+                      passHref
                     >
                       <ListItemText primary={child.title} />
                     </Link>

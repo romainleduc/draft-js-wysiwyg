@@ -115,6 +115,7 @@ const EditorModal = (props) => {
         </Tabs>
         {mediaData.map((media, key) => (
           <TabPanel
+            key={key}
             value={value}
             index={key}
           >
@@ -124,8 +125,8 @@ const EditorModal = (props) => {
               cellHeight={140}
               cols={3}
             >
-              {media.map(({ background, tooltip, src }) => (
-                <GridListTile>
+              {media.map(({ background, tooltip, src }, key) => (
+                <GridListTile key={key}>
                   <Tooltip
                     title={tooltip}
                     placement='top'

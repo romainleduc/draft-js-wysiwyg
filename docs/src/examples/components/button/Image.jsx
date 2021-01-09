@@ -63,7 +63,7 @@ const EditorModal = (props) => {
               cols={3}
             >
               {imageData.map(({ background, tooltip, src }, key) => (
-                <GridListTile>
+                <GridListTile key={key}>
                   <Tooltip
                     title={tooltip}
                     placement='top'
