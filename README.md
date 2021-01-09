@@ -50,31 +50,51 @@ Please note that `draft-js-wysiwyg` depends on `draft-js`, `@material-ui/core` a
 Here is a quick example to get you started.
 
 ```jsx
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  FormatBold as FormatBoldIcon,
-  FormatItalic as FormatItalicIcon
+  FormatAlignLeft as FormatAlignLeftIcon,
+  FormatAlignCenter as FormatAlignCenterIcon,
+  FormatAlignRight as FormatAlignRightIcon
 } from '@material-ui/icons';
+import { ToggleButtonGroup } from '@material-ui/core';
 import {
   Editor,
   EditorContainer,
   EditorToolbar,
-  InlineToggleButton,
+  TextAlignToggleButton,
 } from 'draft-js-wysiwyg';
+import 'draft-js/dist/Draft.css';
 
-const SimpleExample = () => (
-  <EditorContainer>
-    <EditorToolbar>
-      <InlineToggleButton value='BOLD'>
-        <FormatBoldIcon />
-      </InlineToggleButton>
-      <InlineToggleButton value='ITALIC'>
-        <FormatItalicIcon />
-      </InlineToggleButton>
-    </EditorToolbar>
-    <Editor />
-  </EditorContainer>
-);
+const SimpleExample = () => {
+  const [alignment, setAlignment] = useState('left');
+
+  const handleAlignment = (_, newAlignment) => {
+    setAlignment(newAlignment);
+  };
+
+  return (
+    <EditorContainer>
+      <EditorToolbar>
+        <ToggleButtonGroup
+          exclusive
+          value={alignment}
+          onChange={handleAlignment}
+        >
+          <TextAlignToggleButton value='left'>
+            <FormatAlignLeftIcon />
+          </TextAlignToggleButton>
+          <TextAlignToggleButton value='center'>
+            <FormatAlignCenterIcon />
+          </TextAlignToggleButton>
+          <TextAlignToggleButton value='right'>
+            <FormatAlignRightIcon />
+          </TextAlignToggleButton>
+        </ToggleButtonGroup>
+      </EditorToolbar>
+      <Editor placeholder='Enter some text..' />
+    </EditorContainer>
+  );
+}
 ```
 
 ## Documentation
