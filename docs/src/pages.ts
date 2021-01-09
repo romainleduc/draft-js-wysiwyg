@@ -1,10 +1,10 @@
 const pages = [
   {
-    title: 'Toggle Button',
-    pathname: '/toggle-button',
+    title: 'Components',
+    pathname: '/components',
     children: [
-      { pathname: '/toggle-button/inline', title: 'Inline' },
-      { pathname: '/toggle-button/text-align', title: 'Text Align' },
+      { pathname: '/toggle-button', title: 'Toggle button' },
+      { pathname: '/button', title: 'Button' },
     ],
   },
 ];

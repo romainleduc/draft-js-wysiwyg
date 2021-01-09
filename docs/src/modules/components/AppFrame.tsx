@@ -1,5 +1,11 @@
 import React, { useState, ReactNode } from 'react';
-import { IconButton, AppBar, Toolbar, makeStyles, Container } from '@material-ui/core';
+import {
+  IconButton,
+  AppBar,
+  Toolbar,
+  makeStyles,
+  Container,
+} from '@material-ui/core';
 import { Menu as MenuIcon, GitHub as GithubIcon } from '@material-ui/icons';
 import AppDrawer from './AppDrawer';
 import AppFooter from './AppFooter';
@@ -47,17 +53,27 @@ const useStyles = makeStyles((theme) => ({
 interface AppFrameProps {
   children: ReactNode;
   className?: string;
+  disablePermanent?: boolean;
 }
 
-const AppFrame = ({ children, className }: AppFrameProps): JSX.Element => {
-  const [openDrawer, setOpenDrawer] = useState(true);
+const AppFrame = ({
+  children,
+  disablePermanent = false,
+  className,
+}: AppFrameProps): JSX.Element => {
+  const [openDrawer, setOpenDrawer] = useState(false);
   const classes = useStyles();
+
+  const handleClickOpenDrawer = () => {
+    setOpenDrawer(true);
+  };
 
   return (
     <div className={clsx(className)}>
       <AppBar className={classes.appBar} position="fixed">
         <Toolbar>
           <IconButton
+            onClick={handleClickOpenDrawer}
             edge="start"
             className="menuButton"
             color="inherit"
@@ -80,8 +96,8 @@ const AppFrame = ({ children, className }: AppFrameProps): JSX.Element => {
       </AppBar>
       <AppDrawer
         className={classes.drawer}
-        anchor="left"
         open={openDrawer}
+        variant={disablePermanent ? 'temporary' : 'permanent'}
         onClose={() => setOpenDrawer(false)}
         classes={{
           paper: classes.drawerPaper,

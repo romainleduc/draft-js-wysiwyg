@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useWindowSize } from '../hooks/useWindowSize';
+import React from 'react';
 import {
   Drawer,
   List,
@@ -8,6 +7,7 @@ import {
   ListItemText,
   makeStyles,
   DrawerProps,
+  Divider,
 } from '@material-ui/core';
 import pages from '../../pages';
 import AppDrawerNavItem from './AppDrawerNavItem';
@@ -17,34 +17,40 @@ const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(4),
   },
+  // necessary for content to be below app bar
+  toolbar: {
+    ...theme.mixins.toolbar,
+    padding: 10,
+  },
 }));
 
 const AppDrawer = ({ onClose, ...other }: DrawerProps): JSX.Element => {
   const classes = useStyles();
-  const { width } = useWindowSize();
-  const [isMobileSize, setIsMobileSize] = useState(width < 500);
-
-  useEffect(() => {
-    if ((!isMobileSize && width < 500) || (isMobileSize && width > 500)) {
-      setIsMobileSize(!isMobileSize);
-      onClose?.({}, 'escapeKeyDown');
-    }
-  }, [width]);
 
   return (
     <nav>
-      <Drawer
-        variant={isMobileSize ? 'temporary' : 'permanent'}
-        onClose={onClose}
-        {...other}
-      >
+      <Drawer anchor="left" onClose={onClose} {...other}>
+        <div className={classes.toolbar}>
+          <Link
+            variant="h6"
+            color="textSecondary"
+            href="test"
+            component="button"
+          >
+            Draft-js-wysiwyg
+          </Link>
+        </div>
+        <Divider />
         <List>
-          {pages.map(({ title, children }, key) => (
+          {pages.map(({ title, pathname, children }, key) => (
             <AppDrawerNavItem key={`nav-item-${key}`} title={title}>
               {children.map((child, key) => (
                 <List key={`drawer-list-${key}`} component="div" disablePadding>
                   <ListItem className={classes.nested} button>
-                    <Link component={NextLink} href={child.pathname}>
+                    <Link
+                      component={NextLink}
+                      href={`${pathname}${child.pathname}`}
+                    >
                       <ListItemText primary={child.title} />
                     </Link>
                   </ListItem>
