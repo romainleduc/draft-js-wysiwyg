@@ -2,7 +2,7 @@ import {
   ContentBlock,
   getDefaultKeyBinding as getDraftDefaultKeyBinding,
 } from 'draft-js';
-import { IndentCommand } from '../components/IndentDraftButton/IndentDraftButton';
+import { IndentCommand } from '../components/IndentDraftButton';
 import { Media } from '../components/Media';
 
 export const getDefaultBlockRenderer = (contentBlock: ContentBlock): any => {

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
-import { setBlockData, setBlocksData } from '../../utils';
-import EditorContext from '../EditorContext';
+import { setBlockData, setBlocksData } from '../utils';
+import EditorContext from './EditorContext';
 import DraftToggleButton, {
   DraftToggleButtonProps,
-} from '../DraftToggleButton';
+} from './DraftToggleButton';
 
 export interface TextAlignToggleButtonProps
   extends Omit<DraftToggleButtonProps, 'value'> {

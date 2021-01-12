@@ -7,9 +7,9 @@ import {
   withStyles,
   Theme,
 } from '@material-ui/core';
-import ReduxContext from '../ReduxContext';
+import ReduxContext from './ReduxContext';
 import clsx from 'clsx';
-import { ACTION_TYPES } from '../../redux/constants';
+import { ACTION_TYPES } from '../redux/constants';
 
 export type SizeType = 'root' | 'label' | 'sizeLarge' | 'sizeSmall';
 

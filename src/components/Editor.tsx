@@ -6,16 +6,16 @@ import {
   RichUtils,
   DraftHandleValue,
 } from 'draft-js';
-import { indentSelection, mergeBlockData, draftToHtml } from '../../utils';
-import EditorContext from '../EditorContext';
+import { indentSelection, mergeBlockData, draftToHtml } from '../utils';
+import EditorContext from './EditorContext';
 import { makeStyles } from '@material-ui/core';
-import ReduxContext from '../ReduxContext';
+import ReduxContext from './ReduxContext';
 import {
   getDefaultBlockRenderer,
   getDefaultBlockStyle,
   getDefaultKeyBinding,
-} from '../../utils/editorUtils';
-import { IndentCommand } from '../IndentDraftButton/IndentDraftButton';
+} from '../utils/editorUtils';
+import { IndentCommand } from './IndentDraftButton';
 import clsx from 'clsx';
 
 export interface EditorProps

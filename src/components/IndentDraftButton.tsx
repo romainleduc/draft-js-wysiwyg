@@ -1,11 +1,11 @@
-import React, { useContext, forwardRef, useEffect } from 'react';
+import React, { useContext, forwardRef } from 'react';
 import {
   indentSelection as indentSelectionUtils,
   isOutdentable,
   IndentType,
-} from '../../utils';
-import EditorContext from '../EditorContext';
-import { DraftButton, DraftButtonProps } from '../DraftButton';
+} from '../utils';
+import EditorContext from './EditorContext';
+import DraftButton, { DraftButtonProps } from './DraftButton';
 
 export interface IndentDraftButtonProps
   extends Omit<DraftButtonProps, 'keyCommand'> {

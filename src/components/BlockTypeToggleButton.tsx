@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import { EditorState, RichUtils } from 'draft-js';
-import EditorContext from '../EditorContext';
+import EditorContext from './EditorContext';
 
 export interface BlockTypeToggleButtonProps
   extends Omit<ToggleButtonProps, 'value' | 'onChange'> {
