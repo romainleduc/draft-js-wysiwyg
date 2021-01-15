@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
 import { EditorState, RichUtils } from 'draft-js';
-import EditorContext from './EditorContext';
-import DraftToggleButton, { DraftToggleButtonProps } from './DraftToggleButton';
+import EditorContext from '../EditorContext/EditorContext';
+import DraftToggleButton, {
+  DraftToggleButtonProps,
+} from '../DraftToggleButton/DraftToggleButton';
 
 export interface InlineToggleButtonProps
   extends Omit<DraftToggleButtonProps, 'value' | 'keyCommand'> {

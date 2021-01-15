@@ -3,9 +3,9 @@ import {
   indentSelection as indentSelectionUtils,
   isOutdentable,
   IndentType,
-} from '../utils';
-import EditorContext from './EditorContext';
-import DraftButton, { DraftButtonProps } from './DraftButton';
+} from '../../utils';
+import EditorContext from '../EditorContext/EditorContext';
+import DraftButton, { DraftButtonProps } from '../DraftButton/DraftButton';
 
 export interface IndentDraftButtonProps
   extends Omit<DraftButtonProps, 'keyCommand'> {

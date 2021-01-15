@@ -4,19 +4,19 @@ export type { TextAlignToggleButtonProps } from './TextAlignToggleButton';
 export { default as InlineToggleButton } from './InlineToggleButton';
 export type { InlineToggleButtonProps } from './InlineToggleButton';
 
-export { default as BlockTypeToggleButton } from './BlockTypeToggleButton';
+export { BlockTypeToggleButton } from './BlockTypeToggleButton';
 export type { BlockTypeToggleButtonProps } from './BlockTypeToggleButton';
 
-export { default as DraftToggleButtonGroup } from './DraftToggleButtonGroup';
+export { DraftToggleButtonGroup } from './DraftToggleButtonGroup';
 export type { DraftToggleButtonGroupProps } from './DraftToggleButtonGroup';
 
-export { default as EditorContainer } from './EditorContainer';
+export { EditorContainer } from './EditorContainer';
 export type { EditorContainerProps } from './EditorContainer';
 
 export { default as EditorToolbar } from './EditorToolbar';
 export type { EditorToolbarProps } from './EditorToolbar';
 
-export { default as Editor } from './Editor';
+export { Editor } from './Editor';
 export type { EditorProps } from './Editor';
 
 export { default as IndentDraftButton } from './IndentDraftButton';

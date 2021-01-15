@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
-import { ACTION_TYPES } from '../redux/constants';
-import ReduxContext from './ReduxContext';
+import { ACTION_TYPES } from '../../redux/constants';
+import ReduxContext from '../ReduxContext';
 
 export interface DraftToggleButtonProps
   extends Omit<ToggleButtonProps, 'onChange'> {
