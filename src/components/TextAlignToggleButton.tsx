@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
 import { setBlockData, setBlocksData } from '../utils';
 import EditorContext from './EditorContext';
-import DraftToggleButton, {
-  DraftToggleButtonProps,
-} from './DraftToggleButton';
+import DraftToggleButton, { DraftToggleButtonProps } from './DraftToggleButton';
 
 export interface TextAlignToggleButtonProps
-  extends Omit<DraftToggleButtonProps, 'value'> {
+  extends Omit<DraftToggleButtonProps, 'value' | 'keyCommand'> {
   value: 'left' | 'center' | 'right' | 'justify';
   ignoreSelection?: boolean;
 }
@@ -29,11 +27,15 @@ const TextAlignToggleButton = forwardRef<
 
     useEffect(() => {
       if (selected) {
-        handleClick();
+        toggleTextAlign();
       }
     }, []);
 
     const handleClick = () => {
+      toggleTextAlign();
+    };
+
+    const toggleTextAlign = () => {
       if (editorState && setEditorState) {
         const contentState = editorState.getCurrentContent();
         const selectionState = editorState.getSelection();
@@ -66,6 +68,7 @@ const TextAlignToggleButton = forwardRef<
         ref={ref}
         selected={selected}
         onClick={handleClick}
+        keyCommand={`align-${value}`}
         value={value}
         {...rest}
       >

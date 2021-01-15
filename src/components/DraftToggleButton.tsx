@@ -3,37 +3,77 @@ import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import { ACTION_TYPES } from '../redux/constants';
 import ReduxContext from './ReduxContext';
 
-export interface DraftToggleButtonProps extends ToggleButtonProps {
+export interface DraftToggleButtonProps
+  extends Omit<ToggleButtonProps, 'onChange'> {
   /**
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
    */
   disableKeyboardShortcuts?: boolean;
+  /**
+   *
+   */
+  keyCommand: string;
+  /**
+   *
+   */
+  onChange?: any;
 }
 
 const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
   (
     {
       value,
-      selected,
       children,
       disableKeyboardShortcuts,
-      ...rest
+      onChange,
+      selected,
+      keyCommand,
+      ...other
     }: DraftToggleButtonProps,
     ref
   ) => {
-    const { dispatch } = useContext(ReduxContext);
+    const { state, dispatch } = useContext(ReduxContext);
+
     useEffect(() => {
       if (!disableKeyboardShortcuts) {
         dispatch({
           type: ACTION_TYPES.ADD_KEY_COMMAND,
-          payload: value,
+          payload: keyCommand,
         });
       }
     }, []);
 
+    const hasSelectedKeyCommand = () => {
+      return state.selectedKeyCommands.includes(keyCommand);
+    };
+
+    const handleChange = (event: any) => {
+      if (onChange) {
+        if (hasSelectedKeyCommand()) {
+          dispatch({
+            type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
+            payload: keyCommand,
+          });
+
+          value = null;
+        }
+
+        onChange(event, value);
+      }
+    };
+
     return (
-      <ToggleButton ref={ref} selected={selected} value={value} {...rest}>
+      <ToggleButton
+        ref={ref}
+        value={value}
+        onChange={handleChange}
+        selected={
+          (selected && !hasSelectedKeyCommand()) ||
+          (!selected && hasSelectedKeyCommand())
+        }
+        {...other}
+      >
         {children}
       </ToggleButton>
     );

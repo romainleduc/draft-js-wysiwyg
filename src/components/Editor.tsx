@@ -17,6 +17,7 @@ import {
 } from '../utils/editorUtils';
 import { IndentCommand } from './IndentDraftButton';
 import clsx from 'clsx';
+import { ACTION_TYPES } from '../redux/constants';
 
 export interface EditorProps
   extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -51,7 +52,7 @@ const userStyles = makeStyles({
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
   ({ className, keyCommands, onChange, ...rest }: EditorProps, ref) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
-    const { state } = useContext(ReduxContext);
+    const { state, dispatch } = useContext(ReduxContext);
     const classes = userStyles();
 
     const isNotEmpty = () => {
@@ -75,6 +76,11 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         keyCommands?.includes(command) ||
         state.keyCommands.includes(command)
       ) {
+        dispatch({
+          type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
+          payload: command,
+        });
+
         if (Object.values(IndentCommand).includes(command as IndentCommand)) {
           const contentState = editorState.getCurrentContent();
           const indentType =

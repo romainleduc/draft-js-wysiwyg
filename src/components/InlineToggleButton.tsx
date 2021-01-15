@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
 import { EditorState, RichUtils } from 'draft-js';
 import EditorContext from './EditorContext';
-import DraftToggleButton, {
-  DraftToggleButtonProps,
-} from './DraftToggleButton';
+import DraftToggleButton, { DraftToggleButtonProps } from './DraftToggleButton';
 
 export interface InlineToggleButtonProps
-  extends Omit<DraftToggleButtonProps, 'value'> {
+  extends Omit<DraftToggleButtonProps, 'value' | 'keyCommand'> {
   /**
    * The inline style value to associate with the button
    */
@@ -21,26 +19,15 @@ const InlineToggleButton = forwardRef<
 
   useEffect(() => {
     if (selected) {
-      handleClick();
+      toggleInlineStyle();
     }
   }, []);
 
-  // Synchronize selection with keyboard shortcuts
-  // const synchronizeSelection = () => {
-  //     if (editorState && setEditorState) {
-  //         if (editorState.getCurrentContent().hasText()) {
-  //             const hasValue = editorState.getCurrentInlineStyle().has(value);
-
-  //             return (hasValue && !selected) || (!hasValue && selected)
-  //                 ? !selected
-  //                 : selected;
-  //         }
-  //     }
-
-  //     return selected;
-  // };
-
   const handleClick = () => {
+    toggleInlineStyle();
+  };
+
+  const toggleInlineStyle = () => {
     if (editorState && setEditorState) {
       setEditorState(
         RichUtils.toggleInlineStyle(
@@ -56,6 +43,7 @@ const InlineToggleButton = forwardRef<
       ref={ref}
       selected={selected}
       onClick={handleClick}
+      keyCommand={value.toLowerCase()}
       value={value}
       {...rest}
     >

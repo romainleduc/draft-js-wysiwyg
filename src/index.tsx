@@ -25,6 +25,9 @@ export type { AtomicImageButtonProps } from './components/Media';
 export { IndentDraftButton } from './components';
 export type { IndentDraftButtonProps } from './components';
 
+export { DraftToggleButtonGroup } from './components';
+export type { DraftToggleButtonGroupProps } from './components';
+
 export {
   getDefaultBlockRenderer,
   getDefaultBlockStyle,

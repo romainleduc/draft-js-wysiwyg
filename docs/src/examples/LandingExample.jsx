@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { EditorContainer, EditorToolbar, Editor, AtomicImageButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
+import { DraftToggleButtonGroup, EditorContainer, EditorToolbar, Editor, AtomicImageButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
 import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, GridList, GridListTile, fade, Divider, withStyles, FormControl, Select as MuiSelect, MenuItem, InputBase, ButtonGroup as MuiButtonGroup } from '@material-ui/core';
 import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, List } from '@material-ui/icons';
 import imageData from './components/button/imageData';
-import { ToggleButtonGroup as MuiToggleButtonGroup } from '@material-ui/lab';
 
 const ToggleButtonGroup = withStyles((theme) => ({
   grouped: {
@@ -16,7 +15,7 @@ const ToggleButtonGroup = withStyles((theme) => ({
       borderRadius: theme.shape.borderRadius,
     },
   },
-}))(MuiToggleButtonGroup);
+}))(DraftToggleButtonGroup);
 
 const ButtonGroup = withStyles((theme) => ({
   grouped: {

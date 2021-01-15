@@ -7,6 +7,9 @@ export type { InlineToggleButtonProps } from './InlineToggleButton';
 export { default as BlockTypeToggleButton } from './BlockTypeToggleButton';
 export type { BlockTypeToggleButtonProps } from './BlockTypeToggleButton';
 
+export { default as DraftToggleButtonGroup } from './DraftToggleButtonGroup';
+export type { DraftToggleButtonGroupProps } from './DraftToggleButtonGroup';
+
 export { default as EditorContainer } from './EditorContainer';
 export type { EditorContainerProps } from './EditorContainer';
 
