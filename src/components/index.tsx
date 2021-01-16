@@ -24,6 +24,3 @@ export type { IndentDraftButtonProps } from './IndentDraftButton';
 
 export { AtomicMediaButton } from './Media';
 export type { AtomicMediaButtonProps } from './Media';
-
-export { AtomicImageButton } from './Media';
-export type { AtomicImageButtonProps } from './Media';

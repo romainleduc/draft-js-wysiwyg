@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EditorContainer, EditorToolbar, Editor, AtomicImageButton } from 'draft-js-wysiwyg';
+import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton } from 'draft-js-wysiwyg';
 import { makeStyles, Modal, IconButton, FormHelperText, Typography } from '@material-ui/core';
 import { ImageOutlined, Panorama } from '@material-ui/icons';
 import { Switch } from '@material-ui/core';
@@ -75,15 +75,15 @@ const EditorModal = (props) => {
             Errors were found
           </FormHelperText>
         }
-        <AtomicImageButton
+        <AtomicMediaButton
           disabled={hasErrors}
           onInserted={() => props.onClose()}
-          atomicImageProps={{
+          atomicMediaProps={{
             src: imgUrl,
           }}
         >
           Insert
-        </AtomicImageButton>
+        </AtomicMediaButton>
       </div>
     </Modal>
   );

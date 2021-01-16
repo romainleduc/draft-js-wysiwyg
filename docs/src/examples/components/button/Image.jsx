@@ -1,5 +1,5 @@
 import React from 'react';
-import { EditorContainer, EditorToolbar, Editor, AtomicImageButton } from 'draft-js-wysiwyg';
+import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton } from 'draft-js-wysiwyg';
 import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, Tabs, Tab, GridList, GridListTile, fade } from '@material-ui/core';
 import { ImageOutlined } from '@material-ui/icons';
 import imageData from './imageData';
@@ -68,11 +68,11 @@ const EditorModal = (props) => {
                     title={tooltip}
                     placement='top'
                   >
-                    <AtomicImageButton
+                    <AtomicMediaButton
                       className={classes.media}
                       style={{ backgroundImage: `url('${background}')` }}
                       onInserted={() => props.onClose()}
-                      atomicImageProps={{ src }}
+                      atomicMediaProps={{ src }}
                       component='span'
                     />
                   </Tooltip>
