@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme => ({
 
 const EditorModal = (props) => {
   const [hasErrors, setHasErrors] = useState(false);
-  const imgUrl = '/static/images/media/dairypanda.png'; 
+  const imgUrl = '/static/images/media/nuffy.jpg'; 
   const classes = useStyles();
 
   const handleChangeChecked = () => {
@@ -51,12 +51,19 @@ const EditorModal = (props) => {
   return (
     <Modal className={classes.modal} {...props}>
       <div className={classes.paper}>
-        <Typography variant='h2' align='center'>Add image</Typography>
+        <Typography
+          component='h2'
+          variant='h3'
+          align='center'
+          gutterBottom
+        >
+          Add image
+        </Typography>
         <Switch
           checked={!hasErrors}
           onChange={handleChangeChecked}
           color='primary'
-          name='checked-media'
+          name='switch-media'
           inputProps={{'aria-label': 'primary checkbox' }}
         />
         <div

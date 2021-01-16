@@ -40,25 +40,21 @@ const theme = createMuiTheme({
     MuiTypography: {
       h1: {
         fontSize: '3rem',
-        margin: '20px 0',
         letterSpacing: '0em',
         fontWeight: 400,
       },
       h2: {
         fontSize: '2.5rem',
-        margin: '16px 0',
         letterSpacing: '0em',
         fontWeight: 400,
       },
       h3: {
-        margin: '40px 0 16px',
         fontSize: '1.875rem',
         fontWeight: 400,
         lineHeight: 1.235,
         letterSpacing: '0.00735em',
       },
       h4: {
-        margin: '16px 0 16px',
         fontSize: '1.5rem',
         fontWeight: 400,
         lineHeight: 1.334,
