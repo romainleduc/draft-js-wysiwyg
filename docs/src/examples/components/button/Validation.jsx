@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, FormHelperText, Typography } from '@material-ui/core';
+import { makeStyles, Modal, IconButton, FormHelperText, Typography, fade } from '@material-ui/core';
 import { ImageOutlined, Panorama } from '@material-ui/icons';
 import { Switch } from '@material-ui/core';
 import clsx from 'clsx';
@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme => ({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: theme.palette.background.paper,
-    border: '1px solid #000000c9',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    border: `solid 1px ${fade('#000', .7)}`,
+    padding: theme.spacing(2),
+    outline: 0,
     '& p': {
       textAlign: 'center',
     }

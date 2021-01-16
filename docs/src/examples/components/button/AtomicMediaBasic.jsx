@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     border: `solid 1px ${fade('#000', .7)}`,
-    padding: theme.spacing(2.5),
+    padding: theme.spacing(2),
+    outline: 0,
   },
   media: {
     backgroundSize: 'cover',
