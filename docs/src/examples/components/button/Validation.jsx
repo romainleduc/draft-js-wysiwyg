@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { EditorContainer, EditorToolbar, Editor, AtomicImageButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, FormHelperText, Typography } from '@material-ui/core';
+import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton } from 'draft-js-wysiwyg';
+import { makeStyles, Modal, IconButton, FormHelperText, Typography, fade } from '@material-ui/core';
 import { ImageOutlined, Panorama } from '@material-ui/icons';
 import { Switch } from '@material-ui/core';
 import clsx from 'clsx';
@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme => ({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: theme.palette.background.paper,
-    border: '1px solid #000000c9',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    border: `solid 1px ${fade('#000', .7)}`,
+    padding: theme.spacing(2),
+    outline: 0,
     '& p': {
       textAlign: 'center',
     }
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme => ({
 
 const EditorModal = (props) => {
   const [hasErrors, setHasErrors] = useState(false);
-  const imgUrl = '/static/images/media/dairypanda.png'; 
+  const imgUrl = '/static/images/media/nuffy.jpg'; 
   const classes = useStyles();
 
   const handleChangeChecked = () => {
@@ -51,12 +51,19 @@ const EditorModal = (props) => {
   return (
     <Modal className={classes.modal} {...props}>
       <div className={classes.paper}>
-        <Typography variant='h2' align='center'>Add image</Typography>
+        <Typography
+          component='h2'
+          variant='h3'
+          align='center'
+          gutterBottom
+        >
+          Add image
+        </Typography>
         <Switch
           checked={!hasErrors}
           onChange={handleChangeChecked}
           color='primary'
-          name='checked-media'
+          name='switch-media'
           inputProps={{'aria-label': 'primary checkbox' }}
         />
         <div
@@ -75,15 +82,15 @@ const EditorModal = (props) => {
             Errors were found
           </FormHelperText>
         }
-        <AtomicImageButton
+        <AtomicMediaButton
           disabled={hasErrors}
           onInserted={() => props.onClose()}
-          atomicImageProps={{
+          atomicMediaProps={{
             src: imgUrl,
           }}
         >
           Insert
-        </AtomicImageButton>
+        </AtomicMediaButton>
       </div>
     </Modal>
   );

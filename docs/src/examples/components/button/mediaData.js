@@ -5,53 +5,86 @@ const videoPath = '/static/videos/media';
 const mediaData = [
   [
     {
+      type: 'img',
+      background: `${path}/dairypanda.png`,
+      tooltip: 'Dairypanda’s hytale fan art',
+      mediaProps: {
+        src: `${path}/dairypanda.png`,
+      },
+    },
+    {
+      type: 'img',
+      background: `${path}/nuffy.jpg`,
+      tooltip: 'Nuffy’s hytale fan art',
+      mediaProps: {
+        src: `${path}/nuffy.jpg`,
+      },
+    },
+    {
+      type: 'img',
+      background: `${path}/aura.gif`,
+      tooltip: 'Aura’s hytale fan art',
+      mediaProps: {
+        src: `${path}/aura.gif`,
+      },
+    },
+  ],
+  [
+    {
+      type: 'audio',
       background: `${path}/shine.jpg`,
       tooltip: 'Acoustic music',
-      src: `${audioPath}/Shine.mp3`,
+      mediaProps: {
+        controls: true,
+        src: `${audioPath}/Shine.mp3`,
+      },
     },
     {
+      type: 'audio',
       background: `${path}/open.jpg`,
       tooltip: 'Orchestral music',
-      src: [`${audioPath}/Open.mp3`],
+      mediaProps: {
+        controls: true,
+        src: [`${audioPath}/Open.mp3`],
+      },
     },
     {
+      type: 'audio',
       background: `${path}/percussion.jpg`,
       tooltip: 'Percussion music',
-      src: `${audioPath}/Bongoland.mp3`,
+      mediaProps: {
+        controls: true,
+        src: `${audioPath}/Bongoland.mp3`,
+      },
     },
   ],
   [
     {
+      type: 'video',
       background: `${path}/casino.jpg`,
       tooltip: 'Orchestral music',
-      src: `${videoPath}/casino.mp4`,
+      mediaProps: {
+        controls: true,
+        src: `${videoPath}/casino.mp4`,
+      },
     },
     {
+      type: 'video',
       background: `${path}/react.jpg`,
       tooltip: 'Percussion music',
-      src: `${videoPath}/react.mp4`,
+      mediaProps: {
+        controls: true,
+        src: `${videoPath}/react.mp4`,
+      },
     },
     {
+      type: 'video',
       background: `${path}/game.jpg`,
       tooltip: 'Percussion music',
-      src: `${videoPath}/gaming.mp4`,
-    },
-  ],
-  [
-    {
-      background: `https://i.vimeocdn.com/video/826491820.jpg`,
-      tooltip: 'Orchestral music',
-      src: `https://player.vimeo.com/video/369521302/config?autopause=1&byline=0&collections=1&context=Vimeo%5CController%5CClipController.main&default_to_hd=1&outro=nothing&portrait=0&share=1&title=0&watch_trailer=0&s=32ec6c8ef0c6d53a1c2a44788684d7476c7eac7f_1606750930`,
-    },
-    {
-      background: `${path}/react.jpg`,
-      tooltip: 'Percussion music',
-      src: `https://www.youtube.com/watch?v=nn-0rd2fDsU`,
-    },
-    {
-      background: `https://i.ytimg.com/vi/5qap5aO4i9A/hq720_live.jpg?sqp=CLiMjv4F-oaymwEZCNAFEJQDSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLB29_L4c1dVwJ7C5NI1Ta0JgdXyIg`,
-      tooltip: 'Percussion music',
-      src: `https://www.youtube.com/watch?v=5qap5aO4i9A`,
+      mediaProps: {
+        controls: true,
+        src: `${videoPath}/gaming.mp4`,
+      },
     },
   ],
 ];

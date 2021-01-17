@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useContext, useEffect } from 'react';
 import {
   fade,
   ButtonBaseProps,
@@ -7,7 +7,9 @@ import {
   withStyles,
   Theme,
 } from '@material-ui/core';
+import ReduxContext from '../ReduxContext';
 import clsx from 'clsx';
+import { ACTION_TYPES } from '../../redux/constants';
 
 export type SizeType = 'root' | 'label' | 'sizeLarge' | 'sizeSmall';
 
@@ -33,6 +35,15 @@ export interface DraftButtonProps extends ButtonBaseProps {
    * @default 'medium'
    */
   size?: 'small' | 'medium' | 'large';
+  /**
+   *
+   */
+  keyCommand: string;
+  /**
+   * If `true`, indentation will not be available from keyboard shortcuts
+   * @default false
+   */
+  disableKeyboardShortcuts?: boolean;
 }
 
 const styles = (theme: Theme) => ({
@@ -78,9 +89,29 @@ const styles = (theme: Theme) => ({
 
 const DraftButton = forwardRef<HTMLButtonElement, DraftButtonProps>(
   (
-    { className, classes, children, disabled, size, ...rest }: DraftButtonProps,
+    {
+      className,
+      classes,
+      children,
+      disabled,
+      size,
+      keyCommand,
+      disableKeyboardShortcuts,
+      ...rest
+    }: DraftButtonProps,
     ref
   ) => {
+    const { dispatch } = useContext(ReduxContext);
+
+    useEffect(() => {
+      if (!disableKeyboardShortcuts) {
+        dispatch({
+          type: ACTION_TYPES.ADD_KEY_COMMAND,
+          payload: keyCommand,
+        });
+      }
+    }, []);
+
     return (
       <ButtonBase
         className={clsx(

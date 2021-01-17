@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
-import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import { EditorState, RichUtils } from 'draft-js';
-import EditorContext from '../EditorContext';
+import EditorContext from '../EditorContext/EditorContext';
+import DraftToggleButton, {
+  DraftToggleButtonProps,
+} from '../DraftToggleButton/DraftToggleButton';
 
 export interface BlockTypeToggleButtonProps
-  extends Omit<ToggleButtonProps, 'value' | 'onChange'> {
+  extends Omit<DraftToggleButtonProps, 'value' | 'onChange' | 'keyCommand'> {
   value: string;
   onChange?: (event: React.MouseEvent<HTMLElement>, value?: string) => void;
 }
@@ -53,15 +55,16 @@ const BlockTypeToggleButton = forwardRef<
     };
 
     return (
-      <ToggleButton
+      <DraftToggleButton
         ref={ref}
         onChange={handleChange}
         value={value}
         selected={selected}
+        keyCommand={value}
         {...rest}
       >
         {children}
-      </ToggleButton>
+      </DraftToggleButton>
     );
   }
 );

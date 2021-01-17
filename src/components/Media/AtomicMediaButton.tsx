@@ -2,14 +2,12 @@ import React, { useContext, forwardRef } from 'react';
 import { Button, ButtonProps } from '@material-ui/core';
 import EditorContext from '../EditorContext';
 import { insertAtomicBlock } from '../../utils';
-import clsx from 'clsx';
 import { getMediaType } from './patterns';
+import clsx from 'clsx';
 
 export interface AtomicMediaProps
   extends React.MediaHTMLAttributes<HTMLMediaElement> {
   sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
-  height?: number;
-  poster?: string;
 }
 
 export interface AtomicMediaButtonProps extends ButtonProps {
@@ -37,7 +35,7 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
             setEditorState(
               insertAtomicBlock(editorState, 'media', {
                 atomicMediaProps,
-                mediaType: getMediaType(atomicMediaProps?.src),
+                atomicMediaComponent: getMediaType(atomicMediaProps?.src),
               })
             ),
           0

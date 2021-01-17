@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useReducer } from 'react';
 import { EditorState } from 'draft-js';
-import EditorContext from '../EditorContext';
+import EditorContext from '../EditorContext/EditorContext';
 import clsx from 'clsx';
 import keyCommandsReducer from '../../redux/reducers/keyCommandsReducer';
 import ReduxContext from '../ReduxContext';
