@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton } from 'draft-js-wysiwyg';
 import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, Tabs, Tab, GridList, GridListTile, fade } from '@material-ui/core';
 import { ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
+import { EditorState } from 'draft-js';
 import mediaData from './mediaData';
 
 const useStyles = makeStyles((theme => ({
@@ -174,14 +175,22 @@ const AtomicMediaModal = (props) => {
 }
 
 const BasicExample = () => {
-  const [open, setOpen] = React.useState(false);
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty()
+  );
+  const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   }
 
   return (
-    <EditorContainer>
+    <EditorContainer
+      editorState={editorState}
+      onChangeEditorState={(newEditorState) => {
+        setEditorState(newEditorState);
+      }}
+    >
       <EditorToolbar>
         <IconButton onClick={handleClick}>
           <ImageOutlined />

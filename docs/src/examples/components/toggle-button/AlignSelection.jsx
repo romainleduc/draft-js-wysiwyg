@@ -11,8 +11,12 @@ import {
   FormatAlignCenter,
   FormatAlignRight,
 } from '@material-ui/icons';
+import { EditorState } from 'draft-js';
 
 const AlignSelection = () => {
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty()
+  );
   const [alignment, setAlignment] = useState('left');
 
   const handleAlignment = (_, newAlignment) => {
@@ -20,7 +24,12 @@ const AlignSelection = () => {
   };
 
   return (
-    <EditorContainer>
+    <EditorContainer
+      editorState={editorState}
+      onChangeEditorState={(newEditorState) => {
+        setEditorState(newEditorState);
+      }}
+    >
       <EditorToolbar>
         <ToggleButtonGroup
           exclusive

@@ -6,8 +6,12 @@ import {
   EditorToolbar,
   BlockTypeToggleButton,
 } from 'draft-js-wysiwyg';
+import { EditorState } from 'draft-js';
 
 const BasicExample = () => {
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty()
+  );
   const [block, setBlock] = useState('');
 
   const handleBlock = (_, newBlock) => {
@@ -15,7 +19,12 @@ const BasicExample = () => {
   };
 
   return (
-    <EditorContainer>
+    <EditorContainer
+      editorState={editorState}
+      onChangeEditorState={(newEditorState) => {
+        setEditorState(newEditorState);
+      }}
+    >
       <EditorToolbar>
         <ToggleButtonGroup
           exclusive

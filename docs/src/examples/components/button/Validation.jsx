@@ -4,6 +4,7 @@ import { makeStyles, Modal, IconButton, FormHelperText, Typography, fade } from 
 import { ImageOutlined, Panorama } from '@material-ui/icons';
 import { Switch } from '@material-ui/core';
 import clsx from 'clsx';
+import { EditorState } from 'draft-js';
 
 const useStyles = makeStyles((theme => ({
   iconHidden: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme => ({
     width: 250,
     height: 230,
     backgroundColor: theme.palette.background['level1'],
-    marginBottom: 10,
+    marginBottom: theme.spacing(2),
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     color: '#fff',
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme => ({
 
 const EditorModal = (props) => {
   const [hasErrors, setHasErrors] = useState(false);
-  const imgUrl = '/static/images/media/nuffy.jpg'; 
+  const imgUrl = '/static/images/media/nuffy.jpg';
   const classes = useStyles();
 
   const handleChangeChecked = () => {
@@ -64,7 +65,7 @@ const EditorModal = (props) => {
           onChange={handleChangeChecked}
           color='primary'
           name='switch-media'
-          inputProps={{'aria-label': 'primary checkbox' }}
+          inputProps={{ 'aria-label': 'primary checkbox' }}
         />
         <div
           className={classes.preview}
@@ -83,6 +84,8 @@ const EditorModal = (props) => {
           </FormHelperText>
         }
         <AtomicMediaButton
+          variant='contained'
+          color='primary'
           disabled={hasErrors}
           onInserted={() => props.onClose()}
           atomicMediaProps={{
@@ -97,14 +100,22 @@ const EditorModal = (props) => {
 }
 
 const Image = () => {
-  const [open, setOpen] = React.useState(false);
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty()
+  );
+  const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   }
 
   return (
-    <EditorContainer>
+    <EditorContainer
+      editorState={editorState}
+      onChangeEditorState={(newEditorState) => {
+        setEditorState(newEditorState);
+      }}
+    >
       <EditorToolbar>
         <IconButton onClick={handleClick}>
           <ImageOutlined />

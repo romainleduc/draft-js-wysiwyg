@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useReducer } from 'react';
+import React, { forwardRef, useReducer } from 'react';
 import { EditorState } from 'draft-js';
 import EditorContext from '../EditorContext/EditorContext';
 import clsx from 'clsx';
@@ -9,7 +9,8 @@ import { NoSsr } from '@material-ui/core';
 
 export interface EditorContainerProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  editorState?: EditorState;
+  editorState: EditorState;
+  onChangeEditorState(editorState: EditorState): void;
   noSsr?: boolean;
 }
 
@@ -25,7 +26,8 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
   (
     {
       className,
-      editorState: editorStateProps,
+      editorState,
+      onChangeEditorState,
       children,
       noSsr,
       ...rest
@@ -33,9 +35,6 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
     ref
   ) => {
     const [state, dispatch] = useReducer(keyCommandsReducer, initialState);
-    const [editorState, setEditorState] = useState(
-      editorStateProps || EditorState.createEmpty()
-    );
 
     return (
       <RenderWithPossibleSsr noSsr={noSsr}>
@@ -43,7 +42,7 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
           <EditorContext.Provider
             value={{
               editorState,
-              setEditorState,
+              setEditorState: onChangeEditorState,
             }}
           >
             <div

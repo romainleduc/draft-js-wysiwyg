@@ -6,8 +6,12 @@ import {
   EditorToolbar,
   InlineToggleButton,
 } from 'draft-js-wysiwyg';
+import { EditorState } from 'draft-js';
 
 const ExtendStyle = () => {
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty()
+  );
   const [size, setSize] = useState('FONT_SIZE_MEDIUM');
 
   const handleSize = (_, newSize) => {
@@ -15,7 +19,12 @@ const ExtendStyle = () => {
   };
 
   return (
-    <EditorContainer>
+    <EditorContainer
+      editorState={editorState}
+      onChangeEditorState={(newEditorState) => {
+        setEditorState(newEditorState);
+      }}
+    >
       <EditorToolbar>
         <ToggleButtonGroup
           exclusive

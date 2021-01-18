@@ -1,3 +1,4 @@
+
 export { default as TextAlignToggleButton } from './TextAlignToggleButton';
 export type { TextAlignToggleButtonProps } from './TextAlignToggleButton';
 

@@ -217,3 +217,22 @@ export const insertAtomicBlock = (
     ' '
   );
 };
+
+export const findEntitiesRangeByType = (
+  contentBlock: ContentBlock,
+  callback: (start: number, end: number) => void,
+  contentState: ContentState,
+  type: string
+) => {
+  contentBlock.findEntityRanges(
+    (character) => {
+      const entityKey = character.getEntity();
+
+      return (
+        entityKey !== null &&
+        contentState.getEntity(entityKey).getType() === type
+      );
+    },
+    callback
+  );
+}

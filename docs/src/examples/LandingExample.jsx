@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme => ({
   },
   editor: {
     border: `1px solid ${theme.palette.divider}`,
-    padding: 5,
+    padding: 40,
     borderTop: 0,
     minHeight: 141,
     '& .DraftEditor-editorContainer': {

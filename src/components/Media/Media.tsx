@@ -33,27 +33,36 @@ interface AtomicImageProps
   sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
 }
 
-const AtomicImage = ({
+export const AtomicImage = ({
+  className,
   src,
   sourcesProps,
   ...other
-}: AtomicImageProps): JSX.Element => (
-  <>
-    {!sourcesProps ? (
-      <img src={src} {...other} />
-    ) : (
-        <picture>
-          {sourcesProps.map((sourceProps, key) => (
-            <source key={`${src}-${key}`} {...sourceProps} />
-          ))}
-          <img
-            src={src}
-            {...other}
-          />
-        </picture>
-      )}
-  </>
-);
+}: AtomicImageProps): JSX.Element => {
+  const classes = useStyles();
+
+  return (
+    <>
+      {!sourcesProps ? (
+        <img
+          className={clsx(classes.media, className)}
+          src={src}
+          {...other}
+        />
+      ) : (
+          <picture>
+            {sourcesProps.map((sourceProps, key) => (
+              <source key={`${src}-${key}`} {...sourceProps} />
+            ))}
+            <img
+              src={src}
+              {...other}
+            />
+          </picture>
+        )}
+    </>
+  );
+}
 
 interface AtomicVideoProps
   extends React.VideoHTMLAttributes<HTMLVideoElement> {
@@ -123,10 +132,7 @@ export const Media = (props: MediaProps): JSX.Element => {
   const getAtomicMediaComponent = () => {
     switch (atomicMediaComponent) {
       case 'img':
-        return <AtomicImage
-          className={clsx(classes.media, atomicMediaProps.className)}
-          {...atomicMediaProps}
-        />;
+        return <AtomicImage {...atomicMediaProps} />;
       case 'video':
         return <AtomicVideo
           className={clsx(classes.media, atomicMediaProps.className)}
