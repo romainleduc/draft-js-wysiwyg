@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { DraftToggleButtonGroup, EditorContainer, EditorToolbar, Editor, AtomicImageButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
+import { DraftToggleButtonGroup, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
 import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, GridList, GridListTile, fade, Divider, withStyles, FormControl, Select as MuiSelect, MenuItem, InputBase, ButtonGroup as MuiButtonGroup, Button } from '@material-ui/core';
 import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, List } from '@material-ui/icons';
 import imageData from './components/button/imageData';
+import { EditorState } from 'draft-js';
 
 const ToggleButtonGroup = withStyles((theme) => ({
   grouped: {
@@ -240,11 +241,12 @@ const EditorModal = (props) => {
                   title={tooltip}
                   placement='top'
                 >
-                  <AtomicImageButton
+                  <AtomicMediaButton
+                    type='img'
                     className={classes.media}
                     style={{ backgroundImage: `url('${background}')` }}
                     onInserted={() => props.onClose()}
-                    atomicImageProps={{ src }}
+                    atomicMediaProps={{ src }}
                     component='span'
                   />
                 </Tooltip>
@@ -259,6 +261,9 @@ const EditorModal = (props) => {
 
 const LandingExample = () => {
   const [open, setOpen] = React.useState(false);
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty()
+  );
   const [alignment, setAlignment] = useState('left');
   const classes = useStyles();
 
@@ -271,7 +276,13 @@ const LandingExample = () => {
   }
 
   return (
-    <EditorContainer noSsr>
+    <EditorContainer
+      noSsr
+      editorState={editorState}
+      onChangeEditorState={(newEditorState) => {
+        setEditorState(newEditorState);
+      }}
+    >
       <EditorToolbar className={classes.toolbar}>
         <BlockTypeToggleButtonSelect />
         <Divider flexItem orientation="vertical" className={classes.divider} />
