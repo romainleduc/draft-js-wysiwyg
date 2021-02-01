@@ -33,7 +33,7 @@
     "react": "^17.0.1",
     "react-docgen": "^5.3.1",
     "react-dom": "^17.0.0",
-    "react-player": "^2.7.0",
+    "react-player": "^2.8.2",
     "webpack-bundle-analyzer": "^3.9.0"
   },
   "devDependencies": {
