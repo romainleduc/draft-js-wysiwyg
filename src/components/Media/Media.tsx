@@ -28,8 +28,7 @@ const useStyles = makeStyles({
   },
 });
 
-interface AtomicImageProps
-  extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface AtomicImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
 }
 
@@ -44,28 +43,20 @@ export const AtomicImage = ({
   return (
     <>
       {!sourcesProps ? (
-        <img
-          className={clsx(classes.media, className)}
-          src={src}
-          {...other}
-        />
+        <img className={clsx(classes.media, className)} src={src} {...other} />
       ) : (
-          <picture>
-            {sourcesProps.map((sourceProps, key) => (
-              <source key={`${src}-${key}`} {...sourceProps} />
-            ))}
-            <img
-              src={src}
-              {...other}
-            />
-          </picture>
-        )}
+        <picture>
+          {sourcesProps.map((sourceProps, key) => (
+            <source key={`${src}-${key}`} {...sourceProps} />
+          ))}
+          <img src={src} {...other} />
+        </picture>
+      )}
     </>
   );
-}
+};
 
-interface AtomicVideoProps
-  extends React.VideoHTMLAttributes<HTMLVideoElement> {
+interface AtomicVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
   sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
 }
 
@@ -74,18 +65,14 @@ const AtomicVideo = ({
   sourcesProps,
   ...other
 }: AtomicVideoProps): JSX.Element => (
-  <video
-    src={!sourcesProps && src}
-    {...other}
-  >
+  <video src={!sourcesProps && src} {...other}>
     {sourcesProps?.map((sourceProps, key) => (
       <source key={`${src}-${key}`} {...sourceProps} />
     ))}
   </video>
 );
 
-interface AtomicAudioProps
-  extends React.AudioHTMLAttributes<HTMLAudioElement> {
+interface AtomicAudioProps extends React.AudioHTMLAttributes<HTMLAudioElement> {
   sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
 }
 
@@ -94,10 +81,7 @@ const AtomicAudio = ({
   sourcesProps,
   ...other
 }: AtomicAudioProps): JSX.Element => (
-  <audio
-    src={!sourcesProps && src}
-    {...other}
-  >
+  <audio src={!sourcesProps && src} {...other}>
     {sourcesProps?.map((sourceProps, key) => (
       <source key={`${src}-${key}`} {...sourceProps} />
     ))}
@@ -115,18 +99,11 @@ const AtomicIframe = ({
   className,
   children,
   ...other
-}: AtomicIframeProps): JSX.Element => (
-  <iframe {...other}>
-    {children}
-  </iframe>
-);
+}: AtomicIframeProps): JSX.Element => <iframe {...other}>{children}</iframe>;
 
 export const Media = (props: MediaProps): JSX.Element => {
   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
-  const {
-    atomicMediaProps,
-    atomicMediaComponent,
-  } = entity.getData();
+  const { atomicMediaProps, atomicMediaComponent } = entity.getData();
   const classes = useStyles();
 
   const getAtomicMediaComponent = () => {
@@ -134,27 +111,35 @@ export const Media = (props: MediaProps): JSX.Element => {
       case 'img':
         return <AtomicImage {...atomicMediaProps} />;
       case 'video':
-        return <AtomicVideo
-          className={clsx(classes.media, atomicMediaProps.className)}
-          {...atomicMediaProps}
-        />;
+        return (
+          <AtomicVideo
+            className={clsx(classes.media, atomicMediaProps.className)}
+            {...atomicMediaProps}
+          />
+        );
       case 'audio':
-        return <AtomicAudio
-          className={clsx(classes.media, atomicMediaProps.className)}
-          {...atomicMediaProps}
-        />;
+        return (
+          <AtomicAudio
+            className={clsx(classes.media, atomicMediaProps.className)}
+            {...atomicMediaProps}
+          />
+        );
       case 'iframe':
-        return <AtomicIframe
-          className={clsx(classes.media, atomicMediaProps.className)}
-          {...atomicMediaProps}
-        />;
+        return (
+          <AtomicIframe
+            className={clsx(classes.media, atomicMediaProps.className)}
+            {...atomicMediaProps}
+          />
+        );
       default:
-        return <img
-          className={clsx(classes.media, atomicMediaProps.className)}
-          {...atomicMediaProps}
-        />;
+        return (
+          <img
+            className={clsx(classes.media, atomicMediaProps.className)}
+            {...atomicMediaProps}
+          />
+        );
     }
-  }
+  };
 
   return getAtomicMediaComponent();
 };

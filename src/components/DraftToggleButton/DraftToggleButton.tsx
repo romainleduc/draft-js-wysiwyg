@@ -18,6 +18,11 @@ export interface DraftToggleButtonProps
    *
    */
   onChange?: any;
+
+  /**
+   *
+   */
+  onToggle?: any;
 }
 
 const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
@@ -27,6 +32,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       children,
       disableKeyboardShortcuts,
       onChange,
+      onToggle,
       selected,
       keyCommand,
       ...other
@@ -41,6 +47,10 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
           type: ACTION_TYPES.ADD_KEY_COMMAND,
           payload: keyCommand,
         });
+      }
+
+      if (selected) {
+        onToggle?.();
       }
     }, []);
 
@@ -59,6 +69,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
           value = null;
         }
 
+        onToggle?.();
         onChange(event, value);
       }
     };

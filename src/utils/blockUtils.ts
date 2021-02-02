@@ -224,15 +224,11 @@ export const findEntitiesRangeByType = (
   contentState: ContentState,
   type: string
 ) => {
-  contentBlock.findEntityRanges(
-    (character) => {
-      const entityKey = character.getEntity();
+  contentBlock.findEntityRanges((character) => {
+    const entityKey = character.getEntity();
 
-      return (
-        entityKey !== null &&
-        contentState.getEntity(entityKey).getType() === type
-      );
-    },
-    callback
-  );
-}
+    return (
+      entityKey !== null && contentState.getEntity(entityKey).getType() === type
+    );
+  }, callback);
+};

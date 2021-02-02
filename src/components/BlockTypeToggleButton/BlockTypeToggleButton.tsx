@@ -1,72 +1,52 @@
-import React, { useContext, useEffect, forwardRef } from 'react';
+import React, { useContext, forwardRef } from 'react';
 import { EditorState, RichUtils } from 'draft-js';
 import EditorContext from '../EditorContext/EditorContext';
-import DraftToggleButton, {
-  DraftToggleButtonProps,
-} from '../DraftToggleButton/DraftToggleButton';
+import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
+import { ToggleButtonProps } from '@material-ui/lab';
 
 export interface BlockTypeToggleButtonProps
-  extends Omit<DraftToggleButtonProps, 'value' | 'onChange' | 'keyCommand'> {
+  extends Omit<ToggleButtonProps, 'value'> {
+  /**
+   * If `true`, inline style will not be available from keyboard shortcuts
+   * @default false
+   */
+  disableKeyboardShortcuts?: boolean;
+  /**
+   *
+   */
   value: string;
-  onChange?: (event: React.MouseEvent<HTMLElement>, value?: string) => void;
 }
 
 const BlockTypeToggleButton = forwardRef<
   HTMLButtonElement,
   BlockTypeToggleButtonProps
->(
-  (
-    {
-      value,
-      selected,
-      children,
-      onChange,
-      ...rest
-    }: BlockTypeToggleButtonProps,
-    ref
-  ) => {
-    const { editorState, setEditorState } = useContext(EditorContext) || {};
+>(({ value, selected, children, ...rest }: BlockTypeToggleButtonProps, ref) => {
+  const { editorState, setEditorState } = useContext(EditorContext) || {};
 
-    useEffect(() => {
-      if (selected && value) {
-        toggleBlockType(value);
-      }
-    }, []);
+  console.log(selected);
+  const handleToggle = () => {
+    if (editorState && setEditorState) {
+      setEditorState(
+        RichUtils.toggleBlockType(
+          EditorState.forceSelection(editorState, editorState.getSelection()),
+          value
+        )
+      );
+    }
+  };
 
-    const handleChange = (event: React.FormEvent<HTMLButtonElement>) => {
-      const buttonValue = value || (event.target as HTMLButtonElement).value;
-
-      if (buttonValue) {
-        toggleBlockType(buttonValue);
-      }
-
-      onChange?.(event as any, buttonValue);
-    };
-
-    const toggleBlockType = (buttonValue: string) => {
-      if (editorState && setEditorState) {
-        setEditorState(
-          RichUtils.toggleBlockType(
-            EditorState.forceSelection(editorState, editorState.getSelection()),
-            buttonValue
-          )
-        );
-      }
-    };
-
-    return (
-      <DraftToggleButton
-        ref={ref}
-        onChange={handleChange}
-        value={value}
-        selected={selected}
-        keyCommand={value}
-        {...rest}
-      >
-        {children}
-      </DraftToggleButton>
-    );
-  }
-);
+  return (
+    <DraftToggleButton
+      ref={ref}
+      onToggle={handleToggle}
+      value={value}
+      selected={selected}
+      keyCommand={value}
+      {...rest}
+    >
+      {children}
+    </DraftToggleButton>
+  );
+});
 
 export default BlockTypeToggleButton;

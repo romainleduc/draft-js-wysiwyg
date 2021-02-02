@@ -19,6 +19,9 @@ export type { IndentDraftButtonProps } from './components';
 export { DraftToggleButtonGroup } from './components';
 export type { DraftToggleButtonGroupProps } from './components';
 
+export { SelectToggleButtonGroup } from './components';
+export type { SelectToggleButtonGroupProps } from './components';
+
 export { TextAlignToggleButton } from './components';
 export type { TextAlignToggleButtonProps } from './components';
 
@@ -29,5 +32,5 @@ export {
   getDefaultBlockRenderer,
   getDefaultBlockStyle,
   getDefaultKeyBinding,
-  createEditorStateFromHTML
+  createEditorStateFromHTML,
 } from './utils/editorUtils';

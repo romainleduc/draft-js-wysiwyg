@@ -1,12 +1,17 @@
-import React, { useContext, useEffect, forwardRef } from 'react';
+import React, { useContext, forwardRef } from 'react';
 import { EditorState, RichUtils } from 'draft-js';
 import EditorContext from '../EditorContext/EditorContext';
-import DraftToggleButton, {
-  DraftToggleButtonProps,
-} from '../DraftToggleButton/DraftToggleButton';
+import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
+import { ToggleButtonProps } from '@material-ui/lab';
 
 export interface InlineToggleButtonProps
-  extends Omit<DraftToggleButtonProps, 'value' | 'keyCommand'> {
+  extends Omit<ToggleButtonProps, 'value'> {
+  /**
+   * If `true`, inline style will not be available from keyboard shortcuts
+   * @default false
+   */
+  disableKeyboardShortcuts?: boolean;
+
   /**
    * The inline style value to associate with the button
    */
@@ -19,17 +24,7 @@ const InlineToggleButton = forwardRef<
 >(({ value, selected, children, ...rest }: InlineToggleButtonProps, ref) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
 
-  useEffect(() => {
-    if (selected) {
-      toggleInlineStyle();
-    }
-  }, []);
-
-  const handleClick = () => {
-    toggleInlineStyle();
-  };
-
-  const toggleInlineStyle = () => {
+  const handleToggle = () => {
     if (editorState && setEditorState) {
       setEditorState(
         RichUtils.toggleInlineStyle(
@@ -44,7 +39,7 @@ const InlineToggleButton = forwardRef<
     <DraftToggleButton
       ref={ref}
       selected={selected}
-      onClick={handleClick}
+      onToggle={handleToggle}
       keyCommand={value.toLowerCase()}
       value={value}
       {...rest}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { DraftToggleButtonGroup, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, GridList, GridListTile, fade, Divider, withStyles, FormControl, Select as MuiSelect, MenuItem, InputBase, ButtonGroup as MuiButtonGroup, Button } from '@material-ui/core';
+import { SelectToggleButtonGroup, DraftToggleButtonGroup, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
+import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, GridList, GridListTile, fade, Divider, withStyles, FormControl, Select as MuiSelect, MenuItem, InputBase, ButtonGroup as MuiButtonGroup, Button, Menu, ButtonBase } from '@material-ui/core';
 import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, List } from '@material-ui/icons';
 import imageData from './components/button/imageData';
 import { EditorState } from 'draft-js';
@@ -43,7 +43,7 @@ const Select = withStyles((theme) => ({
   },
 }))(MuiSelect);
 
-const BootstrapInput = withStyles((theme) => ({
+const BootstrapButton = withStyles((theme) => ({
   input: {
     margin: theme.spacing(0.5),
     borderRadius: theme.shape.borderRadius,
@@ -55,7 +55,7 @@ const BootstrapInput = withStyles((theme) => ({
       backgroundColor: "#fff",
     },
   },
-}))(InputBase);
+}))(ButtonBase);
 
 const useStyles = makeStyles((theme => ({
   modal: {
@@ -138,39 +138,37 @@ const InlineToggleButtonGroup = () => {
 const BlockTypeToggleButtonSelect = () => {
   const [blockType, setBlockType] = React.useState('header-two');
 
-  const handleChange = (event) => {
-    setBlockType(event.target.value);
+  const handleChange = (_, newBlockType) => {
+    setBlockType(newBlockType);
   };
 
   return (
-    <FormControl>
-      <Select
-        value={blockType}
-        onChange={handleChange}
-        input={<BootstrapInput />}
-      >
-        {[
-          ['unstyled', 'Paragraph'],
-          ['header-one', 'H1'],
-          ['header-two', 'H2'],
-          ['header-three', 'H3'],
-          ['header-four', 'H4'],
-          ['header-five', 'H5'],
-          ['header-six', 'H6'],
-          ['blockquote', 'Blockquote'],
-          ['code-block', 'Code Block'],
-        ].map((block, key) =>
-          <BlockTypeToggleButton
-            key={`block-type-${key}`}
-            component={StyledMenuItem}
-            key={`basic-block-${block[0]}`}
-            value={block[0]}
-          >
-            {block[1]}
-          </BlockTypeToggleButton>
-        )}
-      </Select>
-    </FormControl>
+    <SelectToggleButtonGroup
+      exclusive
+      value={blockType}
+      onChange={handleChange}
+      orientation='vertical'
+      // button={<BootstrapButton />}
+    >
+      {[
+        ['unstyled', 'Paragraph'],
+        ['header-one', 'H1'],
+        ['header-two', 'H2'],
+        ['header-three', 'H3'],
+        ['header-four', 'H4'],
+        ['header-five', 'H5'],
+        ['header-six', 'H6'],
+        ['blockquote', 'Blockquote'],
+        ['code-block', 'Code Block'],
+      ].map((block) =>
+        <BlockTypeToggleButton
+          key={`basic-block-${block[0]}`}
+          value={block[0]}
+        >
+          {block[1]}
+        </BlockTypeToggleButton>
+      )}
+    </SelectToggleButtonGroup>
   )
 }
 

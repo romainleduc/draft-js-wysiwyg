@@ -10,19 +10,18 @@ export interface DraftToggleButtonGroupProps extends ToggleButtonGroupProps {
 }
 
 const DraftToggleButtonGroup = forwardRef<
-  HTMLButtonElement,
+  HTMLDivElement,
   DraftToggleButtonGroupProps
 >(
   (
     {
-      value,
       children,
       disableKeyboardShortcuts,
       ...other
     }: DraftToggleButtonGroupProps,
     ref
   ) => (
-    <ToggleButtonGroup ref={ref} value={value} {...other}>
+    <ToggleButtonGroup ref={ref} {...other}>
       {React.Children.map(children, (child) => {
         if (!React.isValidElement(child)) {
           return null;
