@@ -22,5 +22,6 @@ title: Button React component
 
 {{"demo": "button/Validation.jsx"}}
 
-***
+### Customize
 
+{{"demo": "button/CustomizedMedia.jsx"}}

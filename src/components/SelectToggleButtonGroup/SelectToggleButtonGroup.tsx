@@ -1,10 +1,5 @@
 import React, { forwardRef, useState, useRef } from 'react';
-import {
-  Button,
-  ButtonProps,
-  PopoverProps,
-  Popover,
-} from '@material-ui/core';
+import { Button, ButtonProps, PopoverProps, Popover } from '@material-ui/core';
 import {
   ArrowDropDown as ArrowDropDownIcon,
   ArrowDropUp as ArrowDropUpIcon,
@@ -51,7 +46,6 @@ const SelectToggleButtonGroup = forwardRef<
       if (!onChange) {
         return;
       }
-      console.log('passe la ???')
 
       // if (exclusive) {
       //   setOpen(false);
@@ -60,12 +54,12 @@ const SelectToggleButtonGroup = forwardRef<
       // setSelectedValue(buttonValue);
       // onChange(event, event.target.value);
     };
-    
+
     const handleClick = (event: any) => {
-      console.log(event, event.currentTarget)
+      console.log(event, event.currentTarget);
       setAnchorEl(event.currentTarget);
     };
-  
+
     const handleClose = () => {
       setAnchorEl(null);
     };
@@ -76,7 +70,11 @@ const SelectToggleButtonGroup = forwardRef<
           ButtonComponent,
           {
             onClick: handleClick,
-            endIcon: Boolean(anchorEl) ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />,
+            endIcon: Boolean(anchorEl) ? (
+              <ArrowDropUpIcon />
+            ) : (
+              <ArrowDropDownIcon />
+            ),
             role: undefined,
             ...buttonProps,
           },

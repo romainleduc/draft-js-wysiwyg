@@ -18,11 +18,10 @@ export interface DraftToggleButtonProps
    *
    */
   onChange?: any;
-
   /**
    *
    */
-  onToggle?: any;
+  onToggle?: () => void;
 }
 
 const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
