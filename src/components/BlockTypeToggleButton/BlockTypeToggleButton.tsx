@@ -12,7 +12,7 @@ export interface BlockTypeToggleButtonProps
    */
   disableKeyboardShortcuts?: boolean;
   /**
-   * 
+   *
    */
   value: string;
 }
@@ -20,42 +20,32 @@ export interface BlockTypeToggleButtonProps
 const BlockTypeToggleButton = forwardRef<
   HTMLButtonElement,
   BlockTypeToggleButtonProps
->(
-  (
-    {
-      value,
-      selected,
-      children,
-      ...rest
-    }: BlockTypeToggleButtonProps,
-    ref
-  ) => {
-    const { editorState, setEditorState } = useContext(EditorContext) || {};
+>(({ value, selected, children, ...rest }: BlockTypeToggleButtonProps, ref) => {
+  const { editorState, setEditorState } = useContext(EditorContext) || {};
 
-    const handleToggle = () => {
-      if (editorState && setEditorState) {
-        setEditorState(
-          RichUtils.toggleBlockType(
-            EditorState.forceSelection(editorState, editorState.getSelection()),
-            value
-          )
-        );
-      }
-    };
+  const handleToggle = () => {
+    if (editorState && setEditorState) {
+      setEditorState(
+        RichUtils.toggleBlockType(
+          EditorState.forceSelection(editorState, editorState.getSelection()),
+          value
+        )
+      );
+    }
+  };
 
-    return (
-      <DraftToggleButton
-        ref={ref}
-        onToggle={handleToggle}
-        value={value}
-        selected={selected}
-        keyCommand={value}
-        {...rest}
-      >
-        {children}
-      </DraftToggleButton>
-    );
-  }
-);
+  return (
+    <DraftToggleButton
+      ref={ref}
+      onToggle={handleToggle}
+      value={value}
+      selected={selected}
+      keyCommand={value}
+      {...rest}
+    >
+      {children}
+    </DraftToggleButton>
+  );
+});
 
 export default BlockTypeToggleButton;
