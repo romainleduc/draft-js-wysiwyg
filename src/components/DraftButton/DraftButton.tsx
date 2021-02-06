@@ -1,8 +1,8 @@
 import React, { forwardRef, useContext, useEffect } from 'react';
 import {
   fade,
-  ButtonBaseProps,
-  ButtonBase,
+  ButtonProps,
+  Button,
   capitalize,
   withStyles,
   Theme,
@@ -13,7 +13,7 @@ import { ACTION_TYPES } from '../../redux/constants';
 
 export type SizeType = 'root' | 'label' | 'sizeLarge' | 'sizeSmall';
 
-export interface DraftButtonProps extends ButtonBaseProps {
+export interface DraftButtonProps extends ButtonProps {
   /**
    * Override or extend the styles applied to the component.
    */
@@ -30,12 +30,6 @@ export interface DraftButtonProps extends ButtonBaseProps {
     sizeLarge?: string;
   };
   /**
-   * The size of the button.
-   * The prop defaults to the value inherited from the parent ToggleButtonGroup component.
-   * @default 'medium'
-   */
-  size?: 'small' | 'medium' | 'large';
-  /**
    *
    */
   keyCommand: string;
@@ -50,6 +44,7 @@ const styles = (theme: Theme) => ({
   /* Styles applied to the root element. */
   root: {
     ...theme.typography.button,
+    minWidth: 0,
     borderRadius: theme.shape.borderRadius,
     padding: 11,
     border: `1px solid ${fade(theme.palette.action.active, 0.12)}`,
@@ -113,7 +108,7 @@ const DraftButton = forwardRef<HTMLButtonElement, DraftButtonProps>(
     }, []);
 
     return (
-      <ButtonBase
+      <Button
         className={clsx(
           classes?.root,
           size && {
@@ -129,7 +124,7 @@ const DraftButton = forwardRef<HTMLButtonElement, DraftButtonProps>(
         {...rest}
       >
         <span className={classes?.label}>{children}</span>
-      </ButtonBase>
+      </Button>
     );
   }
 );
