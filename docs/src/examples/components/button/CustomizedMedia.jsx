@@ -60,33 +60,6 @@ const TabPanel = (props) => {
  * const mediaData = [
  *   [
  *     {
- *       type: 'img',
- *       tooltip: 'Image',
- *       background: 'path/to/background.jpg',
- *       mediaProps: {
- *         src: 'path/to/image.jpg',
- *       },
- *     },
- *     {
- *       [etc...]
- *     },
- *   ],
- *   [
- *     {
- *       type: 'audio',
- *       tooltip: 'Audio',
- *       background: 'path/to/background.jpg',
- *       mediaProps: {
- *         src: 'path/to/audio.mp3',
- *         controls: true,
- *       },
- *     },
- *     {
- *       [etc...]
- *     },
- *   ],
- *   [
- *     {
  *       type: 'video',
  *       tooltip: 'Video',
  *       background: 'path/to/background.jpg',
@@ -99,6 +72,7 @@ const TabPanel = (props) => {
  *       [etc...]
  *     },
  *   ],
+ *   [etc...]
  * ];
  */
 const AtomicMediaModal = (props) => {
@@ -189,14 +163,18 @@ const Media = (props) => {
       url={src}
       controls
     />
-  )
+  );
 }
 
 const BasicExample = () => {
+  const [open, setOpen] = useState(false);
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty()
   );
-  const [open, setOpen] = useState(false);
+
+  const handleChange = (newEditorState) => {
+    setEditorState(newEditorState);
+  }
 
   const handleClick = () => {
     setOpen(!open);
@@ -216,9 +194,7 @@ const BasicExample = () => {
   return (
     <EditorContainer
       editorState={editorState}
-      onChangeEditorState={(newEditorState) => {
-        setEditorState(newEditorState);
-      }}
+      onChangeEditorState={handleChange}
     >
       <EditorToolbar>
         <IconButton onClick={handleClick}>

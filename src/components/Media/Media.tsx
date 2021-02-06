@@ -103,11 +103,11 @@ const AtomicIframe = ({
 
 export const Media = (props: MediaProps): JSX.Element => {
   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
-  const { atomicMediaProps, atomicMediaComponent } = entity.getData();
+  const { atomicMediaProps, atomicMediaType } = entity.getData();
   const classes = useStyles();
 
-  const getAtomicMediaComponent = () => {
-    switch (atomicMediaComponent) {
+  const getAtomicMediaType = () => {
+    switch (atomicMediaType) {
       case 'img':
         return <AtomicImage {...atomicMediaProps} />;
       case 'video':
@@ -141,5 +141,5 @@ export const Media = (props: MediaProps): JSX.Element => {
     }
   };
 
-  return getAtomicMediaComponent();
+  return getAtomicMediaType();
 };

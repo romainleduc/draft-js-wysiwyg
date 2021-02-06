@@ -59,11 +59,7 @@ const isFlv = (url: string | string[]) => {
   return FLV_EXTENSIONS.test(url);
 };
 
-export const getMediaType = (url?: string | string[]): string => {
-  if (!url) {
-    return 'media';
-  }
-
+export const getMediaType = (url: string | string[]): string => {
   if (isImage(url)) {
     return 'img';
   }

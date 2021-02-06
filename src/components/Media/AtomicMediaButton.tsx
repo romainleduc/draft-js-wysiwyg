@@ -6,8 +6,9 @@ import { getMediaType } from './patterns';
 import clsx from 'clsx';
 
 export interface AtomicMediaProps
-  extends React.MediaHTMLAttributes<HTMLMediaElement> {
+  extends Omit<React.MediaHTMLAttributes<HTMLMediaElement>, 'src'> {
   sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
+  src: string;
 }
 
 export interface AtomicMediaButtonProps extends ButtonProps {
@@ -35,7 +36,7 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
             setEditorState(
               insertAtomicBlock(editorState, 'media', {
                 atomicMediaProps,
-                atomicMediaComponent: getMediaType(atomicMediaProps?.src),
+                atomicMediaType: getMediaType(atomicMediaProps.src),
               })
             ),
           0
