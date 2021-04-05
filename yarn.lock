@@ -3214,10 +3214,10 @@ domutils@^2.4.2:
     domelementtype "^2.0.1"
     domhandler "^4.0.0"
 
-draft-js-wysiwyg@^1.0.14:
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/draft-js-wysiwyg/-/draft-js-wysiwyg-1.0.14.tgz#347bce8379b14710605b354b08e01f0b0e28fcaa"
-  integrity sha512-JTeDig0ehiDmI6nDXL3owoQqI/Vo0qr88uo2eYVHZPjtRZ3BoakA/66C2mNrX04raepVoqcGzZtZAZ1erBykkg==
+draft-js-wysiwyg@^1.0.15:
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/draft-js-wysiwyg/-/draft-js-wysiwyg-1.0.15.tgz#88762686eec8ad55a10b20778d7957db6af6cdc0"
+  integrity sha512-o6LpVbBjVjHJTtnROh362az3X1DKAHa2RQc+OygNrcuDC8QMIV2ZK7cP0dS3t/V7bzgWOZbJVTVGrCoG5g2PUg==
   dependencies:
     clsx "^1.1.1"
     prop-types "^15.7.2"
