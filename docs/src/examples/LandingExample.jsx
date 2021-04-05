@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SelectToggleButtonGroup, DraftToggleButtonGroup, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
+import { DraftToggleButtonGroup, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
 import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, GridList, GridListTile, fade, Divider, withStyles, FormControl, Select as MuiSelect, MenuItem, InputBase, ButtonGroup as MuiButtonGroup, Button, Menu, ButtonBase } from '@material-ui/core';
 import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, List } from '@material-ui/icons';
 import imageData from './components/button/imageData';
@@ -143,12 +143,10 @@ const BlockTypeToggleButtonSelect = () => {
   };
 
   return (
-    <SelectToggleButtonGroup
+    <ToggleButtonGroup
       exclusive
       value={blockType}
       onChange={handleChange}
-      orientation='vertical'
-      // button={<BootstrapButton />}
     >
       {[
         ['unstyled', 'Paragraph'],
@@ -168,7 +166,7 @@ const BlockTypeToggleButtonSelect = () => {
           {block[1]}
         </BlockTypeToggleButton>
       )}
-    </SelectToggleButtonGroup>
+    </ToggleButtonGroup>
   )
 }
 

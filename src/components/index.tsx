@@ -10,9 +10,6 @@ export type { BlockTypeToggleButtonProps } from './BlockTypeToggleButton';
 export { DraftToggleButtonGroup } from './DraftToggleButtonGroup';
 export type { DraftToggleButtonGroupProps } from './DraftToggleButtonGroup';
 
-export { default as SelectToggleButtonGroup } from './SelectToggleButtonGroup';
-export type { SelectToggleButtonGroupProps } from './SelectToggleButtonGroup';
-
 export { EditorContainer } from './EditorContainer';
 export type { EditorContainerProps } from './EditorContainer';
 
