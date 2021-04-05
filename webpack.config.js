@@ -1,5 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const workspaceDocs = `${__dirname}/docs`;
 
 module.exports = {
   mode: 'production',
@@ -35,10 +36,10 @@ module.exports = {
   resolve: {
     alias: {
       // all packages in this monorepo
-      '@material-ui/core': path.resolve(__dirname, 'node_modules', '@material-ui/core'),
-      '@material-ui/lab': path.resolve(__dirname, 'node_modules', '@material-ui/lab'),
-      '@material-ui/icons': path.resolve(__dirname, 'node_modules', '@material-ui/icons'),
-      "@material-ui/styles": path.resolve(__dirname, "node_modules", "@material-ui/styles"),
+      '@material-ui/core': path.resolve(workspaceDocs, 'node_modules', '@material-ui/core'),
+      '@material-ui/lab': path.resolve(workspaceDocs, 'node_modules', '@material-ui/lab'),
+      '@material-ui/icons': path.resolve(workspaceDocs, 'node_modules', '@material-ui/icons'),
+      "@material-ui/styles": path.resolve(workspaceDocs, "node_modules", "@material-ui/styles"),
     },
     extensions: ['.ts', '.tsx', '.js'],
   },

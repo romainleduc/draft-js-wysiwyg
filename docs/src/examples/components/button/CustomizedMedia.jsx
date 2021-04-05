@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton, getDefaultBlockRenderer } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, Tabs, Tab, GridList, GridListTile, fade } from '@material-ui/core';
+import { makeStyles, Modal, IconButton, Tooltip, Box, Tabs, Tab, GridList, GridListTile, fade } from '@material-ui/core';
 import { ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import { EditorState } from 'draft-js';
 import mediaData from './customizeMediaData';
@@ -29,9 +29,6 @@ const useStyles = makeStyles((theme => ({
     width: '100%',
     height: '100%',
   },
-  hidden: {
-    display: 'none',
-  }
 })));
 
 const TabPanel = (props) => {
@@ -60,7 +57,6 @@ const TabPanel = (props) => {
  * const mediaData = [
  *   [
  *     {
- *       type: 'video',
  *       tooltip: 'Video',
  *       background: 'path/to/background.jpg',
  *       mediaProps: {
@@ -114,7 +110,6 @@ const AtomicMediaModal = (props) => {
               cols={2}
             >
               {media.map(({
-                type,
                 background,
                 tooltip,
                 mediaProps,
@@ -131,12 +126,10 @@ const AtomicMediaModal = (props) => {
                       atomicMediaProps={mediaProps}
                       component='span'
                     >
-                      {['audio', 'video'].includes(type) &&
-                        <PlayArrowRounded style={{
-                          fontSize: 45,
-                          color: '#fff',
-                        }} />
-                      }
+                      <PlayArrowRounded style={{
+                        fontSize: 45,
+                        color: '#fff',
+                      }} />
                     </AtomicMediaButton>
                   </Tooltip>
                 </GridListTile>

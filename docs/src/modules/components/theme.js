@@ -1,4 +1,4 @@
-import { createMuiTheme, fade } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 
 /**
@@ -10,7 +10,7 @@ const theme = createMuiTheme({
       main: '#1976d2',
     },
     secondary: {
-      main: '#19857b',
+      main: '#843131',
     },
     error: {
       main: red.A400,
@@ -46,11 +46,11 @@ const theme = createMuiTheme({
       h2: {
         fontSize: '2.5rem',
         letterSpacing: '0em',
-        fontWeight: 400,
+        fontWeight: 500,
       },
       h3: {
         fontSize: '1.875rem',
-        fontWeight: 400,
+        fontWeight: 500,
         lineHeight: 1.235,
         letterSpacing: '0.00735em',
       },

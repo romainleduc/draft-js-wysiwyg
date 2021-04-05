@@ -5,7 +5,6 @@ const videoPath = '/static/videos/media';
 const mediaData = [
   [
     {
-      type: 'video',
       background: `${path}/casino.jpg`,
       tooltip: 'Orchestral music',
       mediaProps: {
@@ -14,7 +13,6 @@ const mediaData = [
       },
     },
     {
-      type: 'video',
       background: `${path}/react.jpg`,
       tooltip: 'Percussion music',
       mediaProps: {
@@ -25,7 +23,6 @@ const mediaData = [
   ],
   [
     {
-      type: 'video',
       background: 'https://i.ytimg.com/vi/o77MzDQT1cg/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBVJtS5r-538msWyVBzDEXAzmQpSQ',
       tooltip: "Youtube video",
       mediaProps: {
@@ -33,7 +30,6 @@ const mediaData = [
       }
     },
     {
-      type: 'video',
       background: `https://i.vimeocdn.com/video/607688565_750x421.875.jpg?q=60`,
       tooltip: 'Vimeo',
       mediaProps: {
@@ -43,7 +39,6 @@ const mediaData = [
   ],
   [
     {
-      type: 'video',
       background: `https://static-cdn.jtvnw.net/previews-ttv/live_user_sweetsio-440x248.jpg`,
       tooltip: 'Twitch',
       mediaProps: {
@@ -52,7 +47,6 @@ const mediaData = [
       },
     },
     {
-      type: 'video',
       background: `https://i.ytimg.com/vi/5qap5aO4i9A/hq720_live.jpg?sqp=CLiMjv4F-oaymwEZCNAFEJQDSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLB29_L4c1dVwJ7C5NI1Ta0JgdXyIg`,
       tooltip: 'Youtube video',
       mediaProps: {
