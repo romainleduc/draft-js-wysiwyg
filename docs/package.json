@@ -26,7 +26,7 @@
     "draft-js": "^0.11.7",
     "draft-js-wysiwyg": "^1.0.14",
     "markdown-to-jsx": "^7.0.1",
-    "marked": "^1.2.6",
+    "marked": "^2.0.0",
     "next": "^10.0.5",
     "path": "^0.12.7",
     "prismjs": "^1.22.0",
