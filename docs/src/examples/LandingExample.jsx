@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { DraftToggleButtonGroup, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, GridList, GridListTile, fade, Divider, withStyles, FormControl, Select as MuiSelect, MenuItem, InputBase, ButtonGroup as MuiButtonGroup, Button, Menu, ButtonBase } from '@material-ui/core';
-import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, List } from '@material-ui/icons';
-import imageData from './components/button/imageData';
+import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, fade, Divider, withStyles, Select as MuiSelect, MenuItem, ButtonGroup as MuiButtonGroup, ButtonBase, Tabs, Tab, Box } from '@material-ui/core';
+import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
+import mediaData from './components/button/mediaData';
 import { EditorState } from 'draft-js';
 
 const ToggleButtonGroup = withStyles((theme) => ({
@@ -102,6 +102,26 @@ const useStyles = makeStyles((theme => ({
   }
 })));
 
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`wrapped-tabpanel-${index}`}
+      aria-labelledby={`wrapped-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
+
 const InlineToggleButtonGroup = () => {
   const [formats, setFormats] = useState(() => []);
 
@@ -170,7 +190,6 @@ const BlockTypeToggleButtonSelect = () => {
   )
 }
 
-
 const ListToggleButtonGroup = () => {
   const [blockType, setBlockType] = useState('');
 
@@ -214,8 +233,13 @@ const ListToggleButtonGroup = () => {
  *   },
  * ];
  */
-const EditorModal = (props) => {
+const AtomicMediaModal = (props) => {
   const classes = useStyles();
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <Modal
@@ -223,33 +247,61 @@ const EditorModal = (props) => {
       {...props}
     >
       <div className={classes.paper}>
-        <Typography variant='h2'>Image</Typography>
-        <Box p={3}>
-          <GridList
-            className={classes.gridList}
-            spacing={10}
-            cellHeight={140}
-            cols={3}
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor='primary'
+          textColor='primary'
+          variant='fullWidth'
+          aria-label='Media tabs example'
+        >
+          <Tab label='Image' />
+          <Tab label='Audio' />
+          <Tab label='Video' />
+        </Tabs>
+        {mediaData.map((media, key) => (
+          <TabPanel
+            key={key}
+            value={value}
+            index={key}
           >
-            {imageData.map(({ background, tooltip, src }, key) => (
-              <GridListTile key={`grid-list-tile-${key}`}>
-                <Tooltip
-                  title={tooltip}
-                  placement='top'
-                >
-                  <AtomicMediaButton
-                    type='img'
-                    className={classes.media}
-                    style={{ backgroundImage: `url('${background}')` }}
-                    onInserted={() => props.onClose()}
-                    atomicMediaProps={{ src }}
-                    component='span'
-                  />
-                </Tooltip>
-              </GridListTile>
-            ))}
-          </GridList>
-        </Box>
+            <GridList
+              className={classes.gridList}
+              spacing={10}
+              cellHeight={140}
+              cols={3}
+            >
+              {media.map(({
+                type,
+                background,
+                tooltip,
+                mediaProps,
+              }, key) => (
+                <GridListTile key={key}>
+                  <Tooltip
+                    title={tooltip}
+                    placement='top'
+                  >
+                    <AtomicMediaButton
+                      className={classes.media}
+                      style={{ backgroundImage: `url('${background}')` }}
+                      onInserted={() => props.onClose()}
+                      atomicMediaProps={mediaProps}
+                      component='span'
+                    >
+                      {['audio', 'video'].includes(type) &&
+                        <PlayArrowRounded style={{
+                          fontSize: 45,
+                          color: '#fff',
+                        }} />
+                      }
+                    </AtomicMediaButton>
+                  </Tooltip>
+                </GridListTile>
+              ))}
+            </GridList>
+          </TabPanel>
+        ))}
       </div>
     </Modal >
   );
@@ -317,7 +369,7 @@ const LandingExample = () => {
         <IconButton onClick={handleClick}>
           <ImageOutlined />
         </IconButton>
-        <EditorModal
+        <AtomicMediaModal
           open={open}
           onClose={handleClick}
         />
