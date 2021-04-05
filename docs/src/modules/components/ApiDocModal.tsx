@@ -66,6 +66,7 @@ const ApiDocModal = ({
         color="primary"
         variant="outlined"
         onClick={handleOpen}
+        size="large"
       >
         Show Api
       </Button>

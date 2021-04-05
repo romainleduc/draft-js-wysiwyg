@@ -68,14 +68,14 @@ const useStyles = makeStyles((theme) => ({
     '& h2': {
       margin: '40px 0 16px',
       fontSize: '1.875rem',
-      fontWeight: 500,
+      fontWeight: 400,
       lineHeight: 1.235,
       letterSpacing: '0.00735em',
     },
     '& h3': {
       margin: '40px 0 16px',
       fontSize: '1.5rem',
-      fontWeight: 500,
+      fontWeight: 400,
       lineHeight: 1.334,
       letterSpacing: '0em',
     },
