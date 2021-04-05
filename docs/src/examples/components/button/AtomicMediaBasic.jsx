@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton } from 'draft-js-wysiwyg';
 import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, Tabs, Tab, GridList, GridListTile, fade } from '@material-ui/core';
 import { ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
+import { EditorState } from 'draft-js';
 import mediaData from './mediaData';
-import ReactPlayer from 'react-player';
 
 const useStyles = makeStyles((theme => ({
   modal: {
@@ -17,9 +17,10 @@ const useStyles = makeStyles((theme => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.shape.borderRadius,
     border: `solid 1px ${fade('#000', .7)}`,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2),
+    outline: 0,
   },
   media: {
     backgroundSize: 'cover',
@@ -46,48 +47,61 @@ const TabPanel = (props) => {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
   );
 }
 
-// export const CustomMedia = (props) => {
-//   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
-//   const {
-//     atomicMediaProps,
-//     atomicImageProps,
-//     atomicIframeProps
-//   } = entity.getData();
-//   const {foo} = props.blockProps;
-
-//   return (
-//     <>
-//       {atomicMediaProps && (
-//         <ReactPlayer url={atomicMediaProps?.src} controls={atomicMediaProps?.controls} />
-//       )}
-//     </>
-//   );
-// };
-
 /**
  * The example data is structured as follows:
  *
- * import image from 'path/to/image.jpg';
- * [etc...]
- *
- * const imgData = [
- *   {
- *     src: image,
- *     title: 'Image',
- *   },
- *   {
- *     [etc...]
- *   },
+ * const mediaData = [
+ *   [
+ *     {
+ *       type: 'img',
+ *       tooltip: 'Image',
+ *       background: 'path/to/background.jpg',
+ *       mediaProps: {
+ *         src: 'path/to/image.jpg',
+ *       },
+ *     },
+ *     {
+ *       [etc...]
+ *     },
+ *   ],
+ *   [
+ *     {
+ *       type: 'audio',
+ *       tooltip: 'Audio',
+ *       background: 'path/to/background.jpg',
+ *       mediaProps: {
+ *         src: 'path/to/audio.mp3',
+ *         controls: true,
+ *       },
+ *     },
+ *     {
+ *       [etc...]
+ *     },
+ *   ],
+ *   [
+ *     {
+ *       type: 'video',
+ *       tooltip: 'Video',
+ *       background: 'path/to/background.jpg',
+ *       mediaProps: {
+ *         src: 'path/to/video.mp4',
+ *         controls: true,
+ *       },
+ *     },
+ *     {
+ *       [etc...]
+ *     },
+ *   ],
  * ];
  */
-const EditorModal = (props) => {
+const AtomicMediaModal = (props) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
@@ -109,9 +123,9 @@ const EditorModal = (props) => {
           variant='fullWidth'
           aria-label='Media tabs example'
         >
+          <Tab label='Image' />
           <Tab label='Audio' />
           <Tab label='Video' />
-          <Tab label='Embed' />
         </Tabs>
         {mediaData.map((media, key) => (
           <TabPanel
@@ -125,7 +139,12 @@ const EditorModal = (props) => {
               cellHeight={140}
               cols={3}
             >
-              {media.map(({ background, tooltip, src }, key) => (
+              {media.map(({
+                type,
+                background,
+                tooltip,
+                mediaProps,
+              }, key) => (
                 <GridListTile key={key}>
                   <Tooltip
                     title={tooltip}
@@ -135,16 +154,15 @@ const EditorModal = (props) => {
                       className={classes.media}
                       style={{ backgroundImage: `url('${background}')` }}
                       onInserted={() => props.onClose()}
+                      atomicMediaProps={mediaProps}
                       component='span'
-                      atomicMediaProps={{
-                        controls: true,
-                        src,
-                      }}
                     >
-                      <PlayArrowRounded style={{
-                        fontSize: 45,
-                        color: '#fff',
-                      }} />
+                      {['audio', 'video'].includes(type) &&
+                        <PlayArrowRounded style={{
+                          fontSize: 45,
+                          color: '#fff',
+                        }} />
+                      }
                     </AtomicMediaButton>
                   </Tooltip>
                 </GridListTile>
@@ -157,36 +175,35 @@ const EditorModal = (props) => {
   );
 }
 
-const Media = () => {
-  const [open, setOpen] = React.useState(false);
+const BasicExample = () => {
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty()
+  );
+  const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   }
 
   return (
-    <EditorContainer>
+    <EditorContainer
+      editorState={editorState}
+      onChangeEditorState={(newEditorState) => {
+        setEditorState(newEditorState);
+      }}
+    >
       <EditorToolbar>
         <IconButton onClick={handleClick}>
           <ImageOutlined />
         </IconButton>
-        <EditorModal
+        <AtomicMediaModal
           open={open}
           onClose={handleClick}
         />
       </EditorToolbar>
-      <Editor
-        // blockRendererMedia={{
-        //   component: CustomMedia,
-        //   editable: false,
-        //   props: {
-        //     foo: 'bar',
-        //   }
-        // }}
-        placeholder='Enter some text..'
-      />
+      <Editor placeholder='Enter some text..' />
     </EditorContainer>
   );
 }
 
-export default Media;
+export default BasicExample;

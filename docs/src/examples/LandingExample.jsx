@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { EditorContainer, EditorToolbar, Editor, AtomicImageButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, Box, Typography, GridList, GridListTile, fade, Divider, withStyles, FormControl, Select as MuiSelect, MenuItem, InputBase, ButtonGroup as MuiButtonGroup } from '@material-ui/core';
-import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, List } from '@material-ui/icons';
-import imageData from './components/button/imageData';
-import { ToggleButtonGroup as MuiToggleButtonGroup } from '@material-ui/lab';
+import { DraftToggleButtonGroup, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
+import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, fade, Divider, withStyles, Select as MuiSelect, MenuItem, ButtonGroup as MuiButtonGroup, ButtonBase, Tabs, Tab, Box } from '@material-ui/core';
+import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
+import mediaData from './components/button/mediaData';
+import { EditorState } from 'draft-js';
 
 const ToggleButtonGroup = withStyles((theme) => ({
   grouped: {
@@ -16,7 +16,7 @@ const ToggleButtonGroup = withStyles((theme) => ({
       borderRadius: theme.shape.borderRadius,
     },
   },
-}))(MuiToggleButtonGroup);
+}))(DraftToggleButtonGroup);
 
 const ButtonGroup = withStyles((theme) => ({
   grouped: {
@@ -43,7 +43,7 @@ const Select = withStyles((theme) => ({
   },
 }))(MuiSelect);
 
-const BootstrapInput = withStyles((theme) => ({
+const BootstrapButton = withStyles((theme) => ({
   input: {
     margin: theme.spacing(0.5),
     borderRadius: theme.shape.borderRadius,
@@ -55,7 +55,7 @@ const BootstrapInput = withStyles((theme) => ({
       backgroundColor: "#fff",
     },
   },
-}))(InputBase);
+}))(ButtonBase);
 
 const useStyles = makeStyles((theme => ({
   modal: {
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme => ({
   },
   editor: {
     border: `1px solid ${theme.palette.divider}`,
-    padding: 5,
+    padding: 40,
     borderTop: 0,
     minHeight: 141,
     '& .DraftEditor-editorContainer': {
@@ -101,6 +101,26 @@ const useStyles = makeStyles((theme => ({
     },
   }
 })));
+
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`wrapped-tabpanel-${index}`}
+      aria-labelledby={`wrapped-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
 
 const InlineToggleButtonGroup = () => {
   const [formats, setFormats] = useState(() => []);
@@ -138,42 +158,37 @@ const InlineToggleButtonGroup = () => {
 const BlockTypeToggleButtonSelect = () => {
   const [blockType, setBlockType] = React.useState('header-two');
 
-  const handleChange = (event) => {
-    setBlockType(event.target.value);
+  const handleChange = (_, newBlockType) => {
+    setBlockType(newBlockType);
   };
 
   return (
-    <FormControl>
-      <Select
-        value={blockType}
-        onChange={handleChange}
-        input={<BootstrapInput />}
-      >
-        {[
-          ['unstyled', 'Paragraph'],
-          ['header-one', 'H1'],
-          ['header-two', 'H2'],
-          ['header-three', 'H3'],
-          ['header-four', 'H4'],
-          ['header-five', 'H5'],
-          ['header-six', 'H6'],
-          ['blockquote', 'Blockquote'],
-          ['code-block', 'Code Block'],
-        ].map((block, key) =>
-          <BlockTypeToggleButton
-            key={`block-type-${key}`}
-            component={StyledMenuItem}
-            key={`basic-block-${block[0]}`}
-            value={block[0]}
-          >
-            {block[1]}
-          </BlockTypeToggleButton>
-        )}
-      </Select>
-    </FormControl>
+    <ToggleButtonGroup
+      exclusive
+      value={blockType}
+      onChange={handleChange}
+    >
+      {[
+        ['unstyled', 'Paragraph'],
+        ['header-one', 'H1'],
+        ['header-two', 'H2'],
+        ['header-three', 'H3'],
+        ['header-four', 'H4'],
+        ['header-five', 'H5'],
+        ['header-six', 'H6'],
+        ['blockquote', 'Blockquote'],
+        ['code-block', 'Code Block'],
+      ].map((block) =>
+        <BlockTypeToggleButton
+          key={`basic-block-${block[0]}`}
+          value={block[0]}
+        >
+          {block[1]}
+        </BlockTypeToggleButton>
+      )}
+    </ToggleButtonGroup>
   )
 }
-
 
 const ListToggleButtonGroup = () => {
   const [blockType, setBlockType] = useState('');
@@ -218,8 +233,13 @@ const ListToggleButtonGroup = () => {
  *   },
  * ];
  */
-const EditorModal = (props) => {
+const AtomicMediaModal = (props) => {
   const classes = useStyles();
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <Modal
@@ -227,32 +247,61 @@ const EditorModal = (props) => {
       {...props}
     >
       <div className={classes.paper}>
-        <Typography variant='h2'>Image</Typography>
-        <Box p={3}>
-          <GridList
-            className={classes.gridList}
-            spacing={10}
-            cellHeight={140}
-            cols={3}
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor='primary'
+          textColor='primary'
+          variant='fullWidth'
+          aria-label='Media tabs example'
+        >
+          <Tab label='Image' />
+          <Tab label='Audio' />
+          <Tab label='Video' />
+        </Tabs>
+        {mediaData.map((media, key) => (
+          <TabPanel
+            key={key}
+            value={value}
+            index={key}
           >
-            {imageData.map(({ background, tooltip, src }, key) => (
-              <GridListTile key={`grid-list-tile-${key}`}>
-                <Tooltip
-                  title={tooltip}
-                  placement='top'
-                >
-                  <AtomicImageButton
-                    className={classes.media}
-                    style={{ backgroundImage: `url('${background}')` }}
-                    onInserted={() => props.onClose()}
-                    atomicImageProps={{ src }}
-                    component='span'
-                  />
-                </Tooltip>
-              </GridListTile>
-            ))}
-          </GridList>
-        </Box>
+            <GridList
+              className={classes.gridList}
+              spacing={10}
+              cellHeight={140}
+              cols={3}
+            >
+              {media.map(({
+                type,
+                background,
+                tooltip,
+                mediaProps,
+              }, key) => (
+                <GridListTile key={key}>
+                  <Tooltip
+                    title={tooltip}
+                    placement='top'
+                  >
+                    <AtomicMediaButton
+                      className={classes.media}
+                      style={{ backgroundImage: `url('${background}')` }}
+                      onInserted={() => props.onClose()}
+                      atomicMediaProps={mediaProps}
+                      component='span'
+                    >
+                      {['audio', 'video'].includes(type) &&
+                        <PlayArrowRounded style={{
+                          fontSize: 45,
+                          color: '#fff',
+                        }} />
+                      }
+                    </AtomicMediaButton>
+                  </Tooltip>
+                </GridListTile>
+              ))}
+            </GridList>
+          </TabPanel>
+        ))}
       </div>
     </Modal >
   );
@@ -260,6 +309,9 @@ const EditorModal = (props) => {
 
 const LandingExample = () => {
   const [open, setOpen] = React.useState(false);
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty()
+  );
   const [alignment, setAlignment] = useState('left');
   const classes = useStyles();
 
@@ -272,7 +324,13 @@ const LandingExample = () => {
   }
 
   return (
-    <EditorContainer noSsr>
+    <EditorContainer
+      noSsr
+      editorState={editorState}
+      onChangeEditorState={(newEditorState) => {
+        setEditorState(newEditorState);
+      }}
+    >
       <EditorToolbar className={classes.toolbar}>
         <BlockTypeToggleButtonSelect />
         <Divider flexItem orientation="vertical" className={classes.divider} />
@@ -311,7 +369,7 @@ const LandingExample = () => {
         <IconButton onClick={handleClick}>
           <ImageOutlined />
         </IconButton>
-        <EditorModal
+        <AtomicMediaModal
           open={open}
           onClose={handleClick}
         />

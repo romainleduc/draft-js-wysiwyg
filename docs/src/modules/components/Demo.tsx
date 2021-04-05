@@ -25,15 +25,19 @@ const useStyles = makeStyles((theme) => ({
       border: 0,
     },
     '& .draft-toolbar': {
-      backgroundColor: '#ccd5df57',
       border: `1px solid ${theme.palette.divider}`,
+      borderTopLeftRadius: theme.shape.borderRadius,
+      borderTopRightRadius: theme.shape.borderRadius,
       padding: 4,
       '& .MuiToggleButtonGroup-root': {
         display: 'block',
       },
+      backgroundColor: '#ccd5df57',
     },
     '& .draft-editor': {
       border: `1px solid ${theme.palette.divider}`,
+      borderBottomLeftRadius: theme.shape.borderRadius,
+      borderBottomRightRadius: theme.shape.borderRadius,
       borderTop: 0,
       minHeight: 141,
       padding: 5,

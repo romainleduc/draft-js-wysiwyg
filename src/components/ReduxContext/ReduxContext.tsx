@@ -2,7 +2,7 @@ import React from 'react';
 import {
   ReducerState,
   initialState,
-} from '../redux/reducers/keyCommandsReducer';
+} from '../../redux/reducers/keyCommandsReducer';
 
 const ReduxContext = React.createContext<{
   state: ReducerState;

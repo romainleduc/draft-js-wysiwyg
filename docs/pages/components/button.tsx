@@ -3,7 +3,8 @@ import { prepareMarkdown } from '../../src/modules/utils/parseMarkdown';
 import MarkdownDocsPage from '../../src/modules/components/MarkdownDocsPage';
 import { NextPage } from 'next';
 
-const README = require('../../src/examples/components/button/button.md').default;
+const README = require('../../src/examples/components/button/button.md')
+  .default;
 
 const ButtonPage: NextPage<any> = ({
   title,
@@ -26,7 +27,7 @@ ButtonPage.getInitialProps = () => {
     title,
     description,
     markdown,
-  }
-}
+  };
+};
 
 export default ButtonPage;

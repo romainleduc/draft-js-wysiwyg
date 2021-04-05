@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
       padding: '0 3px',
       fontSize: '.85em',
       borderRadius: 2,
+      backgroundColor: 'rgba(27, 31, 35, 0.05)',
     },
     '& code[class*="language-"]': {
       color: '#abebff',
@@ -177,7 +178,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '& a, & a code': {
       // Style taken from the Link component
-      color: theme.palette.secondary.main,
+      color: theme.palette.primary.main,
       textDecoration: 'none',
       '&:hover': {
         textDecoration: 'underline',

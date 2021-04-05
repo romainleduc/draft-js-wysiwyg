@@ -1,11 +1,23 @@
 import React, { useContext, useEffect, forwardRef } from 'react';
-import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import { setBlockData, setBlocksData } from '../../utils';
-import EditorContext from '../EditorContext';
+import EditorContext from '../EditorContext/EditorContext';
+import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
+import { ToggleButtonProps } from '@material-ui/lab';
 
 export interface TextAlignToggleButtonProps
   extends Omit<ToggleButtonProps, 'value'> {
+  /**
+   * If `true`, inline style will not be available from keyboard shortcuts
+   * @default false
+   */
+  disableKeyboardShortcuts?: boolean;
+  /**
+   *
+   */
   value: 'left' | 'center' | 'right' | 'justify';
+  /**
+   *
+   */
   ignoreSelection?: boolean;
 }
 
@@ -25,13 +37,7 @@ const TextAlignToggleButton = forwardRef<
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
 
-    useEffect(() => {
-      if (selected) {
-        handleClick();
-      }
-    }, []);
-
-    const handleClick = () => {
+    const handleToggle = () => {
       if (editorState && setEditorState) {
         const contentState = editorState.getCurrentContent();
         const selectionState = editorState.getSelection();
@@ -60,15 +66,16 @@ const TextAlignToggleButton = forwardRef<
     };
 
     return (
-      <ToggleButton
+      <DraftToggleButton
         ref={ref}
         selected={selected}
-        onClick={handleClick}
+        onToggle={handleToggle}
+        keyCommand={`align-${value}`}
         value={value}
         {...rest}
       >
         {children}
-      </ToggleButton>
+      </DraftToggleButton>
     );
   }
 );

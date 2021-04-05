@@ -82,11 +82,11 @@ const excludeTitle = (markdown: string): string => {
 };
 
 const getType = (markdown: string) => {
-  if (/api/s.test(markdown)) {
+  if (/^("(?:api)":[^}]*)$/gm.test(markdown)) {
     return 'api';
   }
 
-  if (/demo/s.test(markdown)) {
+  if (/^("(?:demo)":[^}]*)$/gm.test(markdown)) {
     return 'demo';
   }
 

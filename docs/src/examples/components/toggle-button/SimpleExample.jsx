@@ -13,8 +13,12 @@ import {
   FormatUnderlined,
   Code,
 } from '@material-ui/icons';
+import { EditorState } from 'draft-js';
 
 const SimpleExample = () => {
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty()
+  );
   const [formats, setFormats] = useState(() => []);
 
   const handleFormat = (_, newFormats) => {
@@ -22,7 +26,12 @@ const SimpleExample = () => {
   };
 
   return (
-    <EditorContainer>
+    <EditorContainer
+      editorState={editorState}
+      onChangeEditorState={(newEditorState) => {
+        setEditorState(newEditorState);
+      }}
+    >
       <EditorToolbar>
         <ToggleButtonGroup
           value={formats}
