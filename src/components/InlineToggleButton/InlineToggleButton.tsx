@@ -25,7 +25,7 @@ const InlineToggleButton = forwardRef<
 >(({ value, selected, children, ...rest }: InlineToggleButtonProps, ref) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
 
-  const onFirstRenderer = () => {
+  const onFirstRender = () => {
     if (editorState && setEditorState) {
       if (selected) {
         setEditorState(addInlineStyle(editorState, value));
@@ -48,7 +48,7 @@ const InlineToggleButton = forwardRef<
     <DraftToggleButton
       ref={ref}
       selected={selected}
-      onFirstRenderer={onFirstRenderer}
+      onFirstRender={onFirstRender}
       onToggle={handleToggle}
       keyCommand={value.toLowerCase()}
       value={value}

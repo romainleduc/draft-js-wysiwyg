@@ -24,7 +24,7 @@ const BlockTypeToggleButton = forwardRef<
 >(({ value, selected, children, ...rest }: BlockTypeToggleButtonProps, ref) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
 
-  const onFirstRenderer = () => {
+  const onFirstRender = () => {
     if (selected && editorState && setEditorState) {
       setEditorState(addBlockType(editorState, value));
     }
@@ -44,7 +44,7 @@ const BlockTypeToggleButton = forwardRef<
   return (
     <DraftToggleButton
       ref={ref}
-      onFirstRenderer={onFirstRenderer}
+      onFirstRender={onFirstRender}
       onToggle={handleToggle}
       value={value}
       selected={selected}
