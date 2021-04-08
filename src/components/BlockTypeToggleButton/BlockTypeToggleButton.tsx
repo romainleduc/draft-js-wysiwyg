@@ -3,6 +3,7 @@ import { EditorState, RichUtils } from 'draft-js';
 import EditorContext from '../EditorContext/EditorContext';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
+import { addBlockType } from '../../utils';
 
 export interface BlockTypeToggleButtonProps
   extends Omit<ToggleButtonProps, 'value'> {
@@ -23,6 +24,12 @@ const BlockTypeToggleButton = forwardRef<
 >(({ value, selected, children, ...rest }: BlockTypeToggleButtonProps, ref) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
 
+  const onFirstRenderer = () => {
+    if (selected && editorState && setEditorState) {
+      setEditorState(addBlockType(editorState, value));
+    }
+  }
+
   const handleToggle = () => {
     if (editorState && setEditorState) {
       setEditorState(
@@ -37,6 +44,7 @@ const BlockTypeToggleButton = forwardRef<
   return (
     <DraftToggleButton
       ref={ref}
+      onFirstRenderer={onFirstRenderer}
       onToggle={handleToggle}
       value={value}
       selected={selected}

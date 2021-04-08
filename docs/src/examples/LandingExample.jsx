@@ -156,10 +156,14 @@ const InlineToggleButtonGroup = () => {
 }
 
 const BlockTypeToggleButtonSelect = () => {
-  const [blockType, setBlockType] = React.useState('header-two');
+  const [blockType, setBlockType] = React.useState('unstyled');
 
   const handleChange = (_, newBlockType) => {
-    setBlockType(newBlockType);
+    if (!newBlockType) {
+      setBlockType('unstyled');
+    } else {
+      setBlockType(newBlockType);
+    }
   };
 
   return (

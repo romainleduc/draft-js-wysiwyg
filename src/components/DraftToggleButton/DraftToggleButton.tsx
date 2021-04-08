@@ -10,18 +10,10 @@ export interface DraftToggleButtonProps
    * @default false
    */
   disableKeyboardShortcuts?: boolean;
-  /**
-   *
-   */
   keyCommand: string;
-  /**
-   *
-   */
   onChange?: any;
-  /**
-   *
-   */
   onToggle?: () => void;
+  onFirstRenderer?: () => void;
 }
 
 const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
@@ -31,6 +23,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       children,
       disableKeyboardShortcuts,
       onChange,
+      onFirstRenderer,
       onToggle,
       selected,
       keyCommand,
@@ -48,9 +41,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
         });
       }
 
-      if (selected) {
-        onToggle?.();
-      }
+      onFirstRenderer?.();
     }, []);
 
     const hasSelectedKeyCommand = () => {

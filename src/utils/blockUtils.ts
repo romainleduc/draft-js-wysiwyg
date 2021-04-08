@@ -7,6 +7,7 @@ import {
   SelectionState,
   BlockMap,
   AtomicBlockUtils,
+  RichUtils,
 } from 'draft-js';
 
 /**
@@ -232,3 +233,25 @@ export const findEntitiesRangeByType = (
     );
   }, callback);
 };
+
+export const addBlockType = (editorState: EditorState, value: string) => {
+  if (RichUtils.getCurrentBlockType(editorState) !== value) {
+    return RichUtils.toggleBlockType(
+      EditorState.forceSelection(editorState, editorState.getSelection()),
+      value
+    );
+  }
+
+  return editorState;
+}
+
+export const addInlineStyle = (editorState: EditorState, value: string) => {
+  if (!editorState.getCurrentInlineStyle().has(value)) {
+    return RichUtils.toggleInlineStyle(
+      EditorState.forceSelection(editorState, editorState.getSelection()),
+      value
+    )
+  }
+
+  return editorState;
+}

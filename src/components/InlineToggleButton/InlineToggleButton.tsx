@@ -3,6 +3,7 @@ import { EditorState, RichUtils } from 'draft-js';
 import EditorContext from '../EditorContext/EditorContext';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
+import { addInlineStyle } from '../../utils';
 
 export interface InlineToggleButtonProps
   extends Omit<ToggleButtonProps, 'value'> {
@@ -24,6 +25,14 @@ const InlineToggleButton = forwardRef<
 >(({ value, selected, children, ...rest }: InlineToggleButtonProps, ref) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
 
+  const onFirstRenderer = () => {
+    if (editorState && setEditorState) {
+      if (selected) {
+        setEditorState(addInlineStyle(editorState, value));
+      }
+    }
+  }
+
   const handleToggle = () => {
     if (editorState && setEditorState) {
       setEditorState(
@@ -39,6 +48,7 @@ const InlineToggleButton = forwardRef<
     <DraftToggleButton
       ref={ref}
       selected={selected}
+      onFirstRenderer={onFirstRenderer}
       onToggle={handleToggle}
       keyCommand={value.toLowerCase()}
       value={value}
