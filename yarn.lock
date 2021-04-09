@@ -3029,10 +3029,10 @@ domain-browser@^1.1.1:
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
   integrity sha512-jnjyiM6eRyZl2H+W8Q/zLMA481hzi0eszAaBUzIVnmYVDBbnLxVNnfu1HgEBvCbL+71FrxMl3E6lpKH7Ge3OXA==
 
-draft-js-wysiwyg@^1.0.15:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/draft-js-wysiwyg/-/draft-js-wysiwyg-1.0.15.tgz#88762686eec8ad55a10b20778d7957db6af6cdc0"
-  integrity sha512-o6LpVbBjVjHJTtnROh362az3X1DKAHa2RQc+OygNrcuDC8QMIV2ZK7cP0dS3t/V7bzgWOZbJVTVGrCoG5g2PUg==
+draft-js-wysiwyg@^1.0.16:
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/draft-js-wysiwyg/-/draft-js-wysiwyg-1.0.16.tgz#2b025e632d6afb6b64593bf938d3015635c4c330"
+  integrity sha512-FYGkq7ViPc/3GwFuViG2oYv9+CUSlCx8iWuPn0wawxQPE77/v/HzgvBxxOwm5G83gPZ4dhGfneiReARlPLOrlA==
   dependencies:
     clsx "^1.1.1"
     prop-types "^15.7.2"

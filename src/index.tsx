@@ -16,8 +16,8 @@ export type { AtomicMediaButtonProps } from './components/Media';
 export { IndentDraftButton } from './components';
 export type { IndentDraftButtonProps } from './components';
 
-export { DraftToggleButtonGroup } from './components';
-export type { DraftToggleButtonGroupProps } from './components';
+export { ToggleButtonGroup } from './components';
+export type { ToggleButtonGroupProps } from './components';
 
 export { TextAlignToggleButton } from './components';
 export type { TextAlignToggleButtonProps } from './components';

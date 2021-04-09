@@ -47,19 +47,27 @@ const TextAlignToggleButton = forwardRef<
           const contentBlocks = contentState.getBlocksAsArray();
 
           if (!!contentBlocks.length) {
-            setEditorState(
-              setBlocksData(
-                editorState,
-                contentState,
-                contentBlocks[0].getKey(),
-                contentBlocks[contentBlocks.length - 1].getKey(),
-                blockData
-              )
+            setTimeout(
+              () =>
+                setEditorState(
+                  setBlocksData(
+                    editorState,
+                    contentState,
+                    contentBlocks[0].getKey(),
+                    contentBlocks[contentBlocks.length - 1].getKey(),
+                    blockData
+                  )
+                ),
+              0
             );
           }
         } else {
-          setEditorState(
-            setBlockData(editorState, contentState, selectionState, blockData)
+          setTimeout(
+            () =>
+              setEditorState(
+                setBlockData(editorState, contentState, selectionState, blockData)
+              ),
+            0
           );
         }
       }

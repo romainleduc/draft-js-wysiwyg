@@ -26,17 +26,25 @@ const BlockTypeToggleButton = forwardRef<
 
   const onFirstRender = () => {
     if (selected && editorState && setEditorState) {
-      setEditorState(addBlockType(editorState, value));
+      setTimeout(
+        () =>
+          setEditorState(addBlockType(editorState, value)),
+        0
+      );
     }
   }
 
   const handleToggle = () => {
     if (editorState && setEditorState) {
-      setEditorState(
-        RichUtils.toggleBlockType(
-          EditorState.forceSelection(editorState, editorState.getSelection()),
-          value
-        )
+      setTimeout(
+        () =>
+          setEditorState(
+            RichUtils.toggleBlockType(
+              EditorState.forceSelection(editorState, editorState.getSelection()),
+              value
+            )
+          ),
+        0
       );
     }
   };
