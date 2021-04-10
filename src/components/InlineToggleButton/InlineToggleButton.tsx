@@ -28,14 +28,10 @@ const InlineToggleButton = forwardRef<
   const onFirstRender = () => {
     if (editorState && setEditorState) {
       if (selected) {
-        setTimeout(
-          () =>
-            setEditorState(addInlineStyle(editorState, value)),
-          0
-        );
+        setTimeout(() => setEditorState(addInlineStyle(editorState, value)), 0);
       }
     }
-  }
+  };
 
   const handleToggle = () => {
     if (editorState && setEditorState) {
@@ -43,7 +39,10 @@ const InlineToggleButton = forwardRef<
         () =>
           setEditorState(
             RichUtils.toggleInlineStyle(
-              EditorState.forceSelection(editorState, editorState.getSelection()),
+              EditorState.forceSelection(
+                editorState,
+                editorState.getSelection()
+              ),
               value
             )
           ),

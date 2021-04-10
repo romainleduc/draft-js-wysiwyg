@@ -19,6 +19,9 @@ export type { IndentDraftButtonProps } from './components';
 export { ToggleButtonGroup } from './components';
 export type { ToggleButtonGroupProps } from './components';
 
+export { ToggleButtonMenu } from './components';
+export type { ToggleButtonMenuProps } from './components';
+
 export { TextAlignToggleButton } from './components';
 export type { TextAlignToggleButtonProps } from './components';
 

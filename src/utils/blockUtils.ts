@@ -243,15 +243,15 @@ export const addBlockType = (editorState: EditorState, value: string) => {
   }
 
   return editorState;
-}
+};
 
 export const addInlineStyle = (editorState: EditorState, value: string) => {
   if (!editorState.getCurrentInlineStyle().has(value)) {
     return RichUtils.toggleInlineStyle(
       EditorState.forceSelection(editorState, editorState.getSelection()),
       value
-    )
+    );
   }
 
   return editorState;
-}
+};

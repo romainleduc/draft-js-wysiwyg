@@ -26,13 +26,9 @@ const BlockTypeToggleButton = forwardRef<
 
   const onFirstRender = () => {
     if (selected && editorState && setEditorState) {
-      setTimeout(
-        () =>
-          setEditorState(addBlockType(editorState, value)),
-        0
-      );
+      setTimeout(() => setEditorState(addBlockType(editorState, value)), 0);
     }
-  }
+  };
 
   const handleToggle = () => {
     if (editorState && setEditorState) {
@@ -40,7 +36,10 @@ const BlockTypeToggleButton = forwardRef<
         () =>
           setEditorState(
             RichUtils.toggleBlockType(
-              EditorState.forceSelection(editorState, editorState.getSelection()),
+              EditorState.forceSelection(
+                editorState,
+                editorState.getSelection()
+              ),
               value
             )
           ),

@@ -65,7 +65,12 @@ const TextAlignToggleButton = forwardRef<
           setTimeout(
             () =>
               setEditorState(
-                setBlockData(editorState, contentState, selectionState, blockData)
+                setBlockData(
+                  editorState,
+                  contentState,
+                  selectionState,
+                  blockData
+                )
               ),
             0
           );

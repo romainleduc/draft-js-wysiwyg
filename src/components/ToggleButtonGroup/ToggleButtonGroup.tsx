@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import {
   ToggleButtonGroup as MuiToggleButtonGroup,
-  ToggleButtonGroupProps as MuiToggleButtonGroupProps
+  ToggleButtonGroupProps as MuiToggleButtonGroupProps,
 } from '@material-ui/lab';
 
 export interface ToggleButtonGroupProps extends MuiToggleButtonGroupProps {
@@ -12,16 +12,9 @@ export interface ToggleButtonGroupProps extends MuiToggleButtonGroupProps {
   disableKeyboardShortcuts?: boolean;
 }
 
-const ToggleButtonGroup = forwardRef<
-  HTMLDivElement,
-  ToggleButtonGroupProps
->(
+const ToggleButtonGroup = forwardRef<any, ToggleButtonGroupProps>(
   (
-    {
-      children,
-      disableKeyboardShortcuts,
-      ...other
-    }: ToggleButtonGroupProps,
+    { children, disableKeyboardShortcuts, ...other }: ToggleButtonGroupProps,
     ref
   ) => {
     return (
@@ -37,9 +30,9 @@ const ToggleButtonGroup = forwardRef<
           });
         })}
       </MuiToggleButtonGroup>
-    )
+    );
   }
 );
 
-ToggleButtonGroup.displayName = 'DraftToggleButtonGroup';
+ToggleButtonGroup.displayName = 'ToggleButtonGroup';
 export default ToggleButtonGroup;
