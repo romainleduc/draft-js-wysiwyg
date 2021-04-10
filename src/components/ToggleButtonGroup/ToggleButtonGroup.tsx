@@ -28,7 +28,7 @@ const ToggleButtonGroup = forwardRef<any, ToggleButtonGroupProps>(
 
     const handleChange = (event: any, newValue: any) => {
       if (onChange) {
-        onChange(event, newValue);
+        onChange(event, newValue, 'okkk');
       } else {
         setFormat(newValue);
       }

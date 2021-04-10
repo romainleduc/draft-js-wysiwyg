@@ -1,9 +1,9 @@
-import React, { useContext, forwardRef } from 'react';
-import { EditorState, RichUtils } from 'draft-js';
+import React, { useContext, forwardRef, useCallback } from 'react';
+import { EditorState } from 'draft-js';
 import EditorContext from '../EditorContext/EditorContext';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
-import { addBlockType } from '../../utils';
+import { insertBlockType } from '../../utils';
 
 export interface BlockTypeToggleButtonProps
   extends Omit<ToggleButtonProps, 'value'> {
@@ -22,38 +22,22 @@ const BlockTypeToggleButton = forwardRef<
   HTMLButtonElement,
   BlockTypeToggleButtonProps
 >(({ value, selected, children, ...rest }: BlockTypeToggleButtonProps, ref) => {
-  const { editorState, setEditorState } = useContext(EditorContext) || {};
+  const { setEditorState } = useContext(EditorContext) || {};
 
-  const onFirstRender = () => {
-    if (selected && editorState && setEditorState) {
-      setTimeout(() => setEditorState(addBlockType(editorState, value)), 0);
-    }
-  };
-
-  const handleToggle = () => {
-    if (editorState && setEditorState) {
-      setTimeout(
-        () =>
-          setEditorState(
-            RichUtils.toggleBlockType(
-              EditorState.forceSelection(
-                editorState,
-                editorState.getSelection()
-              ),
-              value
-            )
-          ),
-        0
+  const handleToggle = useCallback(
+    (targetEditorState: EditorState) => {
+      setEditorState?.(
+        insertBlockType(targetEditorState, selected ? value : 'unstyled')
       );
-    }
-  };
+    },
+    [selected, value]
+  );
 
   return (
     <DraftToggleButton
       ref={ref}
-      onFirstRender={onFirstRender}
-      onToggle={handleToggle}
       value={value}
+      onToggle={handleToggle}
       selected={selected}
       keyCommand={value}
       {...rest}

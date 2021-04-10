@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, forwardRef } from 'react';
+import React, { useContext, forwardRef } from 'react';
 import { setBlockData, setBlocksData } from '../../utils';
 import EditorContext from '../EditorContext/EditorContext';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
+import { EditorState } from 'draft-js';
 
 export interface TextAlignToggleButtonProps
   extends Omit<ToggleButtonProps, 'value'> {
@@ -35,44 +36,36 @@ const TextAlignToggleButton = forwardRef<
     }: TextAlignToggleButtonProps,
     ref
   ) => {
-    const { editorState, setEditorState } = useContext(EditorContext) || {};
+    const { setEditorState } = useContext(EditorContext) || {};
 
-    const handleToggle = () => {
-      if (editorState && setEditorState) {
-        const contentState = editorState.getCurrentContent();
-        const selectionState = editorState.getSelection();
-        const blockData = { textAlign: value };
+    const handleToggle = (targetEditorState: EditorState) => {
+      if (setEditorState) {
+        const contentState = targetEditorState.getCurrentContent();
+        const selectionState = targetEditorState.getSelection();
+        const blockData = { textAlign: selected ? value : undefined };
 
         if (ignoreSelection) {
           const contentBlocks = contentState.getBlocksAsArray();
 
-          if (!!contentBlocks.length) {
-            setTimeout(
-              () =>
-                setEditorState(
-                  setBlocksData(
-                    editorState,
-                    contentState,
-                    contentBlocks[0].getKey(),
-                    contentBlocks[contentBlocks.length - 1].getKey(),
-                    blockData
-                  )
-                ),
-              0
+          if (contentBlocks.length) {
+            setEditorState(
+              setBlocksData(
+                targetEditorState,
+                contentState,
+                contentBlocks[0].getKey(),
+                contentBlocks[contentBlocks.length - 1].getKey(),
+                blockData
+              )
             );
           }
         } else {
-          setTimeout(
-            () =>
-              setEditorState(
-                setBlockData(
-                  editorState,
-                  contentState,
-                  selectionState,
-                  blockData
-                )
-              ),
-            0
+          setEditorState(
+            setBlockData(
+              targetEditorState,
+              contentState,
+              selectionState,
+              blockData
+            )
           );
         }
       }

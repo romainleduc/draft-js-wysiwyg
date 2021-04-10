@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, forwardRef } from 'react';
+import React, { useContext, useEffect, forwardRef, useState } from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import { ACTION_TYPES } from '../../redux/constants';
 import ReduxContext from '../ReduxContext';
+import { EditorState } from 'draft-js';
+import EditorContext from '../EditorContext';
 
 export interface DraftToggleButtonProps
   extends Omit<ToggleButtonProps, 'onChange'> {
@@ -12,7 +14,8 @@ export interface DraftToggleButtonProps
   disableKeyboardShortcuts?: boolean;
   keyCommand: string;
   onChange?: any;
-  onToggle?: () => void;
+  enforce?: boolean;
+  onToggle: (editorState: EditorState) => void;
   onFirstRender?: () => void;
 }
 
@@ -27,11 +30,14 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       onToggle,
       selected,
       keyCommand,
+      enforce,
       ...other
     }: DraftToggleButtonProps,
     ref
   ) => {
+    const [forceSelection, setForceSelection] = useState(false);
     const { state, dispatch } = useContext(ReduxContext);
+    const { editorState } = useContext(EditorContext) || {};
 
     useEffect(() => {
       if (!disableKeyboardShortcuts) {
@@ -41,8 +47,25 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
         });
       }
 
-      onFirstRender?.();
+      setForceSelection(true);
     }, []);
+
+    useEffect(() => {
+      if (editorState) {
+        setTimeout(
+          () =>
+            onToggle(
+              forceSelection
+                ? EditorState.forceSelection(
+                    editorState,
+                    editorState.getSelection()
+                  )
+                : editorState
+            ),
+          0
+        );
+      }
+    }, [selected]);
 
     const hasSelectedKeyCommand = () => {
       return state.selectedKeyCommands.includes(keyCommand);
@@ -59,7 +82,6 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
           value = null;
         }
 
-        onToggle?.();
         onChange(event, value);
       }
     };
