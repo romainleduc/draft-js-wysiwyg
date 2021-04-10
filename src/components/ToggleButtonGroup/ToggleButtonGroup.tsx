@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import {
   ToggleButtonGroup as MuiToggleButtonGroup,
   ToggleButtonGroupProps as MuiToggleButtonGroupProps,
@@ -14,11 +14,33 @@ export interface ToggleButtonGroupProps extends MuiToggleButtonGroupProps {
 
 const ToggleButtonGroup = forwardRef<any, ToggleButtonGroupProps>(
   (
-    { children, disableKeyboardShortcuts, ...other }: ToggleButtonGroupProps,
+    {
+      onChange,
+      value,
+      defaultValue,
+      children,
+      disableKeyboardShortcuts,
+      ...other
+    }: ToggleButtonGroupProps,
     ref
   ) => {
+    const [format, setFormat] = useState(defaultValue);
+
+    const handleChange = (event: any, newValue: any) => {
+      if (onChange) {
+        onChange(event, newValue);
+      } else {
+        setFormat(newValue);
+      }
+    };
+
     return (
-      <MuiToggleButtonGroup ref={ref} {...other}>
+      <MuiToggleButtonGroup
+        value={value || format}
+        onChange={handleChange}
+        ref={ref}
+        {...other}
+      >
         {React.Children.map(children, (child) => {
           if (!React.isValidElement(child)) {
             return null;
