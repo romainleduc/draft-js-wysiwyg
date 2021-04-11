@@ -50,51 +50,64 @@ Please note that `draft-js-wysiwyg` depends on `draft-js`, `@material-ui/core` a
 Here is a quick example to get you started.
 
 ```jsx
-import React, { useState } from 'react';
-import {
-  FormatAlignLeft as FormatAlignLeftIcon,
-  FormatAlignCenter as FormatAlignCenterIcon,
-  FormatAlignRight as FormatAlignRightIcon
-} from '@material-ui/icons';
-import { ToggleButtonGroup } from '@material-ui/core';
+import React from 'react';
 import {
   Editor,
   EditorContainer,
   EditorToolbar,
-  TextAlignToggleButton,
+  BlockTypeToggleButton as ToggleButton,
+  ToggleButtonGroup,
 } from 'draft-js-wysiwyg';
-import 'draft-js/dist/Draft.css';
+import { EditorState, RichUtils } from 'draft-js';
 
-const SimpleExample = () => {
-  const [alignment, setAlignment] = useState('left');
+const Example = () => {
+  const [value, setValue] = React.useState('unstyled');
+  const [editorState, setEditorState] = React.useState(
+    () => EditorState.createEmpty()
+  );
 
-  const handleAlignment = (_, newAlignment) => {
-    setAlignment(newAlignment);
-  };
+  const handleChange = (newEditorState) => {
+    if (newEditorState) {
+      setEditorState(newEditorState);
+    }
+  }
+
+  const handleToggle = (_, newValue) => {
+    setValue(newValue);
+  }
+
+  const handleClick = (_, newEditorState) => {
+    setValue(RichUtils.getCurrentBlockType(newEditorState));
+  }
 
   return (
-    <EditorContainer>
+    <EditorContainer
+      editorState={editorState}
+      onChangeEditorState={handleChange}
+    >
       <EditorToolbar>
         <ToggleButtonGroup
+          value={value}
+          onChange={handleToggle}
           exclusive
-          value={alignment}
-          onChange={handleAlignment}
         >
-          <TextAlignToggleButton value='left'>
-            <FormatAlignLeftIcon />
-          </TextAlignToggleButton>
-          <TextAlignToggleButton value='center'>
-            <FormatAlignCenterIcon />
-          </TextAlignToggleButton>
-          <TextAlignToggleButton value='right'>
-            <FormatAlignRightIcon />
-          </TextAlignToggleButton>
+          <ToggleButton value="unstyled">
+            Paragraph
+          </ToggleButton>
+          <ToggleButton value="header-one">
+            H1
+          </ToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
-      <Editor placeholder='Enter some text..' />
+      <Editor
+        onClick={handleClick}
+        placeholder='Enter some text..'
+      />
     </EditorContainer>
   );
 }
+
+export default Example;
 ```
 
 ## Documentation
