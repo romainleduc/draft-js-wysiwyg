@@ -1,21 +1,30 @@
-import React, { forwardRef, useState } from 'react';
+import React, {
+  forwardRef,
+  useContext,
+  useEffect,
+} from 'react';
 import {
   ToggleButtonGroup as MuiToggleButtonGroup,
   ToggleButtonGroupProps as MuiToggleButtonGroupProps,
 } from '@material-ui/lab';
+import EditorContext from '../EditorContext';
+import { DraftBlockType, RichUtils } from 'draft-js';
 
-export interface ToggleButtonGroupProps extends MuiToggleButtonGroupProps {
+export interface ToggleButtonGroupProps
+  extends Omit<MuiToggleButtonGroupProps, 'defaultValue'> {
   /**
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
    */
   disableKeyboardShortcuts?: boolean;
+  defaultValue?: string | string[];
+  onChangeSelection?: (newValue: { inlineStyles: string[], blockType: DraftBlockType}) => void;
 }
 
 const ToggleButtonGroup = forwardRef<any, ToggleButtonGroupProps>(
   (
     {
-      onChange,
+      onChangeSelection,
       value,
       defaultValue,
       children,
@@ -24,20 +33,20 @@ const ToggleButtonGroup = forwardRef<any, ToggleButtonGroupProps>(
     }: ToggleButtonGroupProps,
     ref
   ) => {
-    const [format, setFormat] = useState(defaultValue);
+    const { editorState } = useContext(EditorContext) || {};
 
-    const handleChange = (event: any, newValue: any) => {
-      if (onChange) {
-        onChange(event, newValue, 'okkk');
-      } else {
-        setFormat(newValue);
+    useEffect(() => {
+      if (editorState && onChangeSelection) {
+        onChangeSelection({
+          inlineStyles: editorState.getCurrentInlineStyle().toArray(),
+          blockType: RichUtils.getCurrentBlockType(editorState),
+        })
       }
-    };
+    }, [editorState]);
 
     return (
       <MuiToggleButtonGroup
-        value={value || format}
-        onChange={handleChange}
+        value={value}
         ref={ref}
         {...other}
       >

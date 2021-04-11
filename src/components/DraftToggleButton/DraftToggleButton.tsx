@@ -40,12 +40,12 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
     const { editorState } = useContext(EditorContext) || {};
 
     useEffect(() => {
-      if (!disableKeyboardShortcuts) {
-        dispatch({
-          type: ACTION_TYPES.ADD_KEY_COMMAND,
-          payload: keyCommand,
-        });
-      }
+      // if (!disableKeyboardShortcuts) {
+      //   dispatch({
+      //     type: ACTION_TYPES.ADD_KEY_COMMAND,
+      //     payload: keyCommand,
+      //   });
+      // }
 
       setForceSelection(true);
     }, []);
@@ -67,20 +67,20 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       }
     }, [selected]);
 
-    const hasSelectedKeyCommand = () => {
-      return state.selectedKeyCommands.includes(keyCommand);
-    };
+    // const hasSelectedKeyCommand = () => {
+    //   return state.selectedKeyCommands.includes(keyCommand);
+    // };
 
     const handleChange = (event: any) => {
       if (onChange) {
-        if (hasSelectedKeyCommand()) {
-          dispatch({
-            type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
-            payload: keyCommand,
-          });
+        // if (hasSelectedKeyCommand()) {
+        //   dispatch({
+        //     type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
+        //     payload: keyCommand,
+        //   });
 
-          value = null;
-        }
+        //   value = null;
+        // }
 
         onChange(event, value);
       }
@@ -91,10 +91,11 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
         ref={ref}
         value={value}
         onChange={handleChange}
-        selected={
-          (selected && !hasSelectedKeyCommand()) ||
-          (!selected && hasSelectedKeyCommand())
-        }
+        selected={selected}
+        // selected={
+        //   (selected && !hasSelectedKeyCommand()) ||
+        //   (!selected && hasSelectedKeyCommand())
+        // }
         {...other}
       >
         {children}
