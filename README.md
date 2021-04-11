@@ -72,7 +72,6 @@ const Example = () => {
   }
 
   const handleToggle = (_, newValue) => {
-    console.log(newValue)
     setSelected(!selected);
   }
 
