@@ -47,7 +47,7 @@ Please note that `draft-js-wysiwyg` depends on `draft-js`, `@material-ui/core` a
 
 ## Usage
 
-Here is a quick example to get you started.
+Here is a very basic example to get you started.
 
 ```jsx
 import React from 'react';
@@ -55,13 +55,12 @@ import {
   Editor,
   EditorContainer,
   EditorToolbar,
-  BlockTypeToggleButton as ToggleButton,
-  ToggleButtonGroup,
+  InlineToggleButton as ToggleButton,
 } from 'draft-js-wysiwyg';
-import { EditorState, RichUtils } from 'draft-js';
+import { EditorState } from 'draft-js';
 
 const Example = () => {
-  const [value, setValue] = React.useState('unstyled');
+  const [selected, setSelected] = React.useState(false);
   const [editorState, setEditorState] = React.useState(
     () => EditorState.createEmpty()
   );
@@ -73,11 +72,14 @@ const Example = () => {
   }
 
   const handleToggle = (_, newValue) => {
-    setValue(newValue);
+    console.log(newValue)
+    setSelected(!selected);
   }
 
   const handleClick = (_, newEditorState) => {
-    setValue(RichUtils.getCurrentBlockType(newEditorState));
+    if (newEditorState) {
+      setSelected(newEditorState.getCurrentInlineStyle().has('ITALIC'));
+    }
   }
 
   return (
@@ -86,18 +88,13 @@ const Example = () => {
       onChangeEditorState={handleChange}
     >
       <EditorToolbar>
-        <ToggleButtonGroup
-          value={value}
+        <ToggleButton
+          value="ITALIC"
           onChange={handleToggle}
-          exclusive
+          selected={selected}
         >
-          <ToggleButton value="unstyled">
-            Paragraph
-          </ToggleButton>
-          <ToggleButton value="header-one">
-            H1
-          </ToggleButton>
-        </ToggleButtonGroup>
+          Italic
+        </ToggleButton>
       </EditorToolbar>
       <Editor
         onClick={handleClick}
