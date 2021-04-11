@@ -51,7 +51,10 @@ const userStyles = makeStyles({
 });
 
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
-  ({ className, keyCommands, onChange, onClick, ...rest }: EditorProps, ref) => {
+  (
+    { className, keyCommands, onChange, onClick, ...rest }: EditorProps,
+    ref
+  ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
     const { state, dispatch } = useContext(ReduxContext);
     const classes = userStyles();

@@ -1,6 +1,11 @@
-import React, { useContext, useEffect, forwardRef, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  forwardRef,
+  useState,
+  useCallback,
+} from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
-import { ACTION_TYPES } from '../../redux/constants';
 import ReduxContext from '../ReduxContext';
 import { EditorState } from 'draft-js';
 import EditorContext from '../EditorContext';
@@ -17,6 +22,8 @@ export interface DraftToggleButtonProps
   enforce?: boolean;
   onToggle: (editorState: EditorState) => void;
   onFirstRender?: () => void;
+  onSet?: any;
+  testToggle?: any;
 }
 
 const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
@@ -28,6 +35,8 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       onChange,
       onFirstRender,
       onToggle,
+      onSet,
+      testToggle,
       selected,
       keyCommand,
       enforce,
@@ -51,6 +60,12 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
     }, []);
 
     useEffect(() => {
+      if (selected) {
+        execute();
+      }
+    }, []);
+
+    const execute = useCallback(() => {
       if (editorState) {
         setTimeout(
           () =>
@@ -65,7 +80,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
           0
         );
       }
-    }, [selected]);
+    }, [editorState, forceSelection]);
 
     // const hasSelectedKeyCommand = () => {
     //   return state.selectedKeyCommands.includes(keyCommand);
@@ -82,6 +97,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
         //   value = null;
         // }
 
+        testToggle(value, onSet, onToggle);
         onChange(event, value);
       }
     };

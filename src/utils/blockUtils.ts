@@ -9,6 +9,7 @@ import {
   AtomicBlockUtils,
   RichUtils,
 } from 'draft-js';
+const { OrderedSet } = require('immutable');
 
 /**
  * Returns collection of blocks.
@@ -260,6 +261,8 @@ export const applyInlineStyle = (
   const selection = editorState.getSelection();
   const currentStyle = editorState.getCurrentInlineStyle();
 
+  console.log('passe bien dans aplly ???????', inlineStyle);
+
   // If the selection is collapsed, toggle the specified style on or off and
   // set the result as the new inline style override. This will then be
   // used as the inline style for the next character to be inserted.
@@ -289,6 +292,25 @@ export const applyInlineStyle = (
   );
 };
 
+export const setInlineStyle = (
+  editorState: EditorState,
+  inlineStyle: string | string[]
+) => {
+  const selection = editorState.getSelection();
+
+  // If the selection is collapsed, toggle the specified style on or off and
+  // set the result as the new inline style override. This will then be
+  // used as the inline style for the next character to be inserted.
+  if (selection.isCollapsed()) {
+    return EditorState.setInlineStyleOverride(
+      editorState,
+      OrderedSet(Array.isArray(inlineStyle) ? inlineStyle: [inlineStyle])
+    );
+  }
+
+  return editorState;
+};
+
 export const removeInlineStyle = (
   editorState: EditorState,
   inlineStyle: string
@@ -300,6 +322,7 @@ export const removeInlineStyle = (
   // set the result as the new inline style override. This will then be
   // used as the inline style for the next character to be inserted.
   if (selection.isCollapsed()) {
+    console.log('passe bien dans removee collapse ???????', inlineStyle);
     return currentStyle.has(inlineStyle)
       ? EditorState.setInlineStyleOverride(
           editorState,
@@ -308,6 +331,11 @@ export const removeInlineStyle = (
       : editorState;
   }
 
+  console.log(
+    'passe bien dans removee  ???????',
+    inlineStyle,
+    currentStyle.has(inlineStyle)
+  );
   // If the style is already present for the selection range, remove it.
   // Otherwise, apply it.
   if (!currentStyle.has(inlineStyle)) {

@@ -17,10 +17,7 @@ export interface ToggleButtonMenuProps {
   openIcon?: React.ReactNode;
   closeIcon?: React.ReactNode;
   popperProps?: PopperProps;
-  toggleButtonGroupProps?: Omit<
-    ToggleButtonGroupProps,
-    'children' | 'value' | 'onChange'
-  >;
+  toggleButtonGroupProps?: Omit<ToggleButtonGroupProps, 'children'>;
   children?: React.ReactNode;
   defaultValue?: string | string[];
 }
@@ -33,7 +30,6 @@ const ToggleButtonMenu = ({
   toggleButtonGroupProps,
   children,
 }: ToggleButtonMenuProps) => {
-  const [value, setValue] = useState(defaultValue);
   const anchorRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
 
@@ -51,10 +47,6 @@ const ToggleButtonMenu = ({
     setOpen(false);
   };
 
-  const handleChange = (event: any, newValue: any) => {
-    setValue(newValue);
-  };
-
   return (
     <>
       <Button
@@ -68,7 +60,9 @@ const ToggleButtonMenu = ({
             return null;
           }
 
-          if (isValueSelected(child.props.value, value)) {
+          if (
+            isValueSelected(child.props.value, toggleButtonGroupProps?.value)
+          ) {
             return child.props.children;
           }
         })}
@@ -82,8 +76,6 @@ const ToggleButtonMenu = ({
         <Paper>
           <ClickAwayListener onClickAway={handleClose}>
             <ToggleButtonGroup
-              value={value}
-              onChange={handleChange}
               orientation="vertical"
               {...toggleButtonGroupProps}
             >
