@@ -25,6 +25,7 @@ export interface EditorProps
   keyCommands?: string[];
   keyBinding?: string[];
   onChange?(html: string): void;
+  onClick?: (event: any, editorState: EditorState | undefined) => void;
 }
 
 const userStyles = makeStyles({
@@ -50,7 +51,7 @@ const userStyles = makeStyles({
 });
 
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
-  ({ className, keyCommands, onChange, ...rest }: EditorProps, ref) => {
+  ({ className, keyCommands, onChange, onClick, ...rest }: EditorProps, ref) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
     const { state, dispatch } = useContext(ReduxContext);
     const classes = userStyles();
@@ -138,6 +139,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
           isNotEmpty() && classes.hidePlaceholder,
           classes.editor
         )}
+        onClick={(event) => onClick?.(event, editorState)}
       >
         {editorState && setEditorState && (
           <DraftEditor

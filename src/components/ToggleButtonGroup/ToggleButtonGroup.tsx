@@ -33,17 +33,6 @@ const ToggleButtonGroup = forwardRef<any, ToggleButtonGroupProps>(
     }: ToggleButtonGroupProps,
     ref
   ) => {
-    const { editorState } = useContext(EditorContext) || {};
-
-    useEffect(() => {
-      if (editorState && onChangeSelection) {
-        onChangeSelection({
-          inlineStyles: editorState.getCurrentInlineStyle().toArray(),
-          blockType: RichUtils.getCurrentBlockType(editorState),
-        })
-      }
-    }, [editorState]);
-
     return (
       <MuiToggleButtonGroup
         value={value}
