@@ -53,7 +53,6 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
 
     useEffect(() => {
       if (runFirstTime) {
-        console.log('pass la ????');
         execute();
       }
     }, []);

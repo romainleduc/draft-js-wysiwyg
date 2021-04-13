@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import { setBlockData, setBlocksData } from '../../utils';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
@@ -36,11 +36,11 @@ const TextAlignToggleButton = forwardRef<
     }: TextAlignToggleButtonProps,
     ref
   ) => {
-    const handleToggle = (editorState: EditorState): EditorState => {
+    const handleToggle = useCallback((editorState: EditorState): EditorState => {
       const contentState = editorState.getCurrentContent();
       const selectionState = editorState.getSelection();
-      const blockData = { textAlign: selected ? value : undefined };
-
+      const blockData = { textAlign: value };
+      
       if (ignoreSelection) {
         const contentBlocks = contentState.getBlocksAsArray();
 
@@ -63,7 +63,7 @@ const TextAlignToggleButton = forwardRef<
           blockData
         );
       }
-    };
+    }, [ignoreSelection]);
 
     return (
       <DraftToggleButton
