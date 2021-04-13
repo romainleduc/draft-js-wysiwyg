@@ -4,7 +4,7 @@ import {
   ToggleButtonGroupProps as MuiToggleButtonGroupProps,
 } from '@material-ui/lab';
 import EditorContext from '../EditorContext';
-import { DraftBlockType } from 'draft-js';
+import { DraftBlockType, RichUtils } from 'draft-js';
 import isValueSelected from './isValueSelected';
 
 export interface ToggleButtonGroupProps
@@ -34,22 +34,17 @@ const ToggleButtonGroup = forwardRef<any, ToggleButtonGroupProps>(
     }: ToggleButtonGroupProps,
     ref
   ) => {
-    const { editorState, setEditorState } = useContext(EditorContext) || {};
+    const { editorState } = useContext(EditorContext) || {};
 
-    const handleTestToggle = (tvalue: any, set: any, toggle: any) => {
+    const isCurrentSelected = (value: string): boolean => {
       if (!editorState) {
-        return;
+        return false;
       }
 
-      let newEditorState = editorState;
-
-      if (!exclusive || tvalue === value) {
-        newEditorState = toggle();
-      } else {
-        newEditorState = set(tvalue);
-      }
-
-      setEditorState?.(newEditorState);
+      return (
+        editorState.getCurrentInlineStyle()?.toArray().includes(value) ||
+        RichUtils.getCurrentBlockType(editorState) === value
+      );
     };
 
     return (
@@ -65,12 +60,12 @@ const ToggleButtonGroup = forwardRef<any, ToggleButtonGroupProps>(
           }
 
           return React.cloneElement(child, {
+            runFirstTime: isValueSelected(child.props.value, value),
             disableKeyboardShortcuts:
               child.props.disableKeyboardShortcuts || disableKeyboardShortcuts,
-            testToggle: handleTestToggle,
             selected:
               child.props.selected === undefined
-                ? isValueSelected(child.props.value, value)
+                ? isCurrentSelected(child.props.value)
                 : child.props.selected,
           });
         })}

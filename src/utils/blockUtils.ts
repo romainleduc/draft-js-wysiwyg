@@ -302,7 +302,7 @@ export const setInlineStyle = (
   if (selection.isCollapsed()) {
     return EditorState.setInlineStyleOverride(
       editorState,
-      OrderedSet(Array.isArray(inlineStyle) ? inlineStyle: [inlineStyle])
+      OrderedSet(Array.isArray(inlineStyle) ? inlineStyle : [inlineStyle])
     );
   }
 

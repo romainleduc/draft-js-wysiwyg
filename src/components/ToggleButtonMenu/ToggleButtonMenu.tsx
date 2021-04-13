@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Button,
   Popper,
@@ -23,7 +23,6 @@ export interface ToggleButtonMenuProps {
 }
 
 const ToggleButtonMenu = ({
-  defaultValue,
   openIcon = <ArrowDropUp />,
   closeIcon = <ArrowDropDown />,
   popperProps,
