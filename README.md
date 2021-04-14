@@ -66,14 +66,10 @@ const Example = () => {
     () => EditorState.createEmpty()
   );
 
-  const handleChange = (newEditorState) => {
-    setEditorState(newEditorState);
-  }
-
   return (
     <EditorContainer
       editorState={editorState}
-      onChangeEditorState={handleChange}
+      onChangeEditorState={setEditorState}
     >
       <EditorToolbar>
         <InlineToggleButton value="ITALIC">
