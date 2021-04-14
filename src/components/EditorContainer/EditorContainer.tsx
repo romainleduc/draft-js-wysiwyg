@@ -9,9 +9,9 @@ import { NoSsr } from '@material-ui/core';
 import ToggleContext from '../ToggleContext/ToggleContext';
 
 export interface EditorContainerProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   editorState: EditorState;
-  onChangeEditorState(editorState: EditorState): void;
+  onChange(editorState: EditorState): void;
   noSsr?: boolean;
 }
 
@@ -28,7 +28,7 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
     {
       className,
       editorState,
-      onChangeEditorState,
+      onChange,
       children,
       noSsr,
       ...rest
@@ -45,7 +45,7 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
           <EditorContext.Provider
             value={{
               editorState,
-              setEditorState: onChangeEditorState,
+              setEditorState: onChange,
             }}
           >
             <ToggleContext.Provider

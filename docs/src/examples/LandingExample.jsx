@@ -331,7 +331,7 @@ const LandingExample = () => {
     <EditorContainer
       noSsr
       editorState={editorState}
-      onChangeEditorState={(newEditorState) => {
+      onChange={(newEditorState) => {
         setEditorState(newEditorState);
       }}
     >

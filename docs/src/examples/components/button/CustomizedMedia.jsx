@@ -188,7 +188,7 @@ const BasicExample = () => {
   return (
     <EditorContainer
       editorState={editorState}
-      onChangeEditorState={handleChange}
+      onChange={handleChange}
     >
       <EditorToolbar>
         <IconButton onClick={handleClick}>

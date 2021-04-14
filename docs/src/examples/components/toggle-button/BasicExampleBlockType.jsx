@@ -21,7 +21,7 @@ const BasicExample = () => {
   return (
     <EditorContainer
       editorState={editorState}
-      onChangeEditorState={(newEditorState) => {
+      onChange={(newEditorState) => {
         setEditorState(newEditorState);
       }}
     >

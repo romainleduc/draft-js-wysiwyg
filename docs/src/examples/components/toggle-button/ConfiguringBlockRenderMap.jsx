@@ -22,9 +22,7 @@ const ConfiguringBlockRenderMap = () => {
   return (
     <EditorContainer
       editorState={editorState}
-      onChangeEditorState={(newEditorState) => {
-        setEditorState(newEditorState);
-      }}
+      onChange={setEditorState}
     >
       <EditorToolbar>
         <ToggleButtonGroup

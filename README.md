@@ -69,7 +69,7 @@ const Example = () => {
   return (
     <EditorContainer
       editorState={editorState}
-      onChangeEditorState={setEditorState}
+      onChange={setEditorState}
     >
       <EditorToolbar>
         <InlineToggleButton value="ITALIC">
