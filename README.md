@@ -52,33 +52,22 @@ Here is a very basic example to get you started.
 ```jsx
 import React from 'react';
 import {
-  Editor,
   EditorContainer,
-  EditorToolbar,
-  InlineToggleButton as ToggleButton,
+  Editor,
+  InlineToggleButton,
+  EditorToolbar
 } from 'draft-js-wysiwyg';
+import { FormatItalic } from '@material-ui/icons';
 import { EditorState } from 'draft-js';
+import 'draft-js/dist/Draft.css';
 
 const Example = () => {
-  const [selected, setSelected] = React.useState(false);
   const [editorState, setEditorState] = React.useState(
     () => EditorState.createEmpty()
   );
 
   const handleChange = (newEditorState) => {
-    if (newEditorState) {
-      setEditorState(newEditorState);
-    }
-  }
-
-  const handleToggle = (_, newValue) => {
-    setSelected(!selected);
-  }
-
-  const handleClick = (_, newEditorState) => {
-    if (newEditorState) {
-      setSelected(newEditorState.getCurrentInlineStyle().has('ITALIC'));
-    }
+    setEditorState(newEditorState);
   }
 
   return (
@@ -87,18 +76,11 @@ const Example = () => {
       onChangeEditorState={handleChange}
     >
       <EditorToolbar>
-        <ToggleButton
-          value="ITALIC"
-          onChange={handleToggle}
-          selected={selected}
-        >
-          Italic
-        </ToggleButton>
+        <InlineToggleButton value="ITALIC">
+          <FormatItalic />
+        </InlineToggleButton>
       </EditorToolbar>
-      <Editor
-        onClick={handleClick}
-        placeholder='Enter some text..'
-      />
+      <Editor placeholder='Enter some text..' />
     </EditorContainer>
   );
 }
