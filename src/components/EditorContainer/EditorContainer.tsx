@@ -1,4 +1,4 @@
-import React, { forwardRef, useReducer } from 'react';
+import React, { forwardRef, useReducer, useState } from 'react';
 import { EditorState } from 'draft-js';
 import EditorContext from '../EditorContext/EditorContext';
 import clsx from 'clsx';
@@ -6,6 +6,7 @@ import keyCommandsReducer from '../../redux/reducers/keyCommandsReducer';
 import ReduxContext from '../ReduxContext';
 import { initialState } from '../../redux/reducers/keyCommandsReducer';
 import { NoSsr } from '@material-ui/core';
+import ToggleContext from '../ToggleContext/ToggleContext';
 
 export interface EditorContainerProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -35,6 +36,8 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
     ref
   ) => {
     const [state, dispatch] = useReducer(keyCommandsReducer, initialState);
+    const [inlineStyles, setInlineStyles] = useState<string[]>([]);
+    const [blockType, setBlockType] = useState<string | null>(null);
 
     return (
       <RenderWithPossibleSsr noSsr={noSsr}>
@@ -45,6 +48,14 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
               setEditorState: onChangeEditorState,
             }}
           >
+            <ToggleContext.Provider
+              value={{
+                inlineStyles,
+                setInlineStyles,
+                blockType,
+                setBlockType
+              }}
+            >
             <div
               ref={ref}
               {...rest}
@@ -52,6 +63,7 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
             >
               {children}
             </div>
+            </ToggleContext.Provider>
           </EditorContext.Provider>
         </ReduxContext.Provider>
       </RenderWithPossibleSsr>

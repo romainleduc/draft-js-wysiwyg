@@ -1,7 +1,8 @@
-import React, { forwardRef, useCallback } from 'react';
+import React, { forwardRef, useCallback, useContext } from 'react';
 import { EditorState, RichUtils } from 'draft-js';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
+import ToggleContext from '../ToggleContext/ToggleContext';
 
 export interface InlineToggleButtonProps
   extends Omit<ToggleButtonProps, 'value'> {
@@ -22,17 +23,21 @@ const InlineToggleButton = forwardRef<
   HTMLButtonElement,
   InlineToggleButtonProps
 >(({ value, selected, children, ...rest }: InlineToggleButtonProps, ref) => {
+  const { inlineStyles, setInlineStyles } = useContext(ToggleContext);
+
   const handleToggle = useCallback(
     (editorState: EditorState): EditorState => {
-      return RichUtils.toggleInlineStyle(editorState, value);
+      const newEditorState = RichUtils.toggleInlineStyle(editorState, value);
+      setInlineStyles(newEditorState.getCurrentInlineStyle().toArray());
+      return newEditorState;
     },
-    [value]
+    [inlineStyles, value]
   );
 
   return (
     <DraftToggleButton
       ref={ref}
-      selected={selected}
+      selected={inlineStyles.includes(value)}
       onToggle={handleToggle}
       keyCommand={value.toLowerCase()}
       value={value}

@@ -6,7 +6,7 @@ import {
   RichUtils,
   DraftHandleValue,
 } from 'draft-js';
-import { indentSelection, mergeBlockData, draftToHtml } from '../../utils';
+import { indentSelection, mergeBlockData, draftToHtml, arraysEqual } from '../../utils';
 import EditorContext from '../EditorContext';
 import { makeStyles } from '@material-ui/core';
 import ReduxContext from '../ReduxContext';
@@ -18,6 +18,7 @@ import {
 import { IndentCommand } from '../IndentDraftButton/IndentDraftButton';
 import clsx from 'clsx';
 import { ACTION_TYPES } from '../../redux/constants';
+import ToggleContext from '../ToggleContext/ToggleContext';
 
 export interface EditorProps
   extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -56,6 +57,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     ref
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
+    const { inlineStyles, setInlineStyles, blockType, setBlockType } = useContext(ToggleContext);
     const { state, dispatch } = useContext(ReduxContext);
     const classes = userStyles();
 
@@ -76,6 +78,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       command: string,
       editorState: EditorState
     ): DraftHandleValue => {
+      console.log('passe dans handle key command ?')
       if (
         keyCommands?.includes(command) ||
         state.keyCommands.includes(command)
@@ -126,12 +129,24 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       return 'not-handled';
     };
 
-    const handleChange = (editorState: EditorState) => {
+    const handleChange = (newEditorState: EditorState) => {
       if (onChange) {
-        onChange(draftToHtml(editorState.getCurrentContent()));
+        onChange(draftToHtml(newEditorState.getCurrentContent()));
       }
 
-      setEditorState?.(editorState);
+      const currentInlineStyle = newEditorState.getCurrentInlineStyle().toArray();
+
+      if (!arraysEqual(inlineStyles, currentInlineStyle)) {
+        setInlineStyles(currentInlineStyle);
+      }
+
+      const currentBlockType = RichUtils.getCurrentBlockType(newEditorState);
+
+      if (blockType !== currentBlockType) {
+        setBlockType(currentBlockType);
+      }
+
+      setEditorState?.(newEditorState);
     };
 
     return (
