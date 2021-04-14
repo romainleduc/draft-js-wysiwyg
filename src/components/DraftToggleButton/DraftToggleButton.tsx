@@ -82,7 +82,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
     // };
 
     const handleChange = (event: any) => {
-      if (editorState && onChange) {
+      if (editorState) {
         // if (hasSelectedKeyCommand()) {
         //   dispatch({
         //     type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
@@ -103,7 +103,9 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
           )
         );
 
-        onChange(event, value);
+        if (onChange) {
+          onChange(event, value);
+        }
       }
     };
 
