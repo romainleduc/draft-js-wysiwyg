@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  forwardRef,
-  useState,
-  useCallback,
-} from 'react';
+import React, { useContext, useEffect, forwardRef, useCallback } from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import { EditorState } from 'draft-js';
 import EditorContext from '../EditorContext';
@@ -33,11 +27,11 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       runFirstTime,
       selected,
       keyCommand,
+      onMouseDown,
       ...other
     }: DraftToggleButtonProps,
     ref
   ) => {
-    const [forceSelection, setForceSelection] = useState(false);
     const { editorState, setEditorState } = useContext(EditorContext) || {};
 
     useEffect(() => {
@@ -47,8 +41,6 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       //     payload: keyCommand,
       //   });
       // }
-
-      setForceSelection(true);
     }, []);
 
     useEffect(() => {
@@ -58,62 +50,40 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
     }, []);
 
     const execute = useCallback(() => {
-      console.log(forceSelection);
       if (editorState) {
-        setTimeout(
-          () =>
-            setEditorState?.(
-              onToggle(
-                forceSelection
-                  ? EditorState.forceSelection(
-                      editorState,
-                      editorState.getSelection()
-                    )
-                  : editorState
-              )
-            ),
-          1
-        );
+        setTimeout(() => setEditorState?.(onToggle(editorState)), 1);
       }
-    }, [editorState, forceSelection]);
+    }, [editorState]);
 
     // const hasSelectedKeyCommand = () => {
     //   return state.selectedKeyCommands.includes(keyCommand);
     // };
 
-    const handleChange = (event: any) => {
+    const handleMouseDown = (event: any) => {
       if (editorState) {
-        // if (hasSelectedKeyCommand()) {
-        //   dispatch({
-        //     type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
-        //     payload: keyCommand,
-        //   });
+        event.preventDefault();
 
-        //   value = null;
-        // }
-
-        setEditorState?.(
-          onToggle(
-            forceSelection
-              ? EditorState.forceSelection(
-                  editorState,
-                  editorState.getSelection()
-                )
-              : editorState
-          )
-        );
-
-        if (onChange) {
-          onChange(event, value);
+        if (onMouseDown) {
+          onMouseDown(event);
         }
+
+        setEditorState?.(onToggle(editorState));
       }
+      // if (hasSelectedKeyCommand()) {
+      //   dispatch({
+      //     type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
+      //     payload: keyCommand,
+      //   });
+
+      //   value = null;
+      // }
     };
 
     return (
       <ToggleButton
         ref={ref}
         value={value}
-        onChange={handleChange}
+        onMouseDown={handleMouseDown}
         selected={selected}
         {...other}
       >
