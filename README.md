@@ -71,6 +71,12 @@ const App = () => {
     () => EditorState.createEmpty()
   );
 
+  const editor = React.useRef(null);
+
+  React.useEffect(() => {
+    editor.current.focus();
+  }, []);
+
   return (
     <EditorContainer
       editorState={editorState}
@@ -86,7 +92,7 @@ const App = () => {
           </InlineToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
-      <Editor placeholder='Enter some text..' />
+      <Editor ref={editor} placeholder='Enter some text..' />
     </EditorContainer>
   );
 }
