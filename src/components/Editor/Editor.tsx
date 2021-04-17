@@ -6,7 +6,12 @@ import {
   RichUtils,
   DraftHandleValue,
 } from 'draft-js';
-import { indentSelection, mergeBlockData, draftToHtml, arraysEqual } from '../../utils';
+import {
+  indentSelection,
+  mergeBlockData,
+  draftToHtml,
+  arraysEqual,
+} from '../../utils';
 import EditorContext from '../EditorContext';
 import { makeStyles } from '@material-ui/core';
 import ReduxContext from '../ReduxContext';
@@ -57,7 +62,12 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     ref
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
-    const { inlineStyles, setInlineStyles, blockType, setBlockType } = useContext(ToggleContext);
+    const {
+      inlineStyles,
+      setInlineStyles,
+      blockType,
+      setBlockType,
+    } = useContext(ToggleContext);
     const { state, dispatch } = useContext(ReduxContext);
     const classes = userStyles();
 
@@ -78,7 +88,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       command: string,
       editorState: EditorState
     ): DraftHandleValue => {
-      console.log('passe dans handle key command ?')
+      console.log('passe dans handle key command ?');
       if (
         keyCommands?.includes(command) ||
         state.keyCommands.includes(command)
@@ -134,7 +144,9 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         onChange(draftToHtml(newEditorState.getCurrentContent()));
       }
 
-      const currentInlineStyle = newEditorState.getCurrentInlineStyle().toArray();
+      const currentInlineStyle = newEditorState
+        .getCurrentInlineStyle()
+        .toArray();
 
       if (!arraysEqual(inlineStyles, currentInlineStyle)) {
         setInlineStyles(currentInlineStyle);

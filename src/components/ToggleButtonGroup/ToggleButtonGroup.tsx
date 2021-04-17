@@ -1,54 +1,89 @@
-import React, { forwardRef, useContext, useEffect } from 'react';
-import {
-  ToggleButtonGroup as MuiToggleButtonGroup,
-  ToggleButtonGroupProps as MuiToggleButtonGroupProps,
-} from '@material-ui/lab';
-import { DraftBlockType } from 'draft-js';
-import isValueSelected from './isValueSelected';
-import ToggleContext from '../ToggleContext/ToggleContext';
+import React, { forwardRef } from 'react';
+import { ToggleButtonGroupProps as MuiToggleButtonGroupProps } from '@material-ui/lab';
+import { isFragment } from 'react-is';
+import { makeStyles, Theme } from '@material-ui/core';
+import { capitalize } from '@material-ui/core/utils';
+import clsx from 'clsx';
 
 export interface ToggleButtonGroupProps
-  extends Omit<MuiToggleButtonGroupProps, 'defaultValue'> {
+  extends Omit<
+    MuiToggleButtonGroupProps,
+    'defaultValue' | 'onChange' | 'value' | 'exclusive'
+  > {
   /**
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
    */
   disableKeyboardShortcuts?: boolean;
   defaultValue?: string | string[];
-  onChangeSelection?: (newValue: {
-    inlineStyles: string[];
-    blockType: DraftBlockType;
-  }) => void;
 }
 
-const ToggleButtonGroup = forwardRef<any, ToggleButtonGroupProps>(
+export const useStyles = makeStyles((theme: Theme) => ({
+  /* Styles applied to the root element. */
+  root: {
+    display: 'inline-flex',
+    borderRadius: theme.shape.borderRadius,
+  },
+  /* Styles applied to the root element if `orientation="vertical"`. */
+  vertical: {
+    flexDirection: 'column',
+  },
+  /* Styles applied to the children. */
+  grouped: {},
+  /* Styles applied to the children if `orientation="horizontal"`. */
+  groupedHorizontal: {
+    '&:not(:first-child)': {
+      marginLeft: -1,
+      borderLeft: '1px solid transparent',
+      borderTopLeftRadius: 0,
+      borderBottomLeftRadius: 0,
+    },
+    '&:not(:last-child)': {
+      borderTopRightRadius: 0,
+      borderBottomRightRadius: 0,
+    },
+  },
+  /* Styles applied to the children if `orientation="vertical"`. */
+  groupedVertical: {
+    '&:not(:first-child)': {
+      marginTop: -1,
+      borderTop: '1px solid transparent',
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+    },
+    '&:not(:last-child)': {
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+    },
+  },
+}));
+
+const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupProps>(
   (
     {
-      onChangeSelection,
-      value,
-      defaultValue,
       children,
+      defaultValue,
       disableKeyboardShortcuts,
-      exclusive,
+      className,
+      orientation = 'horizontal',
+      size = 'medium',
       ...other
     }: ToggleButtonGroupProps,
     ref
   ) => {
-    const { inlineStyles, blockType } = useContext(ToggleContext);
-
-    useEffect(() => {
-      console.log('inlineStyles a changé', inlineStyles);
-    }, [inlineStyles])
-
-    useEffect(() => {
-      console.log('blockTypes a changé', blockType);
-    }, [blockType])
+    const classes = useStyles();
 
     return (
-      <MuiToggleButtonGroup
-        exclusive={exclusive}
-        value={value}
-        ref={ref}
+      <div
+        role="group"
+        className={clsx(
+          classes.root,
+          {
+            [classes.vertical]: orientation === 'vertical',
+          },
+          className
+        )}
+        ref={ref as any}
         {...other}
       >
         {React.Children.map(children, (child) => {
@@ -56,13 +91,29 @@ const ToggleButtonGroup = forwardRef<any, ToggleButtonGroupProps>(
             return null;
           }
 
+          if (process.env.NODE_ENV !== 'production') {
+            if (isFragment(child)) {
+              console.error(
+                [
+                  "Material-UI: The ToggleButtonGroup component doesn't accept a Fragment as a child.",
+                  'Consider providing an array instead.',
+                ].join('\n')
+              );
+            }
+          }
+
           return React.cloneElement(child, {
-            runFirstTime: isValueSelected(child.props.value, value),
+            className: clsx(
+              classes.grouped,
+              classes[`grouped${capitalize(orientation)}`],
+              child.props.className
+            ),
             disableKeyboardShortcuts:
               child.props.disableKeyboardShortcuts || disableKeyboardShortcuts,
+            size: child.props.size || size,
           });
         })}
-      </MuiToggleButtonGroup>
+      </div>
     );
   }
 );

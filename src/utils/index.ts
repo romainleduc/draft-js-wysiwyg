@@ -12,9 +12,9 @@ export const arraysEqual = (a: string[], b: string[]): boolean => {
   // Please note that calling sort on an array will modify that array.
   // you might want to clone your array first.
 
-  for (var i = 0; i < a.length; ++i) {
+  for (let i = 0; i < a.length; ++i) {
     if (a[i] !== b[i]) return false;
   }
 
   return true;
-}
+};

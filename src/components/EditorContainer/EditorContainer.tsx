@@ -53,16 +53,16 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
                 inlineStyles,
                 setInlineStyles,
                 blockType,
-                setBlockType
+                setBlockType,
               }}
             >
-            <div
-              ref={ref}
-              {...rest}
-              className={clsx('draft-container', className)}
-            >
-              {children}
-            </div>
+              <div
+                ref={ref}
+                {...rest}
+                className={clsx('draft-container', className)}
+              >
+                {children}
+              </div>
             </ToggleContext.Provider>
           </EditorContext.Provider>
         </ReduxContext.Provider>

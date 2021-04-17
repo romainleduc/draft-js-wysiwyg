@@ -36,34 +36,37 @@ const TextAlignToggleButton = forwardRef<
     }: TextAlignToggleButtonProps,
     ref
   ) => {
-    const handleToggle = useCallback((editorState: EditorState): EditorState => {
-      const contentState = editorState.getCurrentContent();
-      const selectionState = editorState.getSelection();
-      const blockData = { textAlign: value };
-      
-      if (ignoreSelection) {
-        const contentBlocks = contentState.getBlocksAsArray();
+    const handleToggle = useCallback(
+      (editorState: EditorState): EditorState => {
+        const contentState = editorState.getCurrentContent();
+        const selectionState = editorState.getSelection();
+        const blockData = { textAlign: value };
 
-        if (!contentBlocks.length) {
-          return editorState;
+        if (ignoreSelection) {
+          const contentBlocks = contentState.getBlocksAsArray();
+
+          if (!contentBlocks.length) {
+            return editorState;
+          }
+
+          return setBlocksData(
+            editorState,
+            contentState,
+            contentBlocks[0].getKey(),
+            contentBlocks[contentBlocks.length - 1].getKey(),
+            blockData
+          );
+        } else {
+          return setBlockData(
+            editorState,
+            contentState,
+            selectionState,
+            blockData
+          );
         }
-
-        return setBlocksData(
-          editorState,
-          contentState,
-          contentBlocks[0].getKey(),
-          contentBlocks[contentBlocks.length - 1].getKey(),
-          blockData
-        );
-      } else {
-        return setBlockData(
-          editorState,
-          contentState,
-          selectionState,
-          blockData
-        );
-      }
-    }, [ignoreSelection]);
+      },
+      [ignoreSelection]
+    );
 
     return (
       <DraftToggleButton

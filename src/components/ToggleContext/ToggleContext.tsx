@@ -11,7 +11,7 @@ const ToggleContext = React.createContext<ToggleContextType>({
   inlineStyles: [],
   setInlineStyles: () => {},
   blockType: null,
-  setBlockType: () => {}
+  setBlockType: () => {},
 });
 
 export default ToggleContext;
