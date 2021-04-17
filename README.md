@@ -55,9 +55,10 @@ import {
   EditorContainer,
   Editor,
   InlineToggleButton,
-  EditorToolbar
+  EditorToolbar,
+  ToggleButtonGroup,
 } from 'draft-js-wysiwyg';
-import { FormatItalic } from '@material-ui/icons';
+import { FormatBold, FormatItalic } from '@material-ui/icons';
 import { EditorState } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 
@@ -72,9 +73,14 @@ const Example = () => {
       onChange={setEditorState}
     >
       <EditorToolbar>
-        <InlineToggleButton value="ITALIC">
-          <FormatItalic />
-        </InlineToggleButton>
+        <ToggleButtonGroup size="small">
+          <InlineToggleButton value="BOLD">
+            <FormatBold />
+          </InlineToggleButton>
+          <InlineToggleButton value="ITALIC">
+            <FormatItalic />
+          </InlineToggleButton>
+        </ToggleButtonGroup>
       </EditorToolbar>
       <Editor placeholder='Enter some text..' />
     </EditorContainer>
