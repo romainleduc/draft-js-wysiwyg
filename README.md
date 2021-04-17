@@ -92,7 +92,7 @@ const App = () => {
           </InlineToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
-      <Editor ref={editor} placeholder='Enter some text..' />
+      <Editor ref={editor} placeholder="Enter some text.." />
     </EditorContainer>
   );
 }
@@ -104,6 +104,10 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
+
+You can see this live and interactive demo:
+
+[![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/usage-zlf3t)
 
 ## Documentation
 
