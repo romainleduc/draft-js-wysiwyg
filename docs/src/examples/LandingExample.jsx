@@ -316,7 +316,6 @@ const LandingExample = () => {
       </EditorToolbar>
       <Editor
         className={classes.editor}
-        textAlignment={alignment}
         placeholder='Enter some text..'
       />
     </EditorContainer>
