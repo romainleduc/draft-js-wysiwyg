@@ -51,6 +51,7 @@ Here is a very basic example to get you started.
 
 ```jsx
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {
   EditorContainer,
   Editor,
@@ -58,11 +59,14 @@ import {
   EditorToolbar,
   ToggleButtonGroup,
 } from 'draft-js-wysiwyg';
-import { FormatBold, FormatItalic } from '@material-ui/icons';
 import { EditorState } from 'draft-js';
+import {
+  FormatBold as FormatBoldIcon,
+  FormatItalic as FormatItalicIcon
+} from '@material-ui/icons';
 import 'draft-js/dist/Draft.css';
 
-const Example = () => {
+const App = () => {
   const [editorState, setEditorState] = React.useState(
     () => EditorState.createEmpty()
   );
@@ -75,10 +79,10 @@ const Example = () => {
       <EditorToolbar>
         <ToggleButtonGroup size="small">
           <InlineToggleButton value="BOLD">
-            <FormatBold />
+            <FormatBoldIcon />
           </InlineToggleButton>
           <InlineToggleButton value="ITALIC">
-            <FormatItalic />
+            <FormatItalicIcon />
           </InlineToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
@@ -87,7 +91,12 @@ const Example = () => {
   );
 }
 
-export default Example;
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 ```
 
 ## Documentation
