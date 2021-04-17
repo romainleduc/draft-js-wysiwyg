@@ -113,9 +113,7 @@ const Image = () => {
   return (
     <EditorContainer
       editorState={editorState}
-      onChange={(newEditorState) => {
-        setEditorState(newEditorState);
-      }}
+      onChange={setEditorState}
     >
       <EditorToolbar>
         <IconButton onClick={handleClick}>

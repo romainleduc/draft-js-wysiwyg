@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ToggleButtonGroup } from '@material-ui/lab';
 import {
+  ToggleButtonGroup,
   EditorContainer,
   Editor,
   EditorToolbar,
@@ -17,45 +17,35 @@ const AlignSelection = () => {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty()
   );
-  const [alignment, setAlignment] = useState('left');
-
-  const handleAlignment = (_, newAlignment) => {
-    setAlignment(newAlignment);
-  };
 
   return (
     <EditorContainer
       editorState={editorState}
-      onChange={(newEditorState) => {
-        setEditorState(newEditorState);
-      }}
+      onChange={setEditorState}
     >
       <EditorToolbar>
-        <ToggleButtonGroup
-          exclusive
-          value={alignment}
-          onChange={handleAlignment}
-          size='small'
-        >
-          {[
-            ['left', <FormatAlignLeft />],
-            ['center', <FormatAlignCenter />],
-            ['right', <FormatAlignRight />],
-          ].map(inline =>
-            <TextAlignToggleButton
-              ignoreSelection
-              key={`align-${inline[0]}`}
-              value={inline[0]}
-            >
-              {inline[1]}
-            </TextAlignToggleButton>
-          )}
+        <ToggleButtonGroup size='small'>
+          <TextAlignToggleButton
+            ignoreSelection
+            value="left"
+          >
+            <FormatAlignLeft />
+          </TextAlignToggleButton>
+          <TextAlignToggleButton
+            ignoreSelection
+            value="center"
+          >
+            <FormatAlignCenter />
+          </TextAlignToggleButton>
+          <TextAlignToggleButton
+            ignoreSelection
+            value="right"
+          >
+            <FormatAlignRight />
+          </TextAlignToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
-      <Editor
-        textAlignment={alignment}
-        placeholder='Enter some text..'
-      />
+      <Editor placeholder='Enter some text..' />
     </EditorContainer>
   );
 };
