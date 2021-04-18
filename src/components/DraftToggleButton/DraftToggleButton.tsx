@@ -90,9 +90,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
           onClick(event);
         }
 
-        if (!editorState.getSelection().isCollapsed()) {
-          executeToggle();
-        }
+        executeToggle();
       }
     };
 
@@ -102,10 +100,6 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
 
         if (onMouseDown) {
           onMouseDown(event);
-        }
-
-        if (editorState.getSelection().isCollapsed()) {
-          executeToggle();
         }
       }
     };

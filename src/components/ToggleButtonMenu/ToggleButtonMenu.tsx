@@ -91,7 +91,7 @@ const ToggleButtonMenu = ({
               {React.Children.map(children, (child: any, key) => {
                 if (child) {
                   return React.cloneElement(child, {
-                    onMouseDown: handleClick,
+                    onClick: handleClick,
                     forceSelection: true,
                   });
                 }
