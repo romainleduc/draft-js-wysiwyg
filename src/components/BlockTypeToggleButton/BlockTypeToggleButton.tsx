@@ -2,7 +2,7 @@ import React, { forwardRef, useCallback, useContext } from 'react';
 import { EditorState, RichUtils } from 'draft-js';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
-import ToggleContext from '../ToggleContext/ToggleContext';
+import EditorContext from '../EditorContext';
 
 export interface BlockTypeToggleButtonProps
   extends Omit<ToggleButtonProps, 'value'> {
@@ -22,15 +22,13 @@ const BlockTypeToggleButton = forwardRef<
   HTMLButtonElement,
   BlockTypeToggleButtonProps
 >(({ value, selected, children, ...rest }: BlockTypeToggleButtonProps, ref) => {
-  const { blockType, setBlockType } = useContext(ToggleContext);
+  const { editorState, setEditorState } = useContext(EditorContext) || {};
 
   const handleToggle = useCallback(
-    (editorState: EditorState): EditorState => {
-      const newEditorState = RichUtils.toggleBlockType(editorState, value);
-      setBlockType(RichUtils.getCurrentBlockType(newEditorState));
-      return newEditorState;
+    (newEditorState: EditorState): void => {
+      setEditorState?.(RichUtils.toggleBlockType(newEditorState, value));
     },
-    [blockType, value]
+    [value]
   );
 
   return (
@@ -38,7 +36,9 @@ const BlockTypeToggleButton = forwardRef<
       ref={ref}
       value={value}
       onToggle={handleToggle}
-      selected={value === blockType}
+      selected={
+        editorState && value === RichUtils.getCurrentBlockType(editorState)
+      }
       keyCommand={value}
       {...rest}
     >

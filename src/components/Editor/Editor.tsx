@@ -6,12 +6,7 @@ import {
   RichUtils,
   DraftHandleValue,
 } from 'draft-js';
-import {
-  indentSelection,
-  mergeBlockData,
-  draftToHtml,
-  arraysEqual,
-} from '../../utils';
+import { indentSelection, mergeBlockData, draftToHtml } from '../../utils';
 import EditorContext from '../EditorContext';
 import { makeStyles } from '@material-ui/core';
 import ReduxContext from '../ReduxContext';
@@ -23,7 +18,6 @@ import {
 import { IndentCommand } from '../IndentDraftButton/IndentDraftButton';
 import clsx from 'clsx';
 import { ACTION_TYPES } from '../../redux/constants';
-import ToggleContext from '../ToggleContext/ToggleContext';
 
 export interface EditorProps
   extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -62,12 +56,6 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     ref
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
-    const {
-      inlineStyles,
-      setInlineStyles,
-      blockType,
-      setBlockType,
-    } = useContext(ToggleContext);
     const { state, dispatch } = useContext(ReduxContext);
     const classes = userStyles();
 
@@ -142,20 +130,6 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     const handleChange = (newEditorState: EditorState) => {
       if (onChange) {
         onChange(draftToHtml(newEditorState.getCurrentContent()));
-      }
-
-      const currentInlineStyle = newEditorState
-        .getCurrentInlineStyle()
-        .toArray();
-
-      if (!arraysEqual(inlineStyles, currentInlineStyle)) {
-        setInlineStyles(currentInlineStyle);
-      }
-
-      const currentBlockType = RichUtils.getCurrentBlockType(newEditorState);
-
-      if (blockType !== currentBlockType) {
-        setBlockType(currentBlockType);
       }
 
       setEditorState?.(newEditorState);

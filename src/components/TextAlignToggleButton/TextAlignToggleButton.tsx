@@ -1,8 +1,9 @@
-import React, { forwardRef, useCallback } from 'react';
+import React, { forwardRef, useCallback, useContext } from 'react';
 import { setBlockData, setBlocksData } from '../../utils';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
 import { EditorState } from 'draft-js';
+import EditorContext from '../EditorContext';
 
 export interface TextAlignToggleButtonProps
   extends Omit<ToggleButtonProps, 'value'> {
@@ -36,32 +37,38 @@ const TextAlignToggleButton = forwardRef<
     }: TextAlignToggleButtonProps,
     ref
   ) => {
+    const { editorState, setEditorState } = useContext(EditorContext) || {};
+
     const handleToggle = useCallback(
-      (editorState: EditorState): EditorState => {
-        const contentState = editorState.getCurrentContent();
-        const selectionState = editorState.getSelection();
+      (newEditorState: EditorState): void => {
+        const contentState = newEditorState.getCurrentContent();
+        const selectionState = newEditorState.getSelection();
         const blockData = { textAlign: value };
 
         if (ignoreSelection) {
           const contentBlocks = contentState.getBlocksAsArray();
 
           if (!contentBlocks.length) {
-            return editorState;
+            return;
           }
 
-          return setBlocksData(
-            editorState,
-            contentState,
-            contentBlocks[0].getKey(),
-            contentBlocks[contentBlocks.length - 1].getKey(),
-            blockData
+          setEditorState?.(
+            setBlocksData(
+              newEditorState,
+              contentState,
+              contentBlocks[0].getKey(),
+              contentBlocks[contentBlocks.length - 1].getKey(),
+              blockData
+            )
           );
         } else {
-          return setBlockData(
-            editorState,
-            contentState,
-            selectionState,
-            blockData
+          setEditorState?.(
+            setBlockData(
+              newEditorState,
+              contentState,
+              selectionState,
+              blockData
+            )
           );
         }
       },

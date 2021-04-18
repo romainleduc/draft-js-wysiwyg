@@ -12,7 +12,7 @@ export interface DraftToggleButtonProps
   disableKeyboardShortcuts?: boolean;
   keyCommand: string;
   onChange?: any;
-  onToggle: (editorState: EditorState) => EditorState;
+  onToggle: (editorState: EditorState) => void;
   runFirstTime?: boolean;
 }
 
@@ -51,7 +51,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
 
     const execute = useCallback(() => {
       if (editorState) {
-        setTimeout(() => setEditorState?.(onToggle(editorState)), 1);
+        setTimeout(() => onToggle(editorState), 1);
       }
     }, [editorState]);
 
@@ -67,7 +67,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
           onMouseDown(event);
         }
 
-        setEditorState?.(onToggle(editorState));
+        onToggle(editorState);
       }
       // if (hasSelectedKeyCommand()) {
       //   dispatch({
