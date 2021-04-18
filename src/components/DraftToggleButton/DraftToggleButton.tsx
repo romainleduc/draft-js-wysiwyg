@@ -30,6 +30,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       keyCommand,
       forceSelection = false,
       onMouseDown,
+      onClick,
       ...other
     }: DraftToggleButtonProps,
     ref
@@ -72,6 +73,29 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
     //   return state.selectedKeyCommands.includes(keyCommand);
     // };
 
+    // if (hasSelectedKeyCommand()) {
+    //   dispatch({
+    //     type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
+    //     payload: keyCommand,
+    //   });
+
+    //   value = null;
+    // }
+
+    const handleClick = (event: any) => {
+      if (editorState) {
+        event.preventDefault();
+
+        if (onClick) {
+          onClick(event);
+        }
+
+        if (!editorState.getSelection().isCollapsed()) {
+          executeToggle();
+        }
+      }
+    };
+
     const handleMouseDown = (event: any) => {
       if (editorState) {
         event.preventDefault();
@@ -80,22 +104,17 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
           onMouseDown(event);
         }
 
-        executeToggle();
+        if (editorState.getSelection().isCollapsed()) {
+          executeToggle();
+        }
       }
-      // if (hasSelectedKeyCommand()) {
-      //   dispatch({
-      //     type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
-      //     payload: keyCommand,
-      //   });
-
-      //   value = null;
-      // }
     };
 
     return (
       <ToggleButton
         ref={ref}
         value={value}
+        onClick={handleClick}
         onMouseDown={handleMouseDown}
         selected={selected}
         {...other}
