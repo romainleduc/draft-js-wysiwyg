@@ -14,6 +14,7 @@ export interface DraftToggleButtonProps
   onChange?: any;
   onToggle: (editorState: EditorState) => void;
   runFirstTime?: boolean;
+  forceSelection?: boolean;
 }
 
 const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
@@ -27,6 +28,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       runFirstTime,
       selected,
       keyCommand,
+      forceSelection = false,
       onMouseDown,
       ...other
     }: DraftToggleButtonProps,
@@ -67,7 +69,18 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
           onMouseDown(event);
         }
 
-        setTimeout(() => onToggle(editorState), 1);
+        setTimeout(
+          () =>
+            onToggle(
+              forceSelection
+                ? EditorState.forceSelection(
+                    editorState,
+                    editorState.getSelection()
+                  )
+                : editorState
+            ),
+          1
+        );
       }
       // if (hasSelectedKeyCommand()) {
       //   dispatch({
