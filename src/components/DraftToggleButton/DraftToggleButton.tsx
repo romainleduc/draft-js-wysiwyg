@@ -67,7 +67,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
           onMouseDown(event);
         }
 
-        onToggle(editorState);
+        setTimeout(() => onToggle(editorState), 1);
       }
       // if (hasSelectedKeyCommand()) {
       //   dispatch({

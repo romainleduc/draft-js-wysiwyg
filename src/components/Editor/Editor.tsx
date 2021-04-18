@@ -76,7 +76,6 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       command: string,
       editorState: EditorState
     ): DraftHandleValue => {
-      console.log('passe dans handle key command ?');
       if (
         keyCommands?.includes(command) ||
         state.keyCommands.includes(command)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Button,
   Popper,
@@ -11,29 +11,33 @@ import {
   ToggleButtonGroup,
   ToggleButtonGroupProps,
 } from '../ToggleButtonGroup';
-import isValueSelected from '../ToggleButtonGroup/isValueSelected';
+import EditorContext from '../EditorContext';
+import { RichUtils } from 'draft-js';
 
 export interface ToggleButtonMenuProps {
+  exclusive?: boolean;
   openIcon?: React.ReactNode;
   closeIcon?: React.ReactNode;
   popperProps?: PopperProps;
-  toggleButtonGroupProps?: Omit<ToggleButtonGroupProps, 'children'>;
+  toggleButtonGroupProps?: ToggleButtonGroupProps;
   children?: React.ReactNode;
   defaultValue?: string | string[];
 }
 
 const ToggleButtonMenu = ({
+  exclusive,
   openIcon = <ArrowDropUp />,
   closeIcon = <ArrowDropDown />,
   popperProps,
   toggleButtonGroupProps,
   children,
-}: ToggleButtonMenuProps) => {
+}: ToggleButtonMenuProps): JSX.Element => {
   const anchorRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
+  const { editorState } = useContext(EditorContext) || {};
 
   const handleClick = () => {
-    if (toggleButtonGroupProps?.exclusive) {
+    if (exclusive) {
       setOpen(false);
     }
   };
@@ -59,10 +63,15 @@ const ToggleButtonMenu = ({
             return null;
           }
 
-          if (
-            isValueSelected(child.props.value, toggleButtonGroupProps?.value)
-          ) {
-            return child.props.children;
+          const value = child.props.value;
+
+          if (editorState) {
+            if (
+              editorState.getCurrentInlineStyle().toArray().includes(value) ||
+              RichUtils.getCurrentBlockType(editorState) === value
+            ) {
+              return child.props.children;
+            }
           }
         })}
       </Button>
@@ -77,11 +86,12 @@ const ToggleButtonMenu = ({
             <ToggleButtonGroup
               orientation="vertical"
               {...toggleButtonGroupProps}
+              ref={toggleButtonGroupProps?.ref as any}
             >
               {React.Children.map(children, (child: any, key) => {
                 if (child) {
                   return React.cloneElement(child, {
-                    onClick: handleClick,
+                    onMouseDown: handleClick,
                   });
                 }
               })}
