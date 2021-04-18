@@ -78,7 +78,15 @@ const TextAlignToggleButton = forwardRef<
     return (
       <DraftToggleButton
         ref={ref}
-        selected={selected}
+        selected={
+          editorState &&
+          editorState
+            .getCurrentContent()
+            .getBlockForKey(editorState.getSelection().getStartKey())
+            .getData()
+            .toArray()
+            .includes(value)
+        }
         onToggle={handleToggle}
         keyCommand={`align-${value}`}
         value={value}
