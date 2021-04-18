@@ -47,15 +47,26 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
 
     useEffect(() => {
       if (runFirstTime) {
-        execute();
+        executeToggle();
       }
     }, []);
 
-    const execute = useCallback(() => {
+    const executeToggle = useCallback(() => {
       if (editorState) {
-        setTimeout(() => onToggle(editorState), 1);
+        setTimeout(
+          () =>
+            onToggle(
+              forceSelection
+                ? EditorState.forceSelection(
+                    editorState,
+                    editorState.getSelection()
+                  )
+                : editorState
+            ),
+          1
+        );
       }
-    }, [editorState]);
+    }, [onToggle, forceSelection, editorState]);
 
     // const hasSelectedKeyCommand = () => {
     //   return state.selectedKeyCommands.includes(keyCommand);
@@ -69,18 +80,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
           onMouseDown(event);
         }
 
-        setTimeout(
-          () =>
-            onToggle(
-              forceSelection
-                ? EditorState.forceSelection(
-                    editorState,
-                    editorState.getSelection()
-                  )
-                : editorState
-            ),
-          1
-        );
+        executeToggle();
       }
       // if (hasSelectedKeyCommand()) {
       //   dispatch({
