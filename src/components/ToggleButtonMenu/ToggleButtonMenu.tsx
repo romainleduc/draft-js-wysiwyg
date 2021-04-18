@@ -14,12 +14,11 @@ import {
 import EditorContext from '../EditorContext';
 import { RichUtils } from 'draft-js';
 
-export interface ToggleButtonMenuProps {
+export interface ToggleButtonMenuProps extends ToggleButtonGroupProps {
   exclusive?: boolean;
   openIcon?: React.ReactNode;
   closeIcon?: React.ReactNode;
   popperProps?: PopperProps;
-  toggleButtonGroupProps?: ToggleButtonGroupProps;
   children?: React.ReactNode;
   defaultValue?: string | string[];
 }
@@ -29,8 +28,8 @@ const ToggleButtonMenu = ({
   openIcon = <ArrowDropUp />,
   closeIcon = <ArrowDropDown />,
   popperProps,
-  toggleButtonGroupProps,
   children,
+  ...other
 }: ToggleButtonMenuProps): JSX.Element => {
   const anchorRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
@@ -83,11 +82,7 @@ const ToggleButtonMenu = ({
       >
         <Paper>
           <ClickAwayListener onClickAway={handleClose}>
-            <ToggleButtonGroup
-              orientation="vertical"
-              {...toggleButtonGroupProps}
-              ref={toggleButtonGroupProps?.ref as any}
-            >
+            <ToggleButtonGroup {...other} ref={other?.ref as any}>
               {React.Children.map(children, (child: any, key) => {
                 if (child) {
                   return React.cloneElement(child, {
