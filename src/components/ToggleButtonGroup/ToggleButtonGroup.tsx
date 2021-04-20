@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { ToggleButtonGroupProps as MuiToggleButtonGroupProps } from '@material-ui/lab';
 import { isFragment } from 'react-is';
-import { makeStyles, Theme } from '@material-ui/core';
+import { Theme, withStyles } from '@material-ui/core';
 import { capitalize } from '@material-ui/core/utils';
 import clsx from 'clsx';
 
@@ -18,7 +18,7 @@ export interface ToggleButtonGroupProps
   defaultValue?: string | string[];
 }
 
-export const useStyles = makeStyles((theme: Theme) => ({
+export const styles = (theme: Theme) => ({
   /* Styles applied to the root element. */
   root: {
     display: 'inline-flex',
@@ -56,12 +56,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
       borderBottomRightRadius: 0,
     },
   },
-}));
+});
 
 const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupProps>(
   (
     {
       children,
+      classes,
       defaultValue,
       disableKeyboardShortcuts,
       className,
@@ -71,13 +72,12 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupProps>(
     }: ToggleButtonGroupProps,
     ref
   ) => {
-    const classes = useStyles();
-
     return (
       <div
         role="group"
         className={clsx(
-          classes.root,
+          classes?.root,
+          classes?.vertical && 
           {
             [classes.vertical]: orientation === 'vertical',
           },
@@ -104,8 +104,8 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupProps>(
 
           return React.cloneElement(child, {
             className: clsx(
-              classes.grouped,
-              classes[`grouped${capitalize(orientation)}`],
+              classes?.grouped,
+              classes?.[`grouped${capitalize(orientation)}`],
               child.props.className
             ),
             disableKeyboardShortcuts:
@@ -118,5 +118,4 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupProps>(
   }
 );
 
-ToggleButtonGroup.displayName = 'ToggleButtonGroup';
-export default ToggleButtonGroup;
+export default withStyles(styles, { name: 'DraftToggleButtonGroup' })(ToggleButtonGroup);

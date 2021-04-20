@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ToggleButtonGroup as DraftToggleButtonGroup, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
+import { ToggleButtonGroup as DraftToggleButtonGroup, ToggleButtonMenu, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
 import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, fade, Divider, withStyles, Select as MuiSelect, MenuItem, ButtonGroup as MuiButtonGroup, ButtonBase, Tabs, Tab, Box } from '@material-ui/core';
 import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import mediaData from './components/button/mediaData';
@@ -30,32 +30,6 @@ const ButtonGroup = withStyles((theme) => ({
     },
   },
 }))(MuiButtonGroup);
-
-const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    border: 'none',
-  },
-}))(MenuItem);
-
-const Select = withStyles((theme) => ({
-  icon: {
-    right: 4,
-  },
-}))(MuiSelect);
-
-const BootstrapButton = withStyles((theme) => ({
-  input: {
-    margin: theme.spacing(0.5),
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
-    padding: '10px 26px 10px 12px',
-    // Use the system font instead of the default Roboto font.
-    '&:focus': {
-      backgroundColor: "#fff",
-    },
-  },
-}))(ButtonBase);
 
 const useStyles = makeStyles((theme => ({
   modal: {
@@ -230,7 +204,11 @@ const LandingExample = () => {
       onChange={setEditorState}
     >
       <EditorToolbar className={classes.toolbar}>
-        <ToggleButtonGroup size="small">
+        <ToggleButtonMenu
+          exclusive
+          orientation="vertical"
+          size="small"
+        >
           {[
             ['unstyled', 'Paragraph'],
             ['header-one', 'H1'],
@@ -249,7 +227,7 @@ const LandingExample = () => {
               {block[1]}
             </BlockTypeToggleButton>
           )}
-        </ToggleButtonGroup>
+        </ToggleButtonMenu>
         <Divider flexItem orientation="vertical" className={classes.divider} />
         <ToggleButtonGroup size='small'>
           {[
