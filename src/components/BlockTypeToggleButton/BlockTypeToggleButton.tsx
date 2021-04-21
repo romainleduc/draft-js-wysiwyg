@@ -2,7 +2,7 @@ import React, { forwardRef, useCallback, useContext } from 'react';
 import { EditorState, RichUtils } from 'draft-js';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
-import EditorContext from '../EditorContext';
+import EditorContext from '../Editor/EditorContext';
 
 export interface BlockTypeToggleButtonProps
   extends Omit<ToggleButtonProps, 'value'> {

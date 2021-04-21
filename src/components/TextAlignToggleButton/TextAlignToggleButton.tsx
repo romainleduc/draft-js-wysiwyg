@@ -3,7 +3,7 @@ import { setBlockData, setBlocksData } from '../../utils';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
 import { EditorState } from 'draft-js';
-import EditorContext from '../EditorContext';
+import EditorContext from '../Editor/EditorContext';
 
 export interface TextAlignToggleButtonProps
   extends Omit<ToggleButtonProps, 'value'> {

@@ -7,7 +7,7 @@ import {
   DraftHandleValue,
 } from 'draft-js';
 import { indentSelection, mergeBlockData, draftToHtml } from '../../utils';
-import EditorContext from '../EditorContext';
+import EditorContext from './EditorContext';
 import { makeStyles } from '@material-ui/core';
 import ReduxContext from '../ReduxContext';
 import {

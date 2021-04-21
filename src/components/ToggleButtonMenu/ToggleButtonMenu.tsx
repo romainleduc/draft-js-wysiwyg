@@ -11,7 +11,7 @@ import {
   ToggleButtonGroup,
   ToggleButtonGroupProps,
 } from '../ToggleButtonGroup';
-import EditorContext from '../EditorContext';
+import EditorContext from '../Editor/EditorContext';
 import { RichUtils } from 'draft-js';
 import BaseButton from '../BaseButton/BaseButton';
 

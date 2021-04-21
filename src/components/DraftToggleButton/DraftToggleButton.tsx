@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, forwardRef, useCallback } from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
 import { EditorState } from 'draft-js';
-import EditorContext from '../EditorContext';
+import EditorContext from '../Editor/EditorContext';
 import { ACTION_TYPES } from '../../redux/constants';
 import ReduxContext from '../ReduxContext';
 
