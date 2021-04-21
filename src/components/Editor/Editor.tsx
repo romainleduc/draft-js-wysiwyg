@@ -80,11 +80,6 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         keyCommands?.includes(command) ||
         state.keyCommands.includes(command)
       ) {
-        dispatch({
-          type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
-          payload: command,
-        });
-
         if (Object.values(IndentCommand).includes(command as IndentCommand)) {
           const contentState = editorState.getCurrentContent();
           const indentType =
