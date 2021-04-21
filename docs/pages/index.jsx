@@ -1,4 +1,4 @@
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import AppFrame from '../src/modules/components/AppFrame';
 import AppHead from '../src/modules/components/AppHead';
@@ -66,13 +66,15 @@ const LandingPage = () => {
         <Typography className={classes.title} variant='h1'>
           Draft-js-wysiwyg
         </Typography>
-        <Typography
-          variant='h5'
-          component='p'
-          align='center'
-        >
-          A WYSIWYG editor for React built on Draft.js and Material-UI for faster and easier web development.
+        <Box mt={2}>
+          <Typography
+            variant='h5'
+            component='p'
+            align='center'
+          >
+            A WYSIWYG editor for React built on Draft.js and Material-UI for faster and easier web development.
         </Typography>
+        </Box>
         <Button
           component='a'
           href='https://www.npmjs.com/package/draft-js-wysiwyg'

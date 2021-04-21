@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ToggleButtonGroup as DraftToggleButtonGroup, ToggleButtonMenu, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, fade, Divider, withStyles, Select as MuiSelect, MenuItem, ButtonGroup as MuiButtonGroup, ButtonBase, Tabs, Tab, Box } from '@material-ui/core';
+import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, fade, Divider, withStyles, ButtonGroup as MuiButtonGroup, Tabs, Tab, Box } from '@material-ui/core';
 import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import mediaData from './components/button/mediaData';
 import { EditorState } from 'draft-js';
@@ -43,9 +43,10 @@ const useStyles = makeStyles((theme => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.shape.borderRadius,
     border: `solid 1px ${fade('#000', .7)}`,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2),
+    outline: 0,
   },
   media: {
     backgroundSize: 'cover',
@@ -60,12 +61,16 @@ const useStyles = makeStyles((theme => ({
   toolbar: {
     display: 'flex',
     border: `1px solid ${theme.palette.divider}`,
+    borderTopLeftRadius: theme.shape.borderRadius,
+    borderTopRightRadius: theme.shape.borderRadius,
     flexWrap: 'wrap',
     padding: 4,
     backgroundColor: '#ccd5df57',
   },
   editor: {
     border: `1px solid ${theme.palette.divider}`,
+    borderBottomLeftRadius: theme.shape.borderRadius,
+    borderBottomRightRadius: theme.shape.borderRadius,
     padding: 40,
     borderTop: 0,
     minHeight: 141,
@@ -73,6 +78,11 @@ const useStyles = makeStyles((theme => ({
       maxHeight: 'min(68vh, 600px)',
       overflowY: 'auto',
     },
+  },
+  menuButton: {
+    backgroundColor: '#fff',
+    color: 'rgb(0 0 0 / 75%)',
+    margin: theme.spacing(0.5),
   }
 })));
 
@@ -208,6 +218,9 @@ const LandingExample = () => {
           exclusive
           orientation="vertical"
           size="small"
+          buttonProps={{
+            className: classes.menuButton,
+          }}
         >
           {[
             ['unstyled', 'Paragraph'],
@@ -284,6 +297,7 @@ const LandingExample = () => {
             <FormatIndentDecrease />
           </IndentDraftButton>
         </ButtonGroup>
+        <Divider flexItem orientation="vertical" className={classes.divider} />
         <IconButton onClick={handleClick}>
           <ImageOutlined />
         </IconButton>
