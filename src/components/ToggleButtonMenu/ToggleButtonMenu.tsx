@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import {
-  Button,
   Popper,
   PopperProps,
   Paper,
   ClickAwayListener,
+  ButtonProps
 } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import {
@@ -13,6 +13,7 @@ import {
 } from '../ToggleButtonGroup';
 import EditorContext from '../EditorContext';
 import { RichUtils } from 'draft-js';
+import BaseButton from '../BaseButton/BaseButton';
 
 export interface ToggleButtonMenuProps extends ToggleButtonGroupProps {
   exclusive?: boolean;
@@ -21,6 +22,7 @@ export interface ToggleButtonMenuProps extends ToggleButtonGroupProps {
   popperProps?: PopperProps;
   children?: React.ReactNode;
   defaultValue?: string | string[];
+  buttonProps: ButtonProps;
 }
 
 const ToggleButtonMenu = ({
@@ -29,6 +31,7 @@ const ToggleButtonMenu = ({
   closeIcon = <ArrowDropDown />,
   popperProps,
   children,
+  buttonProps,
   ...other
 }: ToggleButtonMenuProps): JSX.Element => {
   const anchorRef = React.useRef(null);
@@ -51,11 +54,11 @@ const ToggleButtonMenu = ({
 
   return (
     <>
-      <Button
+      <BaseButton
         ref={anchorRef}
         endIcon={open ? openIcon : closeIcon}
-        variant="contained"
         onClick={handleToggle}
+        {...buttonProps}
       >
         {React.Children.map(children, (child) => {
           if (!React.isValidElement(child)) {
@@ -73,7 +76,7 @@ const ToggleButtonMenu = ({
             }
           }
         })}
-      </Button>
+      </BaseButton>
       <Popper
         style={{ zIndex: 2 }}
         anchorEl={anchorRef.current}
