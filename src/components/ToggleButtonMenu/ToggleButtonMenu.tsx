@@ -4,7 +4,7 @@ import {
   PopperProps,
   Paper,
   ClickAwayListener,
-  ButtonProps
+  ButtonProps,
 } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import {
@@ -31,6 +31,7 @@ const ToggleButtonMenu = ({
   closeIcon = <ArrowDropDown />,
   popperProps,
   children,
+  size = 'medium',
   buttonProps,
   ...other
 }: ToggleButtonMenuProps): JSX.Element => {
@@ -58,6 +59,7 @@ const ToggleButtonMenu = ({
         ref={anchorRef}
         endIcon={open ? openIcon : closeIcon}
         onClick={handleToggle}
+        size={size}
         {...buttonProps}
       >
         {React.Children.map(children, (child) => {
@@ -91,6 +93,7 @@ const ToggleButtonMenu = ({
                   return React.cloneElement(child, {
                     onClick: handleClick,
                     forceSelection: true,
+                    size,
                   });
                 }
               })}
