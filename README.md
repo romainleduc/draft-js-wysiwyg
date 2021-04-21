@@ -111,7 +111,7 @@ You can see this live and interactive demo:
 
 ## Examples
 
-Are you looking for an example project to get started? [We host some](https://github.com/romainleduc/draft-js-wysiwyg/examples).
+Are you looking for an example project to get started? [We host some](https://github.com/romainleduc/draft-js-wysiwyg/tree/master/examples).
 
 ## Documentation
 
