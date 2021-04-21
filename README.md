@@ -112,3 +112,7 @@ You can see this live and interactive demo:
 ## Documentation
 
 Check out our [documentation website](https://draft-js-wysiwyg.com).
+
+## Examples
+
+Are you looking for an example project to get started? [We host some](https://github.com/romainleduc/draft-js-wysiwyg/examples).
