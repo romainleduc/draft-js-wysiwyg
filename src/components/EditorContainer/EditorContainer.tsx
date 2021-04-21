@@ -1,6 +1,6 @@
 import React, { forwardRef, useReducer } from 'react';
 import { EditorState } from 'draft-js';
-import EditorContext from '../EditorContext/EditorContext';
+import EditorContext from '../Editor/EditorContext';
 import clsx from 'clsx';
 import keyCommandsReducer from '../../redux/reducers/keyCommandsReducer';
 import ReduxContext from '../ReduxContext';
@@ -8,9 +8,9 @@ import { initialState } from '../../redux/reducers/keyCommandsReducer';
 import { NoSsr } from '@material-ui/core';
 
 export interface EditorContainerProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   editorState: EditorState;
-  onChangeEditorState(editorState: EditorState): void;
+  onChange(editorState: EditorState): void;
   noSsr?: boolean;
 }
 
@@ -27,7 +27,7 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
     {
       className,
       editorState,
-      onChangeEditorState,
+      onChange,
       children,
       noSsr,
       ...rest
@@ -42,7 +42,7 @@ const EditorContainer = forwardRef<HTMLDivElement, EditorContainerProps>(
           <EditorContext.Provider
             value={{
               editorState,
-              setEditorState: onChangeEditorState,
+              setEditorState: onChange,
             }}
           >
             <div

@@ -9,6 +9,7 @@ import {
   AtomicBlockUtils,
   RichUtils,
 } from 'draft-js';
+const { OrderedSet } = require('immutable');
 
 /**
  * Returns collection of blocks.
@@ -234,24 +235,112 @@ export const findEntitiesRangeByType = (
   }, callback);
 };
 
-export const addBlockType = (editorState: EditorState, value: string) => {
+export const insertBlockType = (
+  editorState: EditorState,
+  value: string
+): EditorState => {
   if (RichUtils.getCurrentBlockType(editorState) !== value) {
-    return RichUtils.toggleBlockType(
-      EditorState.forceSelection(editorState, editorState.getSelection()),
-      value
+    return EditorState.push(
+      editorState,
+      Modifier.setBlockType(
+        editorState.getCurrentContent(),
+        editorState.getSelection(),
+        value
+      ),
+      'change-block-type'
     );
   }
 
   return editorState;
-}
+};
 
-export const addInlineStyle = (editorState: EditorState, value: string) => {
-  if (!editorState.getCurrentInlineStyle().has(value)) {
-    return RichUtils.toggleInlineStyle(
-      EditorState.forceSelection(editorState, editorState.getSelection()),
-      value
-    )
+export const applyInlineStyle = (
+  editorState: EditorState,
+  inlineStyle: string
+) => {
+  const selection = editorState.getSelection();
+  const currentStyle = editorState.getCurrentInlineStyle();
+
+  // If the selection is collapsed, toggle the specified style on or off and
+  // set the result as the new inline style override. This will then be
+  // used as the inline style for the next character to be inserted.
+  if (selection.isCollapsed()) {
+    return !currentStyle.has(inlineStyle)
+      ? EditorState.setInlineStyleOverride(
+          editorState,
+          currentStyle.add(inlineStyle)
+        )
+      : editorState;
+  }
+
+  // If the style is already present for the selection range, remove it.
+  // Otherwise, apply it.
+  if (currentStyle.has(inlineStyle)) {
+    return editorState;
+  }
+
+  return EditorState.push(
+    editorState,
+    Modifier.applyInlineStyle(
+      editorState.getCurrentContent(),
+      selection,
+      inlineStyle
+    ),
+    'change-inline-style'
+  );
+};
+
+export const setInlineStyle = (
+  editorState: EditorState,
+  inlineStyle: string | string[]
+) => {
+  const selection = editorState.getSelection();
+
+  // If the selection is collapsed, toggle the specified style on or off and
+  // set the result as the new inline style override. This will then be
+  // used as the inline style for the next character to be inserted.
+  if (selection.isCollapsed()) {
+    return EditorState.setInlineStyleOverride(
+      editorState,
+      OrderedSet(Array.isArray(inlineStyle) ? inlineStyle : [inlineStyle])
+    );
   }
 
   return editorState;
-}
+};
+
+export const removeInlineStyle = (
+  editorState: EditorState,
+  inlineStyle: string
+): EditorState => {
+  const selection = editorState.getSelection();
+  const currentStyle = editorState.getCurrentInlineStyle();
+
+  // If the selection is collapsed, toggle the specified style on or off and
+  // set the result as the new inline style override. This will then be
+  // used as the inline style for the next character to be inserted.
+  if (selection.isCollapsed()) {
+    return currentStyle.has(inlineStyle)
+      ? EditorState.setInlineStyleOverride(
+          editorState,
+          currentStyle.remove(inlineStyle)
+        )
+      : editorState;
+  }
+
+  // If the style is already present for the selection range, remove it.
+  // Otherwise, apply it.
+  if (!currentStyle.has(inlineStyle)) {
+    return editorState;
+  }
+
+  return EditorState.push(
+    editorState,
+    Modifier.removeInlineStyle(
+      editorState.getCurrentContent(),
+      selection,
+      inlineStyle
+    ),
+    'change-inline-style'
+  );
+};

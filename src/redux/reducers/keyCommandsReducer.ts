@@ -7,12 +7,10 @@ export interface ActionType {
 
 export interface ReducerState {
   keyCommands: string[];
-  selectedKeyCommands: string[];
 }
 
 export const initialState = {
   keyCommands: [],
-  selectedKeyCommands: [],
 };
 
 const keyCommandsReducer = (
@@ -26,17 +24,6 @@ const keyCommandsReducer = (
       return {
         ...state,
         keyCommands: Array.from(new Set([...state.keyCommands, keyCommand])),
-      };
-    case ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND:
-      const { selectedKeyCommands } = state;
-
-      return {
-        ...state,
-        selectedKeyCommands: selectedKeyCommands.includes(keyCommand)
-          ? selectedKeyCommands.filter(
-              (selectedKeyCommand) => selectedKeyCommand !== keyCommand
-            )
-          : [...selectedKeyCommands, keyCommand],
       };
     default:
       return state;

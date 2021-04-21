@@ -1,6 +1,6 @@
 import React, { useContext, forwardRef } from 'react';
 import { Button, ButtonProps } from '@material-ui/core';
-import EditorContext from '../EditorContext';
+import EditorContext from '../Editor/EditorContext';
 import { insertAtomicBlock } from '../../utils';
 import { getMediaType } from './patterns';
 import clsx from 'clsx';

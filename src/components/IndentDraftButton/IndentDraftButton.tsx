@@ -4,7 +4,7 @@ import {
   isOutdentable,
   IndentType,
 } from '../../utils';
-import EditorContext from '../EditorContext/EditorContext';
+import EditorContext from '../Editor/EditorContext';
 import DraftButton, { DraftButtonProps } from '../DraftButton/DraftButton';
 
 export interface IndentDraftButtonProps

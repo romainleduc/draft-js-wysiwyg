@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ToggleButtonGroup } from '@material-ui/lab';
 import {
+  ToggleButtonGroup,
   EditorContainer,
   Editor,
   EditorToolbar,
@@ -12,26 +12,14 @@ const ExtendStyle = () => {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty()
   );
-  const [size, setSize] = useState('FONT_SIZE_MEDIUM');
-
-  const handleSize = (_, newSize) => {
-    setSize(newSize);
-  };
 
   return (
     <EditorContainer
       editorState={editorState}
-      onChangeEditorState={(newEditorState) => {
-        setEditorState(newEditorState);
-      }}
+      onChange={setEditorState}
     >
       <EditorToolbar>
-        <ToggleButtonGroup
-          exclusive
-          value={size}
-          onChange={handleSize}
-          size='small'
-        >
+        <ToggleButtonGroup size='small'>
           {[
             ['FONT_SIZE_SMALL', 'Small'],
             ['FONT_SIZE_MEDIUM', 'Medium'],

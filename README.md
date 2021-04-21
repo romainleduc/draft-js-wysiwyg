@@ -47,55 +47,67 @@ Please note that `draft-js-wysiwyg` depends on `draft-js`, `@material-ui/core` a
 
 ## Usage
 
-Here is a quick example to get you started.
+Here is a very basic example to get you started.
 
 ```jsx
-import React, { useState } from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {
-  FormatAlignLeft as FormatAlignLeftIcon,
-  FormatAlignCenter as FormatAlignCenterIcon,
-  FormatAlignRight as FormatAlignRightIcon
-} from '@material-ui/icons';
-import { ToggleButtonGroup } from '@material-ui/core';
-import {
-  Editor,
   EditorContainer,
+  Editor,
+  InlineToggleButton,
   EditorToolbar,
-  TextAlignToggleButton,
+  ToggleButtonGroup,
 } from 'draft-js-wysiwyg';
+import { EditorState } from 'draft-js';
+import {
+  FormatBold as FormatBoldIcon,
+  FormatItalic as FormatItalicIcon
+} from '@material-ui/icons';
 import 'draft-js/dist/Draft.css';
 
-const SimpleExample = () => {
-  const [alignment, setAlignment] = useState('left');
+const App = () => {
+  const [editorState, setEditorState] = React.useState(
+    () => EditorState.createEmpty()
+  );
 
-  const handleAlignment = (_, newAlignment) => {
-    setAlignment(newAlignment);
-  };
+  const editor = React.useRef(null);
+
+  React.useEffect(() => {
+    editor.current.focus();
+  }, []);
 
   return (
-    <EditorContainer>
+    <EditorContainer
+      editorState={editorState}
+      onChange={setEditorState}
+    >
       <EditorToolbar>
-        <ToggleButtonGroup
-          exclusive
-          value={alignment}
-          onChange={handleAlignment}
-        >
-          <TextAlignToggleButton value='left'>
-            <FormatAlignLeftIcon />
-          </TextAlignToggleButton>
-          <TextAlignToggleButton value='center'>
-            <FormatAlignCenterIcon />
-          </TextAlignToggleButton>
-          <TextAlignToggleButton value='right'>
-            <FormatAlignRightIcon />
-          </TextAlignToggleButton>
+        <ToggleButtonGroup size="small">
+          <InlineToggleButton value="BOLD">
+            <FormatBoldIcon />
+          </InlineToggleButton>
+          <InlineToggleButton value="ITALIC">
+            <FormatItalicIcon />
+          </InlineToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
-      <Editor placeholder='Enter some text..' />
+      <Editor ref={editor} placeholder="Enter some text.." />
     </EditorContainer>
   );
 }
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 ```
+
+You can see this live and interactive demo:
+
+[![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/usage-zlf3t)
 
 ## Documentation
 

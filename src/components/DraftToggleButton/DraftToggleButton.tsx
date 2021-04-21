@@ -1,5 +1,7 @@
-import React, { useContext, useEffect, forwardRef } from 'react';
+import React, { useContext, useEffect, forwardRef, useCallback } from 'react';
 import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
+import { EditorState } from 'draft-js';
+import EditorContext from '../Editor/EditorContext';
 import { ACTION_TYPES } from '../../redux/constants';
 import ReduxContext from '../ReduxContext';
 
@@ -12,8 +14,9 @@ export interface DraftToggleButtonProps
   disableKeyboardShortcuts?: boolean;
   keyCommand: string;
   onChange?: any;
-  onToggle?: () => void;
-  onFirstRender?: () => void;
+  onToggle: (editorState: EditorState) => void;
+  runFirstTime?: boolean;
+  forceSelection?: boolean;
 }
 
 const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
@@ -23,15 +26,19 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       children,
       disableKeyboardShortcuts,
       onChange,
-      onFirstRender,
       onToggle,
+      runFirstTime,
       selected,
       keyCommand,
+      forceSelection = false,
+      onMouseDown,
+      onClick,
       ...other
     }: DraftToggleButtonProps,
     ref
   ) => {
-    const { state, dispatch } = useContext(ReduxContext);
+    const { editorState } = useContext(EditorContext) || {};
+    const { dispatch } = useContext(ReduxContext);
 
     useEffect(() => {
       if (!disableKeyboardShortcuts) {
@@ -41,26 +48,47 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
         });
       }
 
-      onFirstRender?.();
+      if (runFirstTime) {
+        executeToggle();
+      }
     }, []);
 
-    const hasSelectedKeyCommand = () => {
-      return state.selectedKeyCommands.includes(keyCommand);
-    };
+    const executeToggle = useCallback(() => {
+      if (editorState) {
+        setTimeout(
+          () =>
+            onToggle(
+              forceSelection
+                ? EditorState.forceSelection(
+                    editorState,
+                    editorState.getSelection()
+                  )
+                : editorState
+            ),
+          1
+        );
+      }
+    }, [onToggle, forceSelection, editorState]);
 
-    const handleChange = (event: any) => {
-      if (onChange) {
-        if (hasSelectedKeyCommand()) {
-          dispatch({
-            type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
-            payload: keyCommand,
-          });
+    const handleClick = (event: any) => {
+      if (editorState) {
+        event.preventDefault();
 
-          value = null;
+        if (onClick) {
+          onClick(event);
         }
 
-        onToggle?.();
-        onChange(event, value);
+        executeToggle();
+      }
+    };
+
+    const handleMouseDown = (event: any) => {
+      if (editorState) {
+        event.preventDefault();
+
+        if (onMouseDown) {
+          onMouseDown(event);
+        }
       }
     };
 
@@ -68,11 +96,9 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       <ToggleButton
         ref={ref}
         value={value}
-        onChange={handleChange}
-        selected={
-          (selected && !hasSelectedKeyCommand()) ||
-          (!selected && hasSelectedKeyCommand())
-        }
+        onClick={handleClick}
+        onMouseDown={handleMouseDown}
+        selected={selected}
         {...other}
       >
         {children}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ToggleButtonGroup } from '@material-ui/lab';
 import {
+  ToggleButtonGroup,
   EditorContainer,
   Editor,
   EditorToolbar,
@@ -12,26 +12,14 @@ const BasicExample = () => {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty()
   );
-  const [block, setBlock] = useState('');
-
-  const handleBlock = (_, newBlock) => {
-    setBlock(newBlock);
-  };
 
   return (
     <EditorContainer
       editorState={editorState}
-      onChangeEditorState={(newEditorState) => {
-        setEditorState(newEditorState);
-      }}
+      onChange={setEditorState}
     >
       <EditorToolbar>
-        <ToggleButtonGroup
-          exclusive
-          value={block}
-          onChange={handleBlock}
-          size='small'
-        >
+        <ToggleButtonGroup size='small'>
           {[
             ['header-one', 'H1'],
             ['header-two', 'H2'],

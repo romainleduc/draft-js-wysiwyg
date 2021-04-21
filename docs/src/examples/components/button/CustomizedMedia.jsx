@@ -166,10 +166,6 @@ const BasicExample = () => {
     () => EditorState.createEmpty()
   );
 
-  const handleChange = (newEditorState) => {
-    setEditorState(newEditorState);
-  }
-
   const handleClick = () => {
     setOpen(!open);
   }
@@ -188,7 +184,7 @@ const BasicExample = () => {
   return (
     <EditorContainer
       editorState={editorState}
-      onChangeEditorState={handleChange}
+      onChange={setEditorState}
     >
       <EditorToolbar>
         <IconButton onClick={handleClick}>

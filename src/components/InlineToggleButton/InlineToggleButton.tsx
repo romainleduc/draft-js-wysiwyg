@@ -1,9 +1,8 @@
-import React, { useContext, forwardRef } from 'react';
+import React, { forwardRef, useCallback, useContext } from 'react';
 import { EditorState, RichUtils } from 'draft-js';
-import EditorContext from '../EditorContext/EditorContext';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
-import { addInlineStyle } from '../../utils';
+import EditorContext from '../Editor/EditorContext';
 
 export interface InlineToggleButtonProps
   extends Omit<ToggleButtonProps, 'value'> {
@@ -17,6 +16,7 @@ export interface InlineToggleButtonProps
    * The inline style value to associate with the button
    */
   value: string;
+  runFirstTime?: boolean;
 }
 
 const InlineToggleButton = forwardRef<
@@ -25,30 +25,17 @@ const InlineToggleButton = forwardRef<
 >(({ value, selected, children, ...rest }: InlineToggleButtonProps, ref) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
 
-  const onFirstRender = () => {
-    if (editorState && setEditorState) {
-      if (selected) {
-        setEditorState(addInlineStyle(editorState, value));
-      }
-    }
-  }
-
-  const handleToggle = () => {
-    if (editorState && setEditorState) {
-      setEditorState(
-        RichUtils.toggleInlineStyle(
-          EditorState.forceSelection(editorState, editorState.getSelection()),
-          value
-        )
-      );
-    }
-  };
+  const handleToggle = useCallback(
+    (newEditorState: EditorState): void => {
+      setEditorState?.(RichUtils.toggleInlineStyle(newEditorState, value));
+    },
+    [value]
+  );
 
   return (
     <DraftToggleButton
       ref={ref}
-      selected={selected}
-      onFirstRender={onFirstRender}
+      selected={editorState?.getCurrentInlineStyle().toArray().includes(value)}
       onToggle={handleToggle}
       keyCommand={value.toLowerCase()}
       value={value}

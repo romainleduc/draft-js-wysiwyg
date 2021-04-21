@@ -7,7 +7,7 @@ import {
   DraftHandleValue,
 } from 'draft-js';
 import { indentSelection, mergeBlockData, draftToHtml } from '../../utils';
-import EditorContext from '../EditorContext';
+import EditorContext from './EditorContext';
 import { makeStyles } from '@material-ui/core';
 import ReduxContext from '../ReduxContext';
 import {
@@ -25,6 +25,7 @@ export interface EditorProps
   keyCommands?: string[];
   keyBinding?: string[];
   onChange?(html: string): void;
+  onClick?: (event: any, editorState: EditorState | undefined) => void;
 }
 
 const userStyles = makeStyles({
@@ -50,7 +51,10 @@ const userStyles = makeStyles({
 });
 
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
-  ({ className, keyCommands, onChange, ...rest }: EditorProps, ref) => {
+  (
+    { className, keyCommands, onChange, onClick, ...rest }: EditorProps,
+    ref
+  ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
     const { state, dispatch } = useContext(ReduxContext);
     const classes = userStyles();
@@ -76,11 +80,6 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         keyCommands?.includes(command) ||
         state.keyCommands.includes(command)
       ) {
-        dispatch({
-          type: ACTION_TYPES.SWITCH_SELECTED_KEY_COMMAND,
-          payload: command,
-        });
-
         if (Object.values(IndentCommand).includes(command as IndentCommand)) {
           const contentState = editorState.getCurrentContent();
           const indentType =
@@ -122,12 +121,12 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       return 'not-handled';
     };
 
-    const handleChange = (editorState: EditorState) => {
+    const handleChange = (newEditorState: EditorState) => {
       if (onChange) {
-        onChange(draftToHtml(editorState.getCurrentContent()));
+        onChange(draftToHtml(newEditorState.getCurrentContent()));
       }
 
-      setEditorState?.(editorState);
+      setEditorState?.(newEditorState);
     };
 
     return (
@@ -138,6 +137,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
           isNotEmpty() && classes.hidePlaceholder,
           classes.editor
         )}
+        onClick={(event) => onClick?.(event, editorState)}
       >
         {editorState && setEditorState && (
           <DraftEditor

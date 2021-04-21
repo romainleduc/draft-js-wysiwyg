@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { DraftToggleButtonGroup, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, fade, Divider, withStyles, Select as MuiSelect, MenuItem, ButtonGroup as MuiButtonGroup, ButtonBase, Tabs, Tab, Box } from '@material-ui/core';
+import { ToggleButtonGroup as DraftToggleButtonGroup, ToggleButtonMenu, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
+import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, fade, Divider, withStyles, ButtonGroup as MuiButtonGroup, Tabs, Tab, Box } from '@material-ui/core';
 import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import mediaData from './components/button/mediaData';
 import { EditorState } from 'draft-js';
@@ -31,32 +31,6 @@ const ButtonGroup = withStyles((theme) => ({
   },
 }))(MuiButtonGroup);
 
-const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    border: 'none',
-  },
-}))(MenuItem);
-
-const Select = withStyles((theme) => ({
-  icon: {
-    right: 4,
-  },
-}))(MuiSelect);
-
-const BootstrapButton = withStyles((theme) => ({
-  input: {
-    margin: theme.spacing(0.5),
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
-    padding: '10px 26px 10px 12px',
-    // Use the system font instead of the default Roboto font.
-    '&:focus': {
-      backgroundColor: "#fff",
-    },
-  },
-}))(ButtonBase);
-
 const useStyles = makeStyles((theme => ({
   modal: {
     display: 'flex',
@@ -69,9 +43,10 @@ const useStyles = makeStyles((theme => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.shape.borderRadius,
     border: `solid 1px ${fade('#000', .7)}`,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2),
+    outline: 0,
   },
   media: {
     backgroundSize: 'cover',
@@ -86,12 +61,16 @@ const useStyles = makeStyles((theme => ({
   toolbar: {
     display: 'flex',
     border: `1px solid ${theme.palette.divider}`,
+    borderTopLeftRadius: theme.shape.borderRadius,
+    borderTopRightRadius: theme.shape.borderRadius,
     flexWrap: 'wrap',
     padding: 4,
     backgroundColor: '#ccd5df57',
   },
   editor: {
     border: `1px solid ${theme.palette.divider}`,
+    borderBottomLeftRadius: theme.shape.borderRadius,
+    borderBottomRightRadius: theme.shape.borderRadius,
     padding: 40,
     borderTop: 0,
     minHeight: 141,
@@ -99,6 +78,11 @@ const useStyles = makeStyles((theme => ({
       maxHeight: 'min(68vh, 600px)',
       overflowY: 'auto',
     },
+  },
+  menuButton: {
+    backgroundColor: '#fff',
+    color: 'rgb(0 0 0 / 75%)',
+    margin: theme.spacing(0.5),
   }
 })));
 
@@ -122,105 +106,6 @@ const TabPanel = (props) => {
   );
 }
 
-const InlineToggleButtonGroup = () => {
-  const [formats, setFormats] = useState(() => []);
-
-  const handleFormat = (_, newFormats) => {
-    setFormats(newFormats);
-  };
-
-  return (
-    <ToggleButtonGroup
-      value={formats}
-      onChange={handleFormat}
-      size='small'
-    >
-      {[
-        ['BOLD', <FormatBold />],
-        ['ITALIC', <FormatItalic />],
-        ['STRIKETHROUGH', <FormatStrikethrough />],
-        ['UNDERLINE', <FormatUnderlined />],
-        ['CODE', <Code />],
-      ].map(inline =>
-        <InlineToggleButton
-          key={`inline-${inline[0]}`}
-          value={inline[0]}
-        >
-          <Tooltip title={inline[0].charAt(0).toUpperCase() + inline[0].slice(1).toLowerCase()} placement='top'>
-            {inline[1]}
-          </Tooltip>
-        </InlineToggleButton>
-      )}
-    </ToggleButtonGroup>
-  )
-}
-
-const BlockTypeToggleButtonSelect = () => {
-  const [blockType, setBlockType] = React.useState('unstyled');
-
-  const handleChange = (_, newBlockType) => {
-    if (!newBlockType) {
-      setBlockType('unstyled');
-    } else {
-      setBlockType(newBlockType);
-    }
-  };
-
-  return (
-    <ToggleButtonGroup
-      exclusive
-      value={blockType}
-      onChange={handleChange}
-    >
-      {[
-        ['unstyled', 'Paragraph'],
-        ['header-one', 'H1'],
-        ['header-two', 'H2'],
-        ['header-three', 'H3'],
-        ['header-four', 'H4'],
-        ['header-five', 'H5'],
-        ['header-six', 'H6'],
-        ['blockquote', 'Blockquote'],
-        ['code-block', 'Code Block'],
-      ].map((block) =>
-        <BlockTypeToggleButton
-          key={`basic-block-${block[0]}`}
-          value={block[0]}
-        >
-          {block[1]}
-        </BlockTypeToggleButton>
-      )}
-    </ToggleButtonGroup>
-  )
-}
-
-const ListToggleButtonGroup = () => {
-  const [blockType, setBlockType] = useState('');
-
-  const handleBlockType = (_, newBlockType) => {
-    setBlockType(newBlockType);
-  };
-
-  return (
-    <ToggleButtonGroup
-      exclusive
-      value={blockType}
-      onChange={handleBlockType}
-      size='small'
-    >
-      <BlockTypeToggleButton value='unordered-list-item'>
-        <Tooltip title='Unordered list' placement='top'>
-          <FormatListBulleted />
-        </Tooltip>
-      </BlockTypeToggleButton>
-      <BlockTypeToggleButton value='ordered-list-item'>
-        <Tooltip title='Ordered list' placement='top'>
-          <FormatListNumbered />
-        </Tooltip>
-      </BlockTypeToggleButton>
-    </ToggleButtonGroup>
-  )
-}
 /**
  * The example data is structured as follows:
  *
@@ -316,12 +201,7 @@ const LandingExample = () => {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty()
   );
-  const [alignment, setAlignment] = useState('left');
   const classes = useStyles();
-
-  const handleAlignment = (_, newAlignment) => {
-    setAlignment(newAlignment)
-  }
 
   const handleClick = () => {
     setOpen(!open);
@@ -331,21 +211,57 @@ const LandingExample = () => {
     <EditorContainer
       noSsr
       editorState={editorState}
-      onChangeEditorState={(newEditorState) => {
-        setEditorState(newEditorState);
-      }}
+      onChange={setEditorState}
     >
       <EditorToolbar className={classes.toolbar}>
-        <BlockTypeToggleButtonSelect />
-        <Divider flexItem orientation="vertical" className={classes.divider} />
-        <InlineToggleButtonGroup />
-        <Divider flexItem orientation="vertical" className={classes.divider} />
-        <ToggleButtonGroup
+        <ToggleButtonMenu
           exclusive
-          value={alignment}
-          onChange={handleAlignment}
-          size='small'
+          orientation="vertical"
+          size="small"
+          buttonProps={{
+            className: classes.menuButton,
+          }}
         >
+          {[
+            ['unstyled', 'Paragraph'],
+            ['header-one', 'H1'],
+            ['header-two', 'H2'],
+            ['header-three', 'H3'],
+            ['header-four', 'H4'],
+            ['header-five', 'H5'],
+            ['header-six', 'H6'],
+            ['blockquote', 'Blockquote'],
+            ['code-block', 'Code Block'],
+          ].map((block) =>
+            <BlockTypeToggleButton
+              key={`basic-block-${block[0]}`}
+              value={block[0]}
+            >
+              {block[1]}
+            </BlockTypeToggleButton>
+          )}
+        </ToggleButtonMenu>
+        <Divider flexItem orientation="vertical" className={classes.divider} />
+        <ToggleButtonGroup size='small'>
+          {[
+            ['BOLD', <FormatBold />],
+            ['ITALIC', <FormatItalic />],
+            ['STRIKETHROUGH', <FormatStrikethrough />],
+            ['UNDERLINE', <FormatUnderlined />],
+            ['CODE', <Code />],
+          ].map(inline =>
+            <InlineToggleButton
+              key={`inline-${inline[0]}`}
+              value={inline[0]}
+            >
+              <Tooltip title={inline[0].charAt(0).toUpperCase() + inline[0].slice(1).toLowerCase()} placement='top'>
+                {inline[1]}
+              </Tooltip>
+            </InlineToggleButton>
+          )}
+        </ToggleButtonGroup>
+        <Divider flexItem orientation="vertical" className={classes.divider} />
+        <ToggleButtonGroup size='small'>
           {[
             ['left', <FormatAlignLeft />],
             ['center', <FormatAlignCenter />],
@@ -360,7 +276,18 @@ const LandingExample = () => {
           )}
         </ToggleButtonGroup>
         <Divider flexItem orientation="vertical" className={classes.divider} />
-        <ListToggleButtonGroup />
+        <ToggleButtonGroup size='small'>
+          <BlockTypeToggleButton value='unordered-list-item'>
+            <Tooltip title='Unordered list' placement='top'>
+              <FormatListBulleted />
+            </Tooltip>
+          </BlockTypeToggleButton>
+          <BlockTypeToggleButton value='ordered-list-item'>
+            <Tooltip title='Ordered list' placement='top'>
+              <FormatListNumbered />
+            </Tooltip>
+          </BlockTypeToggleButton>
+        </ToggleButtonGroup>
         <Divider flexItem orientation="vertical" className={classes.divider} />
         <ButtonGroup size='small'>
           <IndentDraftButton value='increase'>
@@ -370,6 +297,7 @@ const LandingExample = () => {
             <FormatIndentDecrease />
           </IndentDraftButton>
         </ButtonGroup>
+        <Divider flexItem orientation="vertical" className={classes.divider} />
         <IconButton onClick={handleClick}>
           <ImageOutlined />
         </IconButton>
@@ -380,7 +308,6 @@ const LandingExample = () => {
       </EditorToolbar>
       <Editor
         className={classes.editor}
-        textAlignment={alignment}
         placeholder='Enter some text..'
       />
     </EditorContainer>

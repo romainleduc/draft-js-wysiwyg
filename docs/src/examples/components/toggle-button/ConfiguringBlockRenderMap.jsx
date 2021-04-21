@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Immutable from 'immutable';
-import { ToggleButtonGroup } from '@material-ui/lab';
 import {
+  ToggleButtonGroup,
   EditorContainer,
   Editor,
   EditorToolbar,
@@ -13,37 +13,20 @@ const ConfiguringBlockRenderMap = () => {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty()
   );
-  const [block, setBlock] = useState('');
-
-  const handleBlock = (_, newBlock) => {
-    setBlock(newBlock);
-  };
 
   return (
     <EditorContainer
       editorState={editorState}
-      onChangeEditorState={(newEditorState) => {
-        setEditorState(newEditorState);
-      }}
+      onChange={setEditorState}
     >
       <EditorToolbar>
-        <ToggleButtonGroup
-          exclusive
-          value={block}
-          onChange={handleBlock}
-          size='small'
-        >
-          {[
-            ['header-one', 'H1'],
-            ['header-two', 'H2'],
-          ].map(block =>
-            <BlockTypeToggleButton
-              key={`configuring-block-${block[0]}`}
-              value={block[0]}
-            >
-              {block[1]}
-            </BlockTypeToggleButton>
-          )}
+        <ToggleButtonGroup size='small'>
+          <BlockTypeToggleButton value="header-one">
+            H1
+          </BlockTypeToggleButton>
+          <BlockTypeToggleButton value="header-two">
+            H2
+          </BlockTypeToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
       <Editor
