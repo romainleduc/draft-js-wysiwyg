@@ -6,16 +6,15 @@ import { ACTION_TYPES } from '../../redux/constants';
 import ReduxContext from '../ReduxContext';
 
 export interface DraftToggleButtonProps
-  extends Omit<ToggleButtonProps, 'onChange'> {
+  extends ToggleButtonProps {
   /**
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
    */
   disableKeyboardShortcuts?: boolean;
   keyCommand: string;
-  onChange?: any;
   onToggle: (editorState: EditorState) => void;
-  runFirstTime?: boolean;
+  defaultSelected?: boolean;
   forceSelection?: boolean;
 }
 
@@ -25,9 +24,8 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       value,
       children,
       disableKeyboardShortcuts,
-      onChange,
       onToggle,
-      runFirstTime,
+      defaultSelected,
       selected,
       keyCommand,
       forceSelection = false,
@@ -48,7 +46,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
         });
       }
 
-      if (runFirstTime) {
+      if (defaultSelected) {
         executeToggle();
       }
     }, []);
@@ -70,7 +68,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       }
     }, [onToggle, forceSelection, editorState]);
 
-    const handleClick = (event: any) => {
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       if (editorState) {
         event.preventDefault();
 
@@ -82,7 +80,7 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       }
     };
 
-    const handleMouseDown = (event: any) => {
+    const handleMouseDown = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       if (editorState) {
         event.preventDefault();
 

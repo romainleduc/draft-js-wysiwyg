@@ -5,7 +5,7 @@ import { ToggleButtonProps } from '@material-ui/lab';
 import EditorContext from '../Editor/EditorContext';
 
 export interface BlockTypeToggleButtonProps
-  extends Omit<ToggleButtonProps, 'value'> {
+  extends Omit<ToggleButtonProps, 'value' | 'selected'> {
   /**
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
@@ -15,13 +15,16 @@ export interface BlockTypeToggleButtonProps
    *
    */
   value: string;
-  runFirstTime?: boolean;
+  /**
+   * 
+   */
+  defaultSelected?: boolean;
 }
 
 const BlockTypeToggleButton = forwardRef<
   HTMLButtonElement,
   BlockTypeToggleButtonProps
->(({ value, selected, children, ...rest }: BlockTypeToggleButtonProps, ref) => {
+>(({ value, children, ...rest }: BlockTypeToggleButtonProps, ref) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
 
   const handleToggle = useCallback(

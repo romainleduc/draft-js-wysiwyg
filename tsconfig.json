@@ -19,7 +19,10 @@
     "experimentalDecorators": true,
     "noErrorTruncation": false,
     "outDir": "lib",
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "test-utils": ["./utils/test-utils"]
+    }
   },
   "exclude": [
     "**/lib",

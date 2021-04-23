@@ -6,7 +6,7 @@ import { EditorState } from 'draft-js';
 import EditorContext from '../Editor/EditorContext';
 
 export interface TextAlignToggleButtonProps
-  extends Omit<ToggleButtonProps, 'value'> {
+  extends Omit<ToggleButtonProps, 'value' | 'selected'> {
   /**
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
@@ -20,7 +20,10 @@ export interface TextAlignToggleButtonProps
    *
    */
   ignoreSelection?: boolean;
-  runFirstTime?: boolean;
+  /**
+   * 
+   */
+  defaultSelected?: boolean;
 }
 
 const TextAlignToggleButton = forwardRef<
@@ -29,7 +32,6 @@ const TextAlignToggleButton = forwardRef<
 >(
   (
     {
-      selected,
       value,
       children,
       ignoreSelection = false,
