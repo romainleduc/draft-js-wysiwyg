@@ -1,8 +1,7 @@
 node_modules
 lib
-docs/.next
-docs/out
-docs/node_modules
-
-# Generated types
 types
+/docs/.next
+/docs/out
+/docs/node_modules
+/coverage
