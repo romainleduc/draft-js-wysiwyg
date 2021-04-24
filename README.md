@@ -27,7 +27,10 @@ A Wysiwyg editor built using
   <a href="https://www.npmjs.com/package/draft-js-wysiwyg">
     <img src="https://img.shields.io/npm/v/draft-js-wysiwyg/latest.svg" alt="npm latest package" />
   </a>
-    <a href="https://dependabot.com">
+  <a href="https://codecov.io/gh/romainleduc/draft-js-wysiwyg">
+    <img src="https://codecov.io/gh/romainleduc/draft-js-wysiwyg/branch/master/graph/badge.svg" />
+  </a>
+  <a href="https://dependabot.com">
     <img src="https://api.dependabot.com/badges/status?host=github&repo=romainleduc/draft-js-wysiwyg" alt="Dependabot Status" />
   </a>
 </p>
