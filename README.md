@@ -21,6 +21,9 @@ A Wysiwyg editor built using
   libraries.
 </p>
 <p align="center">
+  <a href="https://github.com/romainleduc/draft-js-wysiwyg/actions/workflows/ci.yml">
+    <img src="https://github.com/romainleduc/draft-js-wysiwyg/actions/workflows/ci.yml/badge.svg" alt="ci" />
+  </a>
   <a href="https://github.com/romainleduc/draft-js-wysiwyg/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license" />
   </a>
@@ -28,7 +31,7 @@ A Wysiwyg editor built using
     <img src="https://img.shields.io/npm/v/draft-js-wysiwyg/latest.svg" alt="npm latest package" />
   </a>
   <a href="https://codecov.io/gh/romainleduc/draft-js-wysiwyg">
-    <img src="https://img.shields.io/codecov/c/github/romainleduc/draft-js-wysiwyg" />
+    <img src="https://img.shields.io/codecov/c/github/romainleduc/draft-js-wysiwyg" alt="coverage"/>
   </a>
   <a href="https://dependabot.com">
     <img src="https://api.dependabot.com/badges/status?host=github&repo=romainleduc/draft-js-wysiwyg" alt="Dependabot Status" />
