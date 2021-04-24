@@ -27,7 +27,6 @@ This example demonstrates how to create a reusable toolbar anywhere in your appl
     'blockquote',
     'code-block'
   ]}
-  indent
   inline
   align
   list

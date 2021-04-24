@@ -21,7 +21,7 @@ export interface TextAlignToggleButtonProps
    */
   ignoreSelection?: boolean;
   /**
-   * 
+   *
    */
   defaultSelected?: boolean;
 }

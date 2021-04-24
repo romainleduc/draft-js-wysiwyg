@@ -1,5 +1,5 @@
-import { EditorState, RichUtils } from 'draft-js';
 import React from 'react';
+import { EditorState, RichUtils } from 'draft-js';
 import { render } from 'test-utils';
 import { EditorContainer } from '../EditorContainer';
 import InlineToggleButton from './InlineToggleButton';

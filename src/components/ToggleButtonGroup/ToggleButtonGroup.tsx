@@ -77,8 +77,7 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupProps>(
         role="group"
         className={clsx(
           classes?.root,
-          classes?.vertical && 
-          {
+          classes?.vertical && {
             [classes.vertical]: orientation === 'vertical',
           },
           className
@@ -118,4 +117,6 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupProps>(
   }
 );
 
-export default withStyles(styles, { name: 'DraftToggleButtonGroup' })(ToggleButtonGroup);
+export default withStyles(styles, { name: 'DraftToggleButtonGroup' })(
+  ToggleButtonGroup
+);

@@ -23,7 +23,9 @@
     "docs:dev": "yarn workspace docs dev",
     "docs:format": "eslint --ext tsx --ext ts docs --fix",
     "docs:lint": "eslint --ext tsx --ext ts docs && tsc --noEmit",
-    "test": "jest src",
+    "test": "yarn test:coverage",
+    "test:coverage": "jest src --coverage",
+    "test:coverage:ci": "jest src --ci --coverage",
     "test:watch": "npm run test -- --watch"
   },
   "husky": {
