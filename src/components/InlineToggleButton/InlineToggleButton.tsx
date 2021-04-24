@@ -16,7 +16,7 @@ export interface InlineToggleButtonProps
    */
   value: string;
   /**
-   * 
+   *
    */
   defaultSelected?: boolean;
 }

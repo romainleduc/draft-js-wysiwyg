@@ -73,14 +73,7 @@ const styles = (theme: Theme) => ({
 
 const BaseButton = forwardRef<HTMLButtonElement, BaseButtonProps>(
   (
-    {
-      className,
-      classes,
-      children,
-      disabled,
-      size,
-      ...rest
-    }: BaseButtonProps,
+    { className, classes, children, disabled, size, ...rest }: BaseButtonProps,
     ref
   ) => (
     <Button

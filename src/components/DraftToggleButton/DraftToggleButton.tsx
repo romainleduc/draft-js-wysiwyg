@@ -5,8 +5,7 @@ import EditorContext from '../Editor/EditorContext';
 import { ACTION_TYPES } from '../../redux/constants';
 import ReduxContext from '../ReduxContext';
 
-export interface DraftToggleButtonProps
-  extends ToggleButtonProps {
+export interface DraftToggleButtonProps extends ToggleButtonProps {
   /**
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
@@ -68,7 +67,9 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       }
     }, [onToggle, forceSelection, editorState]);
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleClick = (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
       if (editorState) {
         event.preventDefault();
 
@@ -80,7 +81,9 @@ const DraftToggleButton = forwardRef<HTMLButtonElement, DraftToggleButtonProps>(
       }
     };
 
-    const handleMouseDown = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleMouseDown = (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
       if (editorState) {
         event.preventDefault();
 

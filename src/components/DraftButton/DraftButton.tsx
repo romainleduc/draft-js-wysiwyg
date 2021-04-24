@@ -37,11 +37,7 @@ const DraftButton = forwardRef<HTMLButtonElement, DraftButtonProps>(
       }
     }, []);
 
-    return (
-      <BaseButton {...other}>
-        {children}
-      </BaseButton>
-    );
+    return <BaseButton {...other}>{children}</BaseButton>;
   }
 );
 
