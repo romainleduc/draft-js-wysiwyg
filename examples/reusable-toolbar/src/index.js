@@ -32,7 +32,6 @@ const App = () => {
           'blockquote',
           'code-block'
         ]}
-        indent
         inline
         align
         list

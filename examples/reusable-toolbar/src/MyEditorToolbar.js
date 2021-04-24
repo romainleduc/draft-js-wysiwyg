@@ -6,8 +6,6 @@ import {
   FormatAlignLeft,
   FormatAlignRight,
   FormatBold,
-  FormatIndentDecrease,
-  FormatIndentIncrease,
   FormatItalic,
   FormatListBulleted,
   FormatListNumbered,
@@ -17,20 +15,17 @@ import {
 import {
   EditorToolbar,
   BlockTypeToggleButton,
-  IndentDraftButton,
   InlineToggleButton,
   TextAlignToggleButton
 } from 'draft-js-wysiwyg';
 import { generateComponents } from './generateComponents';
 import ToggleButtonPrefab from './ToggleButtonPrefab';
-import { ButtonGroup } from '@material-ui/core';
 
 const MyEditorToolbar = ({
   align,
   inline,
   blockType,
   list,
-  indent,
   isToggleMenu: toggleMenus
 }) => {
   const isToggleMenu = (type) => {
@@ -113,18 +108,6 @@ const MyEditorToolbar = ({
             list
           )}
         </ToggleButtonPrefab>
-      }
-      {indent &&
-        <ButtonGroup size="small">
-          {generateComponents(
-            <IndentDraftButton />,
-            [
-              ['increase', <FormatIndentIncrease />],
-              ['decrease', <FormatIndentDecrease />],
-            ],
-            list
-          )}
-        </ButtonGroup>
       }
     </EditorToolbar>
   );
