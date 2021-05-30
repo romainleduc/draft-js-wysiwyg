@@ -117,6 +117,6 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupProps>(
   }
 );
 
-export default withStyles(styles, { name: 'DraftToggleButtonGroup' })(
-  ToggleButtonGroup
-);
+export default withStyles(styles, {
+  name: 'DraftToggleButtonGroup',
+})(ToggleButtonGroup);

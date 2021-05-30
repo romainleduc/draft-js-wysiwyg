@@ -17,7 +17,6 @@ import {
 } from '../../utils/editorUtils';
 import { IndentCommand } from '../IndentDraftButton/IndentDraftButton';
 import clsx from 'clsx';
-import { ACTION_TYPES } from '../../redux/constants';
 
 export interface EditorProps
   extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -56,7 +55,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     ref
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
-    const { state, dispatch } = useContext(ReduxContext);
+    const { state } = useContext(ReduxContext);
     const classes = userStyles();
 
     const isNotEmpty = () => {

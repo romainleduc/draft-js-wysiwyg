@@ -1,6 +1,3 @@
-export { BlockTypeToggleButton } from './components';
-export type { BlockTypeToggleButtonProps } from './components';
-
 export { EditorContainer } from './components';
 export type { EditorContainerProps } from './components';
 
@@ -19,15 +16,13 @@ export type { IndentDraftButtonProps } from './components';
 export { ToggleButtonGroup } from './components';
 export type { ToggleButtonGroupProps } from './components';
 
+export { ToggleButton } from './components';
+export type { ToggleButtonProps } from './components';
+
 export { ToggleButtonMenu } from './components';
 export type { ToggleButtonMenuProps } from './components';
 
-export { TextAlignToggleButton } from './components';
-export type { TextAlignToggleButtonProps } from './components';
-
-export { InlineToggleButton } from './components';
-export type { InlineToggleButtonProps } from './components';
-
+export { default as useToggle } from './hooks/useToggle';
 export {
   getDefaultBlockRenderer,
   getDefaultBlockStyle,

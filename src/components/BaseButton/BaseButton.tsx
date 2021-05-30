@@ -96,4 +96,6 @@ const BaseButton = forwardRef<HTMLButtonElement, BaseButtonProps>(
   )
 );
 
-export default withStyles(styles, { name: 'DraftBaseButton' })(BaseButton);
+export default withStyles(styles, {
+  name: 'DraftBaseButton',
+})(BaseButton);

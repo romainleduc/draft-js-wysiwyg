@@ -61,7 +61,7 @@ import ReactDOM from 'react-dom';
 import {
   EditorContainer,
   Editor,
-  InlineToggleButton,
+  ToggleButton,
   EditorToolbar,
   ToggleButtonGroup,
 } from 'draft-js-wysiwyg';
@@ -90,12 +90,12 @@ const App = () => {
     >
       <EditorToolbar>
         <ToggleButtonGroup size="small">
-          <InlineToggleButton value="BOLD">
+          <ToggleButton value="BOLD">
             <FormatBoldIcon />
-          </InlineToggleButton>
-          <InlineToggleButton value="ITALIC">
+          </ToggleButton>
+          <ToggleButton value="ITALIC">
             <FormatItalicIcon />
-          </InlineToggleButton>
+          </ToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
       <Editor ref={editor} placeholder="Enter some text.." />
