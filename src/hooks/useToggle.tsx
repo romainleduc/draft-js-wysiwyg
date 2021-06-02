@@ -3,7 +3,7 @@ import { EditorState, RichUtils } from 'draft-js';
 import { EditorContext } from '../components/Editor';
 import ReduxContext from '../components/ReduxContext';
 import { ACTION_TYPES } from '../redux/constants';
-import { textAlignBlock } from '../utils';
+import RichTextEditorUtils from '../utils/RichTextEditorUtils';
 
 interface ToggleConfig {
   disableKeyboardShortcuts?: boolean;
@@ -86,7 +86,7 @@ const useToggle = (
           case 'align-right':
           case 'align-justify':
             setEditorState(
-              textAlignBlock(newEditorState, value, options?.ignoreSelection) ||
+              RichTextEditorUtils.toggleTextAlign(newEditorState, value.substring(6), options?.ignoreSelection) ||
                 newEditorState
             );
             break;
