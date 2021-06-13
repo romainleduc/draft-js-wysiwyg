@@ -22,7 +22,6 @@ export type { ToggleButtonProps } from './components';
 export { ToggleButtonMenu } from './components';
 export type { ToggleButtonMenuProps } from './components';
 
-export { default as useToggle } from './hooks/useToggle';
 export {
   getDefaultBlockRenderer,
   getDefaultBlockStyle,

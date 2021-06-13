@@ -9,7 +9,6 @@ import {
 import { indentSelection, mergeBlockData, draftToHtml } from '../../utils';
 import EditorContext from './EditorContext';
 import { makeStyles } from '@material-ui/core';
-import ReduxContext from '../ReduxContext';
 import {
   getDefaultBlockRenderer,
   getDefaultBlockStyle,
@@ -17,6 +16,7 @@ import {
 } from '../../utils/editorUtils';
 import { IndentCommand } from '../IndentDraftButton/IndentDraftButton';
 import clsx from 'clsx';
+import useKeyCommand from '../../hooks/useKeyCommand';
 
 export interface EditorProps
   extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -27,7 +27,7 @@ export interface EditorProps
   onClick?: (event: any, editorState: EditorState | undefined) => void;
 }
 
-const userStyles = makeStyles({
+const useStyles = makeStyles({
   editor: {
     '& .public-DraftStyleDefault-ltr': {
       textAlign: 'inherit',
@@ -55,8 +55,8 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     ref
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
-    const { state } = useContext(ReduxContext);
-    const classes = userStyles();
+    const [stateKeyCommands] = useKeyCommand();
+    const classes = useStyles();
 
     const isNotEmpty = () => {
       const contentState = editorState?.getCurrentContent();
@@ -77,7 +77,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     ): DraftHandleValue => {
       if (
         keyCommands?.includes(command) ||
-        state.keyCommands.includes(command)
+        stateKeyCommands.includes(command)
       ) {
         if (Object.values(IndentCommand).includes(command as IndentCommand)) {
           const contentState = editorState.getCurrentContent();
