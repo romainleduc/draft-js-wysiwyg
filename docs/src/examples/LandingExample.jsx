@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ToggleButtonGroup as DraftToggleButtonGroup, ToggleButtonMenu, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
+import { ToggleButtonGroup as DraftToggleButtonGroup, ToggleButtonMenu, EditorContainer, EditorToolbar, Editor, IndentDraftButton, AtomicMediaButton, ToggleButton } from 'draft-js-wysiwyg';
 import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, fade, Divider, withStyles, ButtonGroup as MuiButtonGroup, Tabs, Tab, Box } from '@material-ui/core';
 import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import mediaData from './components/button/mediaData';
@@ -233,12 +233,12 @@ const LandingExample = () => {
             ['blockquote', 'Blockquote'],
             ['code-block', 'Code Block'],
           ].map((block) =>
-            <BlockTypeToggleButton
+            <ToggleButton
               key={`basic-block-${block[0]}`}
               value={block[0]}
             >
               {block[1]}
-            </BlockTypeToggleButton>
+            </ToggleButton>
           )}
         </ToggleButtonMenu>
         <Divider flexItem orientation="vertical" className={classes.divider} />
@@ -250,43 +250,43 @@ const LandingExample = () => {
             ['UNDERLINE', <FormatUnderlined />],
             ['CODE', <Code />],
           ].map(inline =>
-            <InlineToggleButton
+            <ToggleButton
               key={`inline-${inline[0]}`}
               value={inline[0]}
             >
               <Tooltip title={inline[0].charAt(0).toUpperCase() + inline[0].slice(1).toLowerCase()} placement='top'>
                 {inline[1]}
               </Tooltip>
-            </InlineToggleButton>
+            </ToggleButton>
           )}
         </ToggleButtonGroup>
         <Divider flexItem orientation="vertical" className={classes.divider} />
         <ToggleButtonGroup size='small'>
           {[
-            ['left', <FormatAlignLeft />],
-            ['center', <FormatAlignCenter />],
-            ['right', <FormatAlignRight />],
+            ['align-left', <FormatAlignLeft />],
+            ['align-center', <FormatAlignCenter />],
+            ['align-right', <FormatAlignRight />],
           ].map(inline =>
-            <TextAlignToggleButton
+            <ToggleButton
               key={`align-${inline[0]}`}
               value={inline[0]}
             >
               {inline[1]}
-            </TextAlignToggleButton>
+            </ToggleButton>
           )}
         </ToggleButtonGroup>
         <Divider flexItem orientation="vertical" className={classes.divider} />
         <ToggleButtonGroup size='small'>
-          <BlockTypeToggleButton value='unordered-list-item'>
+          <ToggleButton value='unordered-list-item'>
             <Tooltip title='Unordered list' placement='top'>
               <FormatListBulleted />
             </Tooltip>
-          </BlockTypeToggleButton>
-          <BlockTypeToggleButton value='ordered-list-item'>
+          </ToggleButton>
+          <ToggleButton value='ordered-list-item'>
             <Tooltip title='Ordered list' placement='top'>
               <FormatListNumbered />
             </Tooltip>
-          </BlockTypeToggleButton>
+          </ToggleButton>
         </ToggleButtonGroup>
         <Divider flexItem orientation="vertical" className={classes.divider} />
         <ButtonGroup size='small'>

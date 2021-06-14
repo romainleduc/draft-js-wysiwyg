@@ -5,10 +5,10 @@ title: Inline Toggle Button
 #### Import
 
 ```js
-import InlineToggleButton from 'draft-js-wysiwyg/InlineToggleButton';
+import ToggleButton from 'draft-js-wysiwyg/ToggleButton';
 
 // or
-import { InlineToggleButton } from 'draft-js-wysiwyg';
+import { ToggleButton } from 'draft-js-wysiwyg';
 ```
 
 #### Props

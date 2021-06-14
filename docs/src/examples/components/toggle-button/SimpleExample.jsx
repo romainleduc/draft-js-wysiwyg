@@ -4,7 +4,6 @@ import {
   EditorContainer,
   Editor,
   EditorToolbar,
-  InlineToggleButton,
 } from 'draft-js-wysiwyg';
 import {
   FormatBold,
@@ -34,12 +33,12 @@ const SimpleExample = () => {
             ['UNDERLINE', <FormatUnderlined />],
             ['CODE', <Code />],
           ].map(inline =>
-            <InlineToggleButton
+            <ToggleButton
               key={`inline-${inline[0]}`}
               value={inline[0]}
             >
               {inline[1]}
-            </InlineToggleButton>
+            </ToggleButton>
           )}
         </ToggleButtonGroup>
       </EditorToolbar>

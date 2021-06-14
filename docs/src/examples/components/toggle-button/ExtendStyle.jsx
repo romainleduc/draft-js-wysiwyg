@@ -4,7 +4,6 @@ import {
   EditorContainer,
   Editor,
   EditorToolbar,
-  InlineToggleButton,
 } from 'draft-js-wysiwyg';
 import { EditorState } from 'draft-js';
 
@@ -25,12 +24,12 @@ const ExtendStyle = () => {
             ['FONT_SIZE_MEDIUM', 'Medium'],
             ['FONT_SIZE_LARGE', 'Large'],
           ].map(inline =>
-            <InlineToggleButton
+            <ToggleButton
               key={`inline-${inline[0]}`}
               value={inline[0]}
             >
               {inline[1]}
-            </InlineToggleButton>
+            </ToggleButton>
           )}
         </ToggleButtonGroup>
       </EditorToolbar>
