@@ -4,7 +4,7 @@ import {
   EditorContainer,
   Editor,
   EditorToolbar,
-  TextAlignToggleButton,
+  ToggleButton,
 } from 'draft-js-wysiwyg';
 import {
   FormatAlignLeft,
@@ -25,15 +25,15 @@ const AlignSelection = () => {
     >
       <EditorToolbar>
         <ToggleButtonGroup size='small'>
-          <TextAlignToggleButton value="left">
+          <ToggleButton value="align-left-selection">
             <FormatAlignLeft />
-          </TextAlignToggleButton>
-          <TextAlignToggleButton value="center" >
+          </ToggleButton>
+          <ToggleButton value="align-center-selection" >
             <FormatAlignCenter />
-          </TextAlignToggleButton>
-          <TextAlignToggleButton value="right" >
+          </ToggleButton>
+          <ToggleButton value="align-right-selection" >
             <FormatAlignRight />
-          </TextAlignToggleButton>
+          </ToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
       <Editor placeholder='Enter some text..' />

@@ -4,6 +4,7 @@ import {
   EditorContainer,
   Editor,
   EditorToolbar,
+  ToggleButton
 } from 'draft-js-wysiwyg';
 import { EditorState } from 'draft-js';
 

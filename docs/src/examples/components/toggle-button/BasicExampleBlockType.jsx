@@ -4,7 +4,7 @@ import {
   EditorContainer,
   Editor,
   EditorToolbar,
-  BlockTypeToggleButton,
+  ToggleButton,
 } from 'draft-js-wysiwyg';
 import { EditorState } from 'draft-js';
 
@@ -32,12 +32,12 @@ const BasicExample = () => {
             ['ordered-list-item', 'OL'],
             ['code-block', 'Code Block'],
           ].map(block =>
-            <BlockTypeToggleButton
+            <ToggleButton
               key={`basic-block-${block[0]}`}
               value={block[0]}
             >
               {block[1]}
-            </BlockTypeToggleButton>
+            </ToggleButton>
           )}
         </ToggleButtonGroup>
       </EditorToolbar>

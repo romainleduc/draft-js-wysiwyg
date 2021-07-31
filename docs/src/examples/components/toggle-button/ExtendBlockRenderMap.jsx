@@ -5,7 +5,7 @@ import {
   EditorContainer,
   Editor,
   EditorToolbar,
-  BlockTypeToggleButton,
+  ToggleButton,
 } from 'draft-js-wysiwyg';
 import { EditorState } from 'draft-js';
 
@@ -26,12 +26,12 @@ const ExtendBlockRenderMap = () => {
             ['section', 'Section'],
             ['blockquote', 'Blockquote'],
           ].map(block =>
-            <BlockTypeToggleButton
+            <ToggleButton
               key={`extend-block-${block[0]}`}
               value={block[0]}
             >
               {block[1]}
-            </BlockTypeToggleButton>
+            </ToggleButton>
           )}
         </ToggleButtonGroup>
       </EditorToolbar>

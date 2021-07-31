@@ -14,9 +14,7 @@ import {
 } from '@material-ui/icons';
 import {
   EditorToolbar,
-  BlockTypeToggleButton,
-  InlineToggleButton,
-  TextAlignToggleButton
+  ToggleButton,
 } from 'draft-js-wysiwyg';
 import { generateComponents } from './generateComponents';
 import ToggleButtonPrefab from './ToggleButtonPrefab';
@@ -41,7 +39,7 @@ const MyEditorToolbar = ({
           exclusive={true}
         >
           {generateComponents(
-            <BlockTypeToggleButton />,
+            <ToggleButton />,
             [
               ['unstyled', 'Paragraph'],
               ['header-one', 'H1'],
@@ -63,7 +61,7 @@ const MyEditorToolbar = ({
           size="small"
         >
           {generateComponents(
-            <InlineToggleButton />,
+            <ToggleButton />,
             [
               ['BOLD', <FormatBold />],
               ['ITALIC', <FormatItalic />],
@@ -82,7 +80,7 @@ const MyEditorToolbar = ({
           size="small"
         >
           {generateComponents(
-            <TextAlignToggleButton />,
+            <ToggleButton />,
             [
               ['left', <FormatAlignLeft />],
               ['center', <FormatAlignCenter />],
@@ -100,7 +98,7 @@ const MyEditorToolbar = ({
           size="small"
         >
           {generateComponents(
-            <BlockTypeToggleButton />,
+            <ToggleButton />,
             [
               ['unordered-list-item', <FormatListBulleted />],
               ['ordered-list-item', <FormatListNumbered />],

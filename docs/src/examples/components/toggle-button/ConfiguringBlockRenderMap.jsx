@@ -5,7 +5,7 @@ import {
   EditorContainer,
   Editor,
   EditorToolbar,
-  BlockTypeToggleButton,
+  ToggleButton,
 } from 'draft-js-wysiwyg';
 import { EditorState } from 'draft-js';
 
@@ -21,12 +21,12 @@ const ConfiguringBlockRenderMap = () => {
     >
       <EditorToolbar>
         <ToggleButtonGroup size='small'>
-          <BlockTypeToggleButton value="header-one">
+          <ToggleButton value="header-one">
             H1
-          </BlockTypeToggleButton>
-          <BlockTypeToggleButton value="header-two">
+          </ToggleButton>
+          <ToggleButton value="header-two">
             H2
-          </BlockTypeToggleButton>
+          </ToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
       <Editor
