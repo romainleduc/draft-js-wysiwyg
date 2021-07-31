@@ -105,7 +105,10 @@ const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
                 );
                 break;
             default:
-              return null;
+              setEditorState(
+                RichUtils.toggleInlineStyle(newEditorState, value)
+              );
+              break;
           }
         }, 1);
       }
