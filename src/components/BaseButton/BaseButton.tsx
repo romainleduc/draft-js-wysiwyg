@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import {
-  fade,
+  alpha,
   ButtonProps,
   Button,
   capitalize,
@@ -36,15 +36,15 @@ const styles = (theme: Theme) => ({
     minWidth: 0,
     borderRadius: theme.shape.borderRadius,
     padding: 11,
-    border: `1px solid ${fade(theme.palette.action.active, 0.12)}`,
-    color: fade(theme.palette.action.active, 0.38),
+    border: `1px solid ${alpha(theme.palette.action.active, 0.12)}`,
+    color: alpha(theme.palette.action.active, 0.38),
     '&$disabled': {
-      color: fade(theme.palette.action.disabled, 0.12),
+      color: alpha(theme.palette.action.disabled, 0.12),
     },
     '&:hover': {
       textDecoration: 'none',
       // Reset on mouse devices
-      backgroundColor: fade(theme.palette.text.primary, 0.05),
+      backgroundColor: alpha(theme.palette.text.primary, 0.05),
       '@media (hover: none)': {
         backgroundColor: 'transparent',
       },

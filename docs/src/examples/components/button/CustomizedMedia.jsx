@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { EditorContainer, EditorToolbar, Editor, AtomicMediaButton, getDefaultBlockRenderer } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, Box, Tabs, Tab, GridList, GridListTile, fade } from '@material-ui/core';
+import { makeStyles, Modal, IconButton, Tooltip, Box, Tabs, Tab, GridList, GridListTile, alpha } from '@material-ui/core';
 import { ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import { EditorState } from 'draft-js';
 import mediaData from './customizeMediaData';
@@ -19,14 +19,14 @@ const useStyles = makeStyles((theme => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius,
-    border: `solid 1px ${fade('#000', .7)}`,
+    border: `solid 1px ${alpha('#000', .7)}`,
     padding: theme.spacing(2),
     outline: 0,
   },
   media: {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    border: `solid 1px ${fade('#000', .6)}`,
+    border: `solid 1px ${alpha('#000', .6)}`,
     width: '100%',
     height: '100%',
   },
