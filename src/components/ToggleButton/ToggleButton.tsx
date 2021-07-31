@@ -16,7 +16,6 @@ export interface ToggleButtonProps extends Omit<MuiToggleButtonProps, 'value'> {
   disableKeyboardShortcuts?: boolean;
   defaultSelected?: boolean;
   forceSelection?: boolean;
-  ignoreSelection?: boolean;
   value: string;
 }
 
@@ -27,7 +26,6 @@ const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       disableKeyboardShortcuts,
       defaultSelected,
       forceSelection = false,
-      ignoreSelection = false,
       onMouseDown,
       onClick,
       ...other
@@ -82,24 +80,36 @@ const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
                 RichUtils.toggleInlineStyle(newEditorState, value)
               );
               break;
-            case 'align-left':
-            case 'align-center':
-            case 'align-right':
-            case 'align-justify':
+            case 'align-left-selection':
+            case 'align-center-selection':
+            case 'align-right-selection':
+            case 'align-justify-selection':
               setEditorState(
                 RichTextEditorUtils.toggleTextAlign(
                   newEditorState,
-                  value.substring(6),
-                  ignoreSelection
+                  value.split('-')[1],
+                  false
                 ) || newEditorState
               );
               break;
+              case 'align-left-content':
+              case 'align-center-content':
+              case 'align-right-content':
+              case 'align-justify-content':
+                setEditorState(
+                  RichTextEditorUtils.toggleTextAlign(
+                    newEditorState,
+                    value.split('-')[1],
+                    true
+                  ) || newEditorState
+                );
+                break;
             default:
               return null;
           }
         }, 1);
       }
-    }, [editorState, setEditorState, forceSelection, ignoreSelection, value]);
+    }, [editorState, setEditorState, forceSelection, value]);
 
     const handleClick = useCallback(
       (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -121,18 +131,32 @@ const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     );
 
     const getSelectedToggles = (): string[] => {
-      return editorState
-        ? [
-            ...editorState.getCurrentInlineStyle().toArray(),
-            ...editorState
-              .getCurrentContent()
-              .getBlockForKey(editorState.getSelection().getStartKey())
-              .getData()
-              .toArray()
-              .map((value) => value.replace(value, `align-${value}`)),
-            RichUtils.getCurrentBlockType(editorState),
-          ]
-        : [];
+      if (!editorState) {
+        return [];
+      }
+
+      const selectedData: string[] = [];
+
+      const currentContentData = editorState
+        .getCurrentContent()
+        .getBlockForKey(editorState.getSelection()
+        .getStartKey())
+        .getData();
+
+      if (currentContentData) {
+        const textAlign = currentContentData.get('textAlign');
+        const textAlignType = currentContentData.get('textAlignType');
+
+        if (textAlign && textAlignType) {
+          selectedData.push(`align-${textAlign}-${textAlignType}`);
+        }
+      }
+
+      return [
+        ...selectedData,
+        ...editorState.getCurrentInlineStyle().toArray(),
+        RichUtils.getCurrentBlockType(editorState)
+      ];
     };
 
     return (

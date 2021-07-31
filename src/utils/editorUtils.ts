@@ -23,7 +23,7 @@ export const getDefaultBlockStyle = (contentBlock: ContentBlock): string => {
   const textAlign = contentBlock.getData()?.get('textAlign');
 
   if (textAlign) {
-    return `align-${textAlign}`;
+    return `align-${textAlign}-selection`;
   }
 
   return '';

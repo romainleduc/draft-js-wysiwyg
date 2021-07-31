@@ -263,12 +263,12 @@ const LandingExample = () => {
         <Divider flexItem orientation="vertical" className={classes.divider} />
         <ToggleButtonGroup size='small'>
           {[
-            ['align-left', <FormatAlignLeft />],
-            ['align-center', <FormatAlignCenter />],
-            ['align-right', <FormatAlignRight />],
+            ['align-left-selection', <FormatAlignLeft />],
+            ['align-center-selection', <FormatAlignCenter />],
+            ['align-right-selection', <FormatAlignRight />],
           ].map(inline =>
             <ToggleButton
-              key={`align-${inline[0]}`}
+              key={`align-${inline[0]}-selection`}
               value={inline[0]}
             >
               {inline[1]}

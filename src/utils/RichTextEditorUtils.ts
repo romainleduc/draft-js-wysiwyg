@@ -9,7 +9,10 @@ const RichTextEditorUtils = {
   ) {
     const contentState = editorState.getCurrentContent();
     const selectionState = editorState.getSelection();
-    const blockData = { textAlign: value };
+    const blockData = {
+      textAlign: value,
+      textAlignType: ignoreSelection ? 'content': 'selection',
+    };
 
     if (ignoreSelection) {
       const contentBlocks = contentState.getBlocksAsArray();

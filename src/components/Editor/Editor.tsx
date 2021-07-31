@@ -32,13 +32,13 @@ const useStyles = makeStyles({
     '& .public-DraftStyleDefault-ltr': {
       textAlign: 'inherit',
     },
-    '& .align-left': {
+    '& .align-left-selection': {
       textAlign: 'left',
     },
-    '& .align-center': {
+    '& .align-center-selection': {
       textAlign: 'center',
     },
-    '& .align-right': {
+    '& .align-right-selection': {
       textAlign: 'right',
     },
   },
