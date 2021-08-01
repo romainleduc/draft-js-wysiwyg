@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ToggleButtonGroup as DraftToggleButtonGroup, ToggleButtonMenu, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, fade, Divider, withStyles, ButtonGroup as MuiButtonGroup, Tabs, Tab, Box } from '@material-ui/core';
+import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, alpha, Divider, withStyles, ButtonGroup as MuiButtonGroup, Tabs, Tab, Box } from '@material-ui/core';
 import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
 import mediaData from './components/button/mediaData';
 import { EditorState } from 'draft-js';
@@ -44,14 +44,14 @@ const useStyles = makeStyles((theme => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius,
-    border: `solid 1px ${fade('#000', .7)}`,
+    border: `solid 1px ${alpha('#000', .7)}`,
     padding: theme.spacing(2),
     outline: 0,
   },
   media: {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    border: `solid 1px ${fade('#000', .6)}`,
+    border: `solid 1px ${alpha('#000', .6)}`,
     width: '100%',
     height: '100%',
   },
