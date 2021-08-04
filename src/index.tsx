@@ -4,6 +4,9 @@ export type { BlockTypeToggleButtonProps } from './components';
 export { EditorContainer } from './components';
 export type { EditorContainerProps } from './components';
 
+export { EditorProvider } from './components';
+export type { EditorProviderProps } from './components';
+
 export { EditorToolbar } from './components';
 export type { EditorToolbarProps } from './components';
 

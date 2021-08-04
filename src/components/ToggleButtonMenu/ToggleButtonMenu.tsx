@@ -33,6 +33,7 @@ const ToggleButtonMenu = ({
   children,
   size = 'medium',
   buttonProps,
+  defaultValue,
   ...other
 }: ToggleButtonMenuProps): JSX.Element => {
   const anchorRef = React.useRef(null);
@@ -62,7 +63,7 @@ const ToggleButtonMenu = ({
         size={size}
         {...buttonProps}
       >
-        {React.Children.map(children, (child) => {
+        {React.Children.map(children, (child, key) => {
           if (!React.isValidElement(child)) {
             return null;
           }
@@ -75,6 +76,8 @@ const ToggleButtonMenu = ({
               RichUtils.getCurrentBlockType(editorState) === value
             ) {
               return child.props.children;
+            } else if (key === React.Children.count(children) - 1) {
+              return defaultValue;
             }
           }
         })}

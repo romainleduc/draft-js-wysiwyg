@@ -24,5 +24,11 @@
     "@typescript-eslint/explicit-module-boundary-types": [
       "error"
     ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
+
 }
