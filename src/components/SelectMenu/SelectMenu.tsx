@@ -64,17 +64,18 @@ const SelectMenu = ({
   if (editorState) {
     switch (type) {
       case 'inline':
-        textButton = editorState
+        const inlineStyles: string[] = [];
+        editorState
           .getCurrentInlineStyle()
           .toArray()
-          .map((inlineStyle) => {
+          .forEach((inlineStyle) => {
             const choice = choices.find(({ value }) => value === inlineStyle);
 
             if (choice) {
-              return choice.label;
+              inlineStyles.push(choice.label);
             }
-          })
-          .join(',');
+          });
+        textButton = inlineStyles.join(',');
         break;
       case 'blockType':
         textButton = choices.find(

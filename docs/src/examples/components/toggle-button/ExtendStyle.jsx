@@ -9,7 +9,7 @@ import {
   ToggleButtonMenu
 } from 'draft-js-wysiwyg';
 import { EditorState } from 'draft-js';
-import { makeStyles, alpha } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 const customStyleMaps = [
   {
