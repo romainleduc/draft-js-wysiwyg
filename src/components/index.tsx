@@ -27,3 +27,8 @@ export type { IndentDraftButtonProps } from './IndentDraftButton';
 
 export { AtomicMediaButton } from './Media';
 export type { AtomicMediaButtonProps } from './Media';
+
+export { default as EditorProvider } from './EditorProvider';
+export type { EditorProviderProps } from './EditorProvider';
+
+export { default as SelectMenu } from './SelectMenu';

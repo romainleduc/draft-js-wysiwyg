@@ -1,8 +1,9 @@
 import React, { forwardRef, useCallback, useContext } from 'react';
-import { EditorState, RichUtils } from 'draft-js';
+import { EditorState, Modifier, RichUtils } from 'draft-js';
 import DraftToggleButton from '../DraftToggleButton/DraftToggleButton';
 import { ToggleButtonProps } from '@material-ui/lab';
 import EditorContext from '../Editor/EditorContext';
+import EditorThemeContext from '../EditorProvider/EditorProviderContext';
 
 export interface InlineToggleButtonProps
   extends Omit<ToggleButtonProps, 'value' | 'selected'> {
@@ -26,12 +27,59 @@ const InlineToggleButton = forwardRef<
   InlineToggleButtonProps
 >(({ value, children, ...rest }: InlineToggleButtonProps, ref) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
+  const { customStyleMaps, getCustomStyleMapOfKey } = useContext(EditorThemeContext);
 
   const handleToggle = useCallback(
     (newEditorState: EditorState): void => {
-      setEditorState?.(RichUtils.toggleInlineStyle(newEditorState, value));
+      const group = getCustomStyleMapOfKey(value);
+
+      let nextEditorState: EditorState;
+
+      if (group?.exclusive) {
+        const selection = newEditorState.getSelection();
+        
+        // Let's just allow one style at a time. Turn off all active colors.
+        const nextContentState = Object.keys(group.styles)
+          .reduce((contentState, style) => {
+            return Modifier.removeInlineStyle(contentState, selection, `${group.group}_${style}`)
+          }, newEditorState.getCurrentContent());
+    
+        nextEditorState = EditorState.push(
+          newEditorState,
+          nextContentState,
+          'change-inline-style'
+        );
+    
+        const currentStyle = newEditorState.getCurrentInlineStyle();
+    
+        // Unset style override for current color.
+        if (selection.isCollapsed()) {
+          nextEditorState = currentStyle.reduce((state: any, style: any) => {
+            const styleGroup = getCustomStyleMapOfKey(style);
+            const valueGroup = getCustomStyleMapOfKey(value);
+
+            if (styleGroup?.group === valueGroup?.group) {
+              return RichUtils.toggleInlineStyle(state, style);
+            }
+
+            return state;
+          }, nextEditorState);
+        }
+    
+        // If the style is being toggled on, apply it.
+        if (!currentStyle.has(value)) {
+          nextEditorState = RichUtils.toggleInlineStyle(
+            nextEditorState,
+            value
+          );
+        }
+      } else {
+        nextEditorState = RichUtils.toggleInlineStyle(newEditorState, value);
+      }
+
+      setEditorState?.(nextEditorState);
     },
-    [value]
+    [customStyleMaps, value]
   );
 
   return (
