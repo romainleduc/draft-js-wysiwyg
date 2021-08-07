@@ -19,6 +19,8 @@ import { BlockTypeToggleButton } from '../BlockTypeToggleButton';
 import { RichUtils } from 'draft-js';
 
 export interface ToggleButtonMenuProps extends ToggleButtonGroupProps {
+  minWidth?: number;
+  maxWidth?: number;
   label?: string;
   exclusive?: boolean;
   openIcon?: React.ReactNode;
@@ -35,22 +37,22 @@ const useStyles = makeStyles((theme) => ({
   menuItem: {
     border: 'none',
   },
+  select: {},
 }));
 
 const SelectMenu = ({
+  minWidth = 150,
+  maxWidth = 200,
   label = '',
   type,
   exclusive,
   openIcon = <ArrowDropUp />,
   closeIcon = <ArrowDropDown />,
   popperProps,
-  children,
   disableKeyboardShortcuts,
   size = 'medium',
   buttonProps,
-  defaultValue,
   choices,
-  ...other
 }: ToggleButtonMenuProps): JSX.Element => {
   const anchorRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
@@ -112,12 +114,13 @@ const SelectMenu = ({
   };
 
   return (
-    <>
+    <div style={{ minWidth, maxWidth }}>
       <BaseButton
         ref={anchorRef}
         endIcon={open ? openIcon : closeIcon}
         onClick={handleToggle}
         size={size}
+        fullWidth
         {...buttonProps}
       >
         {textButton || label}
@@ -128,7 +131,7 @@ const SelectMenu = ({
         open={open}
         {...popperProps}
       >
-        <Paper>
+        <Paper style={{ minWidth, maxWidth }}>
           <ClickAwayListener onClickAway={handleClose}>
             <MenuList>
               {choices.map((choice) => {
@@ -140,6 +143,7 @@ const SelectMenu = ({
                   size,
                   value: choice.value,
                   children: choice.label,
+                  disableKeyboardShortcuts,
                 };
 
                 switch (type) {
@@ -157,7 +161,7 @@ const SelectMenu = ({
           </ClickAwayListener>
         </Paper>
       </Popper>
-    </>
+    </div>
   );
 };
 
