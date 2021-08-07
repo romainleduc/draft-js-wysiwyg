@@ -7,11 +7,10 @@ import {
   ButtonProps,
   MenuList,
   MenuItem,
+  makeStyles,
 } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
-import {
-  ToggleButtonGroupProps,
-} from '../ToggleButtonGroup';
+import { ToggleButtonGroupProps } from '../ToggleButtonGroup';
 import EditorContext from '../Editor/EditorContext';
 import BaseButton from '../BaseButton/BaseButton';
 import InlineToggleButton from '../InlineToggleButton';
@@ -28,9 +27,15 @@ export interface ToggleButtonMenuProps extends ToggleButtonGroupProps {
   children?: React.ReactNode;
   defaultValue?: string | string[];
   buttonProps: ButtonProps;
-  choices: { label: string, value: string }[];
+  choices: { label: string; value: string }[];
   type: 'inline' | 'blockType' | 'textAlign';
 }
+
+const useStyles = makeStyles((theme) => ({
+  menuItem: {
+    border: 'none',
+  },
+}));
 
 const SelectMenu = ({
   label = '',
@@ -50,18 +55,17 @@ const SelectMenu = ({
   const anchorRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
   const { editorState } = useContext(EditorContext) || {};
+  const classes = useStyles();
 
-  let ToggleButton;
   let textButton;
 
   if (editorState) {
     switch (type) {
       case 'inline':
-        ToggleButton = InlineToggleButton;
         textButton = editorState
           .getCurrentInlineStyle()
           .toArray()
-          .map(inlineStyle => {
+          .map((inlineStyle) => {
             const choice = choices.find(({ value }) => value === inlineStyle);
 
             if (choice) {
@@ -71,24 +75,24 @@ const SelectMenu = ({
           .join(',');
         break;
       case 'blockType':
-        ToggleButton = BlockTypeToggleButton;
-        textButton = choices.find(({ value }) => value === RichUtils.getCurrentBlockType(editorState))?.label;
+        textButton = choices.find(
+          ({ value }) => value === RichUtils.getCurrentBlockType(editorState)
+        )?.label;
         break;
       case 'textAlign':
-        ToggleButton = TextAlignToggleButton
         textButton = editorState
           .getCurrentContent()
           .getBlockForKey(editorState.getSelection().getStartKey())
           .getData()
           .toArray()
-          .map(textAlign => {
+          .map((textAlign) => {
             const choice = choices.find(({ value }) => value === textAlign);
 
             if (choice) {
               return choice.label;
             }
           })
-          .join(',')
+          .join(',');
         break;
     }
   }
@@ -127,18 +131,28 @@ const SelectMenu = ({
         <Paper>
           <ClickAwayListener onClickAway={handleClose}>
             <MenuList>
-              {choices.map(choice =>
-                <MenuItem
-                  forceSelection
-                  component={ToggleButton}
-                  onClick={handleClick}
-                  size={size}
-                  value={choice.value}
-                  fullWidth
-                >
-                  {choice.label}
-                </MenuItem>
-              )}
+              {choices.map((choice) => {
+                const props = {
+                  className: classes.menuItem,
+                  forceSelection: true,
+                  onClick: handleClick,
+                  component: MenuItem,
+                  size,
+                  value: choice.value,
+                  children: choice.label,
+                };
+
+                switch (type) {
+                  case 'inline':
+                    return <InlineToggleButton {...props} />;
+                  case 'blockType':
+                    return <BlockTypeToggleButton {...props} />;
+                  case 'textAlign':
+                    return <TextAlignToggleButton {...props} />;
+                  default:
+                    return null;
+                }
+              })}
             </MenuList>
           </ClickAwayListener>
         </Paper>
