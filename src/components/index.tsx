@@ -30,3 +30,5 @@ export type { AtomicMediaButtonProps } from './Media';
 
 export { default as EditorProvider } from './EditorProvider';
 export type { EditorProviderProps } from './EditorProvider';
+
+export { default as SelectMenu } from './SelectMenu';

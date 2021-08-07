@@ -37,3 +37,5 @@ export {
   getDefaultKeyBinding,
   createEditorStateFromHTML,
 } from './utils/editorUtils';
+
+export { SelectMenu } from './components';
