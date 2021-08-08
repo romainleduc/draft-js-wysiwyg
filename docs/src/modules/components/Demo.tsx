@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
       },
       '& .MuiButtonBase-root': {
         color: 'rgba(0, 0, 0, 0.54)',
-      }
+      },
     },
     '& .draft-editor': {
       border: `1px solid ${theme.palette.divider}`,

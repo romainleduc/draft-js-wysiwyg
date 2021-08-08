@@ -9,21 +9,29 @@ interface useInlineToggleProps {
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
    */
-   disableKeyboardShortcuts?: boolean;
-   /**
-    *
-    */
-   value: 'left' | 'center' | 'right' | 'justify';
-   /**
-    *
-    */
-   ignoreSelection?: boolean;
-   /**
-    *
-    */
-   defaultSelected?: boolean;
-   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
-   onMouseDown?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+  disableKeyboardShortcuts?: boolean;
+  /**
+   *
+   */
+  value: 'left' | 'center' | 'right' | 'justify';
+  /**
+   *
+   */
+  ignoreSelection?: boolean;
+  /**
+   *
+   */
+  defaultSelected?: boolean;
+  onClick?: (
+    event:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+  ) => void;
+  onMouseDown?: (
+    event:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+  ) => void;
 }
 
 const useTextAlignToggle = ({
@@ -32,7 +40,7 @@ const useTextAlignToggle = ({
   defaultSelected,
   ignoreSelection,
   onClick,
-  onMouseDown
+  onMouseDown,
 }: useInlineToggleProps) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
 
@@ -60,12 +68,7 @@ const useTextAlignToggle = ({
         );
       } else {
         setEditorState?.(
-          setBlockData(
-            newEditorState,
-            contentState,
-            selectionState,
-            blockData
-          )
+          setBlockData(newEditorState, contentState, selectionState, blockData)
         );
       }
     },
@@ -78,7 +81,7 @@ const useTextAlignToggle = ({
     defaultSelected,
     onClick,
     onMouseDown,
-    onToggle: handleToggle
+    onToggle: handleToggle,
   });
 
   return {
@@ -91,8 +94,7 @@ const useTextAlignToggle = ({
         .getData()
         .toArray()
         .includes(value),
-    
-  }
-}
+  };
+};
 
 export default useTextAlignToggle;

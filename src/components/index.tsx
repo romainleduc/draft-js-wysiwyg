@@ -41,4 +41,3 @@ export type { BlockTypeMenuItemProps } from './BlockTypeMenuItem';
 
 export { default as TextAlignMenuItem } from './TextAlignMenuItem';
 export type { TextAlignMenuItemProps } from './TextAlignMenuItem';
-

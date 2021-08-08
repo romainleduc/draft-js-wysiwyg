@@ -8,17 +8,25 @@ interface useInlineToggleProps {
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
    */
-   disableKeyboardShortcuts?: boolean;
-   /**
-    * The inline style value to associate with the button
-    */
-   value: string;
-   /**
-    *
-    */
-   defaultSelected?: boolean;
-   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
-   onMouseDown?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+  disableKeyboardShortcuts?: boolean;
+  /**
+   * The inline style value to associate with the button
+   */
+  value: string;
+  /**
+   *
+   */
+  defaultSelected?: boolean;
+  onClick?: (
+    event:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+  ) => void;
+  onMouseDown?: (
+    event:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+  ) => void;
 }
 
 const useBlockTypeToggle = ({
@@ -26,7 +34,7 @@ const useBlockTypeToggle = ({
   value,
   defaultSelected,
   onClick,
-  onMouseDown
+  onMouseDown,
 }: useInlineToggleProps) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
 
@@ -43,13 +51,14 @@ const useBlockTypeToggle = ({
     defaultSelected,
     onClick,
     onMouseDown,
-    onToggle: handleToggle
+    onToggle: handleToggle,
   });
 
   return {
     ...props,
-    selected: editorState && value === RichUtils.getCurrentBlockType(editorState),
-  }
-}
+    selected:
+      editorState && value === RichUtils.getCurrentBlockType(editorState),
+  };
+};
 
 export default useBlockTypeToggle;

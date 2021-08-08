@@ -22,25 +22,34 @@ export interface InlineToggleButtonProps
 const InlineToggleButton = forwardRef<
   HTMLButtonElement,
   InlineToggleButtonProps
->(({ disableKeyboardShortcuts, value, defaultSelected, onClick, onMouseDown, children, ...rest }: InlineToggleButtonProps, ref) => {
-  const menuItemProps = useInlineToggle({
-    disableKeyboardShortcuts,
-    value,
-    defaultSelected,
-    onClick,
-    onMouseDown
-  });
+>(
+  (
+    {
+      disableKeyboardShortcuts,
+      value,
+      defaultSelected,
+      onClick,
+      onMouseDown,
+      children,
+      ...rest
+    }: InlineToggleButtonProps,
+    ref
+  ) => {
+    const menuItemProps = useInlineToggle({
+      disableKeyboardShortcuts,
+      value,
+      defaultSelected,
+      onClick,
+      onMouseDown,
+    });
 
-  return (
-    <ToggleButton
-      ref={ref}
-      {...menuItemProps}
-      {...rest}
-    >
-      {children}
-    </ToggleButton>
-  );
-});
+    return (
+      <ToggleButton ref={ref} {...menuItemProps} {...rest}>
+        {children}
+      </ToggleButton>
+    );
+  }
+);
 
 InlineToggleButton.displayName = 'InlineToggleButton';
 

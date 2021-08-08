@@ -75,18 +75,19 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     };
 
     const getCustomStyleMap = (): DraftStyleMap => {
-      let nextCustomStyleMap = new Map();
+      const nextCustomStyleMap = new Map();
 
-      customStyleMaps.forEach(customStyleMap => {
-        Object
-          .keys(customStyleMap.styles)
-          .forEach(style => {
-            nextCustomStyleMap.set([`${customStyleMap.group}_${style}`], customStyleMap.styles[style]);
-          });
+      customStyleMaps.forEach((customStyleMap) => {
+        Object.keys(customStyleMap.styles).forEach((style) => {
+          nextCustomStyleMap.set(
+            [`${customStyleMap.group}_${style}`],
+            customStyleMap.styles[style]
+          );
+        });
       });
 
       return Object.fromEntries(nextCustomStyleMap);
-    }
+    };
 
     const handleKeyCommand = (
       command: string,

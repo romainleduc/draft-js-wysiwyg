@@ -22,22 +22,28 @@ export interface BlockTypeToggleButtonProps
 const BlockTypeToggleButton = forwardRef<
   HTMLButtonElement,
   BlockTypeToggleButtonProps
->(({ disableKeyboardShortcuts, value, defaultSelected, onClick, onMouseDown, ...other }: BlockTypeToggleButtonProps, ref) => {
-  const menuItemProps = useBlockTypeToggle({
-    disableKeyboardShortcuts,
-    value,
-    defaultSelected,
-    onClick,
-    onMouseDown
-  });
+>(
+  (
+    {
+      disableKeyboardShortcuts,
+      value,
+      defaultSelected,
+      onClick,
+      onMouseDown,
+      ...other
+    }: BlockTypeToggleButtonProps,
+    ref
+  ) => {
+    const menuItemProps = useBlockTypeToggle({
+      disableKeyboardShortcuts,
+      value,
+      defaultSelected,
+      onClick,
+      onMouseDown,
+    });
 
-  return (
-    <ToggleButton
-      ref={ref}
-      {...menuItemProps}
-      {...other}
-    />
-  );
-});
+    return <ToggleButton ref={ref} {...menuItemProps} {...other} />;
+  }
+);
 
 export default BlockTypeToggleButton;

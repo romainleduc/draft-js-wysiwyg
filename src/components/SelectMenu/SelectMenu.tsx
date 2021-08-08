@@ -7,7 +7,7 @@ import {
   ButtonProps,
   MenuList,
   makeStyles,
-  Button
+  Button,
 } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import { ToggleButtonGroupProps } from '../ToggleButtonGroup';
@@ -127,7 +127,10 @@ const SelectMenu = ({
   };
 
   return (
-    <div className={clsx(className, classes.select)} style={{ minWidth, maxWidth }}>
+    <div
+      className={clsx(className, classes.select)}
+      style={{ minWidth, maxWidth }}
+    >
       <Button
         ref={anchorRef}
         endIcon={open ? openIcon : closeIcon}
@@ -160,9 +163,9 @@ const SelectMenu = ({
 
                 switch (type) {
                   case 'inline':
-                    return (<InlineMenuItem {...props}/>);
+                    return <InlineMenuItem {...props} />;
                   case 'blockType':
-                    return (<BlockTypeMenuItem {...props} />);
+                    return <BlockTypeMenuItem {...props} />;
                   case 'textAlign':
                     return <TextAlignMenuItem {...props} />;
                   default:

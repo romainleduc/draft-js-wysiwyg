@@ -9,13 +9,21 @@ interface useToggleProps {
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
    */
-   disableKeyboardShortcuts?: boolean;
-   keyCommand: string;
-   onToggle: (editorState: EditorState) => void;
-   defaultSelected?: boolean;
-   forceSelection?: boolean;
-   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
-   onMouseDown?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+  disableKeyboardShortcuts?: boolean;
+  keyCommand: string;
+  onToggle: (editorState: EditorState) => void;
+  defaultSelected?: boolean;
+  forceSelection?: boolean;
+  onClick?: (
+    event:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+  ) => void;
+  onMouseDown?: (
+    event:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+  ) => void;
 }
 
 const useToggle = ({
@@ -25,7 +33,7 @@ const useToggle = ({
   onClick,
   onMouseDown,
   defaultSelected,
-  forceSelection
+  forceSelection,
 }: useToggleProps) => {
   const { editorState } = useContext(EditorContext) || {};
   const { dispatch } = useContext(ReduxContext);
@@ -61,7 +69,9 @@ const useToggle = ({
   }, [onToggle, forceSelection, editorState]);
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLLIElement, MouseEvent>
+    event:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {
     if (editorState) {
       event.preventDefault();
@@ -75,7 +85,9 @@ const useToggle = ({
   };
 
   const handleMouseDown = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLLIElement, MouseEvent>
+    event:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {
     if (editorState) {
       event.preventDefault();
@@ -89,7 +101,7 @@ const useToggle = ({
   return {
     onClick: handleClick,
     onMouseDown: handleMouseDown,
-  }
-}
+  };
+};
 
 export default useToggle;

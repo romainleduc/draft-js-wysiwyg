@@ -46,15 +46,11 @@ const TextAlignToggleButton = forwardRef<
       defaultSelected,
       ignoreSelection,
       onClick,
-      onMouseDown
+      onMouseDown,
     });
 
     return (
-      <ToggleButton
-        ref={ref}
-        {...menuItemProps}
-        {...other}
-      >
+      <ToggleButton ref={ref} {...menuItemProps} {...other}>
         {children}
       </ToggleButton>
     );

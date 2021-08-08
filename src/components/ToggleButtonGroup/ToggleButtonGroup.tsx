@@ -112,7 +112,8 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupProps>(
                 child.props.className
               ),
               disableKeyboardShortcuts:
-                child.props.disableKeyboardShortcuts || disableKeyboardShortcuts,
+                child.props.disableKeyboardShortcuts ||
+                disableKeyboardShortcuts,
               size: child.props.size || size,
             });
           })}
