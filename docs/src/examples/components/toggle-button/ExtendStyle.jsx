@@ -6,10 +6,12 @@ import {
   EditorToolbar,
   InlineToggleButton,
   EditorProvider,
-  ToggleButtonMenu
+  ToggleButtonMenu,
+  SelectMenu
 } from 'draft-js-wysiwyg';
 import { EditorState } from 'draft-js';
 import { makeStyles } from '@material-ui/core';
+import { Colorize as ColorizeIcon } from '@material-ui/icons';
 
 const customStyleMaps = [
   {
@@ -48,10 +50,13 @@ const customStyleMaps = [
 ];
 
 const useStyles = makeStyles(theme => ({
-  button: {
+  menuButton: {
     backgroundColor: theme.palette.common.white,
     marginRight: theme.spacing(.5),
-  }
+  },
+  select: {
+    marginRight: 5,
+  },
 }));
 
 const ExtendStyle = () => {
@@ -67,55 +72,81 @@ const ExtendStyle = () => {
         onChange={setEditorState}
       >
         <EditorToolbar>
-          <ToggleButtonMenu
-            exclusive
-            orientation="vertical"
-            size="small"
-            defaultValue="Font"
+          <SelectMenu
+              className={classes.select}
+              buttonProps={{
+                className: classes.menuButton,
+              }}
+              exclusive
+              minWidth={130}
+              label="Font family"
+              size="small"
+              type="inline"
+              choices={[
+                {
+                  label: 'Roboto',
+                  value: 'FONT_FAMILY_ROBOTO',
+                },
+                {
+                  label: 'Dancing',
+                  value: 'FONT_FAMILY_DANCING',
+                },
+                {
+                  label: 'Ubuntu',
+                  value: 'FONT_FAMILY_UBUNTU',
+                },
+              ]}
+            />
+          <SelectMenu
+            className={classes.select}
             buttonProps={{
-              className: classes.button,
+              className: classes.menuButton,
             }}
-          >
-            <InlineToggleButton value="FONT_FAMILY_ROBOTO">
-              Roboto
-            </InlineToggleButton>
-            <InlineToggleButton value="FONT_FAMILY_DANCING">
-              Dancing
-            </InlineToggleButton>
-            <InlineToggleButton value="FONT_FAMILY_UBUNTU">
-              Ubuntu
-            </InlineToggleButton>
-          </ToggleButtonMenu>
-          <ToggleButtonMenu
             exclusive
-            orientation="vertical"
+            minWidth={100}
+            label="Size"
             size="small"
-            defaultValue="Size"
+            type="inline"
+            choices={[
+              {
+                label: 'Small',
+                value: 'FONT_SIZE_SMALL',
+              },
+              {
+                label: 'Medium',
+                value: 'FONT_SIZE_MEDIUM',
+              },
+              {
+                label: 'Large',
+                value: 'FONT_SIZE_LARGE',
+              },
+            ]}
+          />
+          <SelectMenu
+            className={classes.select}
             buttonProps={{
-              className: classes.button,
+              className: classes.menuButton,
             }}
-          >
-            <InlineToggleButton value="FONT_SIZE_SMALL">
-              Small
-            </InlineToggleButton>
-            <InlineToggleButton value="FONT_SIZE_MEDIUM">
-              Medium
-            </InlineToggleButton>
-            <InlineToggleButton value="FONT_SIZE_LARGE">
-              Large
-            </InlineToggleButton>
-          </ToggleButtonMenu>
-          <ToggleButtonGroup size="small">
-            <InlineToggleButton value="COLOR_RED">
-              Red
-            </InlineToggleButton>
-            <InlineToggleButton value="COLOR_ORANGE">
-              Orange
-            </InlineToggleButton>
-            <InlineToggleButton value="COLOR_YELLOW">
-              Yellow
-            </InlineToggleButton>
-          </ToggleButtonGroup>
+            exclusive
+            minWidth={100}
+            label={<ColorizeIcon />}
+            size="small"
+            type="inline"
+            choices={[
+              {
+                label: 'Red',
+                value: 'COLOR_RED',
+              },
+              {
+                label: 'Orange',
+                value: 'COLOR_ORANGE',
+              },
+              {
+                label: 'Yellow',
+                value: 'COLOR_YELLOW',
+              },
+            ]}
+          />
         </EditorToolbar>
         <Editor placeholder='Enter some text..' />
       </EditorContainer>
