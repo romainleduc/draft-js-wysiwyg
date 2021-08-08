@@ -39,3 +39,12 @@ export {
 } from './utils/editorUtils';
 
 export { SelectMenu } from './components';
+
+export { InlineMenuItem } from './components';
+export type { InlineMenuItemProps } from './components';
+
+export { BlockTypeMenuItem } from './components';
+export type { BlockTypeMenuItemProps } from './components';
+
+export { TextAlignMenuItem } from './components';
+export type { TextAlignMenuItemProps } from './components';

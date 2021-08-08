@@ -6,17 +6,17 @@ import {
   ClickAwayListener,
   ButtonProps,
   MenuList,
-  MenuItem,
   makeStyles,
+  Button
 } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import { ToggleButtonGroupProps } from '../ToggleButtonGroup';
 import EditorContext from '../Editor/EditorContext';
-import BaseButton from '../BaseButton/BaseButton';
-import InlineToggleButton from '../InlineToggleButton';
-import TextAlignToggleButton from '../TextAlignToggleButton';
-import { BlockTypeToggleButton } from '../BlockTypeToggleButton';
 import { RichUtils } from 'draft-js';
+import clsx from 'clsx';
+import InlineMenuItem from '../InlineMenuItem';
+import BlockTypeMenuItem from '../BlockTypeMenuItem/BlockTypeMenuItem';
+import TextAlignMenuItem from '../TextAlignMenuItem/TextAlignMenuItem';
 
 export interface ToggleButtonMenuProps extends ToggleButtonGroupProps {
   minWidth?: number;
@@ -37,7 +37,9 @@ const useStyles = makeStyles((theme) => ({
   menuItem: {
     border: 'none',
   },
-  select: {},
+  select: {
+    display: 'flex',
+  },
 }));
 
 const SelectMenu = ({
@@ -125,8 +127,8 @@ const SelectMenu = ({
   };
 
   return (
-    <div className={className} style={{ minWidth, maxWidth }}>
-      <BaseButton
+    <div className={clsx(className, classes.select)} style={{ minWidth, maxWidth }}>
+      <Button
         ref={anchorRef}
         endIcon={open ? openIcon : closeIcon}
         onMouseDown={handleToggleMouseDown}
@@ -136,7 +138,7 @@ const SelectMenu = ({
         {...buttonProps}
       >
         {textButton || label}
-      </BaseButton>
+      </Button>
       <Popper
         style={{ zIndex: 2 }}
         anchorEl={anchorRef.current}
@@ -151,8 +153,6 @@ const SelectMenu = ({
                   className: classes.menuItem,
                   // forceSelection: true,
                   onClick: handleClick,
-                  component: MenuItem,
-                  size,
                   value: choice.value,
                   children: choice.label,
                   disableKeyboardShortcuts,
@@ -160,11 +160,11 @@ const SelectMenu = ({
 
                 switch (type) {
                   case 'inline':
-                    return <InlineToggleButton {...props} />;
+                    return (<InlineMenuItem {...props}/>);
                   case 'blockType':
-                    return <BlockTypeToggleButton {...props} />;
+                    return (<BlockTypeMenuItem {...props} />);
                   case 'textAlign':
-                    return <TextAlignToggleButton {...props} />;
+                    return <TextAlignMenuItem {...props} />;
                   default:
                     return null;
                 }

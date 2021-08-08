@@ -70,7 +70,7 @@ const AppFrame = ({
 
   return (
     <div className={clsx(className)}>
-      <AppBar className={classes.appBar} position="fixed">
+      <AppBar elevation={0} className={classes.appBar} position="fixed">
         <Toolbar>
           <IconButton
             onClick={handleClickOpenDrawer}
@@ -105,7 +105,7 @@ const AppFrame = ({
       />
       <Container
         component="main"
-        maxWidth="md"
+        maxWidth="lg"
         className={clsx(classes.main, classes.mainWidth)}
       >
         {children as any}

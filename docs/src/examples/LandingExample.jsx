@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ToggleButtonGroup as DraftToggleButtonGroup, EditorContainer, EditorProvider, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton, SelectMenu } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, alpha, Divider, withStyles, ButtonGroup as MuiButtonGroup, Tabs, Tab, Box } from '@material-ui/core';
+import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, alpha, withStyles, ButtonGroup as MuiButtonGroup, Tabs, Tab, Box } from '@material-ui/core';
 import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded, Colorize } from '@material-ui/icons';
 import mediaData from './components/button/mediaData';
 import { EditorState } from 'draft-js';
@@ -55,8 +55,10 @@ const useStyles = makeStyles((theme => ({
     width: '100%',
     height: '100%',
   },
-  divider: {
-    margin: theme.spacing(1, 0.5),
+  container: {
+    maxWidth: 991,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   toolbar: {
     display: 'flex',
@@ -65,13 +67,15 @@ const useStyles = makeStyles((theme => ({
     borderTopRightRadius: theme.shape.borderRadius,
     flexWrap: 'wrap',
     padding: 4,
-    backgroundColor: '#ccd5df57',
+    '& .MuiButtonBase-root': {
+      color: 'rgba(0, 0, 0, 0.54)',
+    }
   },
   editor: {
     border: `1px solid ${theme.palette.divider}`,
     borderBottomLeftRadius: theme.shape.borderRadius,
     borderBottomRightRadius: theme.shape.borderRadius,
-    padding: 40,
+    padding: 15,
     borderTop: 0,
     minHeight: 141,
     '& .DraftEditor-editorContainer': {
@@ -249,18 +253,43 @@ const LandingExample = () => {
   return (
     <EditorProvider customStyleMaps={customStyleMaps}>
       <EditorContainer
+        className={classes.container}
         noSsr
         editorState={editorState}
         onChange={setEditorState}
       >
         <EditorToolbar className={classes.toolbar}>
+        <SelectMenu
+            className={classes.select}
+            buttonProps={{
+              className: classes.menuButton,
+              color: 'inherit'
+            }}
+            exclusive
+            size="small"
+            type="textAlign"
+            choices={[
+              {
+                label: 'Left',
+                value: 'left',
+              },
+              {
+                label: 'Center',
+                value: 'center',
+              },
+              {
+                label: 'Right',
+                value: 'right',
+              },
+            ]}
+          />
           <SelectMenu
             className={classes.select}
             buttonProps={{
               className: classes.menuButton,
+              color: 'inherit'
             }}
             exclusive
-            minWidth={130}
             size="small"
             type="blockType"
             choices={[
@@ -302,7 +331,6 @@ const LandingExample = () => {
               },
             ]}
           />
-          <Divider flexItem orientation="vertical" className={classes.divider} />
           <ToggleButtonGroup size='small'>
             {[
               ['BOLD', <FormatBold />],
@@ -321,14 +349,12 @@ const LandingExample = () => {
               </InlineToggleButton>
             )}
           </ToggleButtonGroup>
-          <Divider flexItem orientation="vertical" className={classes.divider} />
           <SelectMenu
             className={classes.select}
             buttonProps={{
               className: classes.menuButton,
             }}
             exclusive
-            minWidth={130}
             label="Font family"
             size="small"
             type="inline"
@@ -377,6 +403,7 @@ const LandingExample = () => {
               className: classes.menuButton,
             }}
             exclusive
+            minWidth={100}
             label={<Colorize />}
             size="small"
             type="inline"
@@ -395,7 +422,6 @@ const LandingExample = () => {
               },
             ]}
           />
-          <Divider flexItem orientation="vertical" className={classes.divider} />
           <ToggleButtonGroup size='small'>
             {[
               ['left', <FormatAlignLeft />],
@@ -410,7 +436,6 @@ const LandingExample = () => {
               </TextAlignToggleButton>
             )}
           </ToggleButtonGroup>
-          <Divider flexItem orientation="vertical" className={classes.divider} />
           <ToggleButtonGroup size='small'>
             <BlockTypeToggleButton value='unordered-list-item'>
               <Tooltip title='Unordered list' placement='top'>
@@ -423,7 +448,6 @@ const LandingExample = () => {
               </Tooltip>
             </BlockTypeToggleButton>
           </ToggleButtonGroup>
-          <Divider flexItem orientation="vertical" className={classes.divider} />
           <ButtonGroup size='small'>
             <IndentDraftButton value='increase'>
               <FormatIndentIncrease />
@@ -432,7 +456,6 @@ const LandingExample = () => {
               <FormatIndentDecrease />
             </IndentDraftButton>
           </ButtonGroup>
-          <Divider flexItem orientation="vertical" className={classes.divider} />
           <IconButton onClick={handleClick}>
             <ImageOutlined />
           </IconButton>

@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import {
-  ToggleButtonGroup,
   EditorContainer,
   Editor,
   EditorToolbar,
-  InlineToggleButton,
   EditorProvider,
-  ToggleButtonMenu,
   SelectMenu
 } from 'draft-js-wysiwyg';
 import { EditorState } from 'draft-js';
@@ -51,7 +48,6 @@ const customStyleMaps = [
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
-    backgroundColor: theme.palette.common.white,
     marginRight: theme.spacing(.5),
   },
   select: {
@@ -78,7 +74,6 @@ const ExtendStyle = () => {
                 className: classes.menuButton,
               }}
               exclusive
-              minWidth={130}
               label="Font family"
               size="small"
               type="inline"
@@ -103,7 +98,6 @@ const ExtendStyle = () => {
               className: classes.menuButton,
             }}
             exclusive
-            minWidth={100}
             label="Size"
             size="small"
             type="inline"
@@ -128,7 +122,6 @@ const ExtendStyle = () => {
               className: classes.menuButton,
             }}
             exclusive
-            minWidth={100}
             label={<ColorizeIcon />}
             size="small"
             type="inline"

@@ -17,7 +17,7 @@ const theme = createTheme({
       level1: '#24292e',
     },
     text: {
-      secondary: 'rgba(0, 0, 0, 0.54)',
+      secondary: '#586069',
     },
   },
   overrides: {
@@ -26,11 +26,16 @@ const theme = createTheme({
         backgroundColor: '#24292e',
       },
     },
+    MuiToggleButton: {
+      root: {
+        color: 'rgba(0, 0, 0, 0.54)',
+      }
+    },
     MuiTypography: {
       h1: {
         fontSize: '3rem',
         letterSpacing: '0em',
-        fontWeight: 400,
+        fontWeight: 700,
       },
       h2: {
         fontSize: '2.5rem',

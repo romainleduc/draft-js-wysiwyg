@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   alpha,
   ButtonProps,
-  Button,
+  ButtonBase as MuiButtonBase,
   capitalize,
   withStyles,
   Theme,
@@ -33,6 +33,7 @@ const styles = (theme: Theme) => ({
   /* Styles applied to the root element. */
   root: {
     ...theme.typography.button,
+    width: '100%',
     minWidth: 0,
     borderRadius: theme.shape.borderRadius,
     padding: 11,
@@ -76,7 +77,7 @@ const BaseButton = forwardRef<HTMLButtonElement, BaseButtonProps>(
     { className, classes, children, disabled, size, ...rest }: BaseButtonProps,
     ref
   ) => (
-    <Button
+    <MuiButtonBase
       className={clsx(
         classes?.root,
         size && {
@@ -92,7 +93,7 @@ const BaseButton = forwardRef<HTMLButtonElement, BaseButtonProps>(
       {...rest}
     >
       <span className={classes?.label}>{children}</span>
-    </Button>
+    </MuiButtonBase>
   )
 );
 
