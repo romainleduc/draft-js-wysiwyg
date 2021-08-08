@@ -6,13 +6,6 @@ import {
   EditorToolbar,
   InlineToggleButton,
 } from 'draft-js-wysiwyg';
-import {
-  FormatBold,
-  FormatItalic,
-  FormatStrikethrough,
-  FormatUnderlined,
-  Code,
-} from '@material-ui/icons';
 import { EditorState } from 'draft-js';
 
 const SimpleExample = () => {
@@ -27,20 +20,21 @@ const SimpleExample = () => {
     >
       <EditorToolbar>
         <ToggleButtonGroup size='small'>
-          {[
-            ['BOLD', <FormatBold />],
-            ['ITALIC', <FormatItalic />],
-            ['STRIKETHROUGH', <FormatStrikethrough />],
-            ['UNDERLINE', <FormatUnderlined />],
-            ['CODE', <Code />],
-          ].map(inline =>
-            <InlineToggleButton
-              key={`inline-${inline[0]}`}
-              value={inline[0]}
-            >
-              {inline[1]}
-            </InlineToggleButton>
-          )}
+          <InlineToggleButton value="BOLD">
+            Bold
+          </InlineToggleButton>
+          <InlineToggleButton value="ITALIC">
+            Italic
+          </InlineToggleButton>
+          <InlineToggleButton value="STRIKETHROUGH">
+            Strikethrough
+          </InlineToggleButton>
+          <InlineToggleButton value="UNDERLINE">
+            Underline
+          </InlineToggleButton>
+          <InlineToggleButton value="CODE">
+            Code
+          </InlineToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
       <Editor placeholder='Enter some text..' />

@@ -36,7 +36,9 @@ const useStyles = makeStyles((theme) => ({
       padding: '0 3px',
       fontSize: '.85em',
       borderRadius: 2,
-      backgroundColor: 'rgba(27, 31, 35, 0.05)',
+      '& .special': {
+        color: '#ef8ec7'
+      }
     },
     '& code[class*="language-"]': {
       // Avoid layout jump after hydration (style injected by prism)

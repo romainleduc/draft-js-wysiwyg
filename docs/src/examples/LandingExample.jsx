@@ -259,30 +259,6 @@ const LandingExample = () => {
         onChange={setEditorState}
       >
         <EditorToolbar className={classes.toolbar}>
-        <SelectMenu
-            className={classes.select}
-            buttonProps={{
-              className: classes.menuButton,
-              color: 'inherit'
-            }}
-            exclusive
-            size="small"
-            type="textAlign"
-            choices={[
-              {
-                label: 'Left',
-                value: 'left',
-              },
-              {
-                label: 'Center',
-                value: 'center',
-              },
-              {
-                label: 'Right',
-                value: 'right',
-              },
-            ]}
-          />
           <SelectMenu
             className={classes.select}
             buttonProps={{

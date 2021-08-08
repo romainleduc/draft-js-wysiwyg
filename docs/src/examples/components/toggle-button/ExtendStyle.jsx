@@ -7,7 +7,6 @@ import {
   SelectMenu
 } from 'draft-js-wysiwyg';
 import { EditorState } from 'draft-js';
-import { makeStyles } from '@material-ui/core';
 import { Colorize as ColorizeIcon } from '@material-ui/icons';
 
 const customStyleMaps = [
@@ -46,20 +45,10 @@ const customStyleMaps = [
   },
 ];
 
-const useStyles = makeStyles(theme => ({
-  menuButton: {
-    marginRight: theme.spacing(.5),
-  },
-  select: {
-    marginRight: 5,
-  },
-}));
-
 const ExtendStyle = () => {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty()
   );
-  const classes = useStyles();
 
   return (
     <EditorProvider customStyleMaps={customStyleMaps}>
@@ -69,34 +58,26 @@ const ExtendStyle = () => {
       >
         <EditorToolbar>
           <SelectMenu
-              className={classes.select}
-              buttonProps={{
-                className: classes.menuButton,
-              }}
-              exclusive
-              label="Font family"
-              size="small"
-              type="inline"
-              choices={[
-                {
-                  label: 'Roboto',
-                  value: 'FONT_FAMILY_ROBOTO',
-                },
-                {
-                  label: 'Dancing',
-                  value: 'FONT_FAMILY_DANCING',
-                },
-                {
-                  label: 'Ubuntu',
-                  value: 'FONT_FAMILY_UBUNTU',
-                },
-              ]}
-            />
+            exclusive
+            label="Font family"
+            size="small"
+            type="inline"
+            choices={[
+              {
+                label: 'Roboto',
+                value: 'FONT_FAMILY_ROBOTO',
+              },
+              {
+                label: 'Dancing',
+                value: 'FONT_FAMILY_DANCING',
+              },
+              {
+                label: 'Ubuntu',
+                value: 'FONT_FAMILY_UBUNTU',
+              },
+            ]}
+          />
           <SelectMenu
-            className={classes.select}
-            buttonProps={{
-              className: classes.menuButton,
-            }}
             exclusive
             label="Size"
             size="small"
@@ -117,10 +98,6 @@ const ExtendStyle = () => {
             ]}
           />
           <SelectMenu
-            className={classes.select}
-            buttonProps={{
-              className: classes.menuButton,
-            }}
             exclusive
             label={<ColorizeIcon />}
             size="small"
