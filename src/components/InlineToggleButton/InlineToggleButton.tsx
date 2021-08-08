@@ -27,7 +27,8 @@ const InlineToggleButton = forwardRef<
   InlineToggleButtonProps
 >(({ value, children, ...rest }: InlineToggleButtonProps, ref) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
-  const { customStyleMaps, getCustomStyleMapOfKey } = useContext(EditorThemeContext);
+  const { customStyleMaps, getCustomStyleMapOfKey } =
+    useContext(EditorThemeContext);
 
   const handleToggle = useCallback(
     (newEditorState: EditorState): void => {
@@ -37,21 +38,8 @@ const InlineToggleButton = forwardRef<
 
       if (group?.exclusive) {
         const selection = newEditorState.getSelection();
-        
-        // Let's just allow one style at a time. Turn off all active colors.
-        const nextContentState = Object.keys(group.styles)
-          .reduce((contentState, style) => {
-            return Modifier.removeInlineStyle(contentState, selection, `${group.group}_${style}`)
-          }, newEditorState.getCurrentContent());
-    
-        nextEditorState = EditorState.push(
-          newEditorState,
-          nextContentState,
-          'change-inline-style'
-        );
-    
         const currentStyle = newEditorState.getCurrentInlineStyle();
-    
+
         // Unset style override for current color.
         if (selection.isCollapsed()) {
           nextEditorState = currentStyle.reduce((state: any, style: any) => {
@@ -63,15 +51,30 @@ const InlineToggleButton = forwardRef<
             }
 
             return state;
-          }, nextEditorState);
+          }, newEditorState);
+        } else {
+          // Let's just allow one style at a time. Turn off all active styles group.
+          const nextContentState = Object.keys(group.styles).reduce(
+            (contentState, style) => {
+              return Modifier.removeInlineStyle(
+                contentState,
+                selection,
+                `${group.group}_${style}`
+              );
+            },
+            newEditorState.getCurrentContent()
+          );
+
+          nextEditorState = EditorState.push(
+            newEditorState,
+            nextContentState,
+            'change-inline-style'
+          );
         }
-    
+
         // If the style is being toggled on, apply it.
         if (!currentStyle.has(value)) {
-          nextEditorState = RichUtils.toggleInlineStyle(
-            nextEditorState,
-            value
-          );
+          nextEditorState = RichUtils.toggleInlineStyle(nextEditorState, value);
         }
       } else {
         nextEditorState = RichUtils.toggleInlineStyle(newEditorState, value);

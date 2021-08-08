@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SelectMenu = ({
-  minWidth = 150,
+  className,
+  minWidth = 0,
   maxWidth = 200,
   label = '',
   type,
@@ -106,8 +107,17 @@ const SelectMenu = ({
     }
   };
 
-  const handleToggle = () => {
+  const handleToggleClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
     setOpen(true);
+  };
+
+  const handleToggleMouseDown = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
   };
 
   const handleClose = () => {
@@ -115,11 +125,12 @@ const SelectMenu = ({
   };
 
   return (
-    <div style={{ minWidth, maxWidth }}>
+    <div className={className} style={{ minWidth, maxWidth }}>
       <BaseButton
         ref={anchorRef}
         endIcon={open ? openIcon : closeIcon}
-        onClick={handleToggle}
+        onMouseDown={handleToggleMouseDown}
+        onClick={handleToggleClick}
         size={size}
         fullWidth
         {...buttonProps}
@@ -138,7 +149,7 @@ const SelectMenu = ({
               {choices.map((choice) => {
                 const props = {
                   className: classes.menuItem,
-                  forceSelection: true,
+                  // forceSelection: true,
                   onClick: handleClick,
                   component: MenuItem,
                   size,

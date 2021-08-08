@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ToggleButtonGroup as DraftToggleButtonGroup, EditorContainer, EditorProvider, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton, SelectMenu } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, alpha, Divider, withStyles, ButtonGroup as MuiButtonGroup, Tabs, Tab, Box, MenuItem, MenuList } from '@material-ui/core';
-import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
+import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, alpha, Divider, withStyles, ButtonGroup as MuiButtonGroup, Tabs, Tab, Box } from '@material-ui/core';
+import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded, Colorize } from '@material-ui/icons';
 import mediaData from './components/button/mediaData';
 import { EditorState } from 'draft-js';
 
@@ -79,9 +79,12 @@ const useStyles = makeStyles((theme => ({
       overflowY: 'auto',
     },
   },
+  select: {
+    marginRight: 5,
+  },
   menuButton: {
     backgroundColor: '#fff',
-    color: 'rgb(0 0 0 / 75%)',
+    // color: 'rgb(0 0 0 / 75%)',
     margin: theme.spacing(0.5),
   }
 })));
@@ -252,7 +255,12 @@ const LandingExample = () => {
       >
         <EditorToolbar className={classes.toolbar}>
           <SelectMenu
+            className={classes.select}
+            buttonProps={{
+              className: classes.menuButton,
+            }}
             exclusive
+            minWidth={130}
             size="small"
             type="blockType"
             choices={[
@@ -315,7 +323,12 @@ const LandingExample = () => {
           </ToggleButtonGroup>
           <Divider flexItem orientation="vertical" className={classes.divider} />
           <SelectMenu
+            className={classes.select}
+            buttonProps={{
+              className: classes.menuButton,
+            }}
             exclusive
+            minWidth={130}
             label="Font family"
             size="small"
             type="inline"
@@ -335,26 +348,10 @@ const LandingExample = () => {
             ]}
           />
           <SelectMenu
-            label="Inline"
-            size="small"
-            type="inline"
-            choices={[
-              {
-                label: 'Bold',
-                value: 'BOLD',
-              },
-              {
-                label: 'Italic',
-                value: 'ITALIC',
-              },
-              {
-                label: 'Underline',
-                value: 'UNDERLINE',
-              },
-            ]}
-          />
-          <Divider flexItem orientation="vertical" className={classes.divider} />
-          <SelectMenu
+            className={classes.select}
+            buttonProps={{
+              className: classes.menuButton,
+            }}
             exclusive
             label="Size"
             size="small"
@@ -374,10 +371,13 @@ const LandingExample = () => {
               },
             ]}
           />
-          <Divider flexItem orientation="vertical" className={classes.divider} />
           <SelectMenu
+            className={classes.select}
+            buttonProps={{
+              className: classes.menuButton,
+            }}
             exclusive
-            label="Color"
+            label={<Colorize />}
             size="small"
             type="inline"
             choices={[
