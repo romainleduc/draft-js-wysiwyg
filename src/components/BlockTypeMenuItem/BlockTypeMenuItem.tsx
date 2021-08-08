@@ -1,16 +1,16 @@
 import React, { forwardRef } from 'react';
-import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
+import { MenuItem, MenuItemProps } from '@material-ui/core';
 import useBlockTypeToggle from '../useBlockTypeToggle';
 
-export interface BlockTypeToggleButtonProps
-  extends Omit<ToggleButtonProps, 'value' | 'selected'> {
+export interface BlockTypeMenuItemProps
+  extends Omit<MenuItemProps, 'selected'> {
   /**
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
    */
   disableKeyboardShortcuts?: boolean;
   /**
-   *
+   * The inline style value to associate with the button
    */
   value: string;
   /**
@@ -19,10 +19,7 @@ export interface BlockTypeToggleButtonProps
   defaultSelected?: boolean;
 }
 
-const BlockTypeToggleButton = forwardRef<
-  HTMLButtonElement,
-  BlockTypeToggleButtonProps
->(
+const BlockTypeMenuItem = forwardRef<HTMLLIElement, BlockTypeMenuItemProps>(
   (
     {
       disableKeyboardShortcuts,
@@ -31,7 +28,7 @@ const BlockTypeToggleButton = forwardRef<
       onClick,
       onMouseDown,
       ...other
-    }: BlockTypeToggleButtonProps,
+    }: BlockTypeMenuItemProps,
     ref
   ) => {
     const menuItemProps = useBlockTypeToggle({
@@ -42,8 +39,8 @@ const BlockTypeToggleButton = forwardRef<
       onMouseDown,
     });
 
-    return <ToggleButton ref={ref} {...menuItemProps} {...other} />;
+    return <MenuItem ref={ref} {...menuItemProps} {...other} />;
   }
 );
 
-export default BlockTypeToggleButton;
+export default BlockTypeMenuItem;

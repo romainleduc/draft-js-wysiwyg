@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import {
-  fade,
+  alpha,
   ButtonProps,
-  Button,
+  ButtonBase as MuiButtonBase,
   capitalize,
   withStyles,
   Theme,
@@ -33,18 +33,19 @@ const styles = (theme: Theme) => ({
   /* Styles applied to the root element. */
   root: {
     ...theme.typography.button,
+    width: '100%',
     minWidth: 0,
     borderRadius: theme.shape.borderRadius,
     padding: 11,
-    border: `1px solid ${fade(theme.palette.action.active, 0.12)}`,
-    color: fade(theme.palette.action.active, 0.38),
+    border: `1px solid ${alpha(theme.palette.action.active, 0.12)}`,
+    color: alpha(theme.palette.action.active, 0.38),
     '&$disabled': {
-      color: fade(theme.palette.action.disabled, 0.12),
+      color: alpha(theme.palette.action.disabled, 0.12),
     },
     '&:hover': {
       textDecoration: 'none',
       // Reset on mouse devices
-      backgroundColor: fade(theme.palette.text.primary, 0.05),
+      backgroundColor: alpha(theme.palette.text.primary, 0.05),
       '@media (hover: none)': {
         backgroundColor: 'transparent',
       },
@@ -76,7 +77,7 @@ const BaseButton = forwardRef<HTMLButtonElement, BaseButtonProps>(
     { className, classes, children, disabled, size, ...rest }: BaseButtonProps,
     ref
   ) => (
-    <Button
+    <MuiButtonBase
       className={clsx(
         classes?.root,
         size && {
@@ -92,7 +93,7 @@ const BaseButton = forwardRef<HTMLButtonElement, BaseButtonProps>(
       {...rest}
     >
       <span className={classes?.label}>{children}</span>
-    </Button>
+    </MuiButtonBase>
   )
 );
 

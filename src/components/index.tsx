@@ -27,3 +27,17 @@ export type { IndentDraftButtonProps } from './IndentDraftButton';
 
 export { AtomicMediaButton } from './Media';
 export type { AtomicMediaButtonProps } from './Media';
+
+export { default as EditorProvider } from './EditorProvider';
+export type { EditorProviderProps } from './EditorProvider';
+
+export { default as SelectMenu } from './SelectMenu';
+
+export { default as InlineMenuItem } from './InlineMenuItem';
+export type { InlineMenuItemProps } from './InlineMenuItem';
+
+export { default as BlockTypeMenuItem } from './BlockTypeMenuItem';
+export type { BlockTypeMenuItemProps } from './BlockTypeMenuItem';
+
+export { default as TextAlignMenuItem } from './TextAlignMenuItem';
+export type { TextAlignMenuItemProps } from './TextAlignMenuItem';
