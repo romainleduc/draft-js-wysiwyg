@@ -5,6 +5,7 @@ import {
   Editor as DraftEditor,
   RichUtils,
   DraftHandleValue,
+  DraftStyleMap,
 } from 'draft-js';
 import { indentSelection, mergeBlockData, draftToHtml } from '../../utils';
 import EditorContext from './EditorContext';
@@ -17,7 +18,7 @@ import {
 } from '../../utils/editorUtils';
 import { IndentCommand } from '../IndentDraftButton/IndentDraftButton';
 import clsx from 'clsx';
-import { ACTION_TYPES } from '../../redux/constants';
+import EditorProviderContext from '../EditorProvider/EditorProviderContext';
 
 export interface EditorProps
   extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -57,6 +58,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
     const { state, dispatch } = useContext(ReduxContext);
+    const { customStyleMaps } = useContext(EditorProviderContext);
     const classes = userStyles();
 
     const isNotEmpty = () => {
@@ -70,6 +72,21 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       }
 
       return false;
+    };
+
+    const getCustomStyleMap = (): DraftStyleMap => {
+      const nextCustomStyleMap = new Map();
+
+      customStyleMaps.forEach((customStyleMap) => {
+        Object.keys(customStyleMap.styles).forEach((style) => {
+          nextCustomStyleMap.set(
+            [`${customStyleMap.group}_${style}`],
+            customStyleMap.styles[style]
+          );
+        });
+      });
+
+      return Object.fromEntries(nextCustomStyleMap);
     };
 
     const handleKeyCommand = (
@@ -149,6 +166,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
             handleKeyCommand={handleKeyCommand}
             handleReturn={handleReturn}
             onChange={handleChange}
+            customStyleMap={getCustomStyleMap()}
             {...rest}
           />
         )}

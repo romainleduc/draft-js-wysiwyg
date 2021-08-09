@@ -3,7 +3,6 @@ import React from 'react';
 import AppFrame from '../src/modules/components/AppFrame';
 import AppHead from '../src/modules/components/AppHead';
 import LandingExample from '../src/examples/LandingExample';
-import CreateIcon from '@material-ui/icons/Create';
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -11,19 +10,22 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    '& p': {
-      marginBottom: 30
+    '& div': {
+      marginBottom: 15,
     },
     padding: '50px 0px',
-    borderBottom: `1px solid ${theme.palette.divider}`,
     [theme.breakpoints.only('xs')]: {
       padding: '25px 0px',
     },
+    marginBottom: 30,
   },
   title: {
     [theme.breakpoints.only('xs')]: {
       fontSize: '2.2rem',
     },
+  },
+  description: {
+    maxWidth: 700,
   },
   logo: {
     flexShrink: 0,
@@ -68,11 +70,13 @@ const LandingPage = () => {
         </Typography>
         <Box mt={2}>
           <Typography
+            className={classes.description}
             variant='h5'
-            component='p'
+            component='div'
             align='center'
+            color="textSecondary"
           >
-            A WYSIWYG editor for React built on Draft.js and Material-UI for faster and easier web development.
+            Beautiful React web editor built on Draft.js and Material-UI for faster and easier development.
         </Typography>
         </Box>
         <Button
@@ -84,22 +88,7 @@ const LandingPage = () => {
           Get started
         </Button>
       </div>
-      <div className={classes.test2}>
-        <div className={classes.test}>
-          <CreateIcon className={classes.createIcon} color='primary' />
-          <Typography variant='h6' component='h2'>
-            Try it out!
-          </Typography>
-        </div>
-        <Typography
-          className={classes.subtitle1}
-          variant='subtitle1'
-          component='p'
-        >
-          Here's a simple example of a rich text editor built in Draft.js.
-        </Typography>
-        <LandingExample />
-      </div>
+      <LandingExample />
     </AppFrame>
   );
 }

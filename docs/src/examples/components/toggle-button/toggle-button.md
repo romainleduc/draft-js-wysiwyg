@@ -19,7 +19,7 @@ title: Toggle Button React component
 
 ### Extend styles
 
-It is possible to add your own styles using the `customStyleMap` property provided by [Draft.js](https://draftjs.org/docs/advanced-topics-inline-styles/). This will allow you to add an inline style name map corresponding to the CSS style objects.
+It is possible to add your own styles using the `customStyleMaps` property provided by `EditorProvider`. This will allow you to add multiple [inline style name maps](https://draftjs.org/docs/advanced-topics-inline-styles/#mapping-a-style-string-to-css) corresponding to the CSS style objects.
 
 {{"demo": "toggle-button/ExtendStyle.jsx"}}
 

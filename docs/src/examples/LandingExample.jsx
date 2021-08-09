@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ToggleButtonGroup as DraftToggleButtonGroup, ToggleButtonMenu, EditorContainer, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton } from 'draft-js-wysiwyg';
-import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, fade, Divider, withStyles, ButtonGroup as MuiButtonGroup, Tabs, Tab, Box } from '@material-ui/core';
-import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded } from '@material-ui/icons';
+import { ToggleButtonGroup as DraftToggleButtonGroup, EditorContainer, EditorProvider, EditorToolbar, Editor, AtomicMediaButton, InlineToggleButton, BlockTypeToggleButton, TextAlignToggleButton, IndentDraftButton, SelectMenu } from 'draft-js-wysiwyg';
+import { makeStyles, Modal, IconButton, Tooltip, GridList, GridListTile, alpha, withStyles, ButtonGroup as MuiButtonGroup, Tabs, Tab, Box } from '@material-ui/core';
+import { Code, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, FormatBold, FormatIndentDecrease, FormatIndentIncrease, FormatItalic, FormatListBulleted, FormatListNumbered, FormatStrikethrough, FormatUnderlined, ImageOutlined, PlayArrowRounded, Colorize } from '@material-ui/icons';
 import mediaData from './components/button/mediaData';
 import { EditorState } from 'draft-js';
 
@@ -44,19 +44,21 @@ const useStyles = makeStyles((theme => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius,
-    border: `solid 1px ${fade('#000', .7)}`,
+    border: `solid 1px ${alpha('#000', .7)}`,
     padding: theme.spacing(2),
     outline: 0,
   },
   media: {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    border: `solid 1px ${fade('#000', .6)}`,
+    border: `solid 1px ${alpha('#000', .6)}`,
     width: '100%',
     height: '100%',
   },
-  divider: {
-    margin: theme.spacing(1, 0.5),
+  container: {
+    maxWidth: 991,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   toolbar: {
     display: 'flex',
@@ -65,13 +67,15 @@ const useStyles = makeStyles((theme => ({
     borderTopRightRadius: theme.shape.borderRadius,
     flexWrap: 'wrap',
     padding: 4,
-    backgroundColor: '#ccd5df57',
+    '& .MuiButtonBase-root': {
+      color: 'rgba(0, 0, 0, 0.54)',
+    }
   },
   editor: {
     border: `1px solid ${theme.palette.divider}`,
     borderBottomLeftRadius: theme.shape.borderRadius,
     borderBottomRightRadius: theme.shape.borderRadius,
-    padding: 40,
+    padding: 15,
     borderTop: 0,
     minHeight: 141,
     '& .DraftEditor-editorContainer': {
@@ -79,9 +83,12 @@ const useStyles = makeStyles((theme => ({
       overflowY: 'auto',
     },
   },
+  select: {
+    marginRight: 5,
+  },
   menuButton: {
     backgroundColor: '#fff',
-    color: 'rgb(0 0 0 / 75%)',
+    // color: 'rgb(0 0 0 / 75%)',
     margin: theme.spacing(0.5),
   }
 })));
@@ -196,6 +203,42 @@ const AtomicMediaModal = (props) => {
   );
 }
 
+const customStyleMaps = [
+  {
+    group: 'FONT_FAMILY',
+    exclusive: true,
+    styles: {
+      ROBOTO: {
+        fontFamily: '"Roboto", sans-serif',
+      },
+      DANCING: {
+        fontFamily: '"Dancing Script", cursive',
+      },
+      UBUNTU: {
+        fontFamily: '"Ubuntu", sans-serif',
+      },
+    }
+  },
+  {
+    group: 'FONT_SIZE',
+    exclusive: true,
+    styles: {
+      SMALL: { fontSize: 10 },
+      MEDIUM: { fontSize: 15 },
+      LARGE: { fontSize: 30 },
+    }
+  },
+  {
+    group: 'COLOR',
+    exclusive: true,
+    styles: {
+      RED: { color: 'rgba(255, 0, 0, 1.0)' },
+      ORANGE: { color: 'rgba(255, 127, 0, 1.0)' },
+      YELLOW: { color: 'rgba(180, 180, 0, 1.0)' },
+    }
+  },
+];
+
 const LandingExample = () => {
   const [open, setOpen] = React.useState(false);
   const [editorState, setEditorState] = useState(
@@ -208,109 +251,201 @@ const LandingExample = () => {
   }
 
   return (
-    <EditorContainer
-      noSsr
-      editorState={editorState}
-      onChange={setEditorState}
-    >
-      <EditorToolbar className={classes.toolbar}>
-        <ToggleButtonMenu
-          exclusive
-          orientation="vertical"
-          size="small"
-          buttonProps={{
-            className: classes.menuButton,
-          }}
-        >
-          {[
-            ['unstyled', 'Paragraph'],
-            ['header-one', 'H1'],
-            ['header-two', 'H2'],
-            ['header-three', 'H3'],
-            ['header-four', 'H4'],
-            ['header-five', 'H5'],
-            ['header-six', 'H6'],
-            ['blockquote', 'Blockquote'],
-            ['code-block', 'Code Block'],
-          ].map((block) =>
-            <BlockTypeToggleButton
-              key={`basic-block-${block[0]}`}
-              value={block[0]}
-            >
-              {block[1]}
-            </BlockTypeToggleButton>
-          )}
-        </ToggleButtonMenu>
-        <Divider flexItem orientation="vertical" className={classes.divider} />
-        <ToggleButtonGroup size='small'>
-          {[
-            ['BOLD', <FormatBold />],
-            ['ITALIC', <FormatItalic />],
-            ['STRIKETHROUGH', <FormatStrikethrough />],
-            ['UNDERLINE', <FormatUnderlined />],
-            ['CODE', <Code />],
-          ].map(inline =>
-            <InlineToggleButton
-              key={`inline-${inline[0]}`}
-              value={inline[0]}
-            >
-              <Tooltip title={inline[0].charAt(0).toUpperCase() + inline[0].slice(1).toLowerCase()} placement='top'>
+    <EditorProvider customStyleMaps={customStyleMaps}>
+      <EditorContainer
+        className={classes.container}
+        noSsr
+        editorState={editorState}
+        onChange={setEditorState}
+      >
+        <EditorToolbar className={classes.toolbar}>
+          <SelectMenu
+            className={classes.select}
+            buttonProps={{
+              className: classes.menuButton,
+              color: 'inherit'
+            }}
+            exclusive
+            size="small"
+            type="blockType"
+            choices={[
+              {
+                label: 'Paragraph',
+                value: 'unstyled',
+              },
+              {
+                label: 'H1',
+                value: 'header-one',
+              },
+              {
+                label: 'H2',
+                value: 'header-two',
+              },
+              {
+                label: 'H3',
+                value: 'header-three',
+              },
+              {
+                label: 'H4',
+                value: 'header-four',
+              },
+              {
+                label: 'H5',
+                value: 'header-five',
+              },
+              {
+                label: 'H6',
+                value: 'header-six',
+              },
+              {
+                label: 'Blockquote',
+                value: 'blockquote',
+              },
+              {
+                label: 'Code Block',
+                value: 'code-block',
+              },
+            ]}
+          />
+          <ToggleButtonGroup size='small'>
+            {[
+              ['BOLD', <FormatBold />],
+              ['ITALIC', <FormatItalic />],
+              ['STRIKETHROUGH', <FormatStrikethrough />],
+              ['UNDERLINE', <FormatUnderlined />],
+              ['CODE', <Code />],
+            ].map(inline =>
+              <InlineToggleButton
+                key={`inline-${inline[0]}`}
+                value={inline[0]}
+              >
+                <Tooltip title={inline[0].charAt(0).toUpperCase() + inline[0].slice(1).toLowerCase()} placement='top'>
+                  {inline[1]}
+                </Tooltip>
+              </InlineToggleButton>
+            )}
+          </ToggleButtonGroup>
+          <SelectMenu
+            className={classes.select}
+            buttonProps={{
+              className: classes.menuButton,
+            }}
+            exclusive
+            label="Font family"
+            size="small"
+            type="inline"
+            choices={[
+              {
+                label: 'Roboto',
+                value: 'FONT_FAMILY_ROBOTO',
+              },
+              {
+                label: 'Dancing',
+                value: 'FONT_FAMILY_DANCING',
+              },
+              {
+                label: 'Ubuntu',
+                value: 'FONT_FAMILY_UBUNTU',
+              },
+            ]}
+          />
+          <SelectMenu
+            className={classes.select}
+            buttonProps={{
+              className: classes.menuButton,
+            }}
+            exclusive
+            label="Size"
+            size="small"
+            type="inline"
+            choices={[
+              {
+                label: 'Small',
+                value: 'FONT_SIZE_SMALL',
+              },
+              {
+                label: 'Medium',
+                value: 'FONT_SIZE_MEDIUM',
+              },
+              {
+                label: 'Large',
+                value: 'FONT_SIZE_LARGE',
+              },
+            ]}
+          />
+          <SelectMenu
+            className={classes.select}
+            buttonProps={{
+              className: classes.menuButton,
+            }}
+            exclusive
+            minWidth={100}
+            label={<Colorize />}
+            size="small"
+            type="inline"
+            choices={[
+              {
+                label: 'Red',
+                value: 'COLOR_RED',
+              },
+              {
+                label: 'Orange',
+                value: 'COLOR_ORANGE',
+              },
+              {
+                label: 'Yellow',
+                value: 'COLOR_YELLOW',
+              },
+            ]}
+          />
+          <ToggleButtonGroup size='small'>
+            {[
+              ['left', <FormatAlignLeft />],
+              ['center', <FormatAlignCenter />],
+              ['right', <FormatAlignRight />],
+            ].map(inline =>
+              <TextAlignToggleButton
+                key={`align-${inline[0]}`}
+                value={inline[0]}
+              >
                 {inline[1]}
+              </TextAlignToggleButton>
+            )}
+          </ToggleButtonGroup>
+          <ToggleButtonGroup size='small'>
+            <BlockTypeToggleButton value='unordered-list-item'>
+              <Tooltip title='Unordered list' placement='top'>
+                <FormatListBulleted />
               </Tooltip>
-            </InlineToggleButton>
-          )}
-        </ToggleButtonGroup>
-        <Divider flexItem orientation="vertical" className={classes.divider} />
-        <ToggleButtonGroup size='small'>
-          {[
-            ['left', <FormatAlignLeft />],
-            ['center', <FormatAlignCenter />],
-            ['right', <FormatAlignRight />],
-          ].map(inline =>
-            <TextAlignToggleButton
-              key={`align-${inline[0]}`}
-              value={inline[0]}
-            >
-              {inline[1]}
-            </TextAlignToggleButton>
-          )}
-        </ToggleButtonGroup>
-        <Divider flexItem orientation="vertical" className={classes.divider} />
-        <ToggleButtonGroup size='small'>
-          <BlockTypeToggleButton value='unordered-list-item'>
-            <Tooltip title='Unordered list' placement='top'>
-              <FormatListBulleted />
-            </Tooltip>
-          </BlockTypeToggleButton>
-          <BlockTypeToggleButton value='ordered-list-item'>
-            <Tooltip title='Ordered list' placement='top'>
-              <FormatListNumbered />
-            </Tooltip>
-          </BlockTypeToggleButton>
-        </ToggleButtonGroup>
-        <Divider flexItem orientation="vertical" className={classes.divider} />
-        <ButtonGroup size='small'>
-          <IndentDraftButton value='increase'>
-            <FormatIndentIncrease />
-          </IndentDraftButton>
-          <IndentDraftButton value='decrease'>
-            <FormatIndentDecrease />
-          </IndentDraftButton>
-        </ButtonGroup>
-        <Divider flexItem orientation="vertical" className={classes.divider} />
-        <IconButton onClick={handleClick}>
-          <ImageOutlined />
-        </IconButton>
-        <AtomicMediaModal
-          open={open}
-          onClose={handleClick}
+            </BlockTypeToggleButton>
+            <BlockTypeToggleButton value='ordered-list-item'>
+              <Tooltip title='Ordered list' placement='top'>
+                <FormatListNumbered />
+              </Tooltip>
+            </BlockTypeToggleButton>
+          </ToggleButtonGroup>
+          <ButtonGroup size='small'>
+            <IndentDraftButton value='increase'>
+              <FormatIndentIncrease />
+            </IndentDraftButton>
+            <IndentDraftButton value='decrease'>
+              <FormatIndentDecrease />
+            </IndentDraftButton>
+          </ButtonGroup>
+          <IconButton onClick={handleClick}>
+            <ImageOutlined />
+          </IconButton>
+          <AtomicMediaModal
+            open={open}
+            onClose={handleClick}
+          />
+        </EditorToolbar>
+        <Editor
+          className={classes.editor}
+          placeholder='Enter some text..'
         />
-      </EditorToolbar>
-      <Editor
-        className={classes.editor}
-        placeholder='Enter some text..'
-      />
-    </EditorContainer>
+      </EditorContainer>
+    </EditorProvider>
   );
 }
 

@@ -1,16 +1,16 @@
 import React, { forwardRef } from 'react';
-import { ToggleButton, ToggleButtonProps } from '@material-ui/lab';
+import { MenuItem, MenuItemProps } from '@material-ui/core';
 import useTextAlignToggle from '../useTextAlignToggle';
 
-export interface TextAlignToggleButtonProps
-  extends Omit<ToggleButtonProps, 'value' | 'selected'> {
+export interface TextAlignMenuItemProps
+  extends Omit<MenuItemProps, 'selected'> {
   /**
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
    */
   disableKeyboardShortcuts?: boolean;
   /**
-   *
+   * The inline style value to associate with the button
    */
   value: 'left' | 'center' | 'right' | 'justify';
   /**
@@ -23,21 +23,17 @@ export interface TextAlignToggleButtonProps
   defaultSelected?: boolean;
 }
 
-const TextAlignToggleButton = forwardRef<
-  HTMLButtonElement,
-  TextAlignToggleButtonProps
->(
+const TextAlignMenuItem = forwardRef<HTMLButtonElement, TextAlignMenuItemProps>(
   (
     {
       value,
-      children,
       ignoreSelection,
       disableKeyboardShortcuts,
       defaultSelected,
       onClick,
       onMouseDown,
       ...other
-    }: TextAlignToggleButtonProps,
+    }: TextAlignMenuItemProps,
     ref
   ) => {
     const menuItemProps = useTextAlignToggle({
@@ -49,12 +45,8 @@ const TextAlignToggleButton = forwardRef<
       onMouseDown,
     });
 
-    return (
-      <ToggleButton ref={ref} {...menuItemProps} {...other}>
-        {children}
-      </ToggleButton>
-    );
+    return <MenuItem ref={ref} {...menuItemProps} {...other} />;
   }
 );
 
-export default TextAlignToggleButton;
+export default TextAlignMenuItem;

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '& pre': {
       backgroundColor: '#24292e',
-      margin: 0,
+      margin: '24px auto',
       padding: theme.spacing(2),
       direction: 'ltr',
       borderRadius: theme.shape.borderRadius,
@@ -36,10 +36,11 @@ const useStyles = makeStyles((theme) => ({
       padding: '0 3px',
       fontSize: '.85em',
       borderRadius: 2,
-      backgroundColor: 'rgba(27, 31, 35, 0.05)',
+      '& .special': {
+        color: '#ef8ec7'
+      }
     },
     '& code[class*="language-"]': {
-      color: '#abebff',
       // Avoid layout jump after hydration (style injected by prism)
       lineHeight: 1.5,
     },

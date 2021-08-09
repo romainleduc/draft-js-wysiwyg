@@ -4,6 +4,7 @@ import { isFragment } from 'react-is';
 import { Theme, withStyles } from '@material-ui/core';
 import { capitalize } from '@material-ui/core/utils';
 import clsx from 'clsx';
+import ToggleButtonGroupContext from './ToggleButtonGroupContext';
 
 export interface ToggleButtonGroupProps
   extends Omit<
@@ -16,6 +17,7 @@ export interface ToggleButtonGroupProps
    */
   disableKeyboardShortcuts?: boolean;
   defaultValue?: string | string[];
+  group?: string;
 }
 
 export const styles = (theme: Theme) => ({
@@ -68,6 +70,7 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupProps>(
       className,
       orientation = 'horizontal',
       size = 'medium',
+      group,
       ...other
     }: ToggleButtonGroupProps,
     ref
@@ -85,33 +88,36 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupProps>(
         ref={ref as any}
         {...other}
       >
-        {React.Children.map(children, (child) => {
-          if (!React.isValidElement(child)) {
-            return null;
-          }
-
-          if (process.env.NODE_ENV !== 'production') {
-            if (isFragment(child)) {
-              console.error(
-                [
-                  "Material-UI: The ToggleButtonGroup component doesn't accept a Fragment as a child.",
-                  'Consider providing an array instead.',
-                ].join('\n')
-              );
+        <ToggleButtonGroupContext.Provider value={{ group }}>
+          {React.Children.map(children, (child) => {
+            if (!React.isValidElement(child)) {
+              return null;
             }
-          }
 
-          return React.cloneElement(child, {
-            className: clsx(
-              classes?.grouped,
-              classes?.[`grouped${capitalize(orientation)}`],
-              child.props.className
-            ),
-            disableKeyboardShortcuts:
-              child.props.disableKeyboardShortcuts || disableKeyboardShortcuts,
-            size: child.props.size || size,
-          });
-        })}
+            if (process.env.NODE_ENV !== 'production') {
+              if (isFragment(child)) {
+                console.error(
+                  [
+                    "Material-UI: The ToggleButtonGroup component doesn't accept a Fragment as a child.",
+                    'Consider providing an array instead.',
+                  ].join('\n')
+                );
+              }
+            }
+
+            return React.cloneElement(child, {
+              className: clsx(
+                classes?.grouped,
+                classes?.[`grouped${capitalize(orientation)}`],
+                child.props.className
+              ),
+              disableKeyboardShortcuts:
+                child.props.disableKeyboardShortcuts ||
+                disableKeyboardShortcuts,
+              size: child.props.size || size,
+            });
+          })}
+        </ToggleButtonGroupContext.Provider>
       </div>
     );
   }
