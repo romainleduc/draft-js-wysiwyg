@@ -1,6 +1,5 @@
 name: Feature request [Beta Issue Form]
 description: Suggest a new idea for the project
-title: ""
 labels: [feature, triage]
 body:
   - type: markdown
