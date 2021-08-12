@@ -1,6 +1,5 @@
 name: Bug report [Beta Issue Form]
 description: Create a report to help us improve
-title: ""
 labels: [bug, triage]
 body:
   - type: markdown
