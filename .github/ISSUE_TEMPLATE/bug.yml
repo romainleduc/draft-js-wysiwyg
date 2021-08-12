@@ -1,0 +1,63 @@
+name: Bug Report
+description: Create a report to help us improve
+title: "[Bug]: "
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+        - label: I have searched the existing issues
+      required: true
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Current Behavior
+      description: Describe what happens instead of the expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: Describe what should happen.
+    validations:
+      required: true
+  - type: textarea
+    id: steps-reproduce
+    attributes:
+      label: Steps to reproduce the Behavior
+      description: Provide a link to a live example (you can use codesandbox.io) and an unambiguous set of steps to reproduce this bug. Include code to reproduce, if relevant (which it most likely is).
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What are you trying to accomplish? How has this issue affected you? Providing context helps us come up with a solution that is most useful in the real world.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: On which versions of Draft-Js-Wysiwyg are you affected by this issue ?
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: On which browser / OS are you affected by this issue ?
+      multiple: true
+      options:
+        - IE / Edge
+        - Firefox
+        - Chrome
+        - Safari
+        - iOS Safari
+        - Chrome for Android
+    validations:
+      required: true
