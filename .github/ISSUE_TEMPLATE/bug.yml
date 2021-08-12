@@ -1,12 +1,12 @@
-name: Bug Report
+name: Bug report [Beta Issue Form]
 description: Create a report to help us improve
-title: "[Bug]: "
+title: ""
 labels: [bug, triage]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Thank you very much for contributing to Draft-Js-Wysiwyg by creating an issue! ❤️
   - type: checkboxes
     attributes:
       label: Is there an existing issue for this?

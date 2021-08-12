@@ -1,0 +1,36 @@
+name: Feature request [Beta Issue Form]
+description: Suggest a new idea for the project
+labels: [feature, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you very much for contributing to Draft-Js-Wysiwyg by creating an issue! ❤️
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+        - label: I have searched the existing issues
+          required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Describe how it should work.
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples
+      description: Provide screenshots or other implementations of the expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What are you trying to accomplish? How has the lack of this feature affected you ? Providing context helps us come up with a solution that is most useful in the real world.
+    validations:
+      required: true
