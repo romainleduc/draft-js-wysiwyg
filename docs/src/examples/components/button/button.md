@@ -18,6 +18,10 @@ title: Button React component
 
 {{"demo": "button/AtomicMediaBasic.jsx"}}
 
+### Embed example
+
+{{"demo": "button/AtomicMediaEmbed.jsx"}}
+
 ### Disabled state
 
 Make buttons look inactive by adding the `disabled` prop to.

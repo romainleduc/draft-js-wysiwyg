@@ -2,7 +2,7 @@ import React, { useContext, forwardRef } from 'react';
 import { Button, ButtonProps } from '@material-ui/core';
 import EditorContext from '../Editor/EditorContext';
 import { insertAtomicBlock } from '../../utils';
-import { getMediaType } from './patterns';
+import { isImage, isVideo, isAudio, isEmbeddedLink } from './patterns';
 import clsx from 'clsx';
 
 export interface AtomicMediaProps
@@ -28,6 +28,7 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
     ref
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
+    const { src } = atomicMediaProps;
 
     const handleClick = () => {
       if (editorState && setEditorState) {
@@ -36,7 +37,15 @@ const AtomicMediaButton = forwardRef<HTMLButtonElement, AtomicMediaButtonProps>(
             setEditorState(
               insertAtomicBlock(editorState, 'media', {
                 atomicMediaProps,
-                atomicMediaType: getMediaType(atomicMediaProps.src),
+                atomicMediaType: isImage(src)
+                  ? 'img'
+                  : isVideo(src)
+                  ? 'video'
+                  : isAudio(src)
+                  ? 'audio'
+                  : isEmbeddedLink(src)
+                  ? 'embedded_link'
+                  : 'media',
               })
             ),
           0
