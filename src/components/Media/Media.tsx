@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   media: {
     display: 'block',
     margin: '0 auto',
-    width: '100%',
+    maxWidth: '100%',
     // Fix an issue with Firefox rendering video controls
     // with 'pre-wrap' white-space
     whiteSpace: 'initial',
@@ -93,13 +93,7 @@ interface AtomicIframeProps
   sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[];
 }
 
-const AtomicIframe = ({
-  src,
-  sourcesProps,
-  className,
-  children,
-  ...other
-}: AtomicIframeProps): JSX.Element => <iframe {...other}>{children}</iframe>;
+const AtomicIframe = (props: AtomicIframeProps): JSX.Element => <iframe {...props} />;
 
 export const Media = (props: MediaProps): JSX.Element => {
   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
@@ -124,7 +118,7 @@ export const Media = (props: MediaProps): JSX.Element => {
             {...atomicMediaProps}
           />
         );
-      case 'iframe':
+      case 'embedded_link':
         return (
           <AtomicIframe
             className={clsx(classes.media, atomicMediaProps.className)}
