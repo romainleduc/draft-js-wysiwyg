@@ -14,7 +14,7 @@ import {
   Typography,
   Button
 } from "@material-ui/core";
-import { ImageOutlined } from "@material-ui/icons";
+import { Code as CodeIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -115,7 +115,7 @@ const AtomicMediaEmbedExample = () => {
     <EditorContainer editorState={editorState} onChange={setEditorState}>
       <EditorToolbar>
         <IconButton onClick={handleClick}>
-          <ImageOutlined />
+          <CodeIcon />
         </IconButton>
         <AtomicMediaPopover
           anchorEl={anchorEl}
