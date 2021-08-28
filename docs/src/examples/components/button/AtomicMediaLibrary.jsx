@@ -71,37 +71,10 @@ const TabPanel = (props) => {
  *       [etc...]
  *     },
  *   ],
- *   [
- *     {
- *       type: 'audio',
- *       tooltip: 'Audio',
- *       background: 'path/to/background.jpg',
- *       mediaProps: {
- *         src: 'path/to/audio.mp3',
- *         controls: true,
- *       },
- *     },
- *     {
- *       [etc...]
- *     },
- *   ],
- *   [
- *     {
- *       type: 'video',
- *       tooltip: 'Video',
- *       background: 'path/to/background.jpg',
- *       mediaProps: {
- *         src: 'path/to/video.mp4',
- *         controls: true,
- *       },
- *     },
- *     {
- *       [etc...]
- *     },
- *   ],
+ *   [etc...]
  * ];
  */
-const AtomicMediaModal = (props) => {
+const AtomicMediaModal = ({ onClose, ...other }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
@@ -112,7 +85,8 @@ const AtomicMediaModal = (props) => {
   return (
     <Modal
       className={classes.modal}
-      {...props}
+      onClose={onClose}
+      {...other}
     >
       <div className={classes.paper}>
         <Tabs
@@ -153,11 +127,11 @@ const AtomicMediaModal = (props) => {
                     <AtomicMediaButton
                       className={classes.media}
                       style={{ backgroundImage: `url('${background}')` }}
-                      onInserted={() => props.onClose()}
+                      onInserted={onClose}
                       atomicMediaProps={mediaProps}
                       component='span'
                     >
-                      {['audio', 'video'].includes(type) &&
+                      {type !== 'img' &&
                         <PlayArrowRounded style={{
                           fontSize: 45,
                           color: '#fff',
@@ -175,7 +149,7 @@ const AtomicMediaModal = (props) => {
   );
 }
 
-const BasicExample = () => {
+const MediaLibraryExample = () => {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty()
   );
@@ -204,4 +178,4 @@ const BasicExample = () => {
   );
 }
 
-export default BasicExample;
+export default MediaLibraryExample;

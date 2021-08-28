@@ -1,20 +1,12 @@
 import React from "react";
+import { AtomicMediaButton } from "draft-js-wysiwyg";
 import {
-  EditorContainer,
-  Editor,
-  EditorToolbar,
-  AtomicMediaButton
-} from "draft-js-wysiwyg";
-import { EditorState } from "draft-js";
-import {
-  IconButton,
   Popover,
   makeStyles,
   TextField,
   Typography,
   Button
 } from "@material-ui/core";
-import { Code as CodeIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontWeight: theme.typography.fontWeightBold
-  },
-  media: {
-    width: '100%',
   },
   actions: {
     display: "flex",
@@ -75,11 +64,7 @@ const AtomicMediaPopover = ({ onClose, ...other }) => {
           <AtomicMediaButton
             color="primary"
             disabled={!Boolean(src)}
-            atomicMediaProps={{
-              src,
-              height: 460,
-              width: 1400,
-            }}
+            atomicMediaProps={{ src }}
             onInserted={handleClose}
             variant="outlined"
           >
@@ -94,38 +79,4 @@ const AtomicMediaPopover = ({ onClose, ...other }) => {
   );
 };
 
-
-const AtomicMediaEmbedExample = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [editorState, setEditorState] = React.useState(() =>
-    EditorState.createEmpty()
-  );
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-
-  return (
-    <EditorContainer editorState={editorState} onChange={setEditorState}>
-      <EditorToolbar>
-        <IconButton onClick={handleClick}>
-          <CodeIcon />
-        </IconButton>
-        <AtomicMediaPopover
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-        />
-      </EditorToolbar>
-      <Editor placeholder="Enter some text.." />
-    </EditorContainer>
-  );
-}
-
-export default AtomicMediaEmbedExample;
+export default AtomicMediaPopover;
