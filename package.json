@@ -48,7 +48,7 @@
   "homepage": "https://github.com/romainleduc/draft-js-wysiwyg#readme",
   "devDependencies": {
     "@babel/core": "^7.15.0",
-    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-env": "^7.15.6",
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.15.0",
     "@material-ui/core": "^4.12.3",
