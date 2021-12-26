@@ -3810,10 +3810,10 @@ domexception@^2.0.1:
   dependencies:
     webidl-conversions "^5.0.0"
 
-draft-js-wysiwyg@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/draft-js-wysiwyg/-/draft-js-wysiwyg-1.2.0.tgz#f088a5421f0bb767f6d615888ba333f002a8d500"
-  integrity sha512-Vm14GyCmyJzYVswcPY7TJ34YJqRwjDEbIWvqyazDeOZhBQDEZlDU9CXN05WWUdzGcbJq5SuS3nQ/GWLgTmDHdQ==
+draft-js-wysiwyg@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/draft-js-wysiwyg/-/draft-js-wysiwyg-1.2.1.tgz#fad84d950d03f20dafd3359160cd50e6b570e045"
+  integrity sha512-WMwA7TeHbgDagzB4C1fGc682V/FedZCFLIPPY7og18fAckpPXXrlhOVeBppAk3zMPw9+ewP7j4e4AcqOy91ZYg==
   dependencies:
     clsx "^1.1.1"
     immutable "^4.0.0-rc.12"
