@@ -1,8 +1,9 @@
-import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import AppFrame from '../src/modules/components/AppFrame';
 import AppHead from '../src/modules/components/AppHead';
 import LandingExample from '../src/examples/LandingExample';
+import * as gtag from '../utils/gtag';
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -57,6 +58,15 @@ const useStyles = makeStyles(theme => ({
 const LandingPage = () => {
   const classes = useStyles();
 
+  const handleStarted = () => {
+    gtag.event({
+      action: 'get_started',
+      category: 'getting_started',
+      label: 'Get started',
+      value: 'installation',
+    })
+  }
+
   return (
     <AppFrame disablePermanent>
       <AppHead
@@ -84,6 +94,7 @@ const LandingPage = () => {
           href='https://www.npmjs.com/package/draft-js-wysiwyg'
           variant='outlined'
           color='primary'
+          onClick={handleStarted}
         >
           Get started
         </Button>
